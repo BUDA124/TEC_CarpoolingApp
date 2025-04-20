@@ -138,16 +138,21 @@ Sensitive configuration details (like database credentials or API keys) should *
 3.  **Edit `application.properties`:** Open the newly created `application.properties` file and fill in the required values, especially the database connection details:
     ```properties
     # Database Configuration
-    db.url=jdbc:oracle:thin:@your_oracle_host:1521:your_sid_or_service_name
-    db.username=your_db_user
-    db.password=your_db_password
-
-    # Institution Verification API (Example - Adjust per actual API)
-    institution.api.tec.url=https://api.tec.ac.cr/verify # Example URL
-    institution.api.tec.key=YOUR_TEC_API_KEY_IF_NEEDED # Example
-
-    # Google Maps API Key (If using GMapsFX features requiring it)
-    maps.google.api.key=YOUR_GOOGLE_MAPS_API_KEY
+    db.url=jdbc:oracle:thin:@YOUR_ORACLE_HOST:1521:YOUR_SID
+    db.username=DB_USERNAME_PLACEHOLDER
+    db.password=DB_PASSWORD_PLACEHOLDER
+    
+    # Institution Verification APIs (Add one block per supported institution)
+    # Example for TEC:
+    institution.api.tec.url=https://api-dev.tec.ac.cr/verify # Use DEVELOPMENT endpoint URL
+    institution.api.tec.key=YOUR_TEC_API_KEY_GOES_HERE
+    
+    # Example for Another Institution (UCR):
+    institution.api.ucr.url=https://api-sandbox.ucr.ac.cr/validation # Use SANDBOX endpoint URL
+    institution.api.ucr.key=YOUR_UCR_API_KEY_GOES_HERE
+    
+    # Google Maps API Key (If required and obtained)
+    maps.google.api.key=YOUR_GOOGLE_MAPS_API_KEY_IF_USED
     ```
 
 ## Running the Application
