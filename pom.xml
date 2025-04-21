@@ -4,14 +4,270 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>TEC.curso</groupId>
+    <groupId>org.tec.carpooling</groupId> <!-- Ajustado según estructura de paquetes -->
     <artifactId>CarpoolingApp</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <packaging>jar</packaging> <!-- Empaquetado estándar como JAR -->
+
+    <name>Carpooling Application</name>
+    <description>University Carpooling System with JavaFX UI and Database Integration</description>
 
     <properties>
-        <maven.compiler.source>22</maven.compiler.source>
-        <maven.compiler.target>22</maven.compiler.target>
+        <!-- Configuración del Proyecto -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <java.version>22</java.version>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
+
+        <!-- Versiones de Dependencias Clave -->
+        <javafx.version>21.0.2</javafx.version> <!-- O la última compatible con JDK 22 -->
+        <javafx.maven.plugin.version>0.0.8</javafx.maven.plugin.version>
+        <junit.version>5.10.1</junit.version> <!-- JUnit 5 -->
+        <mockito.version>5.8.0</mockito.version> <!-- Mockito -->
+        <hibernate.version>6.4.4.Final</hibernate.version> <!-- O la versión JPA/Hibernate que uses -->
+        <logback.version>1.5.6</logback.version> <!-- Logback -->
+        <postgresql.driver.version>42.7.1</postgresql.driver.version> <!-- Ejemplo: Driver PostgreSQL -->
+        <gmapsfx.version>11.0.7</gmapsfx.version>
+        <h2.version>2.2.224</h2.version> <!-- Base de datos en memoria para tests -->
+
+        <!-- Clase Principal de la Aplicación JavaFX (¡Verifica que esta sea la ruta correcta!) -->
+        <main.class>org.tec.carpooling.app.CarpoolingApplication</main.class>
     </properties>
+
+    <dependencies>
+        <!-- ======================================== -->
+        <!-- JavaFX Modules                         -->
+        <!-- ======================================== -->
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-controls</artifactId>
+            <version>${javafx.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-fxml</artifactId>
+            <version>${javafx.version}</version>
+        </dependency>
+        <!-- Necesario para GMapsFX (WebView) -->
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-web</artifactId>
+            <version>${javafx.version}</version>
+        </dependency>
+        <!-- Posiblemente útil para gráficos y CSS -->
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-graphics</artifactId>
+            <version>${javafx.version}</version>
+        </dependency>
+        <!-- Si necesitas Media (Audio/Video) -->
+        <!--
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-media</artifactId>
+            <version>${javafx.version}</version>
+        </dependency>
+        -->
+
+        <!-- ======================================== -->
+        <!-- GMapsFX (Integración con Google Maps)   -->
+        <!-- ======================================== -->
+
+        <!-- ======================================== -->
+        <!-- Persistencia (JPA / Hibernate)         -->
+        <!-- ======================================== -->
+        <!-- API estándar de JPA -->
+        <dependency>
+            <groupId>jakarta.persistence</groupId>
+            <artifactId>jakarta.persistence-api</artifactId>
+            <version>3.1.0</version>
+        </dependency>
+        <!-- Implementación Hibernate (Ajusta si usas EclipseLink u otro) -->
+        <dependency>
+            <groupId>org.hibernate.orm</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>${hibernate.version}</version>
+        </dependency>
+        <!-- (Opcional) Hibernate Spatial para datos geográficos si usas PostGIS u similar -->
+        <!--
+        <dependency>
+            <groupId>org.hibernate.orm</groupId>
+            <artifactId>hibernate-spatial</artifactId>
+            <version>${hibernate.version}</version>
+        </dependency>
+        -->
+
+        <!-- ======================================== -->
+        <!-- Driver JDBC -->
+        <!-- ======================================== -->
+
+
+        <!-- ======================================== -->
+        <!-- Logging (Logback)                      -->
+        <!-- ======================================== -->
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>${logback.version}</version>
+        </dependency>
+
+        <!-- ======================================== -->
+        <!-- Utilidades Comunes (Ejemplos)          -->
+        <!-- ======================================== -->
+        <!-- Para hashing de contraseñas (o Spring Security) -->
+        <!--
+        <dependency>
+            <groupId>org.mindrot</groupId>
+            <artifactId>jbcrypt</artifactId>
+            <version>0.4</version>
+        </dependency>
+        -->
+        <!-- librerías externas para validación, etc. -->
+
+        <!-- ======================================== -->
+        <!-- Testing (JUnit 5 & Mockito)           -->
+        <!-- ======================================== -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- Para tests parametrizados en JUnit 5 -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-params</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- Mockito para simular dependencias -->
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>${mockito.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-junit-jupiter</artifactId>
+            <version>${mockito.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- Base de datos en memoria para tests de integración DA -->
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>${h2.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+        <plugins>
+            <!-- Plugin de Compilación -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.11.0</version>
+                <configuration>
+                    <source>${maven.compiler.source}</source>
+                    <target>${maven.compiler.target}</target>
+                </configuration>
+            </plugin>
+
+            <!-- Plugin de JavaFX -->
+            <plugin>
+                <groupId>org.openjfx</groupId>
+                <artifactId>javafx-maven-plugin</artifactId>
+                <version>${javafx.maven.plugin.version}</version>
+                <executions>
+                    <execution>
+                        <!-- Default configuration for running with module-path -->
+                        <id>default-cli</id>
+                        <configuration>
+                            <!-- ¡IMPORTANTE! Clase principal -->
+                            <mainClass>${main.class}</mainClass>
+                            <!-- Opciones adicionales para la ejecución y empaquetado -->
+                            <launcher>app</launcher>
+                            <jlinkZipName>app</jlinkZipName>
+                            <jlinkImageName>app</jlinkImageName>
+                            <noManPages>true</noManPages>
+                            <stripDebug>true</stripDebug>
+                            <noHeaderFiles>true</noHeaderFiles>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- Plugin para ejecutar Tests (Surefire) - importante para JUnit 5 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.2.3</version>
+                <!-- Configuración necesaria para JUnit 5 -->
+                <dependencies>
+                    <dependency>
+                        <groupId>org.junit.jupiter</groupId>
+                        <artifactId>junit-jupiter-engine</artifactId>
+                        <version>${junit.version}</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+
+            <!-- (Opcional) Plugin para crear un JAR "gordo" (uber-jar) que incluya dependencias -->
+            <!-- Esto puede ser útil si quieres distribuir un solo archivo JAR ejecutable -->
+            <!-- pero puede ser más complejo con JavaFX debido a los módulos nativos -->
+            <!-- El javafx:jlink o javafx:jpackage del plugin de JavaFX es a menudo mejor -->
+            <!--
+             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>3.5.1</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <transformers>
+                                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                    <mainClass>${main.class}</mainClass> <!- Clase Principal aquí también ->
+                                </transformer>
+                            </transformers>
+                             <filters> <!- Excluir firmas de los JARs de dependencias ->
+                                <filter>
+                                    <artifact>*:*</artifact>
+                                    <excludes>
+                                        <exclude>META-INF/*.SF</exclude>
+                                        <exclude>META-INF/*.DSA</exclude>
+                                        <exclude>META-INF/*.RSA</exclude>
+                                    </excludes>
+                                </filter>
+                            </filters>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            -->
+
+        </plugins>
+
+        <!-- (Opcional) Asegura que los recursos de src/main/resources se copien -->
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
+        </resources>
+
+    </build>
 
 </project>
