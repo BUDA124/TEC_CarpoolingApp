@@ -27,7 +27,6 @@ Key features include user registration/profiling, institutional verification via
 - [Running the Application](#running-the-application)
 - [Running Tests](#running-tests)
 - [Project Structure](#project-structure)
-- [Contributing](#contributing)
 - [License](#license)
 
 ## Motivation
