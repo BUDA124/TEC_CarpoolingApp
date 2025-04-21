@@ -6,9 +6,6 @@
 # Datasource local storage ignored files
 /dataSources/
 /dataSources.local.xml
-# Custom configuration files (sensitive - do not commit)
-src/main/resources/config/application.properties
-src/test/resources/test-application.properties
 target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
@@ -22,26 +19,4 @@ target/
 *.iws
 *.iml
 *.ipr
-
-### Eclipse ###
-.apt_generated
-.classpath
-.factorypath
-.project
-.settings
-.springBeans
-.sts4-cache
-
-### NetBeans ###
-/nbproject/private/
-/nbbuild/
-/dist/
-/nbdist/
-/.nb-gradle/
-build/
-!**/src/main/**/build/
-!**/src/test/**/build/
-
-### VS Code ###
-.vscode/
 
