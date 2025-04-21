@@ -1,12 +1,13 @@
 # Carpooling Application Project
 
 <!-- ## Team Members: -->
+Team Members:
 - Natalia Acuña
 - Carlos Castillo
 - Felipe Benavides
   
 <!-- Course -->
-- Bases de Datos 
+Course: Data Bases 
 
 ## Description
 
