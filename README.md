@@ -90,7 +90,7 @@ Code quality follows principles outlined in "Clean Code" by Robert C. Martin.
 Before you begin, ensure you have the following installed:
 
 1.  **Git:** [Download & Install Git](https://git-scm.com/downloads)
-2.  **Java Development Kit (JDK):** Version 22. Ensure `JAVA_HOME` is set and `java --version` works. ([Oracle Java JDK]([https://adoptium.net/](https://www.oracle.com/java/technologies/javase/jdk22-archive-downloads.html)) or any OpenJDK distribution)
+2.  **Java Development Kit (JDK):** Version 22. Ensure `JAVA_HOME` is set and `java --version` works. Install it from: https://download.oracle.com/java/22/archive/jdk-22.0.2_windows-x64_bin.exe
 3.  **Apache Maven:** Version 3.6+ recommended. Ensure `mvn --version` works. ([Download & Install Maven](https://maven.apache.org/download.cgi))
 4.  **Oracle 11gR2 Database:** Access to a running instance (local or remote). You'll need connection details (host, port, SID/Service Name, username, password).
 5.  **(Recommended) Oracle SQL Developer or other DB Client:** To run setup scripts and inspect the database. ([SQL Developer Download](https://www.oracle.com/database/sqldeveloper/technologies/download/))
