@@ -192,27 +192,48 @@ Tests are located in the `src/test/java` directory.
 ## Project Structure
 
 The project follows the standard Maven directory layout:
+
 CarpoolingApp/
-├── database/         # SQL scripts
-├── docs/             # Documentation (ERD, Manual, Data Dictionary)
+
+├── database/ ---------> # SQL scripts
+
+├── docs/ --------------> # Documentation (ERD, Manual, Data Dictionary)
+
 ├── src/
+
 │ ├── main/
-│ │ ├── java/         # Application source code (org.tec.carpooling)
-│ │ │ ├── app/        # Main application entry point
-│ │ │ ├── ui/         # Presentation Layer (JavaFX Controllers, FXML Loader, Map Utils)
-│ │ │ ├── bl/         # Business Logic Layer (Services, DTOs, Validators)
-│ │ │ ├── da/         # Data Access Layer (JPA Entities, Repositories)
-│ │ │ └── common/     # Shared code (Exceptions, Utils, Constants)
-│ │ └── resources/    # Non-code resources
-│ │ ├── META-INF/     # JPA persistence.xml
-│ │ ├── config/       # application.properties
-│ │ ├── views/        # FXML files
-│ │ ├── css/          # Stylesheets
-│ │ └── images/       # Icons and images
-│ └── test/           # Test code and resources
-├── .gitignore        # Git ignore rules
-├── pom.xml           # Maven configuration
-└── README.md         # This file
+
+│ │ ├── java/ ----------> # Application source code (org.tec.carpooling)
+
+│ │ │ ├── app/ --------> # Main application entry point
+
+│ │ │ ├── ui/ ----------> # Presentation Layer (JavaFX Controllers, FXML Loader, Map Utils)
+
+│ │ │ ├── bl/ ----------> # Business Logic Layer (Services, DTOs, Validators)
+
+│ │ │ ├── da/ ---------> # Data Access Layer (JPA Entities, Repositories)
+
+│ │ │ └── common/ --> # Shared code (Exceptions, Utils, Constants)
+
+│ │ └── resources/ ---> # Non-code resources
+
+│ │ ├── META-INF/ ---> # JPA persistence.xml
+
+│ │ ├── config/ -------> # application.properties
+
+│ │ ├── views/ --------> # FXML files
+
+│ │ ├── css/ ----------> # Stylesheets
+
+│ │ └── images/ ------> # Icons and images
+
+│ └── test/ ------------> # Test code and resources
+
+├── .gitignore --------> # Git ignore rules
+
+├── pom.xml ---------> # Maven configuration
+
+└── README.md -----> # This file
 
 ## License
 
