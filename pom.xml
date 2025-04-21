@@ -25,7 +25,7 @@
         <junit.version>5.10.1</junit.version> <!-- JUnit 5 -->
         <mockito.version>5.8.0</mockito.version> <!-- Mockito -->
         <hibernate.version>6.4.4.Final</hibernate.version> <!-- O la versión JPA/Hibernate que uses -->
-        <logback.version>1.5.6</logback.version> <!-- Logback -->
+        <logback.version>1.5.13</logback.version> <!-- Logback -->
         <postgresql.driver.version>42.7.1</postgresql.driver.version> <!-- Ejemplo: Driver PostgreSQL -->
         <gmapsfx.version>11.0.7</gmapsfx.version>
         <h2.version>2.2.224</h2.version> <!-- Base de datos en memoria para tests -->
