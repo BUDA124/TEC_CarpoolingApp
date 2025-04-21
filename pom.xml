@@ -48,26 +48,24 @@
             <artifactId>javafx-fxml</artifactId>
             <version>${javafx.version}</version>
         </dependency>
-        <!-- Necesario para GMapsFX (WebView) -->
+        <!-- Conexión web -->
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-web</artifactId>
             <version>${javafx.version}</version>
         </dependency>
-        <!-- Posiblemente útil para gráficos y CSS -->
+        <!-- Gráficos y CSS -->
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-graphics</artifactId>
             <version>${javafx.version}</version>
         </dependency>
-        <!-- Si necesitas Media (Audio/Video) -->
-        <!--
+        <!-- Media (Audio/Video) -->
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-media</artifactId>
             <version>${javafx.version}</version>
         </dependency>
-        -->
 
         <!-- ======================================== -->
         <!-- GMapsFX (Integración con Google Maps)   -->
@@ -82,20 +80,12 @@
             <artifactId>jakarta.persistence-api</artifactId>
             <version>3.1.0</version>
         </dependency>
-        <!-- Implementación Hibernate (Ajusta si usas EclipseLink u otro) -->
+        <!-- Implementación Hibernate -->
         <dependency>
             <groupId>org.hibernate.orm</groupId>
             <artifactId>hibernate-core</artifactId>
             <version>${hibernate.version}</version>
         </dependency>
-        <!-- (Opcional) Hibernate Spatial para datos geográficos si usas PostGIS u similar -->
-        <!--
-        <dependency>
-            <groupId>org.hibernate.orm</groupId>
-            <artifactId>hibernate-spatial</artifactId>
-            <version>${hibernate.version}</version>
-        </dependency>
-        -->
 
         <!-- ======================================== -->
         <!-- Driver JDBC -->
@@ -112,7 +102,7 @@
         </dependency>
 
         <!-- ======================================== -->
-        <!-- Utilidades Comunes (Ejemplos)          -->
+        <!-- Utilidades                               -->
         <!-- ======================================== -->
         <!-- Para hashing de contraseñas (o Spring Security) -->
         <!--
@@ -122,6 +112,7 @@
             <version>0.4</version>
         </dependency>
         -->
+
         <!-- librerías externas para validación, etc. -->
 
         <!-- ======================================== -->
@@ -159,7 +150,6 @@
             <version>${mockito.version}</version>
             <scope>test</scope>
         </dependency>
-
         <!-- Base de datos en memoria para tests de integración DA -->
         <dependency>
             <groupId>com.h2database</groupId>
@@ -223,7 +213,7 @@
             </plugin>
 
             <!-- (Opcional) Plugin para crear un JAR "gordo" (uber-jar) que incluya dependencias -->
-            <!-- Esto puede ser útil si quieres distribuir un solo archivo JAR ejecutable -->
+            <!-- Útil para distribuir un solo archivo JAR ejecutable -->
             <!-- pero puede ser más complejo con JavaFX debido a los módulos nativos -->
             <!-- El javafx:jlink o javafx:jpackage del plugin de JavaFX es a menudo mejor -->
             <!--
@@ -261,7 +251,7 @@
 
         </plugins>
 
-        <!-- (Opcional) Asegura que los recursos de src/main/resources se copien -->
+        <!-- Asegura que los recursos de src/main/resources se copien -->
         <resources>
             <resource>
                 <directory>src/main/resources</directory>
