@@ -74,16 +74,54 @@ Code quality follows principles outlined in "Clean Code" by Robert C. Martin.
 
 ## Technology Stack
 
-*   **Language:** Java (JDK 22)
-*   **Framework (UI):** JavaFX
-*   **Build Tool & Dependency Management:** Apache Maven
-*   **Data Persistence:** JPA (Hibernate Implementation)
-*   **Database:** Oracle Database 11gR2 (Mandatory)
-*   **Map Library:** GMapsFX
-*   **IDE (Recommended):** IntelliJ IDEA Ultimate
+This project utilizes a combination of established and modern Java technologies:
+
+*   **Language:** **Java (JDK 22)**
+    *   The core programming language for the application. Version 22 provides access to recent language features.
+
+*   **Framework (UI):** **JavaFX**
+    *   The primary framework for building the desktop Graphical User Interface (GUI).
+    *   Key Dependencies:
+        *   `` `org.openjfx:javafx-controls` ``: Provides standard UI elements like buttons, labels, text fields, tables.
+        *   `` `org.openjfx:javafx-fxml` ``: Enables defining UI layouts declaratively using FXML files, separating UI design from application logic.
+        *   `` `org.openjfx:javafx-graphics` ``: Core graphics engine, CSS support, and scene graph management.
+        *   `` `org.openjfx:javafx-web` ``: Includes the WebView component, essential for embedding web content, notably used by GMapsFX.
+
+*   **Build Tool & Dependency Management:** **Apache Maven**
+    *   Manages the project's build lifecycle (compiling, testing, packaging) and automatically downloads/manages external libraries (dependencies) defined in the `pom.xml`.
+    *   Utilizes plugins like `maven-compiler-plugin` (compilation), `javafx-maven-plugin` (running/packaging JavaFX apps), `maven-surefire-plugin` (running tests), and potentially `maven-enforcer-plugin` (ensuring environment rules like JDK version).
+
+*   **Data Persistence:** **JPA (Jakarta Persistence API) / Hibernate**
+    *   Standard Java API for Object-Relational Mapping (ORM), simplifying database interactions by mapping Java objects (Entities) to database tables.
+    *   Key Dependencies:
+        *   `` `jakarta.persistence:jakarta.persistence-api` ``: Defines the core JPA interfaces and annotations.
+        *   `` `org.hibernate.orm:hibernate-core` ``: The chosen JPA *implementation*. Handles the actual translation between Java objects and SQL queries.
+
+*   **Database:** **Oracle Database 11gR2 (Mandatory)**
+    *   The relational database system required by the project specifications to store all application data, execute triggers (audit log), and scheduled jobs.
+    *   Key Dependency:
+        *   **Oracle JDBC Driver** (e.g., `` `com.oracle.database.jdbc:ojdbc11` ``): The specific driver JAR needed for Java applications to connect and communicate with the Oracle database. *Must be included in the `pom.xml`.*
+
+*   **Map Library:** **GMapsFX**
+    *   A JavaFX library for integrating Google Maps components directly into the application.
+    *   Key Dependency: `` `com.dlsc.gmapsfx:gmapsfx` ``: Provides the necessary classes and components to display maps, markers, routes, etc., within the JavaFX UI.
+
+*   **Logging:** **SLF4J & Logback**
+    *   Used for recording application events, informational messages, warnings, and errors, which is crucial for debugging and monitoring.
+    *   Key Dependencies:
+        *   `` `org.slf4j:slf4j-api` ``: A facade or abstraction layer for logging frameworks. Allows using a consistent logging API regardless of the underlying implementation.
+        *   `` `ch.qos.logback:logback-classic` ``: A powerful and flexible logging *implementation* chosen as the backend for SLF4J. Configured via `src/main/resources/logback.xml`.
+
+*   **Testing:** **JUnit 5 & Mockito**
+    *   Frameworks used for writing and running automated tests to ensure code correctness and stability.
+    *   Key Dependencies:
+        *   `` `org.junit.jupiter:*` ``: The latest generation of the popular JUnit framework for writing unit and integration tests.
+        *   `` `org.mockito:*` ``: A mocking framework used to create "fake" versions of dependencies, allowing tests to isolate the specific code unit being tested.
+        *   (Potentially) `` `com.h2database:h2` `` (scope `test`): An in-memory database often used for running Data Access Layer tests quickly without needing a full external database setup during the test phase.
+
+*   **IDE (Recommended):** IntelliJ IDEA Ultimate (Excellent support for JavaFX, Maven, JPA, Database Tools, etc.)
 *   **Version Control:** Git
-*   **Collaboration Platform:** GitHub (Recommended as per spec)
-*   **Logging:** Logback (or Log4j2)
+*   **Collaboration Platform:** GitHub
 
 ## Prerequisites
 
