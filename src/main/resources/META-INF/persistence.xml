@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<persistence xmlns="https://jakarta.ee/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence https://jakarta.ee/xml/ns/persistence/persistence_3_1.xsd"
+             version="3.1">
+
+    <persistence-unit name="CarpoolingAppPU" transaction-type="RESOURCE_LOCAL">
+
+        <!-- JPA (Hibernate) -->
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+
+        <!-- Listado de todas las clases de Entidad (@Entity) -->
+        <class>org.tec.carpooling.da.entities.AuditLogEntity</class>
+        <class>org.tec.carpooling.da.entities.BookingEntity</class>
+        <class>org.tec.carpooling.da.entities.InstitutionEntity</class>
+        <class>org.tec.carpooling.da.entities.ParameterEntity</class>
+        <class>org.tec.carpooling.da.entities.RideEntity</class>
+        <class>org.tec.carpooling.da.entities.RideStopEntity</class>
+        <class>org.tec.carpooling.da.entities.UserEntity</class>
+        <class>org.tec.carpooling.da.entities.VehicleEntity</class>
+        <properties>
+            <!-- ========= Propiedades de Conexión JDBC ========= -->
+
+            <!-- Driver JDBC -->
+            <property name="jakarta.persistence.jdbc.driver" value="oracle.jdbc.OracleDriver"/>
+
+            <!-- Cambiar localhost y SID según la máquina -->
+            <property name="jakarta.persistence.jdbc.url" value="jdbc:oracle:thin:@localhost:1521:FARADB"/>
+            <property name="jakarta.persistence.jdbc.user" value="system"/>
+            <property name="jakarta.persistence.jdbc.password" value="7564"/>
+
+
+            <!-- ========= Propiedades Específicas de Hibernate ========= -->
+
+            <!-- Dialecto SQL para Oracle -->
+            <property name="hibernate.dialect" value="org.hibernate.dialect.OracleDialect"/>
+
+            <!-- Muestra el SQL generado por Hibernate en la consola (útil para depurar) -->
+            <property name="hibernate.show_sql" value="true"/>
+
+            <!-- Formatea el SQL mostrado en la consola -->
+            <property name="hibernate.format_sql" value="true"/>
+
+            <!-- Estrategia de generación/validación del esquema DDL -->
+            <!-- 'validate': Valida que las tablas coincidan con las entidades. No hace cambios. (Seguro) -->
+            <!-- 'update': Intenta actualizar el esquema si hay diferencias (¡CUIDADO!) -->
+            <!-- 'create': Borra y recrea el esquema cada vez. (Útil para tests, pero PELIGROSO) -->
+            <!-- 'create-drop': Como 'create', pero borra el esquema al cerrar. (Útil para tests) -->
+            <!-- 'none': No hace nada con el esquema. (Recomendado para producción si gestionas el esquema manualmente) -->
+            <!-- Para empezar, 'validate' o 'update' pueden ser útiles en desarrollo. -->
+            <property name="hibernate.hbm2ddl.auto" value="validate"/>
+
+        </properties>
+    </persistence-unit>
+</persistence>
+

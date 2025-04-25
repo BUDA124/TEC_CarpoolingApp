@@ -20,21 +20,27 @@
         <maven.compiler.target>${java.version}</maven.compiler.target>
 
         <!-- Versiones de Dependencias Clave -->
-        <javafx.version>21.0.2</javafx.version> <!-- O la última compatible con JDK 22 -->
+        <javafx.version>21.0.2</javafx.version>
         <javafx.maven.plugin.version>0.0.8</javafx.maven.plugin.version>
-        <junit.version>5.10.1</junit.version> <!-- JUnit 5 -->
-        <mockito.version>5.8.0</mockito.version> <!-- Mockito -->
-        <hibernate.version>6.4.4.Final</hibernate.version> <!-- O la versión JPA/Hibernate que uses -->
-        <logback.version>1.5.13</logback.version> <!-- Logback -->
-        <postgresql.driver.version>42.7.1</postgresql.driver.version> <!-- Ejemplo: Driver PostgreSQL -->
+        <junit.version>5.10.1</junit.version>
+        <mockito.version>5.8.0</mockito.version>
+        <hibernate.version>6.4.4.Final</hibernate.version>
+        <logback.version>1.5.13</logback.version>
+        <oracle.driver.version>23.3.0.23.091</oracle.driver.version>
         <gmapsfx.version>11.0.7</gmapsfx.version>
         <h2.version>2.2.224</h2.version> <!-- Base de datos en memoria para tests -->
 
-        <!-- Clase Principal de la Aplicación JavaFX (¡Verifica que esta sea la ruta correcta!) -->
+        <!-- Clase Principal de la Aplicación JavaFX -->
         <main.class>org.tec.carpooling.app.CarpoolingApplication</main.class>
     </properties>
 
     <dependencies>
+            <dependency>
+                <groupId>com.oracle.database.jdbc</groupId>
+                <artifactId>ojdbc11</artifactId>
+                <version>23.3.0.23.09</version>
+            </dependency>
+
         <!-- ======================================== -->
         <!-- JavaFX Modules                         -->
         <!-- ======================================== -->
@@ -86,11 +92,6 @@
             <artifactId>hibernate-core</artifactId>
             <version>${hibernate.version}</version>
         </dependency>
-
-        <!-- ======================================== -->
-        <!-- Driver JDBC -->
-        <!-- ======================================== -->
-
 
         <!-- ======================================== -->
         <!-- Logging (Logback)                      -->
@@ -211,46 +212,7 @@
                     </dependency>
                 </dependencies>
             </plugin>
-
-            <!-- (Opcional) Plugin para crear un JAR "gordo" (uber-jar) que incluya dependencias -->
-            <!-- Útil para distribuir un solo archivo JAR ejecutable -->
-            <!-- pero puede ser más complejo con JavaFX debido a los módulos nativos -->
-            <!-- El javafx:jlink o javafx:jpackage del plugin de JavaFX es a menudo mejor -->
-            <!--
-             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-shade-plugin</artifactId>
-                <version>3.5.1</version>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>shade</goal>
-                        </goals>
-                        <configuration>
-                            <transformers>
-                                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <mainClass>${main.class}</mainClass> <!- Clase Principal aquí también ->
-                                </transformer>
-                            </transformers>
-                             <filters> <!- Excluir firmas de los JARs de dependencias ->
-                                <filter>
-                                    <artifact>*:*</artifact>
-                                    <excludes>
-                                        <exclude>META-INF/*.SF</exclude>
-                                        <exclude>META-INF/*.DSA</exclude>
-                                        <exclude>META-INF/*.RSA</exclude>
-                                    </excludes>
-                                </filter>
-                            </filters>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            -->
-
         </plugins>
-
         <!-- Asegura que los recursos de src/main/resources se copien -->
         <resources>
             <resource>
