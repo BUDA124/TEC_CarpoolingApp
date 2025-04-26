@@ -26,7 +26,7 @@
         <mockito.version>5.8.0</mockito.version>
         <hibernate.version>6.4.4.Final</hibernate.version>
         <logback.version>1.5.13</logback.version>
-        <oracle.driver.version>23.3.0.23.091</oracle.driver.version>
+        <oracle.driver.version>23.3.0.23.09</oracle.driver.version>
         <gmapsfx.version>11.0.7</gmapsfx.version>
         <h2.version>2.2.224</h2.version> <!-- Base de datos en memoria para tests -->
 
@@ -38,7 +38,7 @@
             <dependency>
                 <groupId>com.oracle.database.jdbc</groupId>
                 <artifactId>ojdbc11</artifactId>
-                <version>23.3.0.23.09</version>
+                <version>${oracle.driver.version}</version>
             </dependency>
 
         <!-- ======================================== -->
