@@ -138,7 +138,7 @@ Before you begin, ensure you have the following installed:
 
 1.  **Connect:** Using SQL*Plus, SQL Developer, or IntelliJ's Database Tool, connect to your Oracle instance with a user account that has privileges to create users, tables, sequences, triggers, and schedule jobs (e.g., `SYS as SYSDBA` or a dedicated admin user).
 
-2. If done with IntelliJ's Database Tool, it might be needed to adjust the Oracle Driver file path. Maven will automatically download a .jar file containing it, it is gonna be found at the default maven folder .m2. A sample path might be "C:\Users\User\.m2\repository\com\oracle\database\jdbc\ojdbc11\23.3.0.23.09\ojdbc11-23.3.0.23.09.jar".  
+2. When using IntelliJ's Database Tool with Oracle, you might need to specify the Oracle driver file path. Maven automatically downloads a .jar file containing the driver and configurations, usually found in the .m2 folder (e.g., C:\Users\User\.m2\repository\com\oracle\database\jdbc\ojdbc11\23.3.0.23.09\ojdbc11-23.3.0.23.09.jar). Use this path when configuring the Driver Class.
 
 3.  **Run Scripts:** Execute the SQL scripts located in the `/database/scripts/` directory **in the specified order** (V1, V2, V3...). These scripts will:
     *   `V1__create_schema.sql`: Create tables, sequences, primary keys, foreign keys.
