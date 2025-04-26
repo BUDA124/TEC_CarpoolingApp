@@ -138,14 +138,16 @@ Before you begin, ensure you have the following installed:
 
 1.  **Connect:** Using SQL*Plus, SQL Developer, or IntelliJ's Database Tool, connect to your Oracle instance with a user account that has privileges to create users, tables, sequences, triggers, and schedule jobs (e.g., `SYS as SYSDBA` or a dedicated admin user).
 
-2.  **Run Scripts:** Execute the SQL scripts located in the `/database/scripts/` directory **in the specified order** (V1, V2, V3...). These scripts will:
+2. If done with IntelliJ's Database Tool, it might be needed to adjust the Oracle Driver file path. Maven will automatically download a .jar file containing it, it is gonna be found at the default maven folder .m2. A sample path might be "C:\Users\User\.m2\repository\com\oracle\database\jdbc\ojdbc11\23.3.0.23.09\ojdbc11-23.3.0.23.09.jar".  
+
+3.  **Run Scripts:** Execute the SQL scripts located in the `/database/scripts/` directory **in the specified order** (V1, V2, V3...). These scripts will:
     *   `V1__create_schema.sql`: Create tables, sequences, primary keys, foreign keys.
     *   `V2__create_triggers.sql`: Create the database triggers for the audit log (bitácora).
     *   `V3__create_db_jobs.sql`: Create the scheduled daily job.
     *   `R__populate_parameters.sql`: (Optional but recommended) Populate initial parameter data (e.g., base institution data if modelled). Run this script after the schema is created.
     *   `R__seed_test_data.sql`: (Optional) Populate the database with sample data for testing.
 
-3.  **Verify:** Ensure tables, triggers, and the job have been created successfully.
+4.  **Verify:** Ensure tables, triggers, and the job have been created successfully.
 
 ## Project Setup & Installation
 
