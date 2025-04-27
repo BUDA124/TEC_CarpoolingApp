@@ -15,7 +15,9 @@ BEGIN
                                      CONSTRAINT pk_dailyreport PRIMARY KEY (id)
                                          USING INDEX TABLESPACE CARPOOLING_INDX,
                                      CONSTRAINT nn_DailyReport_reportType CHECK (reportType IS NOT NULL)
-        )';
+        )
+        TABLESPACE CARPOOLING_DATA';
+
         DBMS_OUTPUT.PUT_LINE('Created table DAILYREPORT.');
     ELSE
         DBMS_OUTPUT.PUT_LINE('Table DAILYREPORT already existed.');
@@ -46,7 +48,9 @@ BEGIN
                                      CONSTRAINT nn_Institution_emaildomain CHECK (emailDomain IS NOT NULL),
                                      CONSTRAINT nn_Institution_institutionname CHECK (institutionName IS NOT NULL)
 
-        )';
+        )
+        TABLESPACE CARPOOLING_DATA';
+
         DBMS_OUTPUT.PUT_LINE('Created table INSTITUTION.');
     ELSE
         DBMS_OUTPUT.PUT_LINE('Table INSTITUTION already existed.');
