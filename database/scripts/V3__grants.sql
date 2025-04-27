@@ -12,7 +12,6 @@ GRANT CONNECT TO CARPOOLING_APP_USER;
 --     - CREATE TYPE
 --     - CREATE OPERATOR
 --     - CREATE INDEXTYPE
---     IMPORTANTE: NO incluye CREATE VIEW por defecto.
 GRANT RESOURCE TO CARPOOLING_APP_USER;
 
 -- 3.3 Privilegio específico para CREAR VISTAS (Views) en su propio schema,
