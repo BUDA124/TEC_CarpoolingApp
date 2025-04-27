@@ -9,8 +9,12 @@ BEGIN
     IF v_table_exists = 0 THEN
         EXECUTE IMMEDIATE '
         CREATE TABLE DailyReport (
-                                     id          NUMBER          CONSTRAINT pk_dailyreport PRIMARY KEY,
-                                     reportType  VARCHAR2(100)   CONSTRAINT nn_DailyReport_reportType NULL
+                                     id          NUMBER,
+                                     reportType  VARCHAR2(100),
+
+                                     CONSTRAINT pk_dailyreport PRIMARY KEY (id)
+                                         USING INDEX TABLESPACE CARPOOLING_INDX,
+                                     CONSTRAINT nn_DailyReport_reportType CHECK (reportType IS NOT NULL)
         )';
         DBMS_OUTPUT.PUT_LINE('Created table DAILYREPORT.');
     ELSE
@@ -35,8 +39,10 @@ BEGIN
                                      institutionName   VARCHAR2(255),
                                      website           VARCHAR2(512),
 
-                                     CONSTRAINT pk_Institution_id PRIMARY KEY (id),
-                                     CONSTRAINT uk_Institution_emaildomain UNIQUE (emailDomain),
+                                     CONSTRAINT pk_Institution_id PRIMARY KEY (id)
+                                         USING INDEX TABLESPACE CARPOOLING_INDX,
+                                     CONSTRAINT uk_Institution_emaildomain UNIQUE (emailDomain)
+                                         USING INDEX TABLESPACE CARPOOLING_INDX,
                                      CONSTRAINT nn_Institution_emaildomain CHECK (emailDomain IS NOT NULL),
                                      CONSTRAINT nn_Institution_institutionname CHECK (institutionName IS NOT NULL)
 
