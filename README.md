@@ -141,9 +141,8 @@ Before you begin, ensure you have the following installed:
 2. When using IntelliJ's Database Tool with Oracle, you might need to specify the Oracle driver file path. Maven automatically downloads a .jar file containing the driver and configurations, usually found in the .m2 folder (e.g., C:\Users\User\.m2\repository\com\oracle\database\jdbc\ojdbc11\23.3.0.23.09\ojdbc11-23.3.0.23.09.jar). Use this path when configuring the Driver Class.
 
 3.  **Run Scripts:** Execute the SQL scripts located in the `/database/scripts/` directory **in the specified order** (V1, V2, V3...). These scripts will:
-    *   `V1__create_schema.sql`: Create tables, sequences, primary keys, foreign keys.
-    *   `V2__create_triggers.sql`: Create the database triggers for the audit log (bitácora).
-    *   `V3__create_db_jobs.sql`: Create the scheduled daily job.
+    *   `V1__create_tablespace.sql`: Create tables, sequences, primary keys, foreign keys.
+    *   `V2__create_schemas.sql`: Create the database triggers for the audit log (bitácora).
     *   `R__populate_parameters.sql`: (Optional but recommended) Populate initial parameter data (e.g., base institution data if modelled). Run this script after the schema is created.
     *   `R__seed_test_data.sql`: (Optional) Populate the database with sample data for testing.
 
