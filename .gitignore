@@ -58,3 +58,5 @@ build/
 ### VS Code ###
 .vscode/
 
+/.idea/dataSources.xml
+/.idea/sqldialects.xml
