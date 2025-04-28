@@ -1,11 +1,5 @@
 -- =============================================================================
--- CARPOOLING SYSTEM - REFINED QUERIES
--- =============================================================================
--- Notes:
--- - Replace placeholders like :placeholder_name with actual values during execution.
--- - Assumes sequences (e.g., seq_person, seq_trip) exist for primary key generation.
--- - :audit_log_id represents the ID of the AuditLog entry for the specific transaction being performed.
---   A new AuditLog entry should be created for each insert/update operation.
+-- CARPOOLING SYSTEM
 -- =============================================================================
 
 -- =============================================================================
@@ -45,10 +39,11 @@ INSERT INTO Credential (id, isActive, numberOfCredential, idPerson, idAuditLog)
 VALUES(seq_credential.nextval, 1, :id_card_number, :new_person_id, :audit_log_id); -- Assuming id_card_number is the credential. Adjust 'type' via CredentialHasTypeOfCredential if needed.
 
 -- Step 1.8: Assign Role(s) - Driver / Passenger (based on registration choice)
--- Example: Register as Passenger
+-- Register as Passenger
 INSERT INTO Passenger (idPerson, idAuditLog) VALUES (:new_person_id, :audit_log_id);
--- Example: Register as Driver (conditional on registration form)
--- INSERT INTO Driver (idPerson, idAuditLog) VALUES (:new_person_id, :audit_log_id);
+
+-- Register as Driver (conditional on registration form)
+INSERT INTO Driver (idPerson, idAuditLog) VALUES (:new_person_id, :audit_log_id);
 
 -- 2. Get User Profile Details (by Username)
 SELECT
@@ -125,7 +120,6 @@ WHERE idPerson = :person_id; -- Assumes Credential link represents account activ
 -- =============================================================================
 
 -- 10. Register Person as a Driver (Assign role if not done at registration)
--- Note: Check if already a driver before inserting to avoid errors.
 INSERT INTO Driver (idPerson, idAuditLog)
 SELECT :person_id, :audit_log_id
 FROM dual
@@ -169,9 +163,6 @@ WHERE id = :vehicle_id;
 DELETE FROM Vehicle
 WHERE id = :vehicle_id
   AND idDriver = :driver_person_id;
--- Note: Consider implications if the vehicle is associated with active/future trips.
--- A check constraint or business logic might prevent deletion in such cases.
-
 
 -- =============================================================================
 -- III. TRIP CREATION & SEARCH
@@ -182,20 +173,11 @@ WHERE id = :vehicle_id
 INSERT INTO Trip (id, maximunPassengers, departureDateTime, durationEstimate, arrivalDateTime, idDriver, idPriceStatus, idVehicle, idAuditLog)
 VALUES (seq_trip.nextval, :max_passengers, :departure_ts, :duration_minutes, :arrival_ts, :driver_person_id, :price_status_id, :vehicle_id, :audit_log_id)
 RETURNING id INTO :new_trip_id;
--- Note: Ensure :vehicle_id belongs to :driver_person_id and is verified (Business Layer check).
--- Note: :price_status_id determines if costs apply (e.g., ID for 'Free' or 'Priced').
 
--- Step 17.2: Add Stops to the Trip Route (Repeat for each stop in sequence)
--- Important: The 'Stop' entity represents a location; TripHasStop defines its role in a specific trip.
--- You'll likely need to find existing Stop ID by District/Address OR create a new Stop record first if it doesn't exist.
--- Assuming :stop_id exists (or was just created using a separate 'GetOrCreateStop' logic):
 INSERT INTO TripHasStop (idTrip, idStop, estimatedArrival, stopCost, numberStop, idAuditLog)
 VALUES (:new_trip_id, :stop_id, :estimated_arrival_dt, :stop_cost, :stop_number, :audit_log_id);
--- Note on stopCost: Represents the cost *from origin to this stop* per passenger if trip is priced. Zero if free.
--- stop_number: Sequential integer (0 = origin, 1 = first intermediate stop, etc.)
 
 -- 18. Find Available Trips for Passengers
--- Example: Search by Origin District, Destination District, and Departure Time
 SELECT
     t.id AS trip_id,
     t.departureDateTime,
@@ -224,7 +206,6 @@ WHERE
   AND dest_stop.idDistrict = :destination_district_id
   AND t.departureDateTime > :min_departure_time
   AND p_driver.idInstitution = p_potential_passenger.idInstitution -- Crucial check from PDF Requirements (d)
-  -- Ensure Trip is in a bookable state (e.g., 'Scheduled' or 'Accepting Passengers')
   AND EXISTS (
     SELECT 1
     FROM TripHasTripStatus thts_stat
@@ -237,7 +218,6 @@ GROUP BY
     t.id, t.departureDateTime, t.arrivalDateTime, t.maximunPassengers, origin_stop.address, p.firstName, v.brand, v.carModel
 HAVING (t.maximunPassengers - COUNT(DISTINCT pjt.idUser)) > 0 -- Only show trips with space
 ORDER BY t.departureDateTime;
--- Note: This query assumes searching_passenger_person_id is provided for institution check. Performance optimization (indexes) is critical.
 
 -- =============================================================================
 -- IV. VIEWING & JOINING TRIPS
@@ -280,19 +260,15 @@ SELECT
     pu.id AS user_id, pu.username,
     p.firstName, p.firstSurname,
     pjt.joinDate
--- Add pickup/dropoff stop info here if relationship is added to schema
 FROM PassengerJoinTrip pjt
          JOIN PERSONALUSER pu ON pjt.idUser = pu.id
          JOIN Person p ON pu.idPerson = p.id
 WHERE pjt.idTrip = :trip_id;
 
 -- 20. Passenger Joins a Trip
--- Note: PDF requires specifying pickup point - the current schema doesn't directly support linking a passenger to a *specific stop* on join.
--- This requires schema modification (e.g., adding idPickupStop to PassengerJoinTrip).
--- This query performs the join if space is available, but lacks pickup point specification.
 INSERT INTO PassengerJoinTrip (idUser, idTrip, joinDate, idAuditLog)
 SELECT :passenger_user_id, :trip_id, SYSDATE, :audit_log_id
-FROM DUAL -- Use FROM (VALUES (1)) or similar for other SQL dialects
+FROM DUAL
 WHERE ( -- Check 1: Seats available
           SELECT COUNT(*) FROM PassengerJoinTrip WHERE idTrip = :trip_id
       ) < (
@@ -310,7 +286,6 @@ WHERE ( -- Check 1: Seats available
 -- 21. Passenger Leaves a Trip (Cancels Booking)
 DELETE FROM PassengerJoinTrip
 WHERE idUser = :passenger_user_id AND idTrip = :trip_id;
--- Create an AuditLog entry specifically for this cancellation action.
 
 -- 22. Get Trips Currently Joined by a Specific Passenger
 SELECT
@@ -338,11 +313,9 @@ SET
     departureDateTime = :new_departure_ts,
     arrivalDateTime = :new_arrival_ts,
     maximunPassengers = :new_max_passengers,
-    -- idVehicle = :new_vehicle_id, -- Consider if vehicle change is allowed/needs validation
     idAuditLog = :audit_log_id
 WHERE id = :trip_id
   AND idDriver = :driver_person_id;
--- Add check: This update should only be allowed if the trip status is appropriate (e.g., 'Scheduled').
 
 -- 24. Add/Update Trip Status History (e.g., Scheduled -> Started -> Completed/Cancelled)
 INSERT INTO TripHasTripStatus (idTrip, idTripStatus, idAuditLog)
@@ -355,8 +328,6 @@ VALUES (
            (SELECT id FROM TripStatus WHERE status = 'Cancelled'), -- Get the ID for 'Cancelled' status
            :audit_log_id
        );
--- Note: Business logic should handle related actions (e.g., notifying passengers).
-
 
 -- =============================================================================
 -- VI. LOCATION & INSTITUTION LOOKUPS
@@ -369,7 +340,6 @@ SELECT id, institutionName, emailDomain FROM Institution ORDER BY institutionNam
 SELECT id, emailDomain, institutionName, website
 FROM Institution
 WHERE id = :institution_id;
--- For contact info, separate queries or aggregation needed if multiple exist per institution
 
 -- 28. Get Countries
 SELECT id, name FROM Country ORDER BY name;
@@ -385,10 +355,8 @@ SELECT id, name FROM District WHERE idCanton = :canton_id ORDER BY name;
 
 
 -- =============================================================================
--- VII. GENERAL REPORTS & STATISTICS (Based on PDF Section 5 & 8)
+-- VII. GENERAL REPORTS & STATISTICS
 -- =============================================================================
--- Note: These queries require implementation based on the specific requirements.
--- The COUNT(*) requirement (PDF 5g) can often be met using Analytic Functions like COUNT(*) OVER() or separate COUNT queries.
 
 -- 32. [REPORT] Top 5 Drivers (Most Trips Completed/Driven)
 -- Placeholder - Requires logic: Count completed Trips per driver.
@@ -397,13 +365,11 @@ FROM Trip t
          JOIN Person p ON t.idDriver = p.id
          JOIN TripHasTripStatus thts ON t.id = thts.idTrip
          JOIN TripStatus ts ON thts.idTripStatus = ts.id AND ts.status = 'Completed' -- Assuming 'Completed' status exists
--- Optional: Add date filters on t.departureDateTime
 GROUP BY p.id, p.firstName, p.firstSurname
 ORDER BY trips_driven DESC
     FETCH FIRST 5 ROWS ONLY;
 
 -- 33. [REPORT] Top 5 Most Frequent Stops (Date Range)
--- Placeholder - Requires logic: Count occurrences of idStop in TripHasStop within a date range.
 SELECT s.address, d.name AS district, COUNT(*) AS frequency
 FROM TripHasStop ths
          JOIN Stop s ON ths.idStop = s.id
@@ -415,35 +381,27 @@ ORDER BY frequency DESC
     FETCH FIRST 5 ROWS ONLY;
 
 -- 34. [REPORT] Top 5 Most Active Passengers (Most Trips Joined)
--- Placeholder - Requires logic: Count trips joined per passenger user.
 SELECT pu.username, p.firstName, p.firstSurname, COUNT(pjt.idTrip) AS trips_joined
 FROM PassengerJoinTrip pjt
          JOIN PERSONALUSER pu ON pjt.idUser = pu.id
          JOIN Person p ON pu.idPerson = p.id
--- Optional: Filter by trip status ('Completed'?) or date range
 GROUP BY pu.id, pu.username, p.firstName, p.firstSurname
 ORDER BY trips_joined DESC
     FETCH FIRST 5 ROWS ONLY;
 
 -- 35. [REPORT] List All Trips Information (Detailed Multi-Trip View)
--- Placeholder - Needs a simplified view of trip data suitable for lists.
--- Combine parts of Query 19 (Trip Details) but select fewer fields and for multiple trips, potentially with filters.
 SELECT t.id AS trip_id, t.departureDateTime,
        p_driver.firstName || ' ' || p_driver.firstSurname AS driver_name,
        v.brand || ' ' || v.carModel AS vehicle,
        (SELECT s.address FROM Stop s JOIN TripHasStop ths_o ON s.id = ths_o.idStop WHERE ths_o.idTrip = t.id AND ths_o.numberStop = 0) AS origin,
        (SELECT s.address FROM Stop s JOIN TripHasStop ths_d ON s.id = ths_d.idStop WHERE ths_d.idTrip = t.id ORDER BY ths_d.numberStop DESC FETCH FIRST 1 ROW ONLY) AS destination,
        (SELECT ts.status FROM TripStatus ts JOIN TripHasTripStatus thts ON ts.id=thts.idTripStatus WHERE thts.idTrip = t.id ORDER BY thts.idAuditLog DESC FETCH FIRST 1 ROW ONLY) AS current_status
--- Add passenger list/count if needed for the report
 FROM Trip t
          JOIN Person p_driver ON t.idDriver = p_driver.id
          JOIN Vehicle v on t.idVehicle = v.id
--- Add relevant WHERE clauses for filtering (e.g., date range, status)
 ORDER BY t.departureDateTime DESC;
 
 -- 36. [REPORT] Average Fare Charged by Drivers
--- Placeholder - Complex due to cost definition. Assuming cost is per *stop* (stopCost in TripHasStop)
--- Example: Average cost of the FINAL stop for trips that are priced.
 SELECT AVG(ths.stopCost) AS average_final_stop_cost
 FROM TripHasStop ths
          JOIN Trip t ON ths.idTrip = t.id
@@ -451,7 +409,6 @@ FROM TripHasStop ths
 WHERE ps.status <> 'Free' -- Only include priced trips
   AND ths.stopCost > 0
   AND ths.numberStop = (SELECT MAX(ths_inner.numberStop) FROM TripHasStop ths_inner WHERE ths_inner.idTrip = ths.idTrip); -- Only consider the last stop
--- Further refinement needed based on exact meaning of stopCost and reporting needs.
 
 -- 37. [REPORT] New User Count (Last 3 Months)
 SELECT COUNT(*) AS new_users_last_3_months
@@ -459,29 +416,25 @@ FROM PERSONALUSER
 WHERE registrationDate >= ADD_MONTHS(SYSDATE, -3);
 
 -- 38. [STATISTIC] Driver Count by Gender & Date Range (uses registration date)
--- Note: Uses PERSONALUSER registration date. Date range applies to *when they registered*.
+-- Uses "PersonalUser" registration date. Date range applies to *when they registered*.
 SELECT g.genderName, COUNT(DISTINCT d.idPerson) AS driver_count
 FROM Driver d
          JOIN Person p ON d.idPerson = p.id
          JOIN Gender g ON p.id = g.idPerson
          JOIN PERSONALUSER pu ON p.id = pu.idPerson
 WHERE pu.registrationDate BETWEEN :start_date AND :end_date
--- Optional: Add institution filter: AND p.idInstitution = :institution_id
 GROUP BY g.genderName;
 
 -- 39. [STATISTIC] Passenger Count by Gender & Date Range (uses registration date)
--- Similar to above, but counts Passengers
 SELECT g.genderName, COUNT(DISTINCT pas.idPerson) AS passenger_count
 FROM Passenger pas
          JOIN Person p ON pas.idPerson = p.id
          JOIN Gender g ON p.id = g.idPerson
          JOIN PERSONALUSER pu ON p.id = pu.idPerson
 WHERE pu.registrationDate BETWEEN :start_date AND :end_date
--- Optional: Add institution filter: AND p.idInstitution = :institution_id
 GROUP BY g.genderName;
 
 -- 40. [STATISTIC] User Count by Age Range & Gender
--- Placeholder - Requires calculating age from birthdate and grouping into defined ranges.
 SELECT
     CASE
         WHEN TRUNC(MONTHS_BETWEEN(SYSDATE, p.birthdate) / 12) BETWEEN 0 AND 18 THEN '0-18'
@@ -495,7 +448,6 @@ SELECT
     COUNT(DISTINCT p.id) AS user_count
 FROM Person p
          JOIN Gender g ON p.id = g.idPerson
--- Add JOIN to PERSONALUSER if only registered users should be counted
 GROUP BY
     CASE
         WHEN TRUNC(MONTHS_BETWEEN(SYSDATE, p.birthdate) / 12) BETWEEN 0 AND 18 THEN '0-18'
@@ -516,7 +468,6 @@ ORDER BY age_range, g.genderName;
 -- 41. Register an Administrator (Assign role)
 INSERT INTO Administrator (idPerson, idAuditLog)
 VALUES (:person_id, :audit_log_id);
--- Note: Ensure the person (:person_id) exists and potentially has specific privileges.
 
 -- 42. Get Basic Administrator Info
 SELECT p.firstName, p.firstSurname, pu.username
@@ -528,7 +479,6 @@ WHERE a.idPerson = :admin_person_id;
 -- 43. Create Daily Report Record (Likely triggered by the background Job)
 INSERT INTO DailyReport (id, reportType, idInstitution, idAuditLog)
 VALUES (seq_dailyreport.nextval, :report_type, :institution_id, :audit_log_id);
--- Link this record to specific trip data possibly via TripReportDailyReport table.
 
 -- 44. Query LogBook Entries (Filtered Example)
 SELECT lb.id, lb.logDate, lb.logTime, lb.description, al.createdBy
@@ -559,5 +509,5 @@ SELECT name, value FROM Parameter ORDER BY name;
 UPDATE Parameter SET value = :new_value, idAuditLog = :audit_log_id WHERE name = :parameter_name;
 
 -- =============================================================================
--- END OF REFINED QUERIES
+-- END OF QUERIES
 -- =============================================================================
