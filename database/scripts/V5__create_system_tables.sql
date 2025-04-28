@@ -1,1239 +1,522 @@
-DECLARE
-    v_table_exists NUMBER;
-BEGIN
-    SELECT COUNT(*)
-    INTO v_table_exists
-    FROM user_tables
-    WHERE table_name = 'DAILYREPORT';
+-- Creating table DAILYREPORT
+CREATE TABLE DailyReport (
+                             id            NUMBER,
+                             reportType    VARCHAR2(100) CONSTRAINT nn_DailyReport_reportType NOT NULL,
+                             idInstitution NUMBER        CONSTRAINT nn_DailyReport_idInstitution NOT NULL,
+                             idAuditLog    NUMBER        CONSTRAINT nn_DailyReport_idAuditLog NOT NULL,
+                             CONSTRAINT pk_dailyreport PRIMARY KEY (id)
+                                 USING INDEX TABLESPACE CARPOOLING_INDX
+)
+    TABLESPACE CARPOOLING_DATA;
 
-    IF v_table_exists = 0 THEN
-        EXECUTE IMMEDIATE '
-        CREATE TABLE DailyReport (
-                                     id          NUMBER,
-                                     reportType  VARCHAR2(100),
+-- Creating table INSTITUTION
+CREATE TABLE Institution (
+                             id                NUMBER,
+                             emailDomain       VARCHAR2(100) CONSTRAINT nn_Institution_emaildomain NOT NULL,
+                             institutionName   VARCHAR2(255) CONSTRAINT nn_Institution_institutionname NOT NULL,
+                             website           VARCHAR2(512),
+                             idAuditLog        NUMBER        CONSTRAINT nn_Institution_idAuditLog NOT NULL,
+                             CONSTRAINT pk_Institution_id PRIMARY KEY (id)
+                                 USING INDEX TABLESPACE CARPOOLING_INDX,
+                             CONSTRAINT uk_Institution_emaildomain UNIQUE (emailDomain)
+                                 USING INDEX TABLESPACE CARPOOLING_INDX
+)
+    TABLESPACE CARPOOLING_DATA;
 
-                                     CONSTRAINT pk_dailyreport PRIMARY KEY (id)
-                                         USING INDEX TABLESPACE CARPOOLING_INDX,
-                                     CONSTRAINT nn_DailyReport_reportType CHECK (reportType IS NOT NULL)
-        )
-        TABLESPACE CARPOOLING_DATA';
-
-        DBMS_OUTPUT.PUT_LINE('Created table DAILYREPORT.');
-    ELSE
-        DBMS_OUTPUT.PUT_LINE('Table DAILYREPORT already existed.');
-    END IF;
-END;
-/
-
-DECLARE
-    v_table_exists NUMBER;
-BEGIN
-    SELECT COUNT(*)
-    INTO v_table_exists
-    FROM user_tables
-    WHERE table_name = 'INSTITUTION';
-
-    IF v_table_exists = 0 THEN
-        EXECUTE IMMEDIATE '
-        CREATE TABLE Institution (
-                                     id                NUMBER,
-                                     emailDomain       VARCHAR2(100),
-                                     institutionName   VARCHAR2(255),
-                                     website           VARCHAR2(512),
-
-                                     CONSTRAINT pk_Institution_id PRIMARY KEY (id)
-                                         USING INDEX TABLESPACE CARPOOLING_INDX,
-                                     CONSTRAINT uk_Institution_emaildomain UNIQUE (emailDomain)
-                                         USING INDEX TABLESPACE CARPOOLING_INDX,
-                                     CONSTRAINT nn_Institution_emaildomain CHECK (emailDomain IS NOT NULL),
-                                     CONSTRAINT nn_Institution_institutionname CHECK (institutionName IS NOT NULL)
-
-        )
-        TABLESPACE CARPOOLING_DATA';
-
-        DBMS_OUTPUT.PUT_LINE('Created table INSTITUTION.');
-    ELSE
-        DBMS_OUTPUT.PUT_LINE('Table INSTITUTION already existed.');
-    END IF;
-END;
-/
-
-DECLARE
-    v_table_exists NUMBER;
-BEGIN
-    SELECT COUNT(*)
-    INTO v_table_exists
-    FROM user_tables
-    WHERE table_name = 'CONTACTPHONENUMBER';
-
-    IF v_table_exists = 0 THEN
-        EXECUTE IMMEDIATE '
-        CREATE TABLE ContactPhoneNumber (
-                                            id     NUMBER,
-                                            phoneNumber VARCHAR2(20),
-
-                                            CONSTRAINT pk_ContactPhoneNumber PRIMARY KEY (id)
-                                                USING INDEX TABLESPACE CARPOOLING_INDX,
-                                            CONSTRAINT nn_ContactPhoneNumber_number CHECK (phoneNumber IS NOT NULL)
-            )
-        TABLESPACE CARPOOLING_DATA';
-
-        DBMS_OUTPUT.PUT_LINE('Created table CONTACTPHONENUMBER.');
-    ELSE
-        DBMS_OUTPUT.PUT_LINE('Table CONTACTPHONENUMBER already existed.');
-    END IF;
-END;
-/
-
-DECLARE
-    v_table_exists NUMBER;
-BEGIN
-    SELECT COUNT(*)
-    INTO v_table_exists
-    FROM user_tables
-    WHERE table_name = 'CONTACTEMAIL';
-
-    IF v_table_exists = 0 THEN
-        EXECUTE IMMEDIATE '
-        CREATE TABLE ContactEmail (
-                                      id      NUMBER,
-                                      address VARCHAR2(255),
-
-                                      CONSTRAINT pk_ContactEmail PRIMARY KEY (id)
-                                          USING INDEX TABLESPACE CARPOOLING_INDX,
-                                      CONSTRAINT nn_ContactEmail_address CHECK (address IS NOT NULL)
-        )
-            TABLESPACE CARPOOLING_DATA';
-
-        DBMS_OUTPUT.PUT_LINE('Created table CONTACTEMAIL.');
-    ELSE
-        DBMS_OUTPUT.PUT_LINE('Table CONTACTEMAIL already existed.');
-    END IF;
-END;
-/
-
-DECLARE
-    v_table_exists NUMBER;
-BEGIN
-    SELECT COUNT(*)
-    INTO v_table_exists
-    FROM user_tables
-    WHERE table_name = 'PERSON';
-
-    IF v_table_exists = 0 THEN
-        EXECUTE IMMEDIATE '
-        CREATE TABLE Person (
-                                id             NUMBER,
-                                firstName      VARCHAR2(100),
-                                secondName     VARCHAR2(100),
-                                firstSurname   VARCHAR2(100),
-                                secondSurname  VARCHAR2(100),
-                                birthdate      DATE,
-                                profilePicture BLOB,
-
-                                CONSTRAINT pk_Person PRIMARY KEY (id)
-                                    USING INDEX TABLESPACE CARPOOLING_INDX,
-                                CONSTRAINT nn_Person_firstName CHECK (firstName IS NOT NULL),
-                                CONSTRAINT nn_Person_firstSurname CHECK (firstSurname IS NOT NULL),
-                                CONSTRAINT nn_Person_birthdate CHECK (birthdate IS NOT NULL)
-        )
-            TABLESPACE CARPOOLING_DATA';
-
-        DBMS_OUTPUT.PUT_LINE('Created table PERSON.');
-    ELSE
-        DBMS_OUTPUT.PUT_LINE('Table PERSON already existed.');
-    END IF;
-END;
-/
-
-DECLARE
-    v_table_exists NUMBER;
-BEGIN
-    SELECT COUNT(*)
-    INTO v_table_exists
-    FROM user_tables
-    WHERE table_name = 'PHONENUMBER';
-
-    IF v_table_exists = 0 THEN
-        EXECUTE IMMEDIATE '
-        CREATE TABLE PhoneNumber (
-                                     id     NUMBER,
-                                     phoneNumber VARCHAR2(20),
-
-                                     CONSTRAINT pk_PhoneNumber PRIMARY KEY (id)
-                                         USING INDEX TABLESPACE CARPOOLING_INDX,
-                                     CONSTRAINT nn_PhoneNumber_number CHECK (phoneNumber IS NOT NULL)
-            )
-        TABLESPACE CARPOOLING_DATA';
-
-        DBMS_OUTPUT.PUT_LINE('Created table PHONENUMBER.');
-    ELSE
-        DBMS_OUTPUT.PUT_LINE('Table PHONENUMBER already existed.');
-    END IF;
-END;
-/
-
-DECLARE
-    v_table_exists NUMBER;
-BEGIN
-    SELECT COUNT(*)
-    INTO v_table_exists
-    FROM user_tables
-    WHERE table_name = 'EMAIL';
-
-    IF v_table_exists = 0 THEN
-        EXECUTE IMMEDIATE '
-        CREATE TABLE Email (
-                               id      NUMBER,
-                               address VARCHAR2(255),
-
-                               CONSTRAINT pk_Email PRIMARY KEY (id)
-                                   USING INDEX TABLESPACE CARPOOLING_INDX,
-                               CONSTRAINT nn_Email_address CHECK (address IS NOT NULL)
-        )
-            TABLESPACE CARPOOLING_DATA';
-
-        DBMS_OUTPUT.PUT_LINE('Created table EMAIL.');
-    ELSE
-        DBMS_OUTPUT.PUT_LINE('Table EMAIL already existed.');
-    END IF;
-END;
-/
-
-DECLARE
-    v_table_exists NUMBER;
-BEGIN
-    SELECT COUNT(*)
-    INTO v_table_exists
-    FROM user_tables
-    WHERE table_name = 'CREDENTIAL';
-
-    IF v_table_exists = 0 THEN
-        EXECUTE IMMEDIATE '
-        CREATE TABLE Credential (
-                                    id                 NUMBER,
-                                    isActive           NUMBER(1),
-                                    numberOfCredential VARCHAR2(255),
-
-                                    CONSTRAINT pk_Credential PRIMARY KEY (id)
-                                        USING INDEX TABLESPACE CARPOOLING_INDX,
-                                    CONSTRAINT nn_Credential_isActive CHECK (isActive IS NOT NULL),
-                                    CONSTRAINT ck_Credential_isActive CHECK (isActive IN (0, 1)),
-                                    CONSTRAINT nn_Credential_numCredential CHECK (numberOfCredential IS NOT NULL)
-        )
-            TABLESPACE CARPOOLING_DATA';
-
-        DBMS_OUTPUT.PUT_LINE('Created table CREDENTIAL.');
-    ELSE
-        DBMS_OUTPUT.PUT_LINE('Table CREDENTIAL already existed.');
-    END IF;
-END;
-/
-
-DECLARE
-    v_table_exists NUMBER;
-BEGIN
-    SELECT COUNT(*)
-    INTO v_table_exists
-    FROM user_tables
-    WHERE table_name = 'TYPEOFCREDENTIAL';
-
-    IF v_table_exists = 0 THEN
-        EXECUTE IMMEDIATE '
-        CREATE TABLE TypeOfCredential (
-                                          id        NUMBER,
-                                          nationalId VARCHAR2(255),
-                                          dimex     VARCHAR2(255),
-                                          nite      VARCHAR2(255),
-                                          passport  VARCHAR2(255),
-
-                                          CONSTRAINT pk_TypeOfCredential PRIMARY KEY (id)
-                                              USING INDEX TABLESPACE CARPOOLING_INDX
-        )
-            TABLESPACE CARPOOLING_DATA';
-
-        DBMS_OUTPUT.PUT_LINE('Created table TYPEOFCREDENTIAL.');
-    ELSE
-        DBMS_OUTPUT.PUT_LINE('Table TYPEOFCREDENTIAL already existed.');
-    END IF;
-END;
-/
-
-DECLARE
-    v_table_exists NUMBER;
-BEGIN
-    SELECT COUNT(*)
-    INTO v_table_exists
-    FROM user_tables
-    WHERE table_name = 'GENDER';
-
-    IF v_table_exists = 0 THEN
-        EXECUTE IMMEDIATE '
-        CREATE TABLE Gender (
-                                id          NUMBER,
-                                isMale      NUMBER(1),
-                                isFemale    NUMBER(1),
-                                isNonBinary NUMBER(1),
-                                description VARCHAR2(255),
-
-                                CONSTRAINT pk_Gender PRIMARY KEY (id)
-                                    USING INDEX TABLESPACE CARPOOLING_INDX
-        )
-            TABLESPACE CARPOOLING_DATA';
-
-        DBMS_OUTPUT.PUT_LINE('Created table GENDER.');
-    ELSE
-        DBMS_OUTPUT.PUT_LINE('Table GENDER already existed.');
-    END IF;
-END;
-/
-
-DECLARE
-    v_table_exists NUMBER;
-BEGIN
-    SELECT COUNT(*)
-    INTO v_table_exists
-    FROM user_tables
-    WHERE table_name = 'ENDUSER';
-
-    IF v_table_exists = 0 THEN
-        EXECUTE IMMEDIATE '
-        CREATE TABLE ENDUSER (
-                                 id             NUMBER,
-                                 password       VARCHAR2(255),
-                                 username       VARCHAR2(100),
-                                 isVerified     NUMBER(1),
-                                 registrationDate DATE,
-
-                                 CONSTRAINT pk_ENDUSER PRIMARY KEY (id)
-                                     USING INDEX TABLESPACE CARPOOLING_INDX,
-                                 CONSTRAINT uk_ENDUSER_username UNIQUE (username)
-                                     USING INDEX TABLESPACE CARPOOLING_INDX,
-                                 CONSTRAINT nn_ENDUSER_password CHECK (password IS NOT NULL),
-                                 CONSTRAINT nn_ENDUSER_username CHECK (username IS NOT NULL),
-                                 CONSTRAINT nn_ENDUSER_isVerified CHECK (isVerified IS NOT NULL),
-                                 CONSTRAINT nn_ENDUSER_registrationDate CHECK (registrationDate IS NOT NULL)
-        )
-            TABLESPACE CARPOOLING_DATA';
-
-        DBMS_OUTPUT.PUT_LINE('Created table ENDUSER.');
-    ELSE
-        DBMS_OUTPUT.PUT_LINE('Table ENDUSER already existed.');
-    END IF;
-END;
-/
-
-DECLARE
-    v_table_exists NUMBER;
-BEGIN
-    SELECT COUNT(*)
-    INTO v_table_exists
-    FROM user_tables
-    WHERE table_name = 'VEHICLE';
-
-    IF v_table_exists = 0 THEN
-        EXECUTE IMMEDIATE '
-        CREATE TABLE Vehicle (
-                                 id            NUMBER,
-                                 isVerified    NUMBER(1),
-                                 brand         VARCHAR2(100),
-                                 carPhoto      BLOB,
-                                 plateNumber   VARCHAR2(20),
-                                 carModel      VARCHAR2(100),
-                                 seatQuantity  NUMBER,
-
-                                 CONSTRAINT pk_Vehicle PRIMARY KEY (id)
-                                     USING INDEX TABLESPACE CARPOOLING_INDX,
-                                 CONSTRAINT nn_Vehicle_isVerified CHECK (isVerified IS NOT NULL),
-                                 CONSTRAINT nn_Vehicle_brand CHECK (brand IS NOT NULL),
-                                 CONSTRAINT nn_Vehicle_plateNumber CHECK (plateNumber IS NOT NULL),
-                                 CONSTRAINT uk_Vehicle_plateNumber UNIQUE (plateNumber)
-                                     USING INDEX TABLESPACE CARPOOLING_INDX,
-                                 CONSTRAINT nn_Vehicle_carModel CHECK (carModel IS NOT NULL),
-                                 CONSTRAINT nn_Vehicle_seatQuantity CHECK (seatQuantity IS NOT NULL)
-        )
-            TABLESPACE CARPOOLING_DATA';
-
-        DBMS_OUTPUT.PUT_LINE('Created table VEHICLE.');
-    ELSE
-        DBMS_OUTPUT.PUT_LINE('Table VEHICLE already existed.');
-    END IF;
-END;
-/
-
-DECLARE
-    v_table_exists NUMBER;
-BEGIN
-    SELECT COUNT(*)
-    INTO v_table_exists
-    FROM user_tables
-    WHERE table_name = 'TRIP';
-
-    IF v_table_exists = 0 THEN
-        EXECUTE IMMEDIATE '
-        CREATE TABLE Trip (
-                              id                 NUMBER,
-                              maximunPassangers  NUMBER,
-                              departureDateTime  TIMESTAMP,
-                              durationEstimate   NUMBER,
-                              arrivalDateTime    TIMESTAMP,
-                              status             VARCHAR2(50),
-
-                              CONSTRAINT pk_Trip PRIMARY KEY (id)
-                                  USING INDEX TABLESPACE CARPOOLING_INDX,
-                              CONSTRAINT nn_Trip_maximunPassangers CHECK (maximunPassangers IS NOT NULL),
-                              CONSTRAINT ck_Trip_maximunPassangers CHECK (maximunPassangers > 0),
-                              CONSTRAINT nn_Trip_departureDateTime CHECK (departureDateTime IS NOT NULL),
-                              CONSTRAINT nn_Trip_durationEstimate CHECK (durationEstimate IS NOT NULL),
-                              CONSTRAINT ck_Trip_durationEstimate CHECK (durationEstimate > 0),
-                              CONSTRAINT nn_Trip_arrivalDateTime CHECK (arrivalDateTime IS NOT NULL),
-                              CONSTRAINT ck_Trip_arrivalDateTime CHECK (arrivalDateTime > departureDateTime),
-                              CONSTRAINT nn_Trip_status CHECK (status IS NOT NULL)
-        )
-            TABLESPACE CARPOOLING_DATA';
-
-        DBMS_OUTPUT.PUT_LINE('Created table TRIP.');
-    ELSE
-        DBMS_OUTPUT.PUT_LINE('Table TRIP already existed.');
-    END IF;
-END;
-/
-
-DECLARE
-    v_table_exists NUMBER;
-BEGIN
-    SELECT COUNT(*)
-    INTO v_table_exists
-    FROM user_tables
-    WHERE table_name = 'PRICE';
-
-    IF v_table_exists = 0 THEN
-        EXECUTE IMMEDIATE '
-        CREATE TABLE Price (
-                               id               NUMBER,
-                               isFixed          NUMBER(1),
-                               isFree           NUMBER(1),
-                               isCustomPerStop  NUMBER(1),
-                               priceAmount      NUMBER,
-                               currency         VARCHAR2(3),
-                               description      VARCHAR2(255),
-
-                               CONSTRAINT pk_Price PRIMARY KEY (id)
-                                   USING INDEX TABLESPACE CARPOOLING_INDX
-        )
-            TABLESPACE CARPOOLING_DATA';
-
-        DBMS_OUTPUT.PUT_LINE('Created table PRICE.');
-    ELSE
-        DBMS_OUTPUT.PUT_LINE('Table PRICE already existed.');
-    END IF;
-END;
-/
-
-DECLARE
-    v_table_exists NUMBER;
-BEGIN
-    SELECT COUNT(*)
-    INTO v_table_exists
-    FROM user_tables
-    WHERE table_name = 'TRIPSTATUS';
-
-    IF v_table_exists = 0 THEN
-        EXECUTE IMMEDIATE '
-        CREATE TABLE TripStatus (
-                                    id          NUMBER,
-                                    isPending   NUMBER(1),
-                                    isOngoing   NUMBER(1),
-                                    isCancelled NUMBER(1),
-                                    isFinished  NUMBER(1),
-                                    description VARCHAR2(255),
-
-                                    CONSTRAINT pk_TripStatus PRIMARY KEY (id)
+-- Creating table CONTACTPHONENUMBER
+CREATE TABLE CONTACTPHONENUMBER (
+                                    id            NUMBER,
+                                    phoneNumber   VARCHAR2(20) CONSTRAINT nn_CPNumber_number NOT NULL,
+                                    idInstitution NUMBER       CONSTRAINT nn_CPNumber_idInstitution NOT NULL,
+                                    idAuditLog    NUMBER       CONSTRAINT nn_CPNumber_idAuditLog NOT NULL,
+                                    CONSTRAINT pk_ContactNumber PRIMARY KEY (id)
                                         USING INDEX TABLESPACE CARPOOLING_INDX
-        )
-            TABLESPACE CARPOOLING_DATA';
+)
+    TABLESPACE CARPOOLING_DATA;
 
-        DBMS_OUTPUT.PUT_LINE('Created table TRIPSTATUS.');
-    ELSE
-        DBMS_OUTPUT.PUT_LINE('Table TRIPSTATUS already existed.');
-    END IF;
-END;
-/
+-- Creating table CONTACTEMAIL
+CREATE TABLE ContactEmail (
+                              id            NUMBER,
+                              address       VARCHAR2(255) CONSTRAINT nn_ContactEmail_address NOT NULL,
+                              idInstitution NUMBER        CONSTRAINT nn_ContactEmail_idInstitution NOT NULL,
+                              idAuditLog    NUMBER        CONSTRAINT nn_ContactEmail_idAuditLog NOT NULL,
+                              CONSTRAINT pk_ContactEmail PRIMARY KEY (id)
+                                  USING INDEX TABLESPACE CARPOOLING_INDX
+)
+    TABLESPACE CARPOOLING_DATA;
 
-DECLARE
-    v_table_exists NUMBER;
-BEGIN
-    SELECT COUNT(*)
-    INTO v_table_exists
-    FROM user_tables
-    WHERE table_name = 'STOP';
+-- Creating table ADMINISTRATOR
+CREATE TABLE Administrator (
+                               idPerson   NUMBER,
+                               idAuditLog NUMBER CONSTRAINT nn_Administrator_idAuditLog NOT NULL,
+                               CONSTRAINT pk_administrator PRIMARY KEY (idPerson)
+                                   USING INDEX TABLESPACE CARPOOLING_INDX
+)
+    TABLESPACE CARPOOLING_DATA;
 
-    IF v_table_exists = 0 THEN
-        EXECUTE IMMEDIATE '
-        CREATE TABLE Stop (
-                              id      NUMBER,
-                              address VARCHAR2(255),
-                              latitude NUMBER,
-                              longitude NUMBER,
+-- Creating table ACCESSSTATUS
+CREATE TABLE ACCESSSTATUS (
+                              id              NUMBER,
+                              status          VARCHAR2(50) CONSTRAINT nn_accessSts_status NOT NULL,
+                              idAdministrator NUMBER       CONSTRAINT nn_accessSts_idAdministrator NOT NULL,
+                              idAuditLog      NUMBER       CONSTRAINT nn_accessSts_idAuditLog NOT NULL,
+                              CONSTRAINT pk_accessStatus PRIMARY KEY (id)
+                                  USING INDEX TABLESPACE CARPOOLING_INDX
+)
+    TABLESPACE CARPOOLING_DATA;
 
-                              CONSTRAINT pk_Stop PRIMARY KEY (id)
+-- Creating table PERSON
+CREATE TABLE Person (
+                        id             NUMBER,
+                        firstName      VARCHAR2(100) CONSTRAINT nn_Person_firstName NOT NULL,
+                        secondName     VARCHAR2(100),
+                        firstSurname   VARCHAR2(100) CONSTRAINT nn_Person_firstSurname NOT NULL,
+                        secondSurname  VARCHAR2(100),
+                        birthdate      DATE          CONSTRAINT nn_Person_birthdate NOT NULL,
+                        nationality    VARCHAR2(100) CONSTRAINT nn_Person_nationality NOT NULL,
+                        profilePicture BLOB,
+                        idInstitution  NUMBER        CONSTRAINT nn_Person_idInstitution NOT NULL,
+                        idAuditLog     NUMBER        CONSTRAINT nn_Person_idAuditLog NOT NULL,
+                        CONSTRAINT pk_Person PRIMARY KEY (id)
+                            USING INDEX TABLESPACE CARPOOLING_INDX
+)
+    TABLESPACE CARPOOLING_DATA;
+
+-- Creating table PHONENUMBER
+CREATE TABLE PhoneNumber (
+                             id          NUMBER,
+                             phoneNumber VARCHAR2(20) CONSTRAINT nn_PhoneNumber_number NOT NULL,
+                             idPerson    NUMBER       CONSTRAINT nn_PhoneNumber_idPerson NOT NULL,
+                             idAuditLog  NUMBER       CONSTRAINT nn_PhoneNumber_idAuditLog NOT NULL,
+                             CONSTRAINT pk_PhoneNumber PRIMARY KEY (id)
+                                 USING INDEX TABLESPACE CARPOOLING_INDX
+)
+    TABLESPACE CARPOOLING_DATA;
+
+-- Creating table EMAIL
+CREATE TABLE Email (
+                       id           NUMBER,
+                       emailAddress VARCHAR2(255) CONSTRAINT nn_Email_emailAddress NOT NULL,
+                       idPerson     NUMBER        CONSTRAINT nn_Email_idPerson NOT NULL,
+                       idAuditLog   NUMBER        CONSTRAINT nn_Email_idAuditLog NOT NULL,
+                       CONSTRAINT pk_Email PRIMARY KEY (id)
+                           USING INDEX TABLESPACE CARPOOLING_INDX
+)
+    TABLESPACE CARPOOLING_DATA;
+
+-- Creating table CREDENTIAL
+CREATE TABLE Credential (
+                            id                 NUMBER,
+                            isActive           NUMBER(1)       CONSTRAINT nn_Credential_isActive NOT NULL,
+                            CONSTRAINT ck_Credential_isActive CHECK (isActive IN (0, 1)),
+                            numberOfCredential VARCHAR2(255)   CONSTRAINT nn_Credential_numCredential NOT NULL,
+                            idPerson           NUMBER          CONSTRAINT nn_Credential_idPerson NOT NULL,
+                            idAuditLog         NUMBER          CONSTRAINT nn_Credential_idAuditLog NOT NULL,
+                            CONSTRAINT pk_Credential PRIMARY KEY (id)
+                                USING INDEX TABLESPACE CARPOOLING_INDX
+)
+    TABLESPACE CARPOOLING_DATA;
+
+-- Creating table TYPEOFCREDENTIAL
+CREATE TABLE TypeOfCredential (
+                                  id         NUMBER,
+                                  type       VARCHAR2(50) CONSTRAINT nn_TypeOfCredential_type NOT NULL,
+                                  idAuditLog NUMBER       CONSTRAINT nn_TypeOfCredential_idAuditLog NOT NULL,
+                                  CONSTRAINT pk_TypeOfCredential PRIMARY KEY (id)
+                                      USING INDEX TABLESPACE CARPOOLING_INDX
+)
+    TABLESPACE CARPOOLING_DATA;
+
+-- Creating table GENDER
+CREATE TABLE Gender (
+                        id          NUMBER,
+                        genderName  VARCHAR2(50) CONSTRAINT nn_Gender_genderName NOT NULL,
+                        idPerson    NUMBER       CONSTRAINT nn_Gender_idPerson NOT NULL,
+                        idAuditLog  NUMBER       CONSTRAINT nn_Gender_idAuditLog NOT NULL,
+                        CONSTRAINT pk_Gender PRIMARY KEY (id)
+                            USING INDEX TABLESPACE CARPOOLING_INDX
+)
+    TABLESPACE CARPOOLING_DATA;
+
+-- Creating table PERSONALUSER
+CREATE TABLE PERSONALUSER (
+                              id             NUMBER,
+                              password       VARCHAR2(255) CONSTRAINT nn_USER_password NOT NULL,
+                              username       VARCHAR2(100) CONSTRAINT nn_USER_username NOT NULL,
+                              registrationDate DATE        CONSTRAINT nn_USER_registrationDate NOT NULL,
+                              idPerson       NUMBER        CONSTRAINT nn_USER_idPerson NOT NULL,
+                              idAuditLog     NUMBER        CONSTRAINT nn_USER_idAuditLog NOT NULL,
+                              CONSTRAINT pk_USER PRIMARY KEY (id)
                                   USING INDEX TABLESPACE CARPOOLING_INDX,
-                              CONSTRAINT nn_Stop_address CHECK (address IS NOT NULL),
-                              CONSTRAINT nn_Stop_latitude CHECK (latitude IS NOT NULL),
-                              CONSTRAINT nn_Stop_longitude CHECK (longitude IS NOT NULL)
-        )
-            TABLESPACE CARPOOLING_DATA';
+                              CONSTRAINT uk_USER_username UNIQUE (username)
+                                  USING INDEX TABLESPACE CARPOOLING_INDX
+)
+    TABLESPACE CARPOOLING_DATA;
 
-        DBMS_OUTPUT.PUT_LINE('Created table STOP.');
-    ELSE
-        DBMS_OUTPUT.PUT_LINE('Table STOP already existed.');
-    END IF;
-END;
-/
+-- Creating table USERSTATUS
+CREATE TABLE USERSTATUS (
+                            id             NUMBER,
+                            status         VARCHAR2(50),
+                            idAuditLog     NUMBER       CONSTRAINT nn_UserStatus_idAuditLog NOT NULL,
+                            CONSTRAINT pk_UserStatus PRIMARY KEY (id)
+                                USING INDEX TABLESPACE CARPOOLING_INDX
+)
+    TABLESPACE CARPOOLING_DATA;
 
-DECLARE
-    v_table_exists NUMBER;
-BEGIN
-    SELECT COUNT(*)
-    INTO v_table_exists
-    FROM user_tables
-    WHERE table_name = 'COORDINATELOCATION';
+-- Creating table INSTITUTIONALEMAIL
+CREATE TABLE INSTITUTIONALEMAIL (
+                                    id                NUMBER,
+                                    emailAddress      VARCHAR2(255) CONSTRAINT nn_Institutional_emailAddress NOT NULL,
+                                    idUser            NUMBER        CONSTRAINT nn_Institutional_idPerson NOT NULL,
+                                    idAuditLog        NUMBER        CONSTRAINT nn_Institutional_idAuditLog NOT NULL,
+                                    CONSTRAINT pk_InstitutionalEmail PRIMARY KEY (id)
+                                        USING INDEX TABLESPACE CARPOOLING_INDX
+)
+    TABLESPACE CARPOOLING_DATA;
 
-    IF v_table_exists = 0 THEN
-        EXECUTE IMMEDIATE '
-        CREATE TABLE CoordinateLocation (
-                                            id          NUMBER,
-                                            yCoordinate NUMBER,
-                                            xCoordinate NUMBER,
+-- Creating table DRIVER
+CREATE TABLE Driver (
+                        idPerson   NUMBER,
+                        idAuditLog NUMBER CONSTRAINT nn_Driver_idAuditlog NOT NULL,
+                        CONSTRAINT pk_driver PRIMARY KEY (idPerson)
+                            USING INDEX TABLESPACE CARPOOLING_INDX
+)
+    TABLESPACE CARPOOLING_DATA;
 
-                                            CONSTRAINT pk_CoordinateLocation PRIMARY KEY (id)
-                                                USING INDEX TABLESPACE CARPOOLING_INDX,
-                                            CONSTRAINT nn_yCoordinate CHECK (yCoordinate IS NOT NULL),
-                                            CONSTRAINT nn_xCoordinate CHECK (xCoordinate IS NOT NULL)
-        )
-            TABLESPACE CARPOOLING_DATA';
+-- Creating table VEHICLE
+CREATE TABLE Vehicle (
+                         id            NUMBER,
+                         isVerified    NUMBER(1)      CONSTRAINT nn_Vehicle_isVerified NOT NULL,
+                         CONSTRAINT ck_Vehicle_isVerified CHECK (isVerified IN (0, 1)),
+                         brand         VARCHAR2(100)  CONSTRAINT nn_Vehicle_brand NOT NULL,
+                         carPhoto      BLOB,
+                         plateNumber   VARCHAR2(20)   CONSTRAINT nn_Vehicle_plateNumber NOT NULL,
+                         carModel      VARCHAR2(100)  CONSTRAINT nn_Vehicle_carModel NOT NULL,
+                         seatQuantity  NUMBER         CONSTRAINT nn_Vehicle_seatQuantity NOT NULL,
+                         CONSTRAINT ck_Vehicle_seatQuantity CHECK (seatQuantity > 0),
+                         idDriver      NUMBER         CONSTRAINT nn_Vehicle_idDriver NOT NULL,
+                         idAuditLog    NUMBER         CONSTRAINT nn_Vehicle_idAuditlog NOT NULL,
+                         CONSTRAINT pk_Vehicle PRIMARY KEY (id)
+                             USING INDEX TABLESPACE CARPOOLING_INDX,
+                         CONSTRAINT uk_Vehicle_plateNumber UNIQUE (plateNumber)
+                             USING INDEX TABLESPACE CARPOOLING_INDX
+)
+    TABLESPACE CARPOOLING_DATA;
 
-        DBMS_OUTPUT.PUT_LINE('Created table COORDINATELOCATION.');
-    ELSE
-        DBMS_OUTPUT.PUT_LINE('Table COORDINATELOCATION already existed.');
-    END IF;
-END;
-/
+-- Creating table PASSENGER
+CREATE TABLE Passenger (
+                           idPerson   NUMBER,
+                           idAuditLog NUMBER CONSTRAINT nn_Passenger_auditlog NOT NULL,
+                           CONSTRAINT pk_passenger PRIMARY KEY (idPerson)
+                               USING INDEX TABLESPACE CARPOOLING_INDX
+)
+    TABLESPACE CARPOOLING_DATA;
 
-DECLARE
-    v_table_exists NUMBER;
-BEGIN
-    SELECT COUNT(*)
-    INTO v_table_exists
-    FROM user_tables
-    WHERE table_name = 'DISTRICT';
+-- Creating table TRIP
+CREATE TABLE Trip (
+                      id                 NUMBER,
+                      maximunPassengers  NUMBER          CONSTRAINT nn_Trip_maximunPassengers NOT NULL,
+                      CONSTRAINT ck_Trip_maximunPassengers CHECK (maximunPassengers > 0),
+                      departureDateTime  TIMESTAMP       CONSTRAINT nn_Trip_departureDateTime NOT NULL,
+                      durationEstimate   NUMBER          CONSTRAINT nn_Trip_durationEstimate NOT NULL,
+                      CONSTRAINT ck_Trip_durationEstimate CHECK (durationEstimate > 0),
+                      arrivalDateTime    TIMESTAMP       CONSTRAINT nn_Trip_arrivalDateTime NOT NULL,
+                      idDriver           NUMBER          CONSTRAINT nn_Trip_idDriver NOT NULL,
+                      idPriceStatus      NUMBER,
+                      idVehicle          NUMBER          CONSTRAINT nn_Trip_idVehicle NOT NULL,
+                      idAuditLog         NUMBER          CONSTRAINT nn_Trip_idAuditLog NOT NULL,
+                      CONSTRAINT pk_Trip PRIMARY KEY (id)
+                          USING INDEX TABLESPACE CARPOOLING_INDX,
+                      CONSTRAINT ck_Trip_arrivalDateTime CHECK (arrivalDateTime > departureDateTime)
+)
+    TABLESPACE CARPOOLING_DATA;
 
-    IF v_table_exists = 0 THEN
-        EXECUTE IMMEDIATE '
-        CREATE TABLE District (
-                                  id   NUMBER,
-                                  name VARCHAR2(255),
+-- Creating table PRICESTATUS
+CREATE TABLE PriceStatus (
+                             id               NUMBER,
+                             status           VARCHAR2(50),
+                             idAuditLog       NUMBER       CONSTRAINT nn_PriceStatus_idAuditLog NOT NULL,
+                             CONSTRAINT pk_PriceStatus PRIMARY KEY (id)
+                                 USING INDEX TABLESPACE CARPOOLING_INDX
+)
+    TABLESPACE CARPOOLING_DATA;
 
-                                  CONSTRAINT pk_District PRIMARY KEY (id)
-                                      USING INDEX TABLESPACE CARPOOLING_INDX,
-                                  CONSTRAINT nn_District_name CHECK (name IS NOT NULL)
-        )
-            TABLESPACE CARPOOLING_DATA';
+-- Creating table TRIPSTATUS
+CREATE TABLE TripStatus (
+                            id               NUMBER,
+                            status           VARCHAR2(50),
+                            idAuditLog       NUMBER       CONSTRAINT nn_TripStatus_idAuditLog NOT NULL,
+                            CONSTRAINT pk_TripStatus PRIMARY KEY (id)
+                                USING INDEX TABLESPACE CARPOOLING_INDX
+)
+    TABLESPACE CARPOOLING_DATA;
 
-        DBMS_OUTPUT.PUT_LINE('Created table DISTRICT.');
-    ELSE
-        DBMS_OUTPUT.PUT_LINE('Table DISTRICT already existed.');
-    END IF;
-END;
-/
+-- Creating table STOP
+CREATE TABLE Stop (
+                      id         NUMBER,
+                      address    VARCHAR2(255) CONSTRAINT nn_Stop_address NOT NULL,
+                      idDistrict NUMBER        CONSTRAINT nn_Stop_idDistrict NOT NULL,
+                      idStarTrip NUMBER,
+                      idEndTrip  NUMBER,
+                      idAuditLog NUMBER        CONSTRAINT nn_Stop_idAuditLog NOT NULL,
+                      CONSTRAINT pk_Stop PRIMARY KEY (id)
+                          USING INDEX TABLESPACE CARPOOLING_INDX
+)
+    TABLESPACE CARPOOLING_DATA;
 
-DECLARE
-    v_table_exists NUMBER;
-BEGIN
-    SELECT COUNT(*)
-    INTO v_table_exists
-    FROM user_tables
-    WHERE table_name = 'CANTON';
+-- Creating table COORDINATELOCATION
+CREATE TABLE CoordinateLocation (
+                                    id          NUMBER,
+                                    yCoordinate NUMBER CONSTRAINT nn_yCoordinate NOT NULL,
+                                    xCoordinate NUMBER CONSTRAINT nn_xCoordinate NOT NULL,
+                                    idAuditLog  NUMBER CONSTRAINT nn_Coordinates_idAuditLog NOT NULL,
+                                    CONSTRAINT pk_CoordinateLocation PRIMARY KEY (id)
+                                        USING INDEX TABLESPACE CARPOOLING_INDX
+)
+    TABLESPACE CARPOOLING_DATA;
 
-    IF v_table_exists = 0 THEN
-        EXECUTE IMMEDIATE '
-        CREATE TABLE Canton (
-                                id   NUMBER,
-                                name VARCHAR2(255),
+-- Creating table DISTRICT
+CREATE TABLE District (
+                          id         NUMBER,
+                          name       VARCHAR2(255) CONSTRAINT nn_District_name NOT NULL,
+                          idCanton   NUMBER        CONSTRAINT nn_District_idCanton NOT NULL,
+                          idAuditLog NUMBER        CONSTRAINT nn_District_idAuditLog NOT NULL,
+                          CONSTRAINT pk_District PRIMARY KEY (id)
+                              USING INDEX TABLESPACE CARPOOLING_INDX
+)
+    TABLESPACE CARPOOLING_DATA;
 
-                                CONSTRAINT pk_Canton PRIMARY KEY (id)
-                                    USING INDEX TABLESPACE CARPOOLING_INDX,
-                                CONSTRAINT nn_Canton_name CHECK (name IS NOT NULL)
-        )
-            TABLESPACE CARPOOLING_DATA';
+-- Creating table CANTON
+CREATE TABLE Canton (
+                        id         NUMBER,
+                        name       VARCHAR2(255) CONSTRAINT nn_Canton_name NOT NULL,
+                        idProvince NUMBER        CONSTRAINT nn_Canton_idProvince NOT NULL,
+                        idAuditLog NUMBER        CONSTRAINT nn_Canton_idAuditLog NOT NULL,
+                        CONSTRAINT pk_Canton PRIMARY KEY (id)
+                            USING INDEX TABLESPACE CARPOOLING_INDX
+)
+    TABLESPACE CARPOOLING_DATA;
 
-        DBMS_OUTPUT.PUT_LINE('Created table CANTON.');
-    ELSE
-        DBMS_OUTPUT.PUT_LINE('Table CANTON already existed.');
-    END IF;
-END;
-/
+-- Creating table PROVINCE
+CREATE TABLE Province (
+                          id         NUMBER,
+                          name       VARCHAR2(255) CONSTRAINT nn_Province_name NOT NULL,
+                          idCountry  NUMBER        CONSTRAINT nn_Province_idCountry NOT NULL,
+                          idAuditLog NUMBER        CONSTRAINT nn_Province_idAuditLog NOT NULL,
+                          CONSTRAINT pk_Province PRIMARY KEY (id)
+                              USING INDEX TABLESPACE CARPOOLING_INDX
+)
+    TABLESPACE CARPOOLING_DATA;
 
-DECLARE
-    v_table_exists NUMBER;
-BEGIN
-    SELECT COUNT(*)
-    INTO v_table_exists
-    FROM user_tables
-    WHERE table_name = 'PROVINCE';
+-- Creating table COUNTRY
+CREATE TABLE Country (
+                         id         NUMBER,
+                         name       VARCHAR2(255) CONSTRAINT nn_Country_name NOT NULL,
+                         idAuditLog NUMBER        CONSTRAINT nn_Country_idAuditLog NOT NULL,
+                         CONSTRAINT pk_Country PRIMARY KEY (id)
+                             USING INDEX TABLESPACE CARPOOLING_INDX
+)
+    TABLESPACE CARPOOLING_DATA;
 
-    IF v_table_exists = 0 THEN
-        EXECUTE IMMEDIATE '
-        CREATE TABLE Province (
-                                  id   NUMBER,
-                                  name VARCHAR2(255),
+-- Creating table PAYMENTMETHOD
+CREATE TABLE PaymentMethod (
+                               id         NUMBER,
+                               method     VARCHAR2(100) CONSTRAINT nn_PaymentMethod_method NOT NULL,
+                               idAuditLog NUMBER        CONSTRAINT nn_PaymentMethod_idAuditLog NOT NULL,
+                               CONSTRAINT pk_PaymentMethod PRIMARY KEY (id)
+                                   USING INDEX TABLESPACE CARPOOLING_INDX
+)
+    TABLESPACE CARPOOLING_DATA;
 
-                                  CONSTRAINT pk_Province PRIMARY KEY (id)
-                                      USING INDEX TABLESPACE CARPOOLING_INDX,
-                                  CONSTRAINT nn_Province_name CHECK (name IS NOT NULL)
-        )
-            TABLESPACE CARPOOLING_DATA';
+-- Creating table AUDITLOG
+CREATE TABLE AuditLog (
+                          id               NUMBER,
+                          creationDate     TIMESTAMP     CONSTRAINT nn_AuditLog_creationDate NOT NULL,
+                          createdBy        VARCHAR2(255) CONSTRAINT nn_AuditLog_createdBy NOT NULL,
+                          lastUpdateDate   TIMESTAMP,
+                          updatedBy        VARCHAR2(255),
+                          CONSTRAINT pk_AuditLog PRIMARY KEY (id)
+                              USING INDEX TABLESPACE CARPOOLING_INDX,
+                          CONSTRAINT ck_AuditLog_update_consistency CHECK ( (lastUpdateDate IS NULL AND updatedBy IS NULL) OR
+                                                                            (lastUpdateDate IS NOT NULL AND updatedBy IS NOT NULL) )
+)
+    TABLESPACE CARPOOLING_DATA;
 
-        DBMS_OUTPUT.PUT_LINE('Created table PROVINCE.');
-    ELSE
-        DBMS_OUTPUT.PUT_LINE('Table PROVINCE already existed.');
-    END IF;
-END;
-/
+-- Creating table PARAMETER
+CREATE TABLE Parameter (
+                           id         NUMBER,
+                           name       VARCHAR2(100) CONSTRAINT nn_Parameter_name NOT NULL,
+                           value      VARCHAR2(255) CONSTRAINT nn_Parameter_value NOT NULL,
+                           idAuditLog NUMBER        CONSTRAINT nn_Parameter_idAuditLog NOT NULL,
+                           CONSTRAINT pk_Parameter PRIMARY KEY (id)
+                               USING INDEX TABLESPACE CARPOOLING_INDX
+)
+    TABLESPACE CARPOOLING_DATA;
 
-DECLARE
-    v_table_exists NUMBER;
-BEGIN
-    SELECT COUNT(*)
-    INTO v_table_exists
-    FROM user_tables
-    WHERE table_name = 'COUNTRY';
+-- Creating table LOGBOOK
+CREATE TABLE LogBook (
+                         id          NUMBER,
+                         logDate     DATE          CONSTRAINT nn_LogBook_logDate NOT NULL,
+                         logTime     TIMESTAMP     CONSTRAINT nn_LogBook_logTime NOT NULL,
+                         description VARCHAR2(255) CONSTRAINT nn_LogBook_description NOT NULL,
+                         idAuditLog  NUMBER        CONSTRAINT nn_LogBook_idAuditLog NOT NULL,
+                         CONSTRAINT pk_LogBook PRIMARY KEY (id)
+                             USING INDEX TABLESPACE CARPOOLING_INDX
+)
+    TABLESPACE CARPOOLING_DATA;
 
-    IF v_table_exists = 0 THEN
-        EXECUTE IMMEDIATE '
-        CREATE TABLE Country (
-                                 id   NUMBER,
-                                 name VARCHAR2(255),
+-- Creating table ENTITYMODIFIED
+CREATE TABLE EntityModified (
+                                id          NUMBER,
+                                entityName  VARCHAR2(100) CONSTRAINT nn_EntityModified_entityName NOT NULL,
+                                idAuditLog  NUMBER        CONSTRAINT nn_EntityModified_idAuditLog NOT NULL,
+                                CONSTRAINT pk_EntityModified PRIMARY KEY (id)
+                                    USING INDEX TABLESPACE CARPOOLING_INDX
+)
+    TABLESPACE CARPOOLING_DATA;
 
-                                 CONSTRAINT pk_Country PRIMARY KEY (id)
-                                     USING INDEX TABLESPACE CARPOOLING_INDX,
-                                 CONSTRAINT nn_Country_name CHECK (name IS NOT NULL)
-        )
-            TABLESPACE CARPOOLING_DATA';
-
-        DBMS_OUTPUT.PUT_LINE('Created table COUNTRY.');
-    ELSE
-        DBMS_OUTPUT.PUT_LINE('Table COUNTRY already existed.');
-    END IF;
-END;
-/
-
-DECLARE
-    v_table_exists NUMBER;
-BEGIN
-    SELECT COUNT(*)
-    INTO v_table_exists
-    FROM user_tables
-    WHERE table_name = 'PAYMENTMETHOD';
-
-    IF v_table_exists = 0 THEN
-        EXECUTE IMMEDIATE '
-        CREATE TABLE PaymentMethod (
-                                       id     NUMBER,
-                                       method VARCHAR2(100),
-
-                                       CONSTRAINT pk_PaymentMethod PRIMARY KEY (id)
-                                           USING INDEX TABLESPACE CARPOOLING_INDX,
-                                       CONSTRAINT nn_PaymentMethod_method CHECK (method IS NOT NULL)
-        )
-            TABLESPACE CARPOOLING_DATA';
-
-        DBMS_OUTPUT.PUT_LINE('Created table PAYMENTMETHOD.');
-    ELSE
-        DBMS_OUTPUT.PUT_LINE('Table PAYMENTMETHOD already existed.');
-    END IF;
-END;
-/
-
-DECLARE
-    v_table_exists NUMBER;
-BEGIN
-    SELECT COUNT(*)
-    INTO v_table_exists
-    FROM user_tables
-    WHERE table_name = 'AUDITLOG';
-
-    IF v_table_exists = 0 THEN
-        EXECUTE IMMEDIATE '
-        CREATE TABLE AuditLog (
-                                  id               NUMBER,
-                                  creationDate     TIMESTAMP,
-                                  createdBy        VARCHAR2(255),
-                                  lastUpdateDate   TIMESTAMP,
-                                  updatedBy        VARCHAR2(255),
-
-                                  CONSTRAINT pk_AuditLog PRIMARY KEY (id)
-                                      USING INDEX TABLESPACE CARPOOLING_INDX,
-                                  CONSTRAINT nn_AuditLog_creationDate CHECK (creationDate IS NOT NULL),
-                                  CONSTRAINT nn_AuditLog_createdBy CHECK (createdBy IS NOT NULL)
-        )
-            TABLESPACE CARPOOLING_DATA';
-
-        DBMS_OUTPUT.PUT_LINE('Created table AUDITLOG.');
-    ELSE
-        DBMS_OUTPUT.PUT_LINE('Table AUDITLOG already existed.');
-    END IF;
-END;
-/
-
-DECLARE
-    v_table_exists NUMBER;
-BEGIN
-    SELECT COUNT(*)
-    INTO v_table_exists
-    FROM user_tables
-    WHERE table_name = 'PARAMETER';
-
-    IF v_table_exists = 0 THEN
-        EXECUTE IMMEDIATE '
-        CREATE TABLE Parameter (
-                                   id    NUMBER,
-                                   name  VARCHAR2(100),
-                                   value VARCHAR2(255),
-
-                                   CONSTRAINT pk_Parameter PRIMARY KEY (id)
+-- Creating table ATTRIBUTEMODIFIED
+CREATE TABLE AttributeModified (
+                                   id               NUMBER,
+                                   newValue         VARCHAR2(255), -- Retaining nullability as change might be TO null
+                                   oldValue         VARCHAR2(255), -- Retaining nullability as change might be FROM null
+                                   attributeName    VARCHAR2(100) CONSTRAINT nn_attributeName NOT NULL,
+                                   idEntityModified NUMBER        CONSTRAINT nn_AttMod_idEntityModified NOT NULL,
+                                   idAuditLog       NUMBER        CONSTRAINT nn_AttMod_idAuditLog NOT NULL,
+                                   CONSTRAINT pk_AttributeModified PRIMARY KEY (id)
                                        USING INDEX TABLESPACE CARPOOLING_INDX,
-                                   CONSTRAINT nn_Parameter_name CHECK (name IS NOT NULL),
-                                   CONSTRAINT nn_Parameter_value CHECK (value IS NOT NULL)
-        )
-            TABLESPACE CARPOOLING_DATA';
-
-        DBMS_OUTPUT.PUT_LINE('Created table PARAMETER.');
-    ELSE
-        DBMS_OUTPUT.PUT_LINE('Table PARAMETER already existed.');
-    END IF;
-END;
-/
-
-DECLARE
-    v_table_exists NUMBER;
-BEGIN
-    SELECT COUNT(*)
-    INTO v_table_exists
-    FROM user_tables
-    WHERE table_name = 'LOGBOOK';
-
-    IF v_table_exists = 0 THEN
-        EXECUTE IMMEDIATE '
-        CREATE TABLE LogBook (
-                                 id          NUMBER,
-                                 logDate     DATE,
-                                 logTime     TIMESTAMP,
-                                 description VARCHAR2(255),
-
-                                 CONSTRAINT pk_LogBook PRIMARY KEY (id)
-                                     USING INDEX TABLESPACE CARPOOLING_INDX,
-                                 CONSTRAINT nn_LogBook_logDate CHECK (logDate IS NOT NULL),
-                                 CONSTRAINT nn_LogBook_logTime CHECK (logTime IS NOT NULL),
-                                 CONSTRAINT nn_LogBook_description CHECK (description IS NOT NULL)
-        )
-            TABLESPACE CARPOOLING_DATA';
-
-        DBMS_OUTPUT.PUT_LINE('Created table LOGBOOK.');
-    ELSE
-        DBMS_OUTPUT.PUT_LINE('Table LOGBOOK already existed.');
-    END IF;
-END;
-/
-
-DECLARE
-    v_table_exists NUMBER;
-BEGIN
-    SELECT COUNT(*)
-    INTO v_table_exists
-    FROM user_tables
-    WHERE table_name = 'ENTITYMODIFIED';
-
-    IF v_table_exists = 0 THEN
-        EXECUTE IMMEDIATE '
-        CREATE TABLE EntityModified (
-                                        id          NUMBER,
-                                        entityName  VARCHAR2(100),
-
-                                        CONSTRAINT pk_EntityModified PRIMARY KEY (id)
-                                            USING INDEX TABLESPACE CARPOOLING_INDX,
-                                        CONSTRAINT nn_EntityModified_entityName CHECK (entityName IS NOT NULL)
-        )
-            TABLESPACE CARPOOLING_DATA';
-
-        DBMS_OUTPUT.PUT_LINE('Created table ENTITYMODIFIED.');
-    ELSE
-        DBMS_OUTPUT.PUT_LINE('Table ENTITYMODIFIED already existed.');
-    END IF;
-END;
-/
-
-DECLARE
-    v_table_exists NUMBER;
-BEGIN
-    SELECT COUNT(*)
-    INTO v_table_exists
-    FROM user_tables
-    WHERE table_name = 'ATTRIBUTEMODIFIED';
-
-    IF v_table_exists = 0 THEN
-        EXECUTE IMMEDIATE '
-        CREATE TABLE AttributeModified (
-                                           id            NUMBER,
-                                           newValue      VARCHAR2(255),
-                                           oldValue      VARCHAR2(255),
-                                           attributeName VARCHAR2(100),
-
-                                           CONSTRAINT pk_AttributeModified PRIMARY KEY (id)
-                                               USING INDEX TABLESPACE CARPOOLING_INDX,
-                                           CONSTRAINT nn_newValue CHECK (newValue IS NOT NULL),
-                                           CONSTRAINT nn_oldValue CHECK (oldValue IS NOT NULL),
-                                           CONSTRAINT nn_attributeName CHECK (attributeName IS NOT NULL)
-        )
-            TABLESPACE CARPOOLING_DATA';
-
-        DBMS_OUTPUT.PUT_LINE('Created table ATTRIBUTEMODIFIED.');
-    ELSE
-        DBMS_OUTPUT.PUT_LINE('Table ATTRIBUTEMODIFIED already existed.');
-    END IF;
-END;
-/
-
---TABLAS NXN
-
-DECLARE
-    v_table_exists NUMBER;
-BEGIN
-    SELECT COUNT(*)
-    INTO v_table_exists
-    FROM user_tables
-    WHERE table_name = 'TRIPREPORTDAILYREPORT'; -- Nombre de la tabla
-
-    IF v_table_exists = 0 THEN
-        EXECUTE IMMEDIATE '
-        CREATE TABLE TripReportDailyReport (
-                                               idTrip NUMBER,
-                                               idDailyReport NUMBER,
-                                               reportDate DATE,
-                                               reportNumber VARCHAR2(100),
-                                               idAuditLog NUMBER,
+                                   CONSTRAINT ck_AttMod_ValuesDiffer CHECK (newValue <> oldValue OR
+                                                                            (newValue IS NULL AND oldValue IS NOT NULL)
+                                                                                OR (newValue IS NOT NULL AND oldValue IS NULL))
+)
+    TABLESPACE CARPOOLING_DATA;
 
 
-                                               CONSTRAINT pk_tripreportdailyreport PRIMARY KEY (idTrip, idDailyReport)
-                                                   USING INDEX TABLESPACE CARPOOLING_INDX
-        )
-            TABLESPACE CARPOOLING_DATA';
-
-        DBMS_OUTPUT.PUT_LINE('Created table TRIPREPORTDAILYREPORT.');
-    ELSE
-        DBMS_OUTPUT.PUT_LINE('Table TRIPREPORTDAILYREPORT already existed.');
-    END IF;
-END;
-/
-
-DECLARE
-    v_table_exists NUMBER;
-BEGIN
-    SELECT COUNT(*)
-    INTO v_table_exists
-    FROM user_tables
-    WHERE table_name = 'ADMINISTRATOR';
-
-    IF v_table_exists = 0 THEN
-        EXECUTE IMMEDIATE '
-        CREATE TABLE Administrator (
-                                       idPerson NUMBER,
-                                       accessStatus VARCHAR2(50),
-                                       idAuditLog NUMBER,
-
-                                       CONSTRAINT pk_administrator PRIMARY KEY (idPerson)
+-- Creating table TRIPREPORTDAILYREPORT (NXN)
+CREATE TABLE TripReportDailyReport (
+                                       idTrip        NUMBER,
+                                       idDailyReport NUMBER,
+                                       reportDate    DATE,
+                                       reportNumber  VARCHAR2(100),
+                                       idAuditLog    NUMBER         CONSTRAINT nn_TRDR_idAuditLog NOT NULL,
+                                       CONSTRAINT pk_tripreportdailyreport PRIMARY KEY (idTrip, idDailyReport)
                                            USING INDEX TABLESPACE CARPOOLING_INDX
-        )
-            TABLESPACE CARPOOLING_DATA';
+)
+    TABLESPACE CARPOOLING_DATA;
 
-        DBMS_OUTPUT.PUT_LINE('Created table ADMINISTRATOR.');
-    ELSE
-        DBMS_OUTPUT.PUT_LINE('Table ADMINISTRATOR already existed.');
-    END IF;
-END;
-/
+-- Creating table ADMINMANAGEINSTITUTION (NXN)
+CREATE TABLE AdminManageInstitution (
+                                        idPerson      NUMBER,
+                                        idInstitution NUMBER,
+                                        idAuditLog    NUMBER CONSTRAINT nn_AMI_idAuditLog NOT NULL,
+                                        CONSTRAINT pk_adminmanageinstitution PRIMARY KEY (idPerson, idInstitution)
+                                            USING INDEX TABLESPACE CARPOOLING_INDX
+)
+    TABLESPACE CARPOOLING_DATA;
 
-DECLARE
-    v_table_exists NUMBER;
-BEGIN
-    SELECT COUNT(*)
-    INTO v_table_exists
-    FROM user_tables
-    WHERE table_name = 'ADMINMANAGEINSTITUTION';
+-- Creating table ADMINRECEIVEDAIILYREPORT (NXN)
+CREATE TABLE AdminReceiveDailyReport (
+                                         idAdministrator NUMBER,
+                                         idDailyReport   NUMBER,
+                                         idAuditLog      NUMBER CONSTRAINT nn_ARDR_idAuditLog NOT NULL,
+                                         CONSTRAINT pk_adminreceivedailyreport PRIMARY KEY (idAdministrator, idDailyReport)
+                                             USING INDEX TABLESPACE CARPOOLING_INDX
+)
+    TABLESPACE CARPOOLING_DATA;
 
-    IF v_table_exists = 0 THEN
-        EXECUTE IMMEDIATE '
-        CREATE TABLE AdminManageInstitution (
-                                                idPerson NUMBER,
-                                                idInstitution NUMBER,
-                                                idAuditLog NUMBER,
+-- Creating table CREDENTIALHASTYPEOFCREDENTIAL (NXN)
+CREATE TABLE CredentialHasTypeOfCredential (
+                                               idCredential       NUMBER,
+                                               idTypeOfCredential NUMBER,
+                                               idAuditLog         NUMBER CONSTRAINT nn_CHTOC_idAuditLog NOT NULL,
+                                               CONSTRAINT pk_credhtyofcred PRIMARY KEY (idCredential, idTypeOfCredential)
+                                                   USING INDEX TABLESPACE CARPOOLING_INDX
+)
+    TABLESPACE CARPOOLING_DATA;
 
-                                                CONSTRAINT pk_adminmanageinstitution PRIMARY KEY (idPerson, idInstitution)
-                                                    USING INDEX TABLESPACE CARPOOLING_INDX,
-                                                CONSTRAINT nn_auditlog CHECK (idAuditLog IS NOT NULL)
-        )
-            TABLESPACE CARPOOLING_DATA';
+-- Creating table PASSENGERQUERYTRIP (NXN)
+CREATE TABLE PassengerQueryTrip (
+                                    idUser     NUMBER,
+                                    idTrip     NUMBER,
+                                    idAuditLog NUMBER CONSTRAINT nn_PassengerQueryTrip_auditlog NOT NULL,
+                                    CONSTRAINT pk_passengerQueryTrip PRIMARY KEY (idUser, idTrip)
+                                        USING INDEX TABLESPACE CARPOOLING_INDX
+)
+    TABLESPACE CARPOOLING_DATA;
 
-        DBMS_OUTPUT.PUT_LINE('Created table ADMINMANAGEINSTITUTION.');
-    ELSE
-        DBMS_OUTPUT.PUT_LINE('Table ADMINMANAGEINSTITUTION already existed.');
-    END IF;
-END;
-/
+-- Creating table PASSENGERJOINTRIP (NXN)
+CREATE TABLE PassengerJoinTrip (
+                                   idUser     NUMBER,
+                                   idTrip     NUMBER,
+                                   joinDate   DATE   CONSTRAINT nn_PassengerJoinTrip_joinDate NOT NULL,
+                                   idAuditLog NUMBER CONSTRAINT nn_PassengerJoinTrip_auditlog NOT NULL,
+                                   CONSTRAINT pk_passengerJoinTrip PRIMARY KEY (idUser, idTrip)
+                                       USING INDEX TABLESPACE CARPOOLING_INDX
+)
+    TABLESPACE CARPOOLING_DATA;
 
-DECLARE
-    v_table_exists NUMBER;
-BEGIN
-    SELECT COUNT(*)
-    INTO v_table_exists
-    FROM user_tables
-    WHERE table_name = 'ADMINRECEIVEDAIILYREPORT';
+-- Creating table TRIPHASTRIPSTATUS (NXN)
+CREATE TABLE TripHasTripStatus (
+                                   idTrip       NUMBER,
+                                   idTripStatus NUMBER,
+                                   idAuditLog   NUMBER CONSTRAINT nn_TripHasTripStatus_auditlog NOT NULL,
+                                   CONSTRAINT pk_triphastripstatus PRIMARY KEY (idTrip, idTripStatus)
+                                       USING INDEX TABLESPACE CARPOOLING_INDX
+)
+    TABLESPACE CARPOOLING_DATA;
 
-    IF v_table_exists = 0 THEN
-        EXECUTE IMMEDIATE '
-        CREATE TABLE AdminReceiveDailyReport (
-                                                 idAdministrator NUMBER,
-                                                 idDailyReport NUMBER,
-                                                 idAuditLog NUMBER,
+-- Creating table STOPHASCOORDINATELOCATION (NXN)
+CREATE TABLE StopHasCoordinateLocation (
+                                           idStop               NUMBER,
+                                           idCoordinateLocation NUMBER,
+                                           idAuditLog           NUMBER CONSTRAINT nn_SHCL_auditlog NOT NULL,
+                                           CONSTRAINT pk_stophascoordloc PRIMARY KEY (idStop, idCoordinateLocation)
+                                               USING INDEX TABLESPACE CARPOOLING_INDX
+)
+    TABLESPACE CARPOOLING_DATA;
 
-                                                 CONSTRAINT pk_adminreceivedailyreport PRIMARY KEY (idAdministrator, idDailyReport)
-                                                     USING INDEX TABLESPACE CARPOOLING_INDX,
-                                                 CONSTRAINT nn_ARDR_auditlog CHECK (idAuditLog IS NOT NULL)
-        )
-            TABLESPACE CARPOOLING_DATA';
+-- Creating table TRIPHASSTOPHASPAYMENTMETHOD (NXN)
+CREATE TABLE TripHasStopHasPaymentMethod (
+                                             idPaymentMethod NUMBER,
+                                             idTrip          NUMBER,
+                                             idStop          NUMBER,
+                                             idAuditLog      NUMBER CONSTRAINT nn_TripStopPayMethod_auditlog NOT NULL,
+                                             CONSTRAINT pk_tripstoppaymethod PRIMARY KEY (idPaymentMethod, idTrip, idStop)
+                                                 USING INDEX TABLESPACE CARPOOLING_INDX
+)
+    TABLESPACE CARPOOLING_DATA;
 
-        DBMS_OUTPUT.PUT_LINE('Created table ADMINRECEIVEDAIILYREPORT.');
-    ELSE
-        DBMS_OUTPUT.PUT_LINE('Table ADMINRECEIVEDAIILYREPORT already existed.');
-    END IF;
-END;
-/
+-- Creating table TRIPHASSTOP (NXN)
+CREATE TABLE TripHasStop (
+                             idTrip           NUMBER,
+                             idStop           NUMBER,
+                             estimatedArrival DATE   CONSTRAINT nn_THS_estimatedArrival NOT NULL,
+                             stopCost         NUMBER CONSTRAINT nn_THS_stopCost NOT NULL,
+                                                     CONSTRAINT ck_THS_stopCost CHECK (stopCost >= 0),
+                             numberStop       NUMBER CONSTRAINT nn_THS_numberStop NOT NULL,
+                                                     CONSTRAINT ck_THS_numberStop CHECK (numberStop >= 0),
+                             idAuditLog       NUMBER CONSTRAINT nn_THS_auditlog NOT NULL,
+                             CONSTRAINT pk_triphasstop PRIMARY KEY (idTrip, idStop)
+                                 USING INDEX TABLESPACE CARPOOLING_INDX
+)
+    TABLESPACE CARPOOLING_DATA;
 
-DECLARE
-    v_table_exists NUMBER;
-BEGIN
-    SELECT COUNT(*)
-    INTO v_table_exists
-    FROM user_tables
-    WHERE table_name = 'CREDENTIALHASTYPEOFCREDENTIAL';
+-- Creating table LOGBOOKHASENTITYMODIFIED (NXN)
+CREATE TABLE LogBookHasEntityModified (
+                                          idLogBook        NUMBER,
+                                          idEntityModified NUMBER,
+                                          idAuditLog       NUMBER CONSTRAINT nn_LogBookHasEntMod_auditlog NOT NULL,
+                                          CONSTRAINT pk_logbookhasentmod PRIMARY KEY (idLogBook, idEntityModified)
+                                              USING INDEX TABLESPACE CARPOOLING_INDX
+)
+    TABLESPACE CARPOOLING_DATA;
 
-    IF v_table_exists = 0 THEN
-        EXECUTE IMMEDIATE '
-        CREATE TABLE CredentialHasTypeOfCredential (
-                                                       idCredential NUMBER,
-                                                       idTypeOfCredential NUMBER,
-                                                       idAuditLog NUMBER,
-
-                                                       CONSTRAINT pk_credhtyofcred PRIMARY KEY (idCredential, idTypeOfCredential)
-                                                           USING INDEX TABLESPACE CARPOOLING_INDX,
-                                                       CONSTRAINT nn_CredHasTypeOfCred_auditlog CHECK (idAuditLog IS NOT NULL)
-        )
-            TABLESPACE CARPOOLING_DATA';
-
-        DBMS_OUTPUT.PUT_LINE('Created table CREDENTIALHASTYPEOFCREDENTIAL.');
-    ELSE
-        DBMS_OUTPUT.PUT_LINE('Table CREDENTIALHASTYPEOFCREDENTIAL already existed.');
-    END IF;
-END;
-/
-
-DECLARE
-    v_table_exists NUMBER;
-BEGIN
-    SELECT COUNT(*)
-    INTO v_table_exists
-    FROM user_tables
-    WHERE table_name = 'DRIVER';
-
-    IF v_table_exists = 0 THEN
-        EXECUTE IMMEDIATE '
-        CREATE TABLE Driver (
-                                idPerson NUMBER,
-                                idAuditLog NUMBER,
-
-                                CONSTRAINT pk_driver PRIMARY KEY (idPerson)
-                                    USING INDEX TABLESPACE CARPOOLING_INDX,
-                                CONSTRAINT nn_Driver_auditlog CHECK (idAuditLog IS NOT NULL)
-        )
-            TABLESPACE CARPOOLING_DATA';
-
-        DBMS_OUTPUT.PUT_LINE('Created table DRIVER.');
-    ELSE
-        DBMS_OUTPUT.PUT_LINE('Table DRIVER already existed.');
-    END IF;
-END;
-/
-
-DECLARE
-    v_table_exists NUMBER;
-BEGIN
-    SELECT COUNT(*)
-    INTO v_table_exists
-    FROM user_tables
-    WHERE table_name = 'PASSANGER';
-
-    IF v_table_exists = 0 THEN
-        EXECUTE IMMEDIATE '
-        CREATE TABLE Passanger (
-                                   idPerson NUMBER,
-                                   idAuditLog NUMBER,
-
-                                   CONSTRAINT pk_passanger PRIMARY KEY (idPerson)
-                                       USING INDEX TABLESPACE CARPOOLING_INDX,
-                                   CONSTRAINT nn_Passanger_auditlog CHECK (idAuditLog IS NOT NULL)
-        )
-            TABLESPACE CARPOOLING_DATA';
-
-        DBMS_OUTPUT.PUT_LINE('Created table PASSANGER.');
-    ELSE
-        DBMS_OUTPUT.PUT_LINE('Table PASSANGER already existed.');
-    END IF;
-END;
-/
-
-DECLARE
-    v_table_exists NUMBER;
-BEGIN
-    SELECT COUNT(*)
-    INTO v_table_exists
-    FROM user_tables
-    WHERE table_name = 'PASSANGERQUERYTRIP';
-
-    IF v_table_exists = 0 THEN
-        EXECUTE IMMEDIATE '
-        CREATE TABLE PassangerQueryTrip (
-                                            idUser NUMBER,
-                                            idTrip NUMBER,
-                                            idAuditLog NUMBER,
-
-                                            CONSTRAINT pk_passangerquerytrip PRIMARY KEY (idUser, idTrip)
-                                                USING INDEX TABLESPACE CARPOOLING_INDX,
-                                            CONSTRAINT nn_PassangerQueryTrip_auditlog CHECK (idAuditLog IS NOT NULL)
-        )
-            TABLESPACE CARPOOLING_DATA';
-
-        DBMS_OUTPUT.PUT_LINE('Created table PASSANGERQUERYTRIP.');
-    ELSE
-        DBMS_OUTPUT.PUT_LINE('Table PASSANGERQUERYTRIP already existed.');
-    END IF;
-END;
-/
-
-DECLARE
-    v_table_exists NUMBER;
-BEGIN
-    SELECT COUNT(*)
-    INTO v_table_exists
-    FROM user_tables
-    WHERE table_name = 'PASSANGERJOINTRIP';
-
-    IF v_table_exists = 0 THEN
-        EXECUTE IMMEDIATE '
-        CREATE TABLE PassangerJoinTrip (
-                                           idUser NUMBER,
-                                           idTrip NUMBER,
-                                           status VARCHAR2(50),
-                                           joinDate DATE,
-                                           idAuditLog NUMBER,
-
-                                           CONSTRAINT pk_passangerjointrip PRIMARY KEY (idUser, idTrip)
-                                               USING INDEX TABLESPACE CARPOOLING_INDX,
-                                           CONSTRAINT nn_PassangerJoinTrip_status CHECK (status IS NOT NULL),
-                                           CONSTRAINT nn_PassangerJoinTrip_joinDate CHECK (joinDate IS NOT NULL),
-                                           CONSTRAINT nn_PassangerJoinTrip_auditlog CHECK (idAuditLog IS NOT NULL)
-        )
-            TABLESPACE CARPOOLING_DATA';
-
-        DBMS_OUTPUT.PUT_LINE('Created table PASSANGERJOINTRIP.');
-    ELSE
-        DBMS_OUTPUT.PUT_LINE('Table PASSANGERJOINTRIP already existed.');
-    END IF;
-END;
-/
-
-DECLARE
-    v_table_exists NUMBER;
-BEGIN
-    SELECT COUNT(*)
-    INTO v_table_exists
-    FROM user_tables
-    WHERE table_name = 'TRIPHASTRIPSTATUS';
-
-    IF v_table_exists = 0 THEN
-        EXECUTE IMMEDIATE '
-        CREATE TABLE TripHasTripStatus (
-                                           idTrip NUMBER,
-                                           idTripStatus NUMBER,
-                                           idAuditLog NUMBER,
-
-                                           CONSTRAINT pk_triphastripstatus PRIMARY KEY (idTrip, idTripStatus)
-                                               USING INDEX TABLESPACE CARPOOLING_INDX,
-                                           CONSTRAINT nn_TripHasTripStatus_auditlog CHECK (idAuditLog IS NOT NULL)
-        )
-            TABLESPACE CARPOOLING_DATA';
-
-        DBMS_OUTPUT.PUT_LINE('Created table TRIPHASTRIPSTATUS.');
-    ELSE
-        DBMS_OUTPUT.PUT_LINE('Table TRIPHASTRIPSTATUS already existed.');
-    END IF;
-END;
-/
-
-DECLARE
-    v_table_exists NUMBER;
-BEGIN
-    SELECT COUNT(*)
-    INTO v_table_exists
-    FROM user_tables
-    WHERE table_name = 'STOPHASCOORDINATELOCATION';
-
-    IF v_table_exists = 0 THEN
-        EXECUTE IMMEDIATE '
-        CREATE TABLE StopHasCoordinateLocation (
-                                                   idStop NUMBER,
-                                                   idCoordinateLocation NUMBER,
-                                                   idAuditLog NUMBER,
-
-                                                   CONSTRAINT pk_stophascoordloc PRIMARY KEY (idStop, idCoordinateLocation)
-                                                       USING INDEX TABLESPACE CARPOOLING_INDX,
-                                                   CONSTRAINT nn_SHCL_auditlog CHECK (idAuditLog IS NOT NULL)
-        )
-            TABLESPACE CARPOOLING_DATA';
-
-        DBMS_OUTPUT.PUT_LINE('Created table STOPHASCOORDINATELOCATION.');
-    ELSE
-        DBMS_OUTPUT.PUT_LINE('Table STOPHASCOORDINATELOCATION already existed.');
-    END IF;
-END;
-/
-
-DECLARE
-    v_table_exists NUMBER;
-BEGIN
-    SELECT COUNT(*)
-    INTO v_table_exists
-    FROM user_tables
-    WHERE table_name = 'TRIPHASSTOPHASPAYMENTMETHOD';
-
-    IF v_table_exists = 0 THEN
-        EXECUTE IMMEDIATE '
-        CREATE TABLE TripHasStopHasPaymentMethod (
-                                                     idPaymentMethod NUMBER,
-                                                     idTrip NUMBER,
-                                                     idStop NUMBER,
-                                                     AuditLog NUMBER,
-
-                                                     CONSTRAINT pk_tripstoppaymethod PRIMARY KEY (idPaymentMethod, idTrip, idStop)
-                                                         USING INDEX TABLESPACE CARPOOLING_INDX,
-                                                     CONSTRAINT nn_TripStopPayMethod_auditlog CHECK (AuditLog IS NOT NULL)
-        )
-            TABLESPACE CARPOOLING_DATA';
-
-        DBMS_OUTPUT.PUT_LINE('Created table TRIPHASSTOPHASPAYMENTMETHOD.');
-    ELSE
-        DBMS_OUTPUT.PUT_LINE('Table TRIPHASSTOPHASPAYMENTMETHOD already existed.');
-    END IF;
-END;
-/
-
-DECLARE
-    v_table_exists NUMBER;
-BEGIN
-    SELECT COUNT(*)
-    INTO v_table_exists
-    FROM user_tables
-    WHERE table_name = 'TRIPHASSTOP';
-
-    IF v_table_exists = 0 THEN
-        EXECUTE IMMEDIATE '
-        CREATE TABLE TripHasStop (
-                                     idTrip NUMBER,
-                                     idStop NUMBER,
-                                     estimatedArrival DATE,
-                                     stopCost NUMBER,
-                                     numberStop NUMBER,
-                                     idAuditLog NUMBER,
-
-                                     CONSTRAINT pk_triphasstop PRIMARY KEY (idTrip, idStop)
-                                         USING INDEX TABLESPACE CARPOOLING_INDX,
-                                     CONSTRAINT nn_THS_estimatedArrival CHECK (estimatedArrival IS NOT NULL),
-                                     CONSTRAINT nn_THS_stopCost CHECK (stopCost IS NOT NULL),
-                                     CONSTRAINT nn_THS_numberStop CHECK (numberStop IS NOT NULL),
-                                     CONSTRAINT nn_THS_auditlog CHECK (idAuditLog IS NOT NULL)
-        )
-            TABLESPACE CARPOOLING_DATA';
-
-        DBMS_OUTPUT.PUT_LINE('Created table TRIPHASSTOP.');
-    ELSE
-        DBMS_OUTPUT.PUT_LINE('Table TRIPHASSTOP already existed.');
-    END IF;
-END;
-/
-
-DECLARE
-    v_table_exists NUMBER;
-BEGIN
-    SELECT COUNT(*)
-    INTO v_table_exists
-    FROM user_tables
-    WHERE table_name = 'LOGBOOKHASENTITYMODIFIED';
-
-    IF v_table_exists = 0 THEN
-        EXECUTE IMMEDIATE '
-        CREATE TABLE LogBookHasEntityModified (
-                                                  idLogBook NUMBER,
-                                                  idEntityModified NUMBER,
-                                                  idAuditLog NUMBER,
-
-                                                  CONSTRAINT pk_logbookhasentmod PRIMARY KEY (idLogBook, idEntityModified)
-                                                      USING INDEX TABLESPACE CARPOOLING_INDX,
-                                                  CONSTRAINT nn_LogBookHasEntMod_auditlog CHECK (idAuditLog IS NOT NULL)
-        )
-            TABLESPACE CARPOOLING_DATA';
-
-        DBMS_OUTPUT.PUT_LINE('Created table LOGBOOKHASENTITYMODIFIED.');
-    ELSE
-        DBMS_OUTPUT.PUT_LINE('Table LOGBOOKHASENTITYMODIFIED already existed.');
-    END IF;
-END;
-/
-
-DECLARE
-    v_table_exists NUMBER;
-BEGIN
-    -- Verificar si la tabla ya existe usando el nombre acortado
-    SELECT COUNT(*)
-    INTO v_table_exists
-    FROM user_tables
-    WHERE table_name = 'ATTRMODHASENTMOD'; -- Nombre de tabla acortado
-
-    IF v_table_exists = 0 THEN
-        -- Si no existe, crear la tabla con el nombre acortado
-        EXECUTE IMMEDIATE '
-        CREATE TABLE AttrModHasEntMod ( -- Nombre de tabla acortado aquí
-                                          idLogBook NUMBER,
-                                          idAttributeModified NUMBER,
-                                          idAuditLog NUMBER,
-
-                                          CONSTRAINT pk_attrmodhasentmod PRIMARY KEY (idLogBook, idAttributeModified)
-                                              USING INDEX TABLESPACE CARPOOLING_INDX,
-                                          CONSTRAINT nn_AMHEM_auditlog CHECK (idAuditLog IS NOT NULL)
-        )
-            TABLESPACE CARPOOLING_DATA';
-
-        DBMS_OUTPUT.PUT_LINE('Created table ATTRMODHASENTMOD.');
-    ELSE
-        DBMS_OUTPUT.PUT_LINE('Table ATTRMODHASENTMOD already existed.');
-    END IF;
-END;
-/
+-- Creating table ATTRMODHASENTMOD (NXN)
+CREATE TABLE AttrModHasEntMod (
+                                  idLogBook           NUMBER,
+                                  idAttributeModified NUMBER,
+                                  idAuditLog          NUMBER CONSTRAINT nn_AMHEM_auditlog NOT NULL,
+                                  CONSTRAINT pk_attrmodhasentmod PRIMARY KEY (idLogBook, idAttributeModified)
+                                      USING INDEX TABLESPACE CARPOOLING_INDX
+)
+    TABLESPACE CARPOOLING_DATA;
