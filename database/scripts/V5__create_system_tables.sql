@@ -77,6 +77,7 @@ CREATE TABLE Person (
                         profilePicture BLOB,
                         idInstitution  NUMBER        CONSTRAINT nn_Person_idInstitution NOT NULL,
                         idAuditLog     NUMBER        CONSTRAINT nn_Person_idAuditLog NOT NULL,
+                        idGender       NUMBER        CONSTRAINT nn_Person_idGender NOT NULL,
                         CONSTRAINT pk_Person PRIMARY KEY (id)
                             USING INDEX TABLESPACE CARPOOLING_INDX
 )
@@ -131,7 +132,6 @@ CREATE TABLE TypeOfCredential (
 CREATE TABLE Gender (
                         id          NUMBER,
                         genderName  VARCHAR2(50) CONSTRAINT nn_Gender_genderName NOT NULL,
-                        idPerson    NUMBER       CONSTRAINT nn_Gender_idPerson NOT NULL,
                         idAuditLog  NUMBER       CONSTRAINT nn_Gender_idAuditLog NOT NULL,
                         CONSTRAINT pk_Gender PRIMARY KEY (id)
                             USING INDEX TABLESPACE CARPOOLING_INDX

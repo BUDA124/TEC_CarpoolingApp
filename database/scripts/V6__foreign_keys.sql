@@ -156,6 +156,15 @@ BEGIN
             p_index_name        => 'IX_PERSON_AUDITLOG'
     );
 
+    add_fk_and_index_if_missing(
+            p_table_name        => 'PERSON',
+            p_constraint_name   => 'FK_PERSON_GENDER',
+            p_fk_column         => 'IDGENDER',
+            p_ref_table         => 'GENDER',
+            p_ref_column        => 'ID',
+            p_index_name        => 'IX_PERSON_AUDITLOG'
+    );
+
     -- Table PhoneNumber
     add_fk_and_index_if_missing(
             p_table_name        => 'PHONENUMBER',
@@ -224,15 +233,6 @@ BEGIN
     );
 
     -- Table Gender
-    add_fk_and_index_if_missing(
-            p_table_name        => 'GENDER',
-            p_constraint_name   => 'FK_GENDER_PERSON',
-            p_fk_column         => 'IDPERSON',
-            p_ref_table         => 'PERSON',
-            p_ref_column        => 'ID',
-            p_index_name        => 'IX_GENDER_PERSON'
-    );
-
     add_fk_and_index_if_missing(
             p_table_name        => 'GENDER',
             p_constraint_name   => 'FK_GENDER_AUDITLOG',
