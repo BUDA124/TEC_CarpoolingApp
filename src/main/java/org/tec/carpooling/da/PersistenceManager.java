@@ -11,7 +11,7 @@ import java.util.Properties;
 
 public class PersistenceManager {
 
-    private static final String PERSISTENCE_UNIT_NAME = "CarpoolingAppPU"; // Debe coincidir con persistence.xml
+    private static final String PERSISTENCE_UNIT_NAME = "CarpoolingAppPU";
     private static EntityManagerFactory emf;
 
     public static void initializeFactory() {

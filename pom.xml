@@ -4,10 +4,10 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.tec.carpooling</groupId> <!-- Ajustado según estructura de paquetes -->
+    <groupId>org.tec.carpooling</groupId>
     <artifactId>CarpoolingApp</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <packaging>jar</packaging> <!-- Empaquetado estándar como JAR -->
+    <packaging>jar</packaging>
 
     <name>Carpooling Application</name>
     <description>University Carpooling System with JavaFX UI and Database Integration</description>
@@ -28,13 +28,16 @@
         <logback.version>1.5.13</logback.version>
         <oracle.driver.version>23.3.0.23.09</oracle.driver.version>
         <gmapsfx.version>11.0.7</gmapsfx.version>
-        <h2.version>2.2.224</h2.version> <!-- Base de datos en memoria para tests -->
+        <h2.version>2.2.224</h2.version>
 
         <!-- Clase Principal de la Aplicación JavaFX -->
         <main.class>org.tec.carpooling.app.CarpoolingApplication</main.class>
     </properties>
 
     <dependencies>
+        <!-- ======================================== -->
+        <!-- Oracle Driver                            -->
+        <!-- ======================================== -->
             <dependency>
                 <groupId>com.oracle.database.jdbc</groupId>
                 <artifactId>ojdbc11</artifactId>
@@ -74,10 +77,6 @@
         </dependency>
 
         <!-- ======================================== -->
-        <!-- GMapsFX (Integración con Google Maps)   -->
-        <!-- ======================================== -->
-
-        <!-- ======================================== -->
         <!-- Persistencia (JPA / Hibernate)         -->
         <!-- ======================================== -->
         <!-- API estándar de JPA -->
@@ -101,20 +100,6 @@
             <artifactId>logback-classic</artifactId>
             <version>${logback.version}</version>
         </dependency>
-
-        <!-- ======================================== -->
-        <!-- Utilidades                               -->
-        <!-- ======================================== -->
-        <!-- Para hashing de contraseñas (o Spring Security) -->
-        <!--
-        <dependency>
-            <groupId>org.mindrot</groupId>
-            <artifactId>jbcrypt</artifactId>
-            <version>0.4</version>
-        </dependency>
-        -->
-
-        <!-- librerías externas para validación, etc. -->
 
         <!-- ======================================== -->
         <!-- Testing (JUnit 5 & Mockito)           -->

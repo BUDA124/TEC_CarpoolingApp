@@ -1,5 +1,3 @@
--- ########## PASO 1: CREAR TABLESPACES ##########
-
 CREATE TABLESPACE CARPOOLING_DATA
     DATAFILE 'C:\app\pipao\oradata\BDTEC\carpooling_data01.dbf' -- ¡¡VERIFICAR Y AJUSTAR RUTA!!
     SIZE 100M

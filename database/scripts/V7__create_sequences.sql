@@ -1,7 +1,3 @@
--- =============================================================================
---                      CREATE SEQUENCES FOR CARPOOLING SYSTEM
--- =============================================================================
-
 -- Sequence for DailyReport Table
 CREATE SEQUENCE SEQ_DAILYREPORT
     START WITH 1
@@ -211,7 +207,3 @@ CREATE SEQUENCE SEQ_ATTRIBUTEMODIFIED
     INCREMENT BY 1
     NOCACHE
     NOCYCLE;
-
--- =============================================================================
---                              END OF SEQUENCES
--- =============================================================================

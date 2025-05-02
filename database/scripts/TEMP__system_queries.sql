@@ -18,8 +18,8 @@ VALUES (seq_personaluser.nextval, :hashed_password, :username, SYSDATE, :new_per
 RETURNING id INTO :new_user_id;
 
 -- Step 1.3: Record User Gender
-INSERT INTO Gender (id, genderName, idPerson, idAuditLog)
-VALUES (seq_gender.nextval, :gender_name, :new_person_id, :audit_log_id);
+INSERT INTO Gender (id, genderName, idAuditLog)
+VALUES (seq_gender.nextval, :gender_name, :audit_log_id);
 
 -- Step 1.4: Add Personal Email
 INSERT INTO Email (id, emailAddress, idPerson, idAuditLog)
