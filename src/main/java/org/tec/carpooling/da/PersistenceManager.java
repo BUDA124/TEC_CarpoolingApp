@@ -66,11 +66,7 @@ public class PersistenceManager {
     // Obtiene un EntityManager (llamar cuando necesites interactuar con la BD)
     public static EntityManager getEntityManager() {
         if (emf == null) {
-            // Podrías llamar a initializeFactory() aquí si quieres inicialización perezosa,
-            // pero es mejor asegurarse de que esté inicializado al arrancar.
             throw new IllegalStateException("EntityManagerFactory has not been initialized. Call initializeFactory() first.");
-            // O intentar inicializar:
-            // initializeFactory(); // Asegurarse de que esté inicializado
         }
         return emf.createEntityManager();
     }

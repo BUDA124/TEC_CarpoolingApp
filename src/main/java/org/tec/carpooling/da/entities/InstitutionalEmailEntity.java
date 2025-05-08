@@ -1,4 +1,4 @@
 package org.tec.carpooling.da.entities;
 
-public class RideStopEntity {
+public class InstitutionalEmailEntity {
 }
