@@ -44,17 +44,17 @@
         <class>org.tec.carpooling.da.entities.EntityModifiedEntity</class>
         <class>org.tec.carpooling.da.entities.AttributeModifiedEntity</class>
         <!-- Join Table Entities -->
-        <class>org.tec.carpooling.da.entities.TripReportDailyReportEntity</class>
-        <class>org.tec.carpooling.da.entities.AdminManageInstitutionEntity</class>
-        <class>org.tec.carpooling.da.entities.AdminReceiveDailyReportEntity</class>
-        <class>org.tec.carpooling.da.entities.CredentialHasTypeOfCredentialEntity</class>
+        <class>org.tec.carpooling.da.entities.embeddable.TripReportDailyReportEntity</class>
+        <class>org.tec.carpooling.da.entities.embeddable.AdminManageInstitutionEntity</class>
+        <class>org.tec.carpooling.da.entities.embeddable.AdminReceiveDailyReportEntity</class>
+        <class>org.tec.carpooling.da.entities.embeddable.CredentialHasTypeOfCredentialEntity</class>
         <class>org.tec.carpooling.da.entities.PassengerQueryTripEntity</class>
         <class>org.tec.carpooling.da.entities.PassengerJoinTripEntity</class>
-        <class>org.tec.carpooling.da.entities.TripHasTripStatusEntity</class>
-        <class>org.tec.carpooling.da.entities.StopHasCoordinateLocationEntity</class>
-        <class>org.tec.carpooling.da.entities.TripHasStopHasPaymentMethodEntity</class>
-        <class>org.tec.carpooling.da.entities.TripHasStopEntity</class>
-        <class>org.tec.carpooling.da.entities.LogBookHasEntityModifiedEntity</class>
+        <class>org.tec.carpooling.da.entities.embeddable.TripHasTripStatusEntity</class>
+        <class>org.tec.carpooling.da.entities.embeddable.StopHasCoordinateLocationEntity</class>
+        <class>org.tec.carpooling.da.entities.embeddable.TripHasStopHasPaymentMethodEntity</class>
+        <class>org.tec.carpooling.da.entities.embeddable.TripHasStopEntity</class>
+        <class>org.tec.carpooling.da.entities.embeddable.LogBookHasEntityModifiedEntity</class>
         <class>org.tec.carpooling.da.entities.AttrModHasEntModEntity</class>
         <properties>
             <!-- ========= JDBC Conection Properties ========= -->

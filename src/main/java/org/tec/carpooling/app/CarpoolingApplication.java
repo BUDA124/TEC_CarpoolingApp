@@ -5,7 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import org.tec.carpooling.da.PersistenceManager;
+import org.tec.carpooling.common.utils.PersistenceManager;
 
 import java.io.IOException;
 import java.net.URL;

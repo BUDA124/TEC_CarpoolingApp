@@ -1,4 +1,4 @@
 package org.tec.carpooling.bl.service;
 
-public class BookingService {
+public interface BookingService {
 }

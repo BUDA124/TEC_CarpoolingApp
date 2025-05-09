@@ -1,4 +1,4 @@
 package org.tec.carpooling.common.exceptions;
 
-public class AuthenticationException {
+public class AuthenticationException extends Throwable {
 }

@@ -1,4 +1,10 @@
 package org.tec.carpooling.da.repositories;
 
-public class VehicleRepository {
+import org.tec.carpooling.da.entities.VehicleEntity;
+
+public class VehicleRepository extends BaseRepository<VehicleEntity, Long> {
+
+    public VehicleRepository() {
+        super(VehicleEntity.class);
+    }
 }
