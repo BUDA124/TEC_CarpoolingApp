@@ -29,7 +29,7 @@ public class CarpoolingApplication extends Application {
     public void start(Stage primaryStage) {
         System.out.println("INFO: Application starting UI...");
         try {
-            URL fxmlUrl = getClass().getResource("/views/LoginView.fxml"); // Ajusta la ruta a tu FXML principal
+            URL fxmlUrl = getClass().getResource("/views/login-view.fxml"); // Ajusta la ruta a tu FXML principal
             if (fxmlUrl == null) {
                 System.err.println("ERROR: Cannot find FXML file.");
                 return;

@@ -1,0 +1,17 @@
+@font-face {
+    font-family: "Alata";
+    src: url("../fonts/Alata-Regular.ttf");
+}
+
+@font-face {
+    font-family: "ADLaM";
+    src: url("../fonts/ADLaMDisplay-Regular.ttf");
+}
+
+.alata-text {
+    -fx-font-family: "Alata";
+}
+
+.adlam-text {
+    -fx-font-family: "ADLaM";
+}
