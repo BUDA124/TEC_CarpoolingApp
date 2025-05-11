@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+    <left>
+        <AnchorPane prefHeight="400.0" prefWidth="260.0" style="-fx-background-color: #081a51;" BorderPane.alignment="CENTER">
+            <children>
+                <Text fill="WHITE" layoutX="22.0" layoutY="135.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="adlam-text" text="Share your ride.">
+                    <font>
+                        <Font name="SansSerif Bold" size="25.0" />
+                    </font>
+                </Text>
+                <Text fill="WHITE" layoutX="22.0" layoutY="165.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="adlam-text" text="Secure rides within" textAlignment="JUSTIFY">
+                    <font>
+                        <Font name="SansSerif Bold" size="25.0" />
+                    </font>
+                </Text>
+                <Text fill="WHITE" layoutX="22.0" layoutY="195.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="adlam-text" text="your community.">
+                    <font>
+                        <Font name="SansSerif Bold" size="25.0" />
+                    </font>
+                </Text>
+                <ImageView fitHeight="177.0" fitWidth="260.0" layoutY="280.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../images/logo.png" />
+                    </image>
+                </ImageView>
+            </children>
+        </AnchorPane>
+    </left>
+    <center>
+        <AnchorPane prefHeight="338.0" prefWidth="276.0" style="-fx-border-radius: 30;" BorderPane.alignment="CENTER">
+            <children>
+                <TextField layoutX="42.0" layoutY="188.0" prefHeight="25.0" prefWidth="220.0" promptText="Car’s Capacity" styleClass="adlam-text" />
+                <Text layoutX="42.0" layoutY="88.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="alata-text" text="Apply to be a driver" wrappingWidth="383.0">
+                    <font>
+                        <Font name="SansSerif Bold" size="40.0" />
+                    </font>
+                </Text>
+                <TextField layoutX="42.0" layoutY="130.0" prefHeight="25.0" prefWidth="220.0" promptText="Car’s model, color and year" styleClass="adlam-text" />
+                <TextField layoutX="42.0" layoutY="159.0" prefHeight="25.0" prefWidth="220.0" promptText="License plate" styleClass="adlam-text" />
+                <DatePicker layoutX="184.0" layoutY="343.0" prefHeight="25.0" prefWidth="220.0" />
+                <Text fontSmoothingType="LCD" layoutX="42.0" layoutY="124.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="adlam-text" text="Vehicle Information">
+                    <font>
+                        <Font name="System Bold" size="12.0" />
+                    </font>
+                </Text>
+                <Text fontSmoothingType="LCD" layoutX="73.0" layoutY="236.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="adlam-text" text="Upload a photo of your vehicle">
+                    <font>
+                        <Font name="System Bold" size="12.0" />
+                    </font>
+                </Text>
+                <TextField layoutX="42.0" layoutY="276.0" prefHeight="25.0" prefWidth="220.0" promptText="License ID" styleClass="adlam-text" />
+                <ComboBox layoutX="207.0" layoutY="379.0" prefHeight="25.0" prefWidth="84.0" promptText="Years" styleClass="adlam-text" visibleRowCount="3" />
+                <PasswordField layoutX="42.0" layoutY="416.0" prefHeight="25.0" prefWidth="220.0" promptText="Motive of the request" styleClass="adlam-text" />
+                <CheckBox layoutX="42.0" layoutY="439.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="119.0" styleClass="adlam-text" text="I accept the">
+                    <font>
+                        <Font size="13.0" />
+                    </font>
+                </CheckBox>
+                <Text fill="#017efa" fontSmoothingType="LCD" layoutX="136.0" layoutY="459.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="adlam-text" text="Terms &amp; Conditions" wrappingWidth="127.0">
+                    <font>
+                        <Font name="System Bold" size="13.0" />
+                    </font>
+                </Text>
+                <Button alignment="CENTER" layoutX="124.0" layoutY="478.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="220.0" style="-fx-background-color: #017efa;" styleClass="adlam-text" text="Submit" textAlignment="CENTER" textFill="WHITE">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </Button>
+                <Text fontSmoothingType="LCD" layoutX="42.0" layoutY="359.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="adlam-text" text="License Expiration Date:">
+                    <font>
+                        <Font name="System Bold" size="12.0" />
+                    </font>
+                </Text>
+            <Text fontSmoothingType="LCD" layoutX="42.0" layoutY="270.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="adlam-text" text="Select your institution">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Text>
+            <ImageView fitHeight="25.0" fitWidth="35.0" layoutX="42.0" layoutY="219.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/subir-foto.png" />
+               </image>
+            </ImageView>
+            <Text fontSmoothingType="LCD" layoutX="73.0" layoutY="322.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="adlam-text" text="Upload a photo of your license">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Text>
+            <ImageView fitHeight="25.0" fitWidth="35.0" layoutX="42.0" layoutY="305.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/subir-foto.png" />
+               </image>
+            </ImageView>
+            <Text fontSmoothingType="LCD" layoutX="42.0" layoutY="395.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="adlam-text" text="Years of driving experience: ">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Text>
+            </children>
+        </AnchorPane>
+    </center>
+</BorderPane>

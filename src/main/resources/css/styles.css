@@ -8,10 +8,19 @@
     src: url("../fonts/ADLaMDisplay-Regular.ttf");
 }
 
+@font-face {
+    font-family: "Akatab";
+    src: url("../fonts/Akatab-Regular.ttf");
+}
+
 .alata-text {
     -fx-font-family: "Alata";
 }
 
 .adlam-text {
     -fx-font-family: "ADLaM";
+}
+
+.akatab-text {
+    -fx-font-family: "Akatab";
 }
