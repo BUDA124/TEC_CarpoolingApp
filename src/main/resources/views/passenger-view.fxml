@@ -11,7 +11,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
     <left>
         <AnchorPane prefHeight="550.0" prefWidth="134.0" style="-fx-background-color: #081a51;" BorderPane.alignment="CENTER">
             <children>
@@ -25,57 +25,42 @@
                   <Image url="@../images/icono.png" />
                </image>
             </ImageView>
-            <Text fill="#51cbff" layoutX="14.0" layoutY="98.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Main Menu">
+            <Text fill="#51cbff" layoutX="14.0" layoutY="100.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Main Menu">
                <font>
                   <Font size="10.0" />
                </font>
             </Text>
-            <Text fill="#51cbff" layoutX="14.0" layoutY="218.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Workspace">
+            <Text fill="#51cbff" layoutX="14.0" layoutY="220.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Workspace">
                <font>
                   <Font size="10.0" />
                </font>
             </Text>
-            <Pane layoutY="104.0" prefHeight="35.0" prefWidth="180.0" style="-fx-background-color: #1b2b65;">
+            <Pane layoutY="105.0" prefHeight="35.0" prefWidth="180.0" style="-fx-background-color: #1b2b65;">
                <children>
                   <Text fill="WHITE" layoutX="50.0" layoutY="22.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Look for a ride" wrappingWidth="89.900390625" />
                </children>
             </Pane>
-            <Pane layoutY="146.0" prefHeight="35.0" prefWidth="180.0" style="-fx-background-color: #1b2b65;">
+            <Pane layoutY="145.0" prefHeight="35.0" prefWidth="180.0" style="-fx-background-color: #1b2b65;">
                <children>
                   <Text fill="WHITE" layoutX="50.0" layoutY="22.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Scheduled Rides" />
                </children>
             </Pane>
-            <Pane layoutY="224.0" prefHeight="35.0" prefWidth="180.0" style="-fx-background-color: #1b2b65;">
+            <Pane layoutY="225.0" prefHeight="35.0" prefWidth="180.0" style="-fx-background-color: #1b2b65;">
                <children>
                   <Text fill="WHITE" layoutX="50.0" layoutY="22.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="History" />
                </children>
             </Pane>
-            <Pane layoutY="266.0" prefHeight="35.0" prefWidth="180.0" style="-fx-background-color: #1b2b65;">
-               <children>
-                  <Text fill="WHITE" layoutX="50.0" layoutY="22.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Schedule Post" />
-               </children>
-            </Pane>
-            <Pane layoutY="308.0" prefHeight="35.0" prefWidth="180.0" style="-fx-background-color: #1b2b65;">
-               <children>
-                  <Text fill="WHITE" layoutX="50.0" layoutY="22.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Communities" />
-               </children>
-            </Pane>
-            <Pane layoutY="350.0" prefHeight="35.0" prefWidth="180.0" style="-fx-background-color: #1b2b65;">
+            <Pane layoutY="265.0" prefHeight="35.0" prefWidth="180.0" style="-fx-background-color: #1b2b65;">
                <children>
                   <Text fill="WHITE" layoutX="50.0" layoutY="22.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Analytics" />
                </children>
             </Pane>
-            <Text fill="#51cbff" layoutX="14.0" layoutY="422.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="General">
+            <Text fill="#51cbff" layoutX="14.0" layoutY="359.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="General">
                <font>
                   <Font size="10.0" />
                </font>
             </Text>
-            <Pane layoutY="428.0" prefHeight="35.0" prefWidth="180.0" style="-fx-background-color: #1b2b65;">
-               <children>
-                  <Text fill="WHITE" layoutX="50.0" layoutY="22.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="File &amp; Folders" wrappingWidth="80.900390625" />
-               </children>
-            </Pane>
-            <Pane layoutY="470.0" prefHeight="35.0" prefWidth="180.0" style="-fx-background-color: #1b2b65;">
+            <Pane layoutY="365.0" prefHeight="35.0" prefWidth="180.0" style="-fx-background-color: #1b2b65;">
                <children>
                   <Text fill="WHITE" layoutX="50.0" layoutY="22.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Settings" />
                </children>
@@ -84,7 +69,7 @@
         </AnchorPane>
     </left>
     <right>
-        <AnchorPane prefHeight="650.0" prefWidth="730.0" style="-fx-border-radius: 30;" BorderPane.alignment="CENTER">
+        <AnchorPane prefHeight="650.0" prefWidth="820.0" style="-fx-border-radius: 30;" BorderPane.alignment="CENTER">
             <children>
                 <TextField layoutX="210.0" layoutY="102.0" prefHeight="25.0" prefWidth="220.0" promptText="Enter your destination" styleClass="adlam-text" />
                 <Text layoutX="42.0" layoutY="88.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="alata-text" text="Look for a ride" wrappingWidth="264.0">
