@@ -86,7 +86,7 @@
                   <Text layoutX="125.0" layoutY="87.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Destiny of the trip: Location's Description" />
                   <Text layoutX="125.0" layoutY="112.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Passanger capacity: 0" />
                   <Text layoutX="125.0" layoutY="137.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Estimated duration of the ride: Calculated time" />
-                  <Text layoutX="125.0" layoutY="162.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Date of the trip: Tips's Date" />
+                  <Text layoutX="125.0" layoutY="162.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Date of the trip: Trips's Date" />
                   <Button layoutX="475.0" layoutY="220.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="57.0" text="Join" />
                   <Text layoutX="125.0" layoutY="213.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Vehicle Model: " />
                   <Text layoutX="125.0" layoutY="243.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Vehicle Plate: " />
