@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.gluonhq.charm.glisten.control.Icon?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.DatePicker?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -39,7 +35,7 @@
                 </Text>
                 <Pane layoutY="105.0" prefHeight="35.0" prefWidth="180.0" style="-fx-background-color: #1b2b65;">
                     <children>
-                        <Text fill="WHITE" layoutX="50.0" layoutY="22.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Look for a ride" wrappingWidth="89.900390625" />
+                        <Text fill="WHITE" layoutX="50.0" layoutY="22.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Publish ride" wrappingWidth="89.900390625" />
                     </children>
                 </Pane>
                 <Pane layoutY="145.0" prefHeight="35.0" prefWidth="180.0" style="-fx-background-color: #1b2b65;">
@@ -70,73 +66,30 @@
             </children>
         </AnchorPane>
     </left>
-    <right>
+    <center>
         <AnchorPane prefHeight="650.0" prefWidth="820.0" style="-fx-border-radius: 30;" BorderPane.alignment="CENTER">
             <children>
-                <Text layoutX="42.0" layoutY="88.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="alata-text" text="Edit your profile" wrappingWidth="297.3333435058594">
+                <Text layoutX="42.0" layoutY="88.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="alata-text" text="Scheduled Rides" wrappingWidth="314.6666564941406">
                     <font>
                         <Font name="SansSerif Regular" size="40.0" />
                     </font>
                 </Text>
-            <ImageView fitHeight="151.0" fitWidth="139.0" layoutX="50.0" layoutY="110.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../images/default-pfp.png" />
-               </image>
-            </ImageView>
-            <Text layoutX="235.0" layoutY="145.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="adlam-text" text="Full Name">
-               <font>
-                  <Font name="System Bold" size="26.0" />
-               </font>
-            </Text>
-            <Text layoutX="235.0" layoutY="183.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="adlam-text" text="ID:">
-               <font>
-                  <Font name="System Bold" size="26.0" />
-               </font>
-            </Text>
-            <Icon content="EDIT" layoutX="155.0" layoutY="220.0" prefHeight="38.0" prefWidth="33.0" style="-fx-background-color: #017efa;" />
-            <TextField layoutX="50.0" layoutY="270.0" prefHeight="35.0" prefWidth="608.0" promptText="Name@example">
-               <font>
-                  <Font size="13.0" />
-               </font>
-            </TextField>
-            <TextField layoutX="50.0" layoutY="310.0" prefHeight="35.0" prefWidth="608.0" promptText="InstitutionName@example">
-               <font>
-                  <Font size="13.0" />
-               </font>
-            </TextField>
-            <Text layoutX="50.0" layoutY="375.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="adlam-text" text="Birthdate:" wrappingWidth="108.6054573059082">
-               <font>
-                  <Font size="20.0" />
-               </font>
-            </Text>
-            <DatePicker layoutX="153.0" layoutY="355.0" prefHeight="26.0" prefWidth="251.0" />
-            <ComboBox layoutX="50.0" layoutY="395.0" prefHeight="32.0" prefWidth="109.0" promptText="Gender" styleClass="akatab-text" />
-            <TextField layoutX="50.0" layoutY="435.0" prefHeight="35.0" prefWidth="608.0" promptText="Password">
-               <font>
-                  <Font size="13.0" />
-               </font>
-            </TextField>
-            <TextField layoutX="50.0" layoutY="515.0" prefHeight="35.0" prefWidth="608.0" promptText="Confirm New Password">
-               <font>
-                  <Font size="13.0" />
-               </font>
-            </TextField>
-            <TextField layoutX="50.0" layoutY="475.0" prefHeight="35.0" prefWidth="608.0" promptText="New Password">
-               <font>
-                  <Font size="13.0" />
-               </font>
-            </TextField>
-            <Button layoutX="50.0" layoutY="559.0" mnemonicParsing="false" styleClass="adlam-text" text="Change Password">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Button>
-            <Button layoutX="355.0" layoutY="589.0" mnemonicParsing="false" styleClass="adlam-text" text="Edit User Info">
-               <font>
-                  <Font size="20.0" />
-               </font>
-            </Button>
+                <Pane layoutX="42.0" layoutY="140.0" prefHeight="47.0" prefWidth="750.0" style="-fx-background-color: #efefef;">
+                    <children>
+                        <Text layoutX="24.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Trip starts in: Date - Destiny Location, Date, Departure time at 0:00">
+                            <font>
+                                <Font size="16.0" />
+                            </font>
+                        </Text>
+                        <Text fill="#017efa" layoutX="628.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="See Details &gt;">
+                            <font>
+                                <Font size="16.0" />
+                            </font>
+                        </Text>
+                        <Icon content="DELETE" layoutX="594.0" layoutY="13.0" prefHeight="26.0" prefWidth="23.0" style="-fx-background-color: #017efa;" />
+                    </children>
+                </Pane>
             </children>
         </AnchorPane>
-    </right>
+    </center>
 </BorderPane>

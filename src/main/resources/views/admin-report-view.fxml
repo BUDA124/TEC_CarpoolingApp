@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.chart.CategoryAxis?>
-<?import javafx.scene.chart.LineChart?>
-<?import javafx.scene.chart.NumberAxis?>
-<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -66,48 +63,44 @@
                         <Text fill="WHITE" layoutX="50.0" layoutY="22.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Settings" />
                     </children>
                 </Pane>
-                <Pane layoutY="305.0" prefHeight="35.0" prefWidth="180.0" style="-fx-background-color: #1b2b65;">
-                    <children>
-                        <Text fill="WHITE" layoutX="50.0" layoutY="22.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Analytics" />
-                    </children>
-                </Pane>
+            <Pane layoutY="305.0" prefHeight="35.0" prefWidth="180.0" style="-fx-background-color: #1b2b65;">
+               <children>
+                  <Text fill="WHITE" layoutX="50.0" layoutY="22.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Analytics" />
+               </children>
+            </Pane>
             </children>
         </AnchorPane>
     </left>
     <right>
         <AnchorPane prefHeight="650.0" prefWidth="820.0" style="-fx-border-radius: 30;" BorderPane.alignment="CENTER">
             <children>
-                <Text layoutX="42.0" layoutY="88.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="alata-text" text="Check General Statistics" wrappingWidth="488.0">
+                <Text layoutX="42.0" layoutY="88.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="alata-text" text="Check Daily Reports" wrappingWidth="388.0">
                     <font>
                         <Font name="SansSerif Regular" size="40.0" />
                     </font>
                 </Text>
-            <PieChart layoutX="42.0" layoutY="110.0" prefHeight="300.0" prefWidth="102.0" style="-fx-background-color: #e0e0e0;" styleClass="akatab-text" />
-            <LineChart layoutX="137.0" layoutY="433.0" prefHeight="189.0" prefWidth="540.0" title="Peak Traffic per Hour">
-              <xAxis>
-                <CategoryAxis side="BOTTOM" />
-              </xAxis>
-              <yAxis>
-                <NumberAxis side="LEFT" />
-              </yAxis>
-            </LineChart>
-            <PieChart layoutX="317.0" layoutY="110.0" prefHeight="300.0" prefWidth="102.0" style="-fx-background-color: #e0e0e0;" styleClass="akatab-text" />
-            <PieChart layoutX="592.0" layoutY="110.0" prefHeight="300.0" prefWidth="102.0" style="-fx-background-color: #e0e0e0;" styleClass="akatab-text" />
-            <Text layoutX="74.0" layoutY="130.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Number of users per age group" wrappingWidth="137.63836669921875">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Text>
-            <Text layoutX="347.0" layoutY="130.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Drivers by gender and date range" wrappingWidth="142.9716796875">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Text>
-            <Text layoutX="605.0" layoutY="130.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Passangers by gender and date range" wrappingWidth="177.63836669921875">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Text>
+                <Text fontSmoothingType="LCD" layoutX="42.0" layoutY="126.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="alata-text" text="Search for a specific report">
+                    <font>
+                        <Font name="System Bold" size="12.0" />
+                    </font>
+                </Text>
+                <ComboBox layoutX="198.0" layoutY="109.0" prefHeight="27.0" prefWidth="78.0" promptText="Day" styleClass="akatab-text" />
+                <ComboBox layoutX="283.0" layoutY="109.0" prefHeight="28.0" prefWidth="85.0" promptText="Month" styleClass="akatab-text" />
+                <ComboBox layoutX="376.0" layoutY="109.0" prefHeight="27.0" prefWidth="78.0" promptText="Year" styleClass="akatab-text" />
+            <Pane layoutX="42.0" layoutY="155.0" prefHeight="47.0" prefWidth="650.0" style="-fx-background-color: #efefef;">
+               <children>
+                  <Text layoutX="24.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Report #1 - Date">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Text>
+                  <Text fill="#017efa" layoutX="545.0" layoutY="28.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="See Details &gt;">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Text>
+               </children>
+            </Pane>
             </children>
         </AnchorPane>
     </right>

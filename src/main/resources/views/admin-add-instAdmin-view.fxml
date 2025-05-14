@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.chart.CategoryAxis?>
-<?import javafx.scene.chart.LineChart?>
-<?import javafx.scene.chart.NumberAxis?>
-<?import javafx.scene.chart.PieChart?>
+<?import com.gluonhq.charm.glisten.control.TextField?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -77,35 +77,27 @@
     <right>
         <AnchorPane prefHeight="650.0" prefWidth="820.0" style="-fx-border-radius: 30;" BorderPane.alignment="CENTER">
             <children>
-                <Text layoutX="42.0" layoutY="88.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="alata-text" text="Check General Statistics" wrappingWidth="488.0">
+                <Text layoutX="42.0" layoutY="88.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="alata-text" text="Add Institution Admin" wrappingWidth="568.0">
                     <font>
                         <Font name="SansSerif Regular" size="40.0" />
                     </font>
                 </Text>
-            <PieChart layoutX="42.0" layoutY="110.0" prefHeight="300.0" prefWidth="102.0" style="-fx-background-color: #e0e0e0;" styleClass="akatab-text" />
-            <LineChart layoutX="137.0" layoutY="433.0" prefHeight="189.0" prefWidth="540.0" title="Peak Traffic per Hour">
-              <xAxis>
-                <CategoryAxis side="BOTTOM" />
-              </xAxis>
-              <yAxis>
-                <NumberAxis side="LEFT" />
-              </yAxis>
-            </LineChart>
-            <PieChart layoutX="317.0" layoutY="110.0" prefHeight="300.0" prefWidth="102.0" style="-fx-background-color: #e0e0e0;" styleClass="akatab-text" />
-            <PieChart layoutX="592.0" layoutY="110.0" prefHeight="300.0" prefWidth="102.0" style="-fx-background-color: #e0e0e0;" styleClass="akatab-text" />
-            <Text layoutX="74.0" layoutY="130.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Number of users per age group" wrappingWidth="137.63836669921875">
+                <TextField floatText="Full Name" layoutX="42.0" layoutY="135.0" prefHeight="40.0" prefWidth="700.0" styleClass="akatab-text" />
+                <TextField floatText="Surname" layoutX="42.0" layoutY="180.0" prefHeight="40.0" prefWidth="700.0" styleClass="akatab-text" />
+                <TextField floatText="Email" layoutX="42.0" layoutY="225.0" prefHeight="40.0" prefWidth="700.0" styleClass="akatab-text" />
+                <Button layoutX="350.0" layoutY="533.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="95.0" text="Add">
+                    <font>
+                        <Font size="16.0" />
+                    </font>
+                </Button>
+            <ComboBox layoutX="42.0" layoutY="325.0" prefHeight="26.0" prefWidth="110.0" promptText="Gender" />
+            <ComboBox layoutX="42.0" layoutY="365.0" prefHeight="27.0" prefWidth="110.0" promptText="Institution" />
+            <TextField floatText="Username" layoutX="42.0" layoutY="404.0" prefHeight="40.0" prefWidth="700.0" styleClass="akatab-text" />
+            <TextField floatText="Password" layoutX="42.0" layoutY="450.0" prefHeight="40.0" prefWidth="700.0" styleClass="akatab-text" />
+            <DatePicker layoutX="121.0" layoutY="279.0" prefHeight="26.0" prefWidth="174.0" />
+            <Text layoutX="42.0" layoutY="296.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Birthdate:">
                <font>
-                  <Font size="18.0" />
-               </font>
-            </Text>
-            <Text layoutX="347.0" layoutY="130.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Drivers by gender and date range" wrappingWidth="142.9716796875">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Text>
-            <Text layoutX="605.0" layoutY="130.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Passangers by gender and date range" wrappingWidth="177.63836669921875">
-               <font>
-                  <Font size="18.0" />
+                  <Font size="16.0" />
                </font>
             </Text>
             </children>
