@@ -37,12 +37,12 @@ public class CarpoolingApplication extends Application {
             Parent root = FXMLLoader.load(fxmlUrl);
             Scene scene = new Scene(root);
 
-            // URL cssUrl = getClass().getResource("/css/styles.css");
-            // if (cssUrl != null) {
-            //     scene.getStylesheets().add(cssUrl.toExternalForm());
-            // } else {
-            //     System.out.println("WARN: CSS file not found.");
-            // }
+            URL cssUrl = getClass().getResource("/css/styles.css");
+            if (cssUrl != null) {
+                 scene.getStylesheets().add(cssUrl.toExternalForm());
+            } else {
+                 System.out.println("WARN: CSS file not found.");
+            }
 
             primaryStage.setTitle("Carpooling App");
             primaryStage.setScene(scene);
