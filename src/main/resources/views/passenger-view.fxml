@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.gluonhq.charm.glisten.control.Icon?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
@@ -82,8 +81,13 @@
                         <Font name="System Bold" size="12.0" />
                     </font>
                 </Text>
-            <Icon content="SEARCH" layoutX="185.0" layoutY="105.0" />
-            <ComboBox layoutX="440.0" layoutY="105.0" prefHeight="27.0" prefWidth="78.0" promptText="Day" styleClass="akatab-text" />
+                <ImageView layoutX="185.0" layoutY="105.0" fitWidth="20.0" fitHeight="20.0">
+                    <image>
+                        <Image url="@/images/search.png" />
+                    </image>
+                </ImageView>
+
+                <ComboBox layoutX="440.0" layoutY="105.0" prefHeight="27.0" prefWidth="78.0" promptText="Day" styleClass="akatab-text" />
             <ComboBox layoutX="525.0" layoutY="105.0" prefHeight="28.0" prefWidth="85.0" promptText="Month" styleClass="akatab-text" />
             <ComboBox layoutX="618.0" layoutY="105.0" prefHeight="27.0" prefWidth="78.0" promptText="Year" styleClass="akatab-text" />
             </children>

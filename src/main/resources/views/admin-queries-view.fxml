@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.gluonhq.charm.glisten.control.Icon?>
+
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.image.Image?>
@@ -105,9 +105,20 @@
                   </AnchorPane>
                </content>
             </TitledPane>
-            <Icon content="PERSON" layoutX="55.0" layoutY="412.0" prefHeight="57.0" prefWidth="50.0" style="-fx-background-color: e6f2fe;" />
-            <Icon content="MONETIZATION_ON" layoutX="56.0" layoutY="497.0" prefHeight="57.0" prefWidth="50.0" style="-fx-background-color: #30da88;" />
-            <Text fontSmoothingType="LCD" layoutX="111.0" layoutY="428.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="alata-text" text="New users in the past 3 months">
+
+                <ImageView layoutX="55.0" layoutY="412.0" fitWidth="50" fitHeight="57">
+                    <image>
+                        <Image url="@/images/user.png" />
+                    </image>
+                </ImageView>
+
+                <ImageView layoutX="56.0" layoutY="497.0" fitWidth="50" fitHeight="57">
+                    <image>
+                        <Image url="@/images/monetization.png" />
+                    </image>
+                </ImageView>
+
+                <Text fontSmoothingType="LCD" layoutX="111.0" layoutY="428.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="alata-text" text="New users in the past 3 months">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
