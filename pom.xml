@@ -13,13 +13,13 @@
     <description>University Carpooling System with JavaFX UI and Database Integration</description>
 
     <properties>
-        <!-- Configuración del Proyecto -->
+        <!-- Project Configuration -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>22</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
 
-        <!-- Versiones de Dependencias Clave -->
+        <!-- Dependencies Versions -->
         <javafx.version>21.0.2</javafx.version>
         <javafx.maven.plugin.version>0.0.8</javafx.maven.plugin.version>
         <junit.version>5.10.1</junit.version>
@@ -29,8 +29,9 @@
         <oracle.driver.version>23.3.0.23.09</oracle.driver.version>
         <gmapsfx.version>11.0.7</gmapsfx.version>
         <h2.version>2.2.224</h2.version>
+        <mapStruct.version>1.6.2</mapStruct.version>
 
-        <!-- Clase Principal de la Aplicación JavaFX -->
+        <!-- Main Class -->
         <main.class>org.tec.carpooling.app.CarpoolingApplication</main.class>
     </properties>
 
@@ -57,19 +58,19 @@
             <artifactId>javafx-fxml</artifactId>
             <version>${javafx.version}</version>
         </dependency>
-        <!-- Conexión web -->
+        <!-- web -->
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-web</artifactId>
             <version>${javafx.version}</version>
         </dependency>
-        <!-- Gráficos y CSS -->
+        <!-- Graphics y CSS -->
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-graphics</artifactId>
             <version>${javafx.version}</version>
         </dependency>
-        <!-- Media (Audio/Video) -->
+        <!-- Media -->
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-media</artifactId>
@@ -79,17 +80,24 @@
         <!-- ======================================== -->
         <!-- Persistencia (JPA / Hibernate)         -->
         <!-- ======================================== -->
-        <!-- API estándar de JPA -->
         <dependency>
             <groupId>jakarta.persistence</groupId>
             <artifactId>jakarta.persistence-api</artifactId>
             <version>3.1.0</version>
         </dependency>
-        <!-- Implementación Hibernate -->
         <dependency>
             <groupId>org.hibernate.orm</groupId>
             <artifactId>hibernate-core</artifactId>
             <version>${hibernate.version}</version>
+        </dependency>
+
+        <!-- ======================================== -->
+        <!-- MapStruct Core                           -->
+        <!-- ======================================== -->
+        <dependency>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct</artifactId>
+            <version>${mapStruct.version}</version>
         </dependency>
 
         <!-- ======================================== -->
@@ -116,14 +124,12 @@
             <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
-        <!-- Para tests parametrizados en JUnit 5 -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-params</artifactId>
             <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
-        <!-- Mockito para simular dependencias -->
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
@@ -136,7 +142,6 @@
             <version>${mockito.version}</version>
             <scope>test</scope>
         </dependency>
-        <!-- Base de datos en memoria para tests de integración DA -->
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
@@ -148,7 +153,7 @@
 
     <build>
         <plugins>
-            <!-- Plugin de Compilación -->
+            <!-- Compilation -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -156,22 +161,28 @@
                 <configuration>
                     <source>${maven.compiler.source}</source>
                     <target>${maven.compiler.target}</target>
+
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>org.mapstruct</groupId>
+                            <artifactId>mapstruct-processor</artifactId>
+                            <version>${mapStruct.version}</version>
+                        </path>
+                    </annotationProcessorPaths>
+
                 </configuration>
             </plugin>
 
-            <!-- Plugin de JavaFX -->
+            <!-- JavaFX -->
             <plugin>
                 <groupId>org.openjfx</groupId>
                 <artifactId>javafx-maven-plugin</artifactId>
                 <version>${javafx.maven.plugin.version}</version>
                 <executions>
                     <execution>
-                        <!-- Default configuration for running with module-path -->
                         <id>default-cli</id>
                         <configuration>
-                            <!-- ¡IMPORTANTE! Clase principal -->
                             <mainClass>${main.class}</mainClass>
-                            <!-- Opciones adicionales para la ejecución y empaquetado -->
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>
                             <jlinkImageName>app</jlinkImageName>
@@ -183,12 +194,11 @@
                 </executions>
             </plugin>
 
-            <!-- Plugin para ejecutar Tests (Surefire) - importante para JUnit 5 -->
+            <!-- Tests (Surefire) -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.2.3</version>
-                <!-- Configuración necesaria para JUnit 5 -->
                 <dependencies>
                     <dependency>
                         <groupId>org.junit.jupiter</groupId>
@@ -198,7 +208,6 @@
                 </dependencies>
             </plugin>
         </plugins>
-        <!-- Asegura que los recursos de src/main/resources se copien -->
         <resources>
             <resource>
                 <directory>src/main/resources</directory>
