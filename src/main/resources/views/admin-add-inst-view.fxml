@@ -80,9 +80,9 @@
                         <Font name="SansSerif Regular" size="40.0" />
                     </font>
                 </Text>
-            <TextField layoutX="42.0" layoutY="135.0" prefHeight="40.0" prefWidth="700.0" styleClass="akatab-text" text="AAAAA" />
-            <TextField layoutX="42.0" layoutY="180.0" prefHeight="40.0" prefWidth="700.0" styleClass="akatab-text" />
-            <TextField layoutX="42.0" layoutY="225.0" prefHeight="40.0" prefWidth="700.0" styleClass="akatab-text" />
+            <TextField layoutX="42.0" layoutY="135.0" prefHeight="40.0" prefWidth="700.0" promptText="Institution's Name" styleClass="akatab-text" />
+            <TextField layoutX="42.0" layoutY="180.0" prefHeight="40.0" prefWidth="700.0" promptText="Institution's Email Domain" styleClass="akatab-text" />
+            <TextField layoutX="42.0" layoutY="225.0" prefHeight="40.0" prefWidth="700.0" promptText="Website URL" styleClass="akatab-text" />
             <Text fill="#017efa" layoutX="42.0" layoutY="300.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add Admin">
                <font>
                   <Font name="System Bold" size="20.0" />
