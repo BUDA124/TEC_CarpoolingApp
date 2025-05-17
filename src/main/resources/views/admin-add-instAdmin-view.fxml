@@ -82,9 +82,9 @@
                         <Font name="SansSerif Regular" size="40.0" />
                     </font>
                 </Text>
-                <TextField layoutX="42.0" layoutY="135.0" prefHeight="40.0" prefWidth="700.0" promptText="Full Name" styleClass="akatab-text" />
-                <TextField layoutX="42.0" layoutY="180.0" prefHeight="40.0" prefWidth="700.0" promptText="Surname" styleClass="akatab-text" />
-                <TextField layoutX="42.0" layoutY="225.0" prefHeight="40.0" prefWidth="700.0" promptText="Email" styleClass="akatab-text" />
+                <TextField floatText="Full Name" layoutX="42.0" layoutY="135.0" prefHeight="40.0" prefWidth="700.0" styleClass="akatab-text" />
+                <TextField floatText="Surname" layoutX="42.0" layoutY="180.0" prefHeight="40.0" prefWidth="700.0" styleClass="akatab-text" />
+                <TextField floatText="Email" layoutX="42.0" layoutY="225.0" prefHeight="40.0" prefWidth="700.0" styleClass="akatab-text" />
                 <Button layoutX="350.0" layoutY="533.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="95.0" text="Add">
                     <font>
                         <Font size="16.0" />
@@ -92,8 +92,8 @@
                 </Button>
             <ComboBox layoutX="42.0" layoutY="325.0" prefHeight="26.0" prefWidth="110.0" promptText="Gender" />
             <ComboBox layoutX="42.0" layoutY="365.0" prefHeight="27.0" prefWidth="110.0" promptText="Institution" />
-            <TextField layoutX="42.0" layoutY="404.0" prefHeight="40.0" prefWidth="700.0" promptText="Username" styleClass="akatab-text" />
-            <TextField layoutX="42.0" layoutY="450.0" prefHeight="40.0" prefWidth="700.0" promptText="Password" styleClass="akatab-text" />
+            <TextField floatText="Username" layoutX="42.0" layoutY="404.0" prefHeight="40.0" prefWidth="700.0" styleClass="akatab-text" />
+            <TextField floatText="Password" layoutX="42.0" layoutY="450.0" prefHeight="40.0" prefWidth="700.0" styleClass="akatab-text" />
             <DatePicker layoutX="121.0" layoutY="279.0" prefHeight="26.0" prefWidth="174.0" />
             <Text layoutX="42.0" layoutY="296.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Birthdate:">
                <font>
