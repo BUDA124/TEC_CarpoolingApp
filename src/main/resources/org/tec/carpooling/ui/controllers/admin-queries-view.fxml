@@ -1,158 +1,190 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-
 <?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
-    <left>
-        <AnchorPane prefHeight="550.0" prefWidth="134.0" style="-fx-background-color: #081a51;" BorderPane.alignment="CENTER">
-            <children>
-                <Text fill="WHITE" layoutX="48.0" layoutY="45.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="CarPool Hub" wrappingWidth="85.42578125">
-                    <font>
-                        <Font name="SansSerif Bold" size="14.0" />
-                    </font>
-                </Text>
-                <ImageView fitHeight="39.0" fitWidth="38.0" layoutX="8.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@../../../../../images/icono.png" />
-                    </image>
-                </ImageView>
-                <Text fill="#51cbff" layoutX="14.0" layoutY="100.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Main Menu">
-                    <font>
-                        <Font size="10.0" />
-                    </font>
-                </Text>
-                <Text fill="#51cbff" layoutX="14.0" layoutY="220.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Workspace">
-                    <font>
-                        <Font size="10.0" />
-                    </font>
-                </Text>
-                <Pane layoutY="105.0" prefHeight="35.0" prefWidth="180.0" style="-fx-background-color: #1b2b65;">
-                    <children>
-                        <Text fill="WHITE" layoutX="50.0" layoutY="22.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Daily Report" wrappingWidth="89.900390625" />
-                    </children>
-                </Pane>
-                <Pane layoutY="145.0" prefHeight="35.0" prefWidth="180.0" style="-fx-background-color: #1b2b65;">
-                    <children>
-                        <Text fill="WHITE" layoutX="50.0" layoutY="22.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="General queries" />
-                    </children>
-                </Pane>
-                <Pane layoutY="225.0" prefHeight="35.0" prefWidth="180.0" style="-fx-background-color: #1b2b65;">
-                    <children>
-                        <Text fill="WHITE" layoutX="50.0" layoutY="22.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="History" />
-                    </children>
-                </Pane>
-                <Pane layoutY="265.0" prefHeight="35.0" prefWidth="180.0" style="-fx-background-color: #1b2b65;">
-                    <children>
-                        <Text fill="WHITE" layoutX="50.0" layoutY="22.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Requests" />
-                    </children>
-                </Pane>
-                <Text fill="#51cbff" layoutX="14.0" layoutY="380.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="General">
-                    <font>
-                        <Font size="10.0" />
-                    </font>
-                </Text>
-                <Pane layoutY="385.0" prefHeight="35.0" prefWidth="180.0" style="-fx-background-color: #1b2b65;">
-                    <children>
-                        <Text fill="WHITE" layoutX="50.0" layoutY="22.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Settings" />
-                    </children>
-                </Pane>
-                <Pane layoutY="305.0" prefHeight="35.0" prefWidth="180.0" style="-fx-background-color: #1b2b65;">
-                    <children>
-                        <Text fill="WHITE" layoutX="50.0" layoutY="22.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Analytics" />
-                    </children>
-                </Pane>
-            </children>
-        </AnchorPane>
-    </left>
-   <center>
-        <AnchorPane prefHeight="650.0" prefWidth="820.0" style="-fx-border-radius: 30;" BorderPane.alignment="CENTER">
-            <children>
-                <Text layoutX="42.0" layoutY="88.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="alata-text" text="Check General Queries" wrappingWidth="432.0">
-                    <font>
-                        <Font name="SansSerif Regular" size="40.0" />
-                    </font>
-                </Text>
-                <Text fontSmoothingType="LCD" layoutX="42.0" layoutY="126.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="alata-text" text="Search for a specific report">
-                    <font>
-                        <Font name="System Bold" size="12.0" />
-                    </font>
-                </Text>
-            <TitledPane animated="false" layoutX="42.0" layoutY="145.0" styleClass="alata-text" text="Driver activity leaderboard">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="alata-text" />
-              </content>
-            </TitledPane>
-            <TitledPane animated="false" layoutX="285.0" layoutY="145.0" styleClass="alata-text" text="User activity leaderboard">
-               <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="alata-text" />
-               </content>
-            </TitledPane>
-            <TitledPane animated="false" layoutX="530.0" layoutY="145.0" prefHeight="206.0" prefWidth="273.0" styleClass="alata-text" text="Busier routes leaderboard">
-               <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="alata-text">
-                     <children>
-                        <DatePicker layoutX="165.0" layoutY="5.0" prefHeight="25.0" prefWidth="100.0" />
-                     </children>
-                  </AnchorPane>
-               </content>
-            </TitledPane>
-
-                <ImageView layoutX="55.0" layoutY="412.0" fitWidth="50" fitHeight="57">
-                    <image>
-                        <Image url="@/images/user.png" />
-                    </image>
-                </ImageView>
-
-                <ImageView layoutX="56.0" layoutY="497.0" fitWidth="50" fitHeight="57">
-                    <image>
-                        <Image url="@/images/monetization.png" />
-                    </image>
-                </ImageView>
-
-                <Text fontSmoothingType="LCD" layoutX="111.0" layoutY="428.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="alata-text" text="New users in the past 3 months">
+<SplitPane dividerPositions="0.25"
+           prefHeight="700.0" prefWidth="1100.0"
+           stylesheets="@../../../../../css/styles.css"
+           xmlns="http://javafx.com/javafx/23.0.1"
+           xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="org.tec.carpooling.ui.controllers.AdminQueriesController">
+   <items>
+      <AnchorPane disable="true" minHeight="0.0" minWidth="0.0" prefHeight="550.0" prefWidth="134.0" style="-fx-background-color: #081a51;">
+         <children>
+            <Text fill="WHITE" layoutX="86.0" layoutY="67.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="CarPool Hub" wrappingWidth="190.0">
                <font>
-                  <Font name="System Bold" size="12.0" />
+                  <Font name="SansSerif Bold" size="30.0" />
                </font>
             </Text>
-            <Text fontSmoothingType="LCD" layoutX="112.0" layoutY="512.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="alata-text" text="Average fare set by drivers" wrappingWidth="157.88401794433594">
+            <ImageView fitHeight="91.0" fitWidth="98.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../images/icono.png" />
+               </image>
+            </ImageView>
+            <Text fill="#51cbff" layoutX="15.0" layoutY="140.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Main Menu">
                <font>
-                  <Font name="System Bold" size="12.0" />
+                  <Font size="18.0" />
                </font>
             </Text>
-            <Text fontSmoothingType="LCD" layoutX="150.0" layoutY="463.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="alata-text" text="0">
+            <Text fill="#51cbff" layoutX="14.0" layoutY="310.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Workspace">
                <font>
-                  <Font name="System Bold" size="24.0" />
+                  <Font size="18.0" />
                </font>
             </Text>
-            <Text fontSmoothingType="LCD" layoutX="151.0" layoutY="548.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="alata-text" text="0">
-               <font>
-                  <Font name="System Bold" size="24.0" />
-               </font>
-            </Text>
-            <Pane layoutX="372.0" layoutY="448.0" prefHeight="78.0" prefWidth="390.0" style="-fx-background-color: #efefef;">
+            <Pane layoutX="30.0" layoutY="160.0" prefHeight="35.0" prefWidth="220.0" style="-fx-background-color: #1b2b65;">
                <children>
-                  <Text layoutX="21.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="View a list of all completed trips with basic details" wrappingWidth="204.60675048828125">
+                  <Text fill="WHITE" layoutX="48.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Daily Report" textAlignment="CENTER" wrappingWidth="128.0">
                      <font>
-                        <Font size="16.0" />
-                     </font>
-                  </Text>
-                  <Text fill="#017efa" layoutX="274.0" layoutY="44.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="See Details &gt;">
-                     <font>
-                        <Font size="16.0" />
+                        <Font size="18.0" />
                      </font>
                   </Text>
                </children>
             </Pane>
-            </children>
-        </AnchorPane>
-   </center>
-</BorderPane>
+            <Text fill="#51cbff" layoutX="14.0" layoutY="540.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="General">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Text>
+            <Pane layoutX="30.0" layoutY="215.0" prefHeight="35.0" prefWidth="220.0" style="-fx-background-color: #1b2b65;">
+               <children>
+                  <Text fill="WHITE" layoutX="42.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="General queries" textAlignment="CENTER" wrappingWidth="145.0">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+               </children>
+            </Pane>
+            <Pane layoutX="30.0" layoutY="330.0" prefHeight="35.0" prefWidth="220.0" style="-fx-background-color: #1b2b65;">
+               <children>
+                  <Text fill="WHITE" layoutX="48.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="History" textAlignment="CENTER" wrappingWidth="128.0">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+               </children>
+            </Pane>
+            <Pane layoutX="30.0" layoutY="385.0" prefHeight="35.0" prefWidth="220.0" style="-fx-background-color: #1b2b65;">
+               <children>
+                  <Text fill="WHITE" layoutX="48.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Analytics" textAlignment="CENTER" wrappingWidth="128.0">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+               </children>
+            </Pane>
+            <Pane layoutX="30.0" layoutY="560.0" prefHeight="35.0" prefWidth="220.0" style="-fx-background-color: #1b2b65;">
+               <children>
+                  <Text fill="WHITE" layoutX="48.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Settings" textAlignment="CENTER" wrappingWidth="128.0">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+               </children>
+            </Pane>
+            <Pane layoutX="30.0" layoutY="440.0" prefHeight="35.0" prefWidth="220.0" style="-fx-background-color: #1b2b65;">
+               <children>
+                  <Text fill="WHITE" layoutX="48.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Requests" textAlignment="CENTER" wrappingWidth="128.0">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+               </children>
+            </Pane>
+         </children>
+      </AnchorPane>
+      <AnchorPane prefHeight="650.0" prefWidth="820.0" style="-fx-border-radius: 30;">
+         <children>
+            <Text layoutX="42.0" layoutY="90.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="alata-text" text="Check General Queries" wrappingWidth="698.0">
+               <font>
+                  <Font name="SansSerif Regular" size="60.0" />
+               </font>
+            </Text>
+            <Text fontSmoothingType="LCD" layoutX="42.0" layoutY="140.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="alata-text" text="Search for a specific report">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </Text>
+            <TitledPane animated="false" layoutX="42.0" layoutY="155.0" prefHeight="260.0" prefWidth="240.0" styleClass="alata-text" text="Driver activity leaderboard">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" scaleY="0.0" styleClass="alata-text" />
+               </content>
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </TitledPane>
+            <TitledPane animated="false" layoutX="297.0" layoutY="155.0" prefHeight="260.0" prefWidth="228.0" styleClass="alata-text" text="User activity leaderboard">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="172.0" styleClass="alata-text" />
+               </content>
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </TitledPane>
+            <TitledPane animated="false" layoutX="539.0" layoutY="155.0" prefHeight="260.0" prefWidth="264.0" styleClass="alata-text" text="Busier routes leaderboard">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="alata-text">
+                     <children>
+                        <DatePicker layoutX="156.0" layoutY="5.0" prefHeight="25.0" prefWidth="100.0" />
+                     </children>
+                  </AnchorPane>
+               </content>
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </TitledPane>
+            <ImageView fitHeight="57" fitWidth="50" layoutX="45.0" layoutY="448.0">
+               <image>
+                  <Image url="@../../../../../images/user.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="57" fitWidth="50" layoutX="45.0" layoutY="559.0">
+               <image>
+                  <Image url="@../../../../../images/monetization.png" />
+               </image>
+            </ImageView>
+            <Text fontSmoothingType="LCD" layoutX="105.0" layoutY="473.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="alata-text" text="New users in the past 3 months">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Text>
+            <Text fontSmoothingType="LCD" layoutX="105.0" layoutY="587.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="alata-text" text="Average fare set by drivers" wrappingWidth="239.88401794433594">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Text>
+            <Text fontSmoothingType="LCD" layoutX="210.0" layoutY="508.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="alata-text" text="0">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </Text>
+            <Text fontSmoothingType="LCD" layoutX="210.0" layoutY="620.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="alata-text" text="0">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </Text>
+            <Pane layoutX="405.0" layoutY="497.0" prefHeight="78.0" prefWidth="390.0" style="-fx-background-color: #efefef;">
+               <children>
+                  <Text layoutX="12.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="View a list of all completed trips with basic details" wrappingWidth="228.60675048828125">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+                  <Text fill="#017efa" layoutX="274.0" layoutY="44.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="See Details &gt;">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+               </children>
+            </Pane>
+         </children>
+      </AnchorPane>
+   </items>
+</SplitPane>

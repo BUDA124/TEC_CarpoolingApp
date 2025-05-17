@@ -54,12 +54,4 @@ public class RegistrationController {
         alert.setContentText(message);
         alert.showAndWait();
     }
-
-    private void showSuccess(String message) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Registration Successful");
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
-    }
 }
