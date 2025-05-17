@@ -24,7 +24,7 @@
                 </Text>
                 <ImageView fitHeight="39.0" fitWidth="38.0" layoutX="8.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@../../../../../images/icono.png" />
+                        <Image url="@../images/icono.png" />
                     </image>
                 </ImageView>
                 <Text fill="#51cbff" layoutX="14.0" layoutY="100.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Main Menu">

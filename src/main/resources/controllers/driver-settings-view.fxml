@@ -23,7 +23,7 @@
                 </Text>
                 <ImageView fitHeight="39.0" fitWidth="38.0" layoutX="8.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@../../../../../images/icono.png" />
+                        <Image url="@../images/icono.png" />
                     </image>
                 </ImageView>
                 <Text fill="#51cbff" layoutX="14.0" layoutY="100.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Main Menu">
@@ -79,7 +79,7 @@
                 </Text>
                 <ImageView fitHeight="151.0" fitWidth="139.0" layoutX="50.0" layoutY="110.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@../../../../../images/licencia.png" />
+                        <Image url="@../images/licencia.png" />
                     </image>
                 </ImageView>
                 <Text layoutX="235.0" layoutY="145.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="adlam-text" text="Full Name">
@@ -141,7 +141,7 @@
             <DatePicker layoutX="269.0" layoutY="267.0" prefHeight="26.0" prefWidth="251.0" />
             <ImageView fitHeight="151.0" fitWidth="139.0" layoutX="50.0" layoutY="360.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../../../../images/car.png" />
+                  <Image url="@../images/car.png" />
                </image>
             </ImageView>
                 <Pane layoutX="162.0" layoutY="463.0" prefWidth="33.0" prefHeight="38.0" style="-fx-background-color: #017efa; -fx-alignment: center;">

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -19,7 +20,7 @@
                 </Text>
                 <ImageView fitHeight="39.0" fitWidth="38.0" layoutX="8.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@../../../../../images/icono.png" />
+                        <Image url="@../images/icono.png" />
                     </image>
                 </ImageView>
                 <Text fill="#51cbff" layoutX="14.0" layoutY="100.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Main Menu">
@@ -34,12 +35,12 @@
                 </Text>
                 <Pane layoutY="105.0" prefHeight="35.0" prefWidth="180.0" style="-fx-background-color: #1b2b65;">
                     <children>
-                        <Text fill="WHITE" layoutX="50.0" layoutY="22.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Daily Report" wrappingWidth="89.900390625" />
+                        <Text fill="WHITE" layoutX="50.0" layoutY="22.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Look for a ride" wrappingWidth="89.900390625" />
                     </children>
                 </Pane>
                 <Pane layoutY="145.0" prefHeight="35.0" prefWidth="180.0" style="-fx-background-color: #1b2b65;">
                     <children>
-                        <Text fill="WHITE" layoutX="50.0" layoutY="22.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="General queries" />
+                        <Text fill="WHITE" layoutX="50.0" layoutY="22.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Scheduled Rides" />
                     </children>
                 </Pane>
                 <Pane layoutY="225.0" prefHeight="35.0" prefWidth="180.0" style="-fx-background-color: #1b2b65;">
@@ -49,49 +50,33 @@
                 </Pane>
                 <Pane layoutY="265.0" prefHeight="35.0" prefWidth="180.0" style="-fx-background-color: #1b2b65;">
                     <children>
-                        <Text fill="WHITE" layoutX="50.0" layoutY="22.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Requests" />
+                        <Text fill="WHITE" layoutX="50.0" layoutY="22.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Analytics" />
                     </children>
                 </Pane>
-                <Text fill="#51cbff" layoutX="14.0" layoutY="380.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="General">
+                <Text fill="#51cbff" layoutX="14.0" layoutY="359.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="General">
                     <font>
                         <Font size="10.0" />
                     </font>
                 </Text>
-                <Pane layoutY="385.0" prefHeight="35.0" prefWidth="180.0" style="-fx-background-color: #1b2b65;">
+                <Pane layoutY="365.0" prefHeight="35.0" prefWidth="180.0" style="-fx-background-color: #1b2b65;">
                     <children>
                         <Text fill="WHITE" layoutX="50.0" layoutY="22.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Settings" />
-                    </children>
-                </Pane>
-                <Pane layoutY="305.0" prefHeight="35.0" prefWidth="180.0" style="-fx-background-color: #1b2b65;">
-                    <children>
-                        <Text fill="WHITE" layoutX="50.0" layoutY="22.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Analytics" />
                     </children>
                 </Pane>
             </children>
         </AnchorPane>
     </left>
     <right>
-        <AnchorPane prefHeight="650.0" prefWidth="820.0" style="-fx-border-radius: 30;" BorderPane.alignment="CENTER">
+        <AnchorPane prefHeight="650.0" prefWidth="870.0" style="-fx-border-radius: 30;" BorderPane.alignment="CENTER">
             <children>
-                <Text layoutX="42.0" layoutY="88.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="alata-text" text="View Institutions' Admins" wrappingWidth="568.0">
+                <Text layoutX="42.0" layoutY="88.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="alata-text" text="History of completed rides" wrappingWidth="505.0">
                     <font>
                         <Font name="SansSerif Regular" size="40.0" />
                     </font>
                 </Text>
-                <Pane layoutX="42.0" layoutY="120.0" prefHeight="47.0" prefWidth="718.0" style="-fx-background-color: #efefef;">
-                    <children>
-                        <Text layoutX="24.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Admin #1 - Date">
-                            <font>
-                                <Font size="16.0" />
-                            </font>
-                        </Text>
-                        <Text fill="#017efa" layoutX="610.0" layoutY="28.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="See Details &gt;">
-                            <font>
-                                <Font size="16.0" />
-                            </font>
-                        </Text>
-                    </children>
-                </Pane>
+            <ToggleButton layoutX="42.0" layoutY="110.0" mnemonicParsing="false" style="-fx-background-color: #017efa;" styleClass="alata-text" text="Total rides: Calculated Amount" />
+            <ToggleButton layoutX="260.0" layoutY="110.0" mnemonicParsing="false" style="-fx-background-color: #017efa;" styleClass="alata-text" text="Total times driven: Calculated Amount" />
+            <ToggleButton layoutX="525.0" layoutY="110.0" mnemonicParsing="false" style="-fx-background-color: #017efa;" styleClass="alata-text" text="Rides I've ridden: Calculated Amount" />
             </children>
         </AnchorPane>
     </right>

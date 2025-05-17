@@ -21,7 +21,7 @@
                 </Text>
                 <ImageView fitHeight="39.0" fitWidth="38.0" layoutX="8.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@../../../../../images/icono.png" />
+                        <Image url="@../images/icono.png" />
                     </image>
                 </ImageView>
                 <Text fill="#51cbff" layoutX="14.0" layoutY="100.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Main Menu">
@@ -89,17 +89,17 @@
                   </Text>
                   <ImageView fitHeight="98.0" fitWidth="105.0" layoutX="35.0" layoutY="51.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../../../images/default-pfp.png" />
+                        <Image url="@../images/default-pfp.png" />
                      </image>
                   </ImageView>
                   <ImageView fitHeight="98.0" fitWidth="105.0" layoutX="35.0" layoutY="160.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../../../images/licencia.png" />
+                        <Image url="@../images/licencia.png" />
                      </image>
                   </ImageView>
                   <ImageView fitHeight="98.0" fitWidth="105.0" layoutX="35.0" layoutY="270.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../../../images/car.png" />
+                        <Image url="@../images/car.png" />
                      </image>
                   </ImageView>
                   <Text layoutX="225.0" layoutY="70.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Driver: Driver's Full Name">

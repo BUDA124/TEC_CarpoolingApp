@@ -19,7 +19,7 @@
                 </Text>
                 <ImageView fitHeight="39.0" fitWidth="38.0" layoutX="8.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@../../../../../images/icono.png" />
+                        <Image url="@../images/icono.png" />
                     </image>
                 </ImageView>
                 <Text fill="#51cbff" layoutX="14.0" layoutY="100.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Main Menu">
@@ -34,12 +34,12 @@
                 </Text>
                 <Pane layoutY="105.0" prefHeight="35.0" prefWidth="180.0" style="-fx-background-color: #1b2b65;">
                     <children>
-                        <Text fill="WHITE" layoutX="50.0" layoutY="22.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Look for a ride" wrappingWidth="89.900390625" />
+                        <Text fill="WHITE" layoutX="50.0" layoutY="22.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Daily Report" wrappingWidth="89.900390625" />
                     </children>
                 </Pane>
                 <Pane layoutY="145.0" prefHeight="35.0" prefWidth="180.0" style="-fx-background-color: #1b2b65;">
                     <children>
-                        <Text fill="WHITE" layoutX="50.0" layoutY="22.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Scheduled Rides" />
+                        <Text fill="WHITE" layoutX="50.0" layoutY="22.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="General queries" />
                     </children>
                 </Pane>
                 <Pane layoutY="225.0" prefHeight="35.0" prefWidth="180.0" style="-fx-background-color: #1b2b65;">
@@ -49,55 +49,50 @@
                 </Pane>
                 <Pane layoutY="265.0" prefHeight="35.0" prefWidth="180.0" style="-fx-background-color: #1b2b65;">
                     <children>
-                        <Text fill="WHITE" layoutX="50.0" layoutY="22.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Analytics" />
+                        <Text fill="WHITE" layoutX="50.0" layoutY="22.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Requests" />
                     </children>
                 </Pane>
-                <Text fill="#51cbff" layoutX="14.0" layoutY="359.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="General">
+                <Text fill="#51cbff" layoutX="14.0" layoutY="380.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="General">
                     <font>
                         <Font size="10.0" />
                     </font>
                 </Text>
-                <Pane layoutY="365.0" prefHeight="35.0" prefWidth="180.0" style="-fx-background-color: #1b2b65;">
+                <Pane layoutY="385.0" prefHeight="35.0" prefWidth="180.0" style="-fx-background-color: #1b2b65;">
                     <children>
                         <Text fill="WHITE" layoutX="50.0" layoutY="22.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Settings" />
+                    </children>
+                </Pane>
+                <Pane layoutY="305.0" prefHeight="35.0" prefWidth="180.0" style="-fx-background-color: #1b2b65;">
+                    <children>
+                        <Text fill="WHITE" layoutX="50.0" layoutY="22.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Analytics" />
                     </children>
                 </Pane>
             </children>
         </AnchorPane>
     </left>
-   <center>
+    <right>
         <AnchorPane prefHeight="650.0" prefWidth="820.0" style="-fx-border-radius: 30;" BorderPane.alignment="CENTER">
             <children>
-                <Text layoutX="42.0" layoutY="88.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="alata-text" text="Scheduled Rides" wrappingWidth="314.6666564941406">
+                <Text layoutX="42.0" layoutY="88.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="alata-text" text="View Institutions" wrappingWidth="568.0">
                     <font>
                         <Font name="SansSerif Regular" size="40.0" />
                     </font>
                 </Text>
-            <Pane layoutX="42.0" layoutY="140.0" prefHeight="47.0" prefWidth="750.0" style="-fx-background-color: #efefef;">
-               <children>
-                  <Text layoutX="24.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Trip starts in: Date - Destiny Location, Date, Departure time at 0:00">
-                     <font>
-                        <Font size="16.0" />
-                     </font>
-                  </Text>
-                  <Text fill="#017efa" layoutX="628.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="See Details &gt;">
-                     <font>
-                        <Font size="16.0" />
-                     </font>
-                  </Text>
-                   <Pane layoutX="594.0" layoutY="13.0" prefWidth="23.0" prefHeight="26.0" style="-fx-background-color: #017efa;">
-                       <children>
-                           <ImageView fitWidth="16.0" fitHeight="16.0" layoutX="3.5" layoutY="5.0">
-                               <image>
-                                   <Image url="@/images/list.png" />
-                               </image>
-                           </ImageView>
-                       </children>
-                   </Pane>
-
-               </children>
-            </Pane>
+                <Pane layoutX="42.0" layoutY="120.0" prefHeight="47.0" prefWidth="718.0" style="-fx-background-color: #efefef;">
+                    <children>
+                        <Text layoutX="24.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Institution #1 - Date">
+                            <font>
+                                <Font size="16.0" />
+                            </font>
+                        </Text>
+                        <Text fill="#017efa" layoutX="610.0" layoutY="28.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="See Details &gt;">
+                            <font>
+                                <Font size="16.0" />
+                            </font>
+                        </Text>
+                    </children>
+                </Pane>
             </children>
         </AnchorPane>
-   </center>
+    </right>
 </BorderPane>

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
+
 <?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -11,7 +11,6 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<?import javafx.scene.control.TextField?>
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
     <left>
         <AnchorPane prefHeight="550.0" prefWidth="134.0" style="-fx-background-color: #081a51;" BorderPane.alignment="CENTER">
@@ -23,7 +22,7 @@
                 </Text>
                 <ImageView fitHeight="39.0" fitWidth="38.0" layoutX="8.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@../../../../../images/icono.png" />
+                        <Image url="@../images/icono.png" />
                     </image>
                 </ImageView>
                 <Text fill="#51cbff" layoutX="14.0" layoutY="100.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Main Menu">
@@ -74,33 +73,86 @@
             </children>
         </AnchorPane>
     </left>
-    <right>
+   <center>
         <AnchorPane prefHeight="650.0" prefWidth="820.0" style="-fx-border-radius: 30;" BorderPane.alignment="CENTER">
             <children>
-                <Text layoutX="42.0" layoutY="88.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="alata-text" text="Add Institution Admin" wrappingWidth="568.0">
+                <Text layoutX="42.0" layoutY="88.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="alata-text" text="Check General Queries" wrappingWidth="432.0">
                     <font>
                         <Font name="SansSerif Regular" size="40.0" />
                     </font>
                 </Text>
-                <TextField floatText="Full Name" layoutX="42.0" layoutY="135.0" prefHeight="40.0" prefWidth="700.0" styleClass="akatab-text" />
-                <TextField floatText="Surname" layoutX="42.0" layoutY="180.0" prefHeight="40.0" prefWidth="700.0" styleClass="akatab-text" />
-                <TextField floatText="Email" layoutX="42.0" layoutY="225.0" prefHeight="40.0" prefWidth="700.0" styleClass="akatab-text" />
-                <Button layoutX="350.0" layoutY="533.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="95.0" text="Add">
+                <Text fontSmoothingType="LCD" layoutX="42.0" layoutY="126.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="alata-text" text="Search for a specific report">
                     <font>
-                        <Font size="16.0" />
+                        <Font name="System Bold" size="12.0" />
                     </font>
-                </Button>
-            <ComboBox layoutX="42.0" layoutY="325.0" prefHeight="26.0" prefWidth="110.0" promptText="Gender" />
-            <ComboBox layoutX="42.0" layoutY="365.0" prefHeight="27.0" prefWidth="110.0" promptText="Institution" />
-            <TextField floatText="Username" layoutX="42.0" layoutY="404.0" prefHeight="40.0" prefWidth="700.0" styleClass="akatab-text" />
-            <TextField floatText="Password" layoutX="42.0" layoutY="450.0" prefHeight="40.0" prefWidth="700.0" styleClass="akatab-text" />
-            <DatePicker layoutX="121.0" layoutY="279.0" prefHeight="26.0" prefWidth="174.0" />
-            <Text layoutX="42.0" layoutY="296.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Birthdate:">
+                </Text>
+            <TitledPane animated="false" layoutX="42.0" layoutY="145.0" styleClass="alata-text" text="Driver activity leaderboard">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="alata-text" />
+              </content>
+            </TitledPane>
+            <TitledPane animated="false" layoutX="285.0" layoutY="145.0" styleClass="alata-text" text="User activity leaderboard">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="alata-text" />
+               </content>
+            </TitledPane>
+            <TitledPane animated="false" layoutX="530.0" layoutY="145.0" prefHeight="206.0" prefWidth="273.0" styleClass="alata-text" text="Busier routes leaderboard">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="alata-text">
+                     <children>
+                        <DatePicker layoutX="165.0" layoutY="5.0" prefHeight="25.0" prefWidth="100.0" />
+                     </children>
+                  </AnchorPane>
+               </content>
+            </TitledPane>
+
+                <ImageView layoutX="55.0" layoutY="412.0" fitWidth="50" fitHeight="57">
+                    <image>
+                        <Image url="@/images/user.png" />
+                    </image>
+                </ImageView>
+
+                <ImageView layoutX="56.0" layoutY="497.0" fitWidth="50" fitHeight="57">
+                    <image>
+                        <Image url="@/images/monetization.png" />
+                    </image>
+                </ImageView>
+
+                <Text fontSmoothingType="LCD" layoutX="111.0" layoutY="428.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="alata-text" text="New users in the past 3 months">
                <font>
-                  <Font size="16.0" />
+                  <Font name="System Bold" size="12.0" />
                </font>
             </Text>
+            <Text fontSmoothingType="LCD" layoutX="112.0" layoutY="512.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="alata-text" text="Average fare set by drivers" wrappingWidth="157.88401794433594">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Text>
+            <Text fontSmoothingType="LCD" layoutX="150.0" layoutY="463.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="alata-text" text="0">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </Text>
+            <Text fontSmoothingType="LCD" layoutX="151.0" layoutY="548.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="alata-text" text="0">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </Text>
+            <Pane layoutX="372.0" layoutY="448.0" prefHeight="78.0" prefWidth="390.0" style="-fx-background-color: #efefef;">
+               <children>
+                  <Text layoutX="21.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="View a list of all completed trips with basic details" wrappingWidth="204.60675048828125">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Text>
+                  <Text fill="#017efa" layoutX="274.0" layoutY="44.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="See Details &gt;">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Text>
+               </children>
+            </Pane>
             </children>
         </AnchorPane>
-    </right>
+   </center>
 </BorderPane>

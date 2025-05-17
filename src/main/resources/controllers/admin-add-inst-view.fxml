@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -20,7 +21,7 @@
                 </Text>
                 <ImageView fitHeight="39.0" fitWidth="38.0" layoutX="8.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@../../../../../images/icono.png" />
+                        <Image url="@../images/icono.png" />
                     </image>
                 </ImageView>
                 <Text fill="#51cbff" layoutX="14.0" layoutY="100.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Main Menu">
@@ -74,26 +75,24 @@
     <right>
         <AnchorPane prefHeight="650.0" prefWidth="820.0" style="-fx-border-radius: 30;" BorderPane.alignment="CENTER">
             <children>
-                <Text layoutX="42.0" layoutY="88.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="alata-text" text="Requests for Driver Role" wrappingWidth="436.0">
+                <Text layoutX="42.0" layoutY="88.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="alata-text" text="Add Institution" wrappingWidth="568.0">
                     <font>
                         <Font name="SansSerif Regular" size="40.0" />
                     </font>
                 </Text>
-                <ComboBox layoutX="486.0" layoutY="55.0" prefHeight="40.0" prefWidth="121.0" promptText="Request Status" styleClass="akatab-text" />
-                <Pane layoutX="42.0" layoutY="142.0" prefHeight="47.0" prefWidth="650.0" style="-fx-background-color: #efefef;">
-                    <children>
-                        <Text layoutX="24.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Driver's Name - Request Date - Pending">
-                            <font>
-                                <Font size="16.0" />
-                            </font>
-                        </Text>
-                        <Text fill="#017efa" layoutX="545.0" layoutY="28.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="See Details &gt;">
-                            <font>
-                                <Font size="16.0" />
-                            </font>
-                        </Text>
-                    </children>
-                </Pane>
+            <TextField layoutX="42.0" layoutY="135.0" prefHeight="40.0" prefWidth="700.0" promptText="Institution's Name" styleClass="akatab-text" />
+            <TextField layoutX="42.0" layoutY="180.0" prefHeight="40.0" prefWidth="700.0" promptText="Institution's Email Domain" styleClass="akatab-text" />
+            <TextField layoutX="42.0" layoutY="225.0" prefHeight="40.0" prefWidth="700.0" promptText="Website URL" styleClass="akatab-text" />
+            <Text fill="#017efa" layoutX="42.0" layoutY="300.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add Admin">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </Text>
+            <Button layoutX="350.0" layoutY="533.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="95.0" text="Create">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Button>
             </children>
         </AnchorPane>
     </right>
