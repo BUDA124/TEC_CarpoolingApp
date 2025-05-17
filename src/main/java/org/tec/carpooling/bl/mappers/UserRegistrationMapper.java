@@ -14,14 +14,6 @@ public interface UserRegistrationMapper {
 
     UserRegistrationMapper INSTANCE = Mappers.getMapper(UserRegistrationMapper.class);
 
-    // --- Mapeo a PersonEntity ---
-    @Mapping(target = "id", ignore = true) // ID es autogenerado
-    @Mapping(target = "profilePicture", ignore = true)
-    @Mapping(target = "idInstitution", source = "idInstitution", qualifiedByName = "longToInstitutionEntity")
-    @Mapping(target = "idGender", source = "idGender", qualifiedByName = "longToGenderEntity")
-    @Mapping(target = "idAuditLog", ignore = true) // Se asignará en la capa de servicio
-    PersonEntity toPersonEntity(UserRegistrationDTO dto);
-
     @Named("longToInstitutionEntity")
     default InstitutionEntity longToInstitutionEntity(Long id) {
         if (id == null) {
@@ -44,7 +36,23 @@ public interface UserRegistrationMapper {
         return gender;
     }
 
-    // --- Mapeo a PersonalUserEntity ---
+    @Named("longToTypeOfCredentialEntity")
+    default TypeOfCredentialEntity longToTypeOfCredentialEntity(Long id) {
+        if (id == null) {
+            return null;
+        }
+        TypeOfCredentialEntity typeOfCredential = new TypeOfCredentialEntity();
+        typeOfCredential.setId(id);
+        return typeOfCredential;
+    }
+
+    @Mapping(target = "id", ignore = true) // ID es autogenerado
+    @Mapping(target = "profilePicture", ignore = true)
+    @Mapping(target = "idInstitution", source = "idInstitution", qualifiedByName = "longToInstitutionEntity")
+    @Mapping(target = "idGender", source = "idGender", qualifiedByName = "longToGenderEntity")
+    @Mapping(target = "idAuditLog", ignore = true) // Se asignará en la capa de servicio
+    PersonEntity toPersonEntity(UserRegistrationDTO dto);
+
     @Mapping(target = "id", ignore = true) // ID es autogenerado
     @Mapping(target = "password", source = "password") // La contraseña se pasará en texto plano, el servicio la hasheará
     @Mapping(target = "registrationDate", ignore = true) // Se asignará en la capa de servicio (e.g., LocalDate.now())
@@ -52,7 +60,6 @@ public interface UserRegistrationMapper {
     @Mapping(target = "auditLog", ignore = true) // Se asignará en la capa de servicio
     PersonalUserEntity toPersonalUserEntity(UserRegistrationDTO dto);
 
-    // --- Mapeo a EmailEntity (para el email personal) ---
     @Mapping(target = "id", ignore = true) // ID es autogenerado
     @Mapping(target = "emailAddress", source = "email")
     @Mapping(target = "person", ignore = true) // Se asignará en la capa de servicio
@@ -75,13 +82,4 @@ public interface UserRegistrationMapper {
     @Mapping(target = "typeOfCredential", source = "idTypeOfCredential", qualifiedByName = "longToTypeOfCredentialEntity") // Mapea el ID a la entidad TypeOfCredential
     CredentialEntity toCredentialEntity(UserRegistrationDTO dto);
 
-    @Named("longToTypeOfCredentialEntity")
-    default TypeOfCredentialEntity longToTypeOfCredentialEntity(Long id) {
-        if (id == null) {
-            return null;
-        }
-        TypeOfCredentialEntity typeOfCredential = new TypeOfCredentialEntity();
-        typeOfCredential.setId(id);
-        return typeOfCredential;
-    }
 }

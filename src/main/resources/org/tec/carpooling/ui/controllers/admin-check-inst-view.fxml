@@ -19,7 +19,7 @@
                 </Text>
                 <ImageView fitHeight="39.0" fitWidth="38.0" layoutX="8.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@../images/icono.png" />
+                        <Image url="@../../../../../images/icono.png" />
                     </image>
                 </ImageView>
                 <Text fill="#51cbff" layoutX="14.0" layoutY="100.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Main Menu">
@@ -73,14 +73,14 @@
     <right>
         <AnchorPane prefHeight="650.0" prefWidth="820.0" style="-fx-border-radius: 30;" BorderPane.alignment="CENTER">
             <children>
-                <Text layoutX="42.0" layoutY="88.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="alata-text" text="View Institutions' Admins" wrappingWidth="568.0">
+                <Text layoutX="42.0" layoutY="88.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="alata-text" text="View Institutions" wrappingWidth="568.0">
                     <font>
                         <Font name="SansSerif Regular" size="40.0" />
                     </font>
                 </Text>
                 <Pane layoutX="42.0" layoutY="120.0" prefHeight="47.0" prefWidth="718.0" style="-fx-background-color: #efefef;">
                     <children>
-                        <Text layoutX="24.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Admin #1 - Date">
+                        <Text layoutX="24.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Institution #1 - Date">
                             <font>
                                 <Font size="16.0" />
                             </font>
