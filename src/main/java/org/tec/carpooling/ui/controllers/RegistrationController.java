@@ -26,7 +26,6 @@ public class RegistrationController {
     @FXML private TextField emailField;
     @FXML private TextField institutionalEmailField;
     @FXML private DatePicker birthdatePicker;
-    @FXML private TextField nationalityField;
     @FXML private TextField usernameField;
     @FXML private PasswordField passwordField;
     @FXML private TextField credentialNumberField;
