@@ -23,7 +23,7 @@ public class SceneManager {
     }
 
     public static void switchToScene(ActionEvent event, String fxmlFile) throws IOException {
-        FXMLLoader loader = new FXMLLoader(SceneManager.class.getResource("/views/" + fxmlFile));
+        FXMLLoader loader = new FXMLLoader(SceneManager.class.getResource("/controllers/" + fxmlFile));
         ApplicationContext context = getContext();
         if (context != null) {
             loader.setControllerFactory(context::getBean);
@@ -38,7 +38,7 @@ public class SceneManager {
     }
 
     public static void switchToScene(Stage stage, String fxmlFile) throws IOException {
-        FXMLLoader loader = new FXMLLoader(SceneManager.class.getResource("/views/" + fxmlFile));
+        FXMLLoader loader = new FXMLLoader(SceneManager.class.getResource("/controllers/" + fxmlFile));
         ApplicationContext context = getContext();
         if (context != null) {
             loader.setControllerFactory(context::getBean);
@@ -53,7 +53,7 @@ public class SceneManager {
     }
 
     public static <T> T loadSceneAndGetController(Stage stage, String fxmlFile) throws IOException {
-        FXMLLoader loader = new FXMLLoader(SceneManager.class.getResource("/views/" + fxmlFile));
+        FXMLLoader loader = new FXMLLoader(SceneManager.class.getResource("/controllers/" + fxmlFile));
         ApplicationContext context = getContext();
         if (context != null) {
             loader.setControllerFactory(context::getBean);
