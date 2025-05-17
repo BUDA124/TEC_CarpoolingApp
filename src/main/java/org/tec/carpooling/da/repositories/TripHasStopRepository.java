@@ -1,11 +1,9 @@
 package org.tec.carpooling.da.repositories;
 
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 import org.tec.carpooling.da.entities.TripHasStopEntity;
-import org.tec.carpooling.da.entities.embeddable.TripHasStopId; // Assuming this PK class exists
 
-public class TripHasStopRepository extends BaseRepository<TripHasStopEntity, TripHasStopId> {
 
-    public TripHasStopRepository() {
-        super(TripHasStopEntity.class);
-    }
-}
+@Repository
+public interface TripHasStopRepository extends JpaRepository<TripHasStopEntity, Long> {}

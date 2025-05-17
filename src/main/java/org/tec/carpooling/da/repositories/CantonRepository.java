@@ -1,10 +1,8 @@
 package org.tec.carpooling.da.repositories;
 
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 import org.tec.carpooling.da.entities.CantonEntity;
 
-public class CantonRepository extends BaseRepository<CantonEntity, Long> {
-
-    public CantonRepository() {
-        super(CantonEntity.class);
-    }
-}
+@Repository
+public interface CantonRepository extends JpaRepository<CantonEntity, Long> {}

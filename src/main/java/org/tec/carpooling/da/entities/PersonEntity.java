@@ -10,6 +10,45 @@ import org.tec.carpooling.common.utils.HashingUtil;
 @Table(name = "PERSON")
 @SequenceGenerator(name = "seq_person_gen", sequenceName = "SEQ_PERSON", allocationSize = 1)
 public class PersonEntity implements Identifiable<Long> {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_person_gen")
+    @Column(name = "ID")
+    private Long id;
+
+    @Column(name = "FIRSTNAME", nullable = false, length = 50)
+    private String firstName;
+
+    @Column(name = "SECONDNAME", length = 50)
+    private String secondName;
+
+    @Column(name = "FIRSTSURNAME", nullable = false, length = 50)
+    private String firstSurname;
+
+    @Column(name = "SECONDSURNAME", length = 50)
+    private String secondSurname;
+
+    @Column(name = "BIRTHDATE", nullable = false)
+    private LocalDate birthdate;
+
+    @Column(name = "NATIONALITY", nullable = false, length = 50)
+    private String nationality;
+
+    @Lob()
+    private Blob profilePicture;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "IDINSTITUTION", nullable = false)
+    private InstitutionEntity idInstitution;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "IDAUDITLOG", nullable = false)
+    private AuditLogEntity idAuditLog;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "IDGENDER", nullable = false)
+    private GenderEntity idGender;
+
     public PersonEntity() {
     }
 
@@ -21,12 +60,12 @@ public class PersonEntity implements Identifiable<Long> {
         this.idGender = idGender;
     }
 
-    public AuditLogEntity getAuditLog() {
-        return auditLog;
+    public AuditLogEntity getIdAuditLog() {
+        return idAuditLog;
     }
 
-    public void setAuditLog(AuditLogEntity auditLog) {
-        this.auditLog = auditLog;
+    public void setIdAuditLog(AuditLogEntity auditLog) {
+        this.idAuditLog = auditLog;
     }
 
     public InstitutionEntity getIdInstitution() {
@@ -101,44 +140,6 @@ public class PersonEntity implements Identifiable<Long> {
         this.id = id;
     }
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_person_gen")
-    @Column(name = "ID")
-    private Long id;
-
-    @Column(name = "FIRSTNAME", nullable = false, length = 50)
-    private String firstName;
-
-    @Column(name = "SECONDNAME", length = 50)
-    private String secondName;
-
-    @Column(name = "FIRSTSURNAME", nullable = false, length = 50)
-    private String firstSurname;
-
-    @Column(name = "SECONDSURNAME", length = 50)
-    private String secondSurname;
-
-    @Column(name = "BIRTHDATE", nullable = false)
-    private LocalDate birthdate;
-
-    @Column(name = "NATIONALITY", nullable = false, length = 50)
-    private String nationality;
-
-    @Lob()
-    private Blob profilePicture;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "IDINSTITUTION", nullable = false)
-    private InstitutionEntity idInstitution;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "IDAUDITLOG", nullable = false)
-    private AuditLogEntity auditLog;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "IDGENDER", nullable = false)
-    private GenderEntity idGender;
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -148,7 +149,7 @@ public class PersonEntity implements Identifiable<Long> {
                 Objects.equals(firstSurname, that.firstSurname) && Objects.equals(secondSurname, that.secondSurname) &&
                 Objects.equals(birthdate, that.birthdate) && Objects.equals(nationality, that.nationality) &&
                 Objects.equals(profilePicture, that.profilePicture) && Objects.equals(idInstitution, that.idInstitution) &&
-                Objects.equals(auditLog, that.auditLog) && Objects.equals(idGender, that.idGender);
+                Objects.equals(idAuditLog, that.idAuditLog) && Objects.equals(idGender, that.idGender);
     }
 
     @Override
@@ -168,7 +169,7 @@ public class PersonEntity implements Identifiable<Long> {
                 ", nationality='" + nationality + '\'' +
                 ", profilePicture=" + profilePicture +
                 ", idInstitution=" + idInstitution +
-                ", auditLog=" + auditLog +
+                ", auditLog=" + idAuditLog +
                 ", idGender=" + idGender +
                 '}';
     }

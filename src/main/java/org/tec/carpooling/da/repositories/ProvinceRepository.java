@@ -1,10 +1,9 @@
 package org.tec.carpooling.da.repositories;
 
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 import org.tec.carpooling.da.entities.ProvinceEntity;
 
-public class ProvinceRepository extends BaseRepository<ProvinceEntity, Long> {
 
-    public ProvinceRepository() {
-        super(ProvinceEntity.class);
-    }
-}
+@Repository
+public interface ProvinceRepository extends JpaRepository<ProvinceEntity, Long> {}

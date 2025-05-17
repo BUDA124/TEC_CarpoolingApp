@@ -1,10 +1,9 @@
 package org.tec.carpooling.da.repositories;
 
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 import org.tec.carpooling.da.entities.GenderEntity;
 
-public class GenderRepository extends BaseRepository<GenderEntity, Long> {
 
-    public GenderRepository() {
-        super(GenderEntity.class);
-    }
-}
+@Repository
+public interface GenderRepository extends JpaRepository<GenderEntity, Long> {}

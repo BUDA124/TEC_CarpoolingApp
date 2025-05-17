@@ -1,11 +1,9 @@
 package org.tec.carpooling.da.repositories;
 
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 import org.tec.carpooling.da.entities.LogBookHasEntityModifiedEntity;
-import org.tec.carpooling.da.entities.embeddable.LogBookHasEntityModifiedId; // Assuming this PK class exists
 
-public class LogBookHasEntityModifiedRepository extends BaseRepository<LogBookHasEntityModifiedEntity, LogBookHasEntityModifiedId> {
 
-    public LogBookHasEntityModifiedRepository() {
-        super(LogBookHasEntityModifiedEntity.class);
-    }
-}
+@Repository
+public interface LogBookHasEntityModifiedRepository extends JpaRepository<LogBookHasEntityModifiedEntity, Long> {}

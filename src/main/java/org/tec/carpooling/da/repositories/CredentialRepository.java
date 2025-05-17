@@ -1,10 +1,13 @@
 package org.tec.carpooling.da.repositories;
 
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 import org.tec.carpooling.da.entities.CredentialEntity;
 
-public class CredentialRepository extends BaseRepository<CredentialEntity, Long> {
+import java.util.List;
 
-    public CredentialRepository() {
-        super(CredentialEntity.class);
-    }
+
+@Repository
+public interface CredentialRepository extends JpaRepository<CredentialEntity, Long> {
+    List<CredentialEntity> findByIdPerson(Long idPerson);
 }

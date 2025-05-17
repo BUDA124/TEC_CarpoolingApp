@@ -5,23 +5,30 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import org.tec.carpooling.common.utils.PersistenceManager;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.context.ConfigurableApplicationContext;
+// Ya no necesitas PersistenceManager aquí, Spring lo gestionará
+// import org.tec.carpooling.common.utils.PersistenceManager;
 
 import java.io.IOException;
 import java.net.URL;
 
 public class CarpoolingApplication extends Application {
 
+    private ConfigurableApplicationContext springContext;
+
     @Override
     public void init() throws Exception {
-        System.out.println("INFO: Application initializing...");
+        System.out.println("INFO: Initializing Spring Context...");
         try {
-            PersistenceManager.initializeFactory();
+            springContext = new SpringApplicationBuilder(CarpoolingSpringApp.class).run();
+            CarpoolingSpringApp.setSpringContext(this.springContext);
+            System.out.println("INFO: Spring Context initialized.");
         } catch (Exception e) {
-            System.err.println("FATAL: Database initialization failed. Application cannot start.");
-            throw new RuntimeException("Database initialization failed", e);
+            System.err.println("FATAL: Spring Context initialization failed. Application cannot start.");
+            e.printStackTrace();
+            throw new RuntimeException("Spring Context initialization failed", e);
         }
-        System.out.println("INFO: Database connection pool initialized (EntityManagerFactory created).");
         super.init();
     }
 
@@ -29,19 +36,23 @@ public class CarpoolingApplication extends Application {
     public void start(Stage primaryStage) {
         System.out.println("INFO: Application starting UI...");
         try {
-            URL fxmlUrl = getClass().getResource("/views/login-view.fxml"); // Ajusta la ruta a tu FXML principal
+            URL fxmlUrl = getClass().getResource("/views/login-view.fxml");
             if (fxmlUrl == null) {
-                System.err.println("ERROR: Cannot find FXML file.");
+                System.err.println("ERROR: Cannot find FXML file: /views/login-view.fxml");
                 return;
             }
-            Parent root = FXMLLoader.load(fxmlUrl);
+
+            FXMLLoader fxmlLoader = new FXMLLoader(fxmlUrl);
+            fxmlLoader.setControllerFactory(springContext::getBean);
+
+            Parent root = fxmlLoader.load();
             Scene scene = new Scene(root);
 
             URL cssUrl = getClass().getResource("/css/styles.css");
             if (cssUrl != null) {
-                 scene.getStylesheets().add(cssUrl.toExternalForm());
+                scene.getStylesheets().add(cssUrl.toExternalForm());
             } else {
-                 System.out.println("WARN: CSS file not found.");
+                System.out.println("WARN: CSS file /css/styles.css not found.");
             }
 
             primaryStage.setTitle("Carpooling App");
@@ -60,15 +71,16 @@ public class CarpoolingApplication extends Application {
 
     @Override
     public void stop() throws Exception {
-        // MÉTODO stop(): Se ejecuta cuando la aplicación se cierra.
-        // Es el lugar ideal para liberar recursos, como la conexión a la BD.
         System.out.println("INFO: Application stopping...");
-        PersistenceManager.closeFactory(); // <-- ¡AQUÍ CIERRAS LA FÁBRICA (y las conexiones)!
-        System.out.println("INFO: Database connection pool closed.");
+        if (springContext != null) {
+            springContext.close();
+            System.out.println("INFO: Spring Context closed.");
+        }
+        CarpoolingSpringApp.setSpringContext(null);
         super.stop();
     }
 
-    // Tu método main que simplemente lanza la aplicación JavaFX
+    // Aquí NO inicia la aplicación. Iniciar en CarpoolingSpringApp.
     public static void main(String[] args) {
         launch(args);
     }

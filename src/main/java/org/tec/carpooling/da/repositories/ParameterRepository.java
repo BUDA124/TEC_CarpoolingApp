@@ -1,10 +1,9 @@
 package org.tec.carpooling.da.repositories;
 
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 import org.tec.carpooling.da.entities.ParameterEntity;
 
-public class ParameterRepository extends BaseRepository<ParameterEntity, Long> {
 
-    public ParameterRepository() {
-        super(ParameterEntity.class);
-    }
-}
+@Repository
+public interface ParameterRepository extends JpaRepository<ParameterEntity, Long> {}

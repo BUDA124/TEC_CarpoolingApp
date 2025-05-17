@@ -1,10 +1,9 @@
 package org.tec.carpooling.da.repositories;
 
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 import org.tec.carpooling.da.entities.ContactPhoneNumberEntity;
 
-public class ContactPhoneNumberRepository extends BaseRepository<ContactPhoneNumberEntity, Long> {
 
-    public ContactPhoneNumberRepository() {
-        super(ContactPhoneNumberEntity.class);
-    }
-}
+@Repository
+public interface ContactPhoneNumberRepository extends JpaRepository<ContactPhoneNumberEntity, Long> {}

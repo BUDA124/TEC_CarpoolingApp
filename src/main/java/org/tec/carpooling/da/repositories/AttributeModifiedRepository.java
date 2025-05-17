@@ -1,10 +1,8 @@
 package org.tec.carpooling.da.repositories;
 
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 import org.tec.carpooling.da.entities.AttributeModifiedEntity;
 
-public class AttributeModifiedRepository extends BaseRepository<AttributeModifiedEntity, Long> {
-
-    public AttributeModifiedRepository() {
-        super(AttributeModifiedEntity.class);
-    }
-}
+@Repository
+public interface AttributeModifiedRepository extends JpaRepository<AttributeModifiedEntity, Long> {}

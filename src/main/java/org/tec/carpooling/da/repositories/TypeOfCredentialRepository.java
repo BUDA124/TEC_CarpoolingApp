@@ -1,10 +1,9 @@
 package org.tec.carpooling.da.repositories;
 
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 import org.tec.carpooling.da.entities.TypeOfCredentialEntity;
 
-public class TypeOfCredentialRepository extends BaseRepository<TypeOfCredentialEntity, Long> {
 
-    public TypeOfCredentialRepository() {
-        super(TypeOfCredentialEntity.class);
-    }
-}
+@Repository
+public interface TypeOfCredentialRepository extends JpaRepository<TypeOfCredentialEntity, Long> {}

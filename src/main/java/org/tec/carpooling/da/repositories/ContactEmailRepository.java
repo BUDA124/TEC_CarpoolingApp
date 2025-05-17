@@ -1,10 +1,9 @@
 package org.tec.carpooling.da.repositories;
 
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 import org.tec.carpooling.da.entities.ContactEmailEntity;
 
-public class ContactEmailRepository extends BaseRepository<ContactEmailEntity, Long> {
 
-    public ContactEmailRepository() {
-        super(ContactEmailEntity.class);
-    }
-}
+@Repository
+public interface ContactEmailRepository extends JpaRepository<ContactEmailEntity, Long> {}

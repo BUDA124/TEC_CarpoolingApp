@@ -1,10 +1,9 @@
 package org.tec.carpooling.da.repositories;
 
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 import org.tec.carpooling.da.entities.InstitutionEntity;
 
-public class InstitutionRepository extends BaseRepository<InstitutionEntity, Long> {
 
-    public InstitutionRepository() {
-        super(InstitutionEntity.class);
-    }
-}
+@Repository
+public interface InstitutionRepository extends JpaRepository<InstitutionEntity, Long> {}

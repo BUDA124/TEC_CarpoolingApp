@@ -1,11 +1,8 @@
 package org.tec.carpooling.da.repositories;
 
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 import org.tec.carpooling.da.entities.AttrModHasEntModEntity;
-import org.tec.carpooling.da.entities.embeddable.AttrModHasEntModId; // Assuming this PK class exists
 
-public class AttrModHasEntModRepository extends BaseRepository<AttrModHasEntModEntity, AttrModHasEntModId> {
-
-    public AttrModHasEntModRepository() {
-        super(AttrModHasEntModEntity.class);
-    }
-}
+@Repository
+public interface AttrModHasEntModRepository extends JpaRepository<AttrModHasEntModEntity, Long> {}

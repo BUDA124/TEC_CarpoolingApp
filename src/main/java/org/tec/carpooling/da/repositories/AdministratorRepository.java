@@ -1,11 +1,8 @@
 package org.tec.carpooling.da.repositories;
 
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 import org.tec.carpooling.da.entities.AdministratorEntity;
 
-// Assuming AdministratorEntity's PK (idPerson) is mapped as Long and identifiable via getId()
-public class AdministratorRepository extends BaseRepository<AdministratorEntity, Long> {
-
-    public AdministratorRepository() {
-        super(AdministratorEntity.class);
-    }
-}
+@Repository
+public interface AdministratorRepository extends JpaRepository<AdministratorEntity, Long> {}

@@ -1,10 +1,13 @@
 package org.tec.carpooling.da.repositories;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 import org.tec.carpooling.da.entities.InstitutionalEmailEntity;
 
-public class InstitutionalEmailRepository extends BaseRepository<InstitutionalEmailEntity, Long> {
 
-    public InstitutionalEmailRepository() {
-        super(InstitutionalEmailEntity.class);
-    }
+@Repository
+public interface InstitutionalEmailRepository extends JpaRepository<InstitutionalEmailEntity, Long> {
+    boolean existsByEmailAddress(String institutionalEmail);
 }

@@ -10,7 +10,8 @@ import org.tec.carpooling.common.utils.HashingUtil;
     @UniqueConstraint(columnNames = {"USERNAME"}, name = "UK_USER_USERNAME")
 })
 @SequenceGenerator(name = "seq_personaluser_gen", sequenceName = "SEQ_PERSONALUSER", allocationSize = 1)
-public class PersonalUserEntity implements Identifiable<Long> {
+public class
+PersonalUserEntity implements Identifiable<Long> {
 
     public PersonalUserEntity() {
     }

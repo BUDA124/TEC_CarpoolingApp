@@ -1,10 +1,9 @@
 package org.tec.carpooling.da.repositories;
 
-import org.tec.carpooling.da.entities.AuditLogEntity;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+import org.tec.carpooling.da.entities.AuditLogEntity; // Tu entidad Person
+import java.util.Optional;
 
-public class AuditLogRepository extends BaseRepository<AuditLogEntity, Long> {
-
-    public AuditLogRepository() {
-        super(AuditLogEntity.class);
-    }
-}
+@Repository
+public interface AuditLogRepository extends JpaRepository<AuditLogEntity, Long> {}

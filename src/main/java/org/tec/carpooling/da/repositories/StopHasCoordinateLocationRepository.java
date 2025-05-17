@@ -1,11 +1,9 @@
 package org.tec.carpooling.da.repositories;
 
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 import org.tec.carpooling.da.entities.StopHasCoordinateLocationEntity;
-import org.tec.carpooling.da.entities.embeddable.StopHasCoordinateLocationId; // Assuming this PK class exists
 
-public class StopHasCoordinateLocationRepository extends BaseRepository<StopHasCoordinateLocationEntity, StopHasCoordinateLocationId> {
 
-    public StopHasCoordinateLocationRepository() {
-        super(StopHasCoordinateLocationEntity.class);
-    }
-}
+@Repository
+public interface StopHasCoordinateLocationRepository extends JpaRepository<StopHasCoordinateLocationEntity, Long> {}

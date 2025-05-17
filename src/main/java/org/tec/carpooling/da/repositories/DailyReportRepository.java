@@ -1,10 +1,9 @@
 package org.tec.carpooling.da.repositories;
 
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 import org.tec.carpooling.da.entities.DailyReportEntity;
 
-public class DailyReportRepository extends BaseRepository<DailyReportEntity, Long> {
 
-    public DailyReportRepository() {
-        super(DailyReportEntity.class);
-    }
-}
+@Repository
+public interface DailyReportRepository extends JpaRepository<DailyReportEntity, Long> {}
