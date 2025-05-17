@@ -1,4 +1,4 @@
-package controllers;
+package org.tec.carpooling.ui.controllers;
 
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -26,6 +26,7 @@ public class RegistrationController {
     public void initialize() {
         // Load Genders
         List<GenderEntity> genders = simpleDataRetrievalService.getAllGenders();
+
         genderComboBox.setItems(FXCollections.observableArrayList(genders));
 
         genderComboBox.setConverter(new StringConverter<GenderEntity>() {

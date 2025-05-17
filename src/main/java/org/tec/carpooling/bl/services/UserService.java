@@ -8,12 +8,11 @@ public interface UserService {
     /**
      * Registers a new user in the system.
      * @param dto The user registration data.
-     * @return UserDTO containing basic information of the newly registered user.
      * @throws org.tec.carpooling.common.exceptions.ValidationException if DTO validation fails.
      * @throws org.tec.carpooling.common.exceptions.UserRegistrationException for other registration-specific errors.
      * @throws org.tec.carpooling.common.exceptions.EntityNotFoundException if related entities like Institution or Gender are not found.
      */
-    UserDTO registerNewUser(UserRegistrationDTO dto);
+    void registerNewUser(UserRegistrationDTO dto);
 
     /**
      * Authenticates a user based on username and password.
