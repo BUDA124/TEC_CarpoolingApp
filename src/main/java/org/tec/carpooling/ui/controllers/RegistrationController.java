@@ -1,4 +1,4 @@
-package controllers;
+package org.tec.carpooling.ui.controllers;
 
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -6,7 +6,9 @@ import javafx.scene.control.*;
 import javafx.util.StringConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.tec.carpooling.bl.dto.UI_BL.UserRegistrationDTO;
 import org.tec.carpooling.bl.services.SimpleDataRetrievalService;
+import org.tec.carpooling.bl.services.UserService;
 import org.tec.carpooling.da.entities.GenderEntity;
 
 import java.util.List;
@@ -18,6 +20,9 @@ public class RegistrationController {
 
     @Autowired
     private SimpleDataRetrievalService simpleDataRetrievalService;
+
+    @Autowired
+    private UserService userService;
 
     @Autowired
     public RegistrationController() {}
@@ -44,7 +49,35 @@ public class RegistrationController {
     }
 
     @FXML
-    private void handleRegister() {}
+    private void handleRegister() {
+        // ... obtener otros datos de la persona (nombre, apellido, etc.)
+        // String firstName = firstNameField.getText();
+        // ...
+
+        GenderEntity selectedGender = genderComboBox.getSelectionModel().getSelectedItem();
+
+        if (selectedGender == null) {
+            // Mostrar error: el género es obligatorio
+            return;
+        }
+
+        UserRegistrationDTO userDTO = new UserRegistrationDTO();
+        // personDTO.setFirstName(firstName);
+        // ... setear otros campos del DTO ...
+
+        userDTO.setIdGender(selectedGender.getId());
+        // Institution u otros seleccionados de forma similar:
+        // personDTO.setInstitutionId(selectedInstitution.getId());
+        // ...
+
+
+        try {
+            userService.registerNewUser(userDTO);
+            // Mostrar mensaje de éxito
+        } catch (Exception e) {
+            // Mostrar mensaje de error
+        }
+    }
 
     private void showError(String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);

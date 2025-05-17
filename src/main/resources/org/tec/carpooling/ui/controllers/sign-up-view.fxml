@@ -16,18 +16,18 @@
 
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="controllers.RegistrationController"
+            fx:controller="org.tec.carpooling.ui.controllers.RegistrationController"
             prefHeight="400.0" prefWidth="600.0">
 
 </AnchorPane>
 
-<SplitPane dividerPositions="0.41894353369763204" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1100.0" stylesheets="@../css/styles.css" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/23.0.1">
+<SplitPane dividerPositions="0.41894353369763204" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1100.0" stylesheets="@../../../../../css/styles.css" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/23.0.1">
   <items>
     <AnchorPane disable="true" minHeight="0.0" minWidth="0.0" prefHeight="698.0" prefWidth="491.0" style="-fx-background-color: #081a51;">
          <children>
             <ImageView fitHeight="270.0" fitWidth="500.0" layoutX="-16.0" layoutY="223.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../images/logo.png" />
+                  <Image url="@../../../../../images/logo.png" />
                </image>
             </ImageView>
             <Text fill="WHITE" layoutX="107.0" layoutY="118.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="adlam-text" text="Secure rides within your community" textAlignment="CENTER" wrappingWidth="235.03466796875">
@@ -59,7 +59,7 @@
             <ComboBox layoutX="465.0" layoutY="255.0" prefHeight="30.0" prefWidth="120.0" promptText="Gender" styleClass="adlam-text" visibleRowCount="3" />
             <ImageView fitHeight="31.0" fitWidth="37.0" layoutX="26.0" layoutY="310.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../images/subir-foto.png" />
+                  <Image url="@../../../../../images/subir-foto.png" />
                </image>
             </ImageView>
             <PasswordField layoutX="28.0" layoutY="431.0" prefHeight="30.0" prefWidth="280.0" promptText="Password" styleClass="adlam-text" />
