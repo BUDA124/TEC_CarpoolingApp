@@ -111,4 +111,15 @@ PersonalUserEntity implements Identifiable<Long> {
                 ", auditLogId=" + (auditLog != null ? auditLog.getId() : null) +
                 '}';
     }
+
+    private String status;
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
 }
