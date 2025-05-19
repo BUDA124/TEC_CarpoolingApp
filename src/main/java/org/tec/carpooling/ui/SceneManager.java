@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import org.springframework.context.ApplicationContext;
 import org.tec.carpooling.app.CarpoolingSpringApp;
@@ -37,18 +38,18 @@ public class SceneManager {
         stage.show();
     }
 
-    public static void switchToScene(Stage stage, String fxmlFile) throws IOException {
+    public static void switchToScene(MouseEvent event, String fxmlFile) throws IOException {
         FXMLLoader loader = new FXMLLoader(SceneManager.class.getResource("/org/tec/carpooling/ui/controllers/" + fxmlFile));
         ApplicationContext context = getContext();
         if (context != null) {
             loader.setControllerFactory(context::getBean);
         } else {
-            System.err.println("WARN: SceneManager.switchToScene(Stage) - Spring context is null. Controllers might not be injected for " + fxmlFile);
+            System.err.println("WARN: SceneSwitcher.switchToScene - Spring context is null. Controllers might not be injected for " + fxmlFile);
         }
         Parent root = loader.load();
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setScene(scene);
-        stage.setTitle("Carpooling App - " + fxmlFile.replace(".fxml", ""));
         stage.show();
     }
 
