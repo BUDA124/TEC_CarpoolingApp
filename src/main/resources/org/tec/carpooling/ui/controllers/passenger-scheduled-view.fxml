@@ -8,13 +8,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<SplitPane dividerPositions="0.25"
-           maxHeight="-Infinity" maxWidth="-Infinity"
-           minHeight="-Infinity" minWidth="-Infinity"
-           prefHeight="700.0" prefWidth="1100.0"
-           xmlns="http://javafx.com/javafx/23.0.1"
-           xmlns:fx="http://javafx.com/fxml/1"
-           fx:controller="org.tec.carpooling.ui.controllers.PassengerScheduledController">
+<SplitPane dividerPositions="0.25" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.tec.carpooling.ui.controllers.PassengerScheduledController">
    <items>
       <AnchorPane disable="true" minHeight="0.0" minWidth="0.0" prefHeight="550.0" prefWidth="134.0" style="-fx-background-color: #081a51;">
          <children>
@@ -113,7 +107,7 @@
                      <children>
                         <ImageView fitHeight="16.0" fitWidth="16.0" layoutX="3.5" layoutY="5.0">
                            <image>
-                              <Image url="@/images/list.png" />
+                              <Image url="@../../../../../images/bin.png" />
                            </image>
                         </ImageView>
                      </children>
