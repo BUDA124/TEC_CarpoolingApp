@@ -26,10 +26,6 @@ public class TripHasStopHasPaymentMethodEntity implements Identifiable<TripHasSt
     @JoinColumn(name = "IDSTOP", referencedColumnName = "ID", insertable = false, updatable = false)
     private StopEntity stop;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "IDAUDITLOG", nullable = false)
-    private AuditLogEntity auditLog;
-
     public TripHasStopHasPaymentMethodEntity() {}
 
     // Getters and Setters
@@ -41,8 +37,6 @@ public class TripHasStopHasPaymentMethodEntity implements Identifiable<TripHasSt
     public void setTrip(TripEntity trip) { this.trip = trip; }
     public StopEntity getStop() { return stop; }
     public void setStop(StopEntity stop) { this.stop = stop; }
-    public AuditLogEntity getAuditLog() { return auditLog; }
-    public void setAuditLog(AuditLogEntity auditLog) { this.auditLog = auditLog; }
 
     @Override
     public boolean equals(Object o) {
@@ -64,7 +58,6 @@ public class TripHasStopHasPaymentMethodEntity implements Identifiable<TripHasSt
                 ", paymentMethodId=" + (paymentMethod != null ? paymentMethod.getId() : null) +
                 ", tripId=" + (trip != null ? trip.getId() : null) +
                 ", stopId=" + (stop != null ? stop.getId() : null) +
-                ", auditLogId=" + (auditLog != null ? auditLog.getId() : null) +
                 '}';
     }
 }

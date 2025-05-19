@@ -35,6 +35,7 @@ public class PersonEntity implements Identifiable<Long> {
     private String nationality;
 
     @Lob()
+    @Column(name = "PROFILEPICTURE")
     private Blob profilePicture;
 
     @ManyToOne(fetch = FetchType.LAZY)

@@ -24,8 +24,6 @@
         <javafx.maven.plugin.version>0.0.8</javafx.maven.plugin.version>
         <junit.version>5.10.1</junit.version>
         <mockito.version>5.8.0</mockito.version>
-        <hibernate.version>6.4.4.Final</hibernate.version>
-        <logback.version>1.5.13</logback.version>
         <oracle.driver.version>23.3.0.23.09</oracle.driver.version>
         <gmapsfx.version>11.0.7</gmapsfx.version>
         <h2.version>2.2.224</h2.version>
@@ -39,7 +37,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.3.4</version>
+        <version>3.4.5</version>
         <relativePath/>
     </parent>
 
@@ -85,59 +83,29 @@
             <version>${javafx.version}</version>
         </dependency>
 
-        <!-- ======================================== -->
-        <!-- Persistencia (JPA / Hibernate)           -->
-        <!-- ======================================== -->
-        <dependency>
-            <groupId>jakarta.persistence</groupId>
-            <artifactId>jakarta.persistence-api</artifactId>
-            <version>3.1.0</version>
-        </dependency>
-        <dependency>
-            <groupId>org.hibernate.orm</groupId>
-            <artifactId>hibernate-core</artifactId>
-            <version>${hibernate.version}</version>
-        </dependency>
-
-        <!-- Core Spring Boot: auto-configuration, logging, etc. -->
+        <!-- Core Spring Boot -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
         </dependency>
 
-        <!-- Spring Data JPA: para simplificar el acceso a datos -->
+        <!-- Spring Data JPA -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
 
+        <!-- Spring Boot Validation -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-validation</artifactId>
         </dependency>
 
+        <!-- Spring Boot Test -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
-        </dependency>
-
-        <!-- ======================================== -->
-        <!-- Jakarta Bean Validation                  -->
-        <!-- ======================================== -->
-        <dependency>
-            <groupId>jakarta.validation</groupId>
-            <artifactId>jakarta.validation-api</artifactId>
-            <version>3.0.2</version>
-        </dependency>
-
-        <!-- ======================================== -->
-        <!-- Hibernate Validator                      -->
-        <!-- ======================================== -->
-        <dependency>
-            <groupId>org.hibernate.validator</groupId>
-            <artifactId>hibernate-validator</artifactId>
-            <version>8.0.2.Final</version>
         </dependency>
 
         <!-- ======================================== -->
@@ -149,103 +117,77 @@
             <version>4.0.2</version>
         </dependency>
 
-        <!-- ======================================== -->
-        <!-- BCrypt for Passwords                     -->
-        <!-- ======================================== -->
+        <!-- BCrypt for Passwords -->
         <dependency>
             <groupId>org.mindrot</groupId>
             <artifactId>jbcrypt</artifactId>
             <version>${BCrypt.version}</version>
         </dependency>
 
-        <!-- ======================================== -->
-        <!-- MapStruct Core                           -->
-        <!-- ======================================== -->
+        <!-- MapStruct Core -->
         <dependency>
             <groupId>org.mapstruct</groupId>
             <artifactId>mapstruct</artifactId>
-            <version>${mapStruct.version}</version>
+            <version>${mapStruct.version}</version> <!-- O elimina la version si 1.5.5.Final es suficiente -->
         </dependency>
 
-        <!-- ======================================== -->
-        <!-- Logging (Logback)                      -->
-        <!-- ======================================== -->
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-classic</artifactId>
-            <version>${logback.version}</version>
-        </dependency>
-
-        <!-- ======================================== -->
-        <!-- Testing (JUnit 5 & Mockito)           -->
-        <!-- ======================================== -->
+        <!-- Testing (JUnit 5 & Mockito) -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
-            <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
-            <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-params</artifactId>
-            <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
-            <version>${mockito.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-junit-jupiter</artifactId>
-            <version>${mockito.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
-            <version>${h2.version}</version>
-            <scope>test</scope>
+            <scope>test</scope> <!-- La versión es gestionada -->
         </dependency>
-
     </dependencies>
 
     <build>
         <plugins>
-            <!-- Compilation -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.11.0</version>
+                <!-- La versión es gestionada por el parent -->
                 <configuration>
-                    <source>${maven.compiler.source}</source>
-                    <target>${maven.compiler.target}</target>
-
+                    <!-- source y target ya están definidos en properties -->
                     <annotationProcessorPaths>
                         <path>
                             <groupId>org.mapstruct</groupId>
                             <artifactId>mapstruct-processor</artifactId>
-                            <version>${mapStruct.version}</version>
+                            <version>${mapStruct.version}</version> <!-- Asegúrate que coincida con la dependencia -->
                         </path>
                     </annotationProcessorPaths>
-
                 </configuration>
             </plugin>
 
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <!-- La versión es gestionada por el parent -->
             </plugin>
 
-            <!-- JavaFX -->
             <plugin>
                 <groupId>org.openjfx</groupId>
                 <artifactId>javafx-maven-plugin</artifactId>
@@ -270,14 +212,8 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.2.3</version>
-                <dependencies>
-                    <dependency>
-                        <groupId>org.junit.jupiter</groupId>
-                        <artifactId>junit-jupiter-engine</artifactId>
-                        <version>${junit.version}</version>
-                    </dependency>
-                </dependencies>
+                <!-- La versión es gestionada por el parent -->
+                <!-- La dependencia de junit-jupiter-engine no es necesaria aquí si está en <dependencies> -->
             </plugin>
         </plugins>
         <resources>
@@ -285,7 +221,5 @@
                 <directory>src/main/resources</directory>
             </resource>
         </resources>
-
     </build>
-
 </project>
