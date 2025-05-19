@@ -26,7 +26,7 @@ public class TripHasStopEntity implements Identifiable<TripHasStopId> {
     private LocalDate estimatedArrival;
 
     @Column(name = "STOPCOST", nullable = false)
-    private Double stopCost; // DDL type NUMBER, using Double
+    private float stopCost;
 
     @Column(name = "NUMBERSTOP", nullable = false)
     private Integer numberStop;
@@ -46,8 +46,8 @@ public class TripHasStopEntity implements Identifiable<TripHasStopId> {
     public void setStop(StopEntity stop) { this.stop = stop; }
     public LocalDate getEstimatedArrival() { return estimatedArrival; }
     public void setEstimatedArrival(LocalDate estimatedArrival) { this.estimatedArrival = estimatedArrival; }
-    public Double getStopCost() { return stopCost; }
-    public void setStopCost(Double stopCost) { this.stopCost = stopCost; }
+    public float getStopCost() { return stopCost; }
+    public void setStopCost(float stopCost) { this.stopCost = stopCost; }
     public Integer getNumberStop() { return numberStop; }
     public void setNumberStop(Integer numberStop) { this.numberStop = numberStop; }
     public AuditLogEntity getAuditLog() { return auditLog; }

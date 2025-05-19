@@ -5,12 +5,9 @@ import javafx.scene.control.Alert;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import org.tec.carpooling.ui.SceneManager;
+import org.springframework.stereotype.Controller;
 
-import java.io.IOException;
-
-@Component
+@Controller
 
 public class AdminHistoryController {
 

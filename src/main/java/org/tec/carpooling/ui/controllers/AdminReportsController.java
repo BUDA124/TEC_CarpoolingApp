@@ -9,8 +9,9 @@ import org.springframework.stereotype.Component;
 import org.tec.carpooling.ui.SceneManager;
 
 import java.io.IOException;
+import org.springframework.stereotype.Controller;
 
-@Component
+@Controller
 public class AdminReportsController {
 
     @FXML

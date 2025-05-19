@@ -8,6 +8,4 @@ import java.util.List;
 
 
 @Repository
-public interface PhoneNumberRepository extends JpaRepository<PhoneNumberEntity, Long> {
-    List<PhoneNumberEntity> findByIdPerson(Long idPerson);
-}
+public interface PhoneNumberRepository extends JpaRepository<PhoneNumberEntity, Long> {}

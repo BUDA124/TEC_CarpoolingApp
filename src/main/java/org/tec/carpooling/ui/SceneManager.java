@@ -16,7 +16,7 @@ import java.io.IOException;
 public class SceneManager {
 
     private static ApplicationContext getContext() {
-        ApplicationContext ctx = CarpoolingSpringApp.getSpringContext();
+        ApplicationContext ctx = CarpoolingSpringApp.getApplicationContext();
         if (ctx == null) {
             System.err.println("CRITICAL: SceneManager.getContext() - Spring context is null! Subsequent operations will likely fail.");
         }

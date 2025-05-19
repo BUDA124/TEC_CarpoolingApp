@@ -8,7 +8,4 @@ import java.util.List;
 
 
 @Repository
-public interface EmailRepository extends JpaRepository<EmailEntity, Long> {
-    boolean existsByEmailAddress(String email);
-    List<EmailEntity> findByIdPerson(Long idPersonId);
-}
+public interface EmailRepository extends JpaRepository<EmailEntity, Long> {}

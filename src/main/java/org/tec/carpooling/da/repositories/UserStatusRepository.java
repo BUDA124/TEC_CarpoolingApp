@@ -6,7 +6,4 @@ import org.tec.carpooling.da.entities.UserStatusEntity;
 
 
 @Repository
-public interface UserStatusRepository extends JpaRepository<UserStatusEntity, Long> {
-    UserStatusEntity findByStatus(String userStatusPendingVerification);
-
-}
+public interface UserStatusRepository extends JpaRepository<UserStatusEntity, Long> {}

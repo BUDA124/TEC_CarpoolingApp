@@ -6,19 +6,19 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import javafx.scene.layout.Pane;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.input.MouseEvent;
+import org.springframework.stereotype.Controller;
 import org.tec.carpooling.bl.services.SimpleDataRetrievalService;
 import org.tec.carpooling.da.entities.AdministratorEntity;
 import org.tec.carpooling.da.entities.PersonEntity;
 import org.tec.carpooling.ui.SceneManager;
 
-@Component
+@Controller
 public class AdminAddInstController {
     //Inicializacion de controles de la pantalla [Admin: Add Institution]
     @FXML

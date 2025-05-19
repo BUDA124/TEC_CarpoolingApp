@@ -5,7 +5,9 @@ import javafx.scene.control.Alert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-@Component
+import org.springframework.stereotype.Controller;
+
+@Controller
 public class PassengerStatsController {
 
     @Autowired

@@ -1,31 +1,33 @@
 package org.tec.carpooling.app;
 
 import javafx.application.Application;
-import org.springframework.boot.SpringApplication; // Import for SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
-import org.springframework.context.ConfigurableApplicationContext; // Use ConfigurableApplicationContext
+import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
-@EntityScan("org.tec.carpooling.da.entities")
-@EnableJpaRepositories("org.tec.carpooling.da.repositories")
+@EnableJpaRepositories(basePackages = "org.tec.carpooling.da.repositories")
+@EntityScan(basePackages = "org.tec.carpooling.da.entities")
+@ComponentScan(basePackages = {"org.tec.carpooling.app", "org.tec.carpooling.bl", "org.tec.carpooling.da",
+                                "org.tec.carpooling.ui.controllers"})
 public class CarpoolingSpringApp {
 
-    // Static field to hold the Spring context
-    private static ConfigurableApplicationContext springContext;
+    // Static reference to the Spring Context
+    private static ConfigurableApplicationContext context;
+
+    // Method to set the context (called by CarpoolingApplication)
+    public static void setSpringContext(ConfigurableApplicationContext springContext) {
+        context = springContext;
+    }
+
+    // Method to get the context if needed (use with caution, ideally inject beans)
+    public static ConfigurableApplicationContext getApplicationContext() {
+        return context;
+    }
 
     public static void main(String[] args) {
-        // The JavaFX application's launch will now handle Spring initialization.
         Application.launch(CarpoolingApplication.class, args);
-    }
-
-    // Getter for the context
-    public static ConfigurableApplicationContext getSpringContext() {
-        return springContext;
-    }
-
-    public static void setSpringContext(ConfigurableApplicationContext springContext) {
-        CarpoolingSpringApp.springContext = springContext;
     }
 }

@@ -492,7 +492,7 @@ CREATE TABLE TripHasStop (
                              idTrip           NUMBER,
                              idStop           NUMBER,
                              estimatedArrival DATE   CONSTRAINT nn_THS_estimatedArrival NOT NULL,
-                             stopCost         NUMBER CONSTRAINT nn_THS_stopCost NOT NULL,
+                             stopCost         FLOAT  CONSTRAINT nn_THS_stopCost NOT NULL,
                                                      CONSTRAINT ck_THS_stopCost CHECK (stopCost >= 0),
                              numberStop       NUMBER CONSTRAINT nn_THS_numberStop NOT NULL,
                                                      CONSTRAINT ck_THS_numberStop CHECK (numberStop >= 0),

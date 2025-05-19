@@ -8,6 +8,4 @@ import java.util.List;
 
 
 @Repository
-public interface CredentialRepository extends JpaRepository<CredentialEntity, Long> {
-    List<CredentialEntity> findByIdPerson(Long idPerson);
-}
+public interface CredentialRepository extends JpaRepository<CredentialEntity, Long> {}

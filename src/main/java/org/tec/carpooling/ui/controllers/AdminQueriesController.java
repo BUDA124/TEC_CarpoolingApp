@@ -3,9 +3,9 @@ package org.tec.carpooling.ui.controllers;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 
-@Component
+@Controller
 public class AdminQueriesController {
 
     @Autowired

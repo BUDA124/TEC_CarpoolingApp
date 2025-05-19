@@ -15,7 +15,9 @@ import org.tec.carpooling.ui.SceneManager;
 import java.io.IOException;
 import java.util.List;
 
-@Component
+import org.springframework.stereotype.Controller;
+
+@Controller
 public class RegistrationController {
 
     @FXML

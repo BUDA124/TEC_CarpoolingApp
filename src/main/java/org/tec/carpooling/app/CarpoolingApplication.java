@@ -1,6 +1,7 @@
 package org.tec.carpooling.app;
 
 import javafx.application.Application;
+import javafx.application.Platform; // Import Platform for safe shutdown
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -14,6 +15,7 @@ import java.io.IOException;
 import java.net.URL;
 
 public class CarpoolingApplication extends Application {
+
 
     private ConfigurableApplicationContext springContext;
 
@@ -36,7 +38,7 @@ public class CarpoolingApplication extends Application {
     public void start(Stage primaryStage) {
         System.out.println("INFO: Application starting UI...");
         try {
-            URL fxmlUrl = getClass().getResource("src/main/resources/org/tec/carpooling/ui/controllers/login-view.fxml");
+            URL fxmlUrl = getClass().getResource("/org/tec/carpooling/ui/controllers/login-view.fxml");
             if (fxmlUrl == null) {
                 System.err.println("ERROR: Cannot find FXML file: /views/login-view.fxml");
                 return;
@@ -85,3 +87,4 @@ public class CarpoolingApplication extends Application {
         launch(args);
     }
 }
+
