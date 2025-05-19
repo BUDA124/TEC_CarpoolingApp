@@ -35,6 +35,10 @@ PersonalUserEntity implements Identifiable<Long> {
     private PersonEntity person;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "IDUSERSTATUS" /*, nullable = false si un usuario SIEMPRE debe tener un estado */)
+    private UserStatusEntity userStatus; // Esta será la FK a la tabla USERSTATUS
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "IDAUDITLOG", nullable = false)
     private AuditLogEntity auditLog;
 
@@ -85,6 +89,14 @@ PersonalUserEntity implements Identifiable<Long> {
 
     public void setAuditLog(AuditLogEntity auditLog) {
         this.auditLog = auditLog;
+    }
+
+    public UserStatusEntity getUserStatus() {
+        return userStatus;
+    }
+
+    public void setUserStatus(UserStatusEntity userStatus) {
+        this.userStatus = userStatus;
     }
 
     @Override

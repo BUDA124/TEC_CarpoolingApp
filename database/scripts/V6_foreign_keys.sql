@@ -261,6 +261,15 @@ BEGIN
             p_index_name        => 'IX_USER_AUDITLOG'
     );
 
+    add_fk_and_index_if_missing(
+            p_table_name        => 'PERSONALUSER',
+            p_constraint_name   => 'FK_USER_USERSTATUS',
+            p_fk_column         => 'IDUSERSTATUS',
+            p_ref_table         => 'USERSTATUS',
+            p_ref_column        => 'ID',
+            p_index_name        => 'IX_USER_USERSTATUS'
+    );
+
     -- Table USERSTATUS
     add_fk_and_index_if_missing(
             p_table_name        => 'USERSTATUS',

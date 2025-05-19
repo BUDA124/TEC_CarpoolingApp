@@ -1,5 +1,7 @@
 package org.tec.carpooling.ui;
 
+import org.tec.carpooling.bl.dto.BL_DA.UserDTO;
+
 public final class UserSession {
 
     private static UserSession instance;
@@ -31,6 +33,6 @@ public final class UserSession {
     }
 
     public Long getCurrentIdPerson() {
-        return isLoggedIn() ? currentUser.getIdPerson() : null;
+        return isLoggedIn() ? currentUser.getId() : null;
     }
 }

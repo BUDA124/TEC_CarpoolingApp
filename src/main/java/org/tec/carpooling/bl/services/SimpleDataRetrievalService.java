@@ -10,6 +10,7 @@ public interface SimpleDataRetrievalService {
     List<GenderEntity> getAllGenders();
     List<AdministratorEntity> getAllAdministrators();
     List<PersonEntity> getAllPersons();
+    String getPrimaryDomainForInstitution(Long institutionId);
 }
 
 

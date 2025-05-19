@@ -8,6 +8,4 @@ import org.tec.carpooling.da.entities.InstitutionalEmailEntity;
 
 
 @Repository
-public interface InstitutionalEmailRepository extends JpaRepository<InstitutionalEmailEntity, Long> {
-    boolean existsByEmailAddress(String institutionalEmail);
-}
+public interface InstitutionalEmailRepository extends JpaRepository<InstitutionalEmailEntity, Long> {}

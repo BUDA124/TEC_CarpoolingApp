@@ -31,7 +31,7 @@ public interface UserRegistrationMapper {
         if (id == null) {
             return null;
         }
-        GenderEntity gender = new GenderEntity(); // Asumiendo que GenderEntity existe y tiene setId
+        GenderEntity gender = new GenderEntity();
         gender.setId(id);
         return gender;
     }
@@ -79,7 +79,6 @@ public interface UserRegistrationMapper {
     @Mapping(target = "isActive", ignore = true) // Se asignará en la capa de servicio (e.g., a 1 por defecto)
     @Mapping(target = "person", ignore = true) // Se asignará en la capa de servicio
     @Mapping(target = "auditLog", ignore = true) // Se asignará en la capa de servicio
-    @Mapping(target = "typeOfCredential", source = "idTypeOfCredential", qualifiedByName = "longToTypeOfCredentialEntity") // Mapea el ID a la entidad TypeOfCredential
     CredentialEntity toCredentialEntity(UserRegistrationDTO dto);
 
 }

@@ -1,7 +1,10 @@
 package org.tec.carpooling.bl.services;
 
+import org.tec.carpooling.bl.dto.BL_DA.UserDTO;
+import org.tec.carpooling.bl.dto.UI_BL.LogInDTO;
 import org.tec.carpooling.bl.dto.UI_BL.UserRegistrationDTO;
 
 public interface UserService {
-    String registerNewUser(UserRegistrationDTO dto);
+    boolean registerNewUser(UserRegistrationDTO dto);
+    UserDTO logInUser(LogInDTO logInDTO);
 }

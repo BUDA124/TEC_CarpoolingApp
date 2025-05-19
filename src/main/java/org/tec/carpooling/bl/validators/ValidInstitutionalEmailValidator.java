@@ -4,6 +4,7 @@ import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import org.tec.carpooling.bl.dto.UI_BL.UserRegistrationDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.tec.carpooling.bl.services.SimpleDataRetrievalService;
 import org.tec.carpooling.bl.validators.constraints.ValidInstitutionalEmail;
 
 import java.util.regex.Pattern;
@@ -11,7 +12,7 @@ import java.util.regex.Pattern;
 public class ValidInstitutionalEmailValidator implements ConstraintValidator<ValidInstitutionalEmail, UserRegistrationDTO> {
 
     @Autowired
-    private InstitutionService institutionService;
+    SimpleDataRetrievalService simpleDataRetrievalService;
 
     private String emailFieldName;
 
@@ -38,17 +39,7 @@ public class ValidInstitutionalEmailValidator implements ConstraintValidator<Val
             return true;
         }
 
-        if (institutionService == null) {
-            System.err.println("WARN: InstitutionDataProvider not injected into ValidInstitutionalEmailValidator. Domain validation will be skipped.");
-            context.disableDefaultConstraintViolation();
-            context.buildConstraintViolationWithTemplate(
-                "System configuration error: Cannot verify institutional email domain.")
-                .addPropertyNode(emailFieldName)
-                .addConstraintViolation();
-            return false;
-        }
-
-        String expectedPrimaryDomain = institutionService.getPrimaryDomainForInstitution(institutionId);
+        String expectedPrimaryDomain = simpleDataRetrievalService.getPrimaryDomainForInstitution(institutionId);
 
         if (expectedPrimaryDomain == null || expectedPrimaryDomain.trim().isEmpty()) {
             context.disableDefaultConstraintViolation();
