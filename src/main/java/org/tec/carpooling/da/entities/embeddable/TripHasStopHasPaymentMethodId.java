@@ -18,6 +18,9 @@ public class TripHasStopHasPaymentMethodId implements Serializable {
     @Column(name = "IDTRIP")
     private Long idStop;
 
+    @Column(name = "IDAUDITLOG")
+    private Long idAuditLog;
+
     public TripHasStopHasPaymentMethodId() {}
 
     public Long getIdStop() {
@@ -42,6 +45,14 @@ public class TripHasStopHasPaymentMethodId implements Serializable {
 
     public void setIdPaymentMethod(Long idPaymentMethod) {
         this.idPaymentMethod = idPaymentMethod;
+    }
+
+    public Long getIdAuditLog() {
+        return idAuditLog;
+    }
+
+    public void setIdAuditLog(Long idAuditLog) {
+        this.idAuditLog = idAuditLog;
     }
 
     @Override
