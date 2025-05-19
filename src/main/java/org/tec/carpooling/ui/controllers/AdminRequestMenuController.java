@@ -16,7 +16,7 @@ public class AdminRequestMenuController {
 
     }
 
-    private void showError(String message) {
+    private void Show(String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Error");
         alert.setHeaderText(null);

@@ -3,13 +3,18 @@ package org.tec.carpooling.bl.services.implementations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.tec.carpooling.bl.dto.BL_DA.UserDTO;
+import org.tec.carpooling.bl.dto.UI_BL.LogInDTO;
 import org.tec.carpooling.bl.dto.UI_BL.UserRegistrationDTO;
+import org.tec.carpooling.bl.mappers.UserLogInMapper;
 import org.tec.carpooling.bl.mappers.UserRegistrationMapper;
 import org.tec.carpooling.bl.services.UserService;
+import org.tec.carpooling.common.exceptions.AuthenticationException;
 import org.tec.carpooling.da.entities.*;
 import org.tec.carpooling.da.repositories.*;
-
+import org.tec.carpooling.common.utils.PasswordUtils;
 import java.time.LocalDate;
+import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -27,14 +32,14 @@ public class UserServiceImpl implements UserService {
     private CredentialRepository credentialRepository;
 
     @Autowired
-    private InstitutionRepository institutionRepository;
+    private UserRegistrationMapper userRegistrationMapper;
 
     @Autowired
-    private UserRegistrationMapper userRegistrationMapper;
+    private UserLogInMapper userLogInMapper;
 
     @Override
     @Transactional
-    public String registerNewUser(UserRegistrationDTO dto) {
+    public boolean registerNewUser(UserRegistrationDTO dto) {
         // Mapear DTO a entidades
         PersonEntity person = userRegistrationMapper.toPersonEntity(dto);
         person = personRepository.save(person);
@@ -42,7 +47,6 @@ public class UserServiceImpl implements UserService {
         PersonalUserEntity personalUser = userRegistrationMapper.toPersonalUserEntity(dto);
         personalUser.setPerson(person);
         personalUser.setRegistrationDate(LocalDate.now());
-        personalUser.setStatus("Pending Verification"); // Default
 
         personalUser = personalUserRepository.save(personalUser);
 
@@ -54,6 +58,28 @@ public class UserServiceImpl implements UserService {
         credential.setPerson(person);
         credentialRepository.save(credential);
 
-        return "User registered successfully.";
+        return true;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public UserDTO logInUser(LogInDTO logInDTO) {
+        // 1.  Retrieve user by username
+        Optional<PersonalUserEntity> userEntityOptional = personalUserRepository.findByUsername(logInDTO.getUsername());
+
+        if (userEntityOptional.isEmpty()) {
+            throw new AuthenticationException("Invalid username or password"); // User not found
+        }
+
+        PersonalUserEntity userEntity = userEntityOptional.get();
+
+        // 2. Verify Password
+        if (!PasswordUtils.verifyPassword(logInDTO.getPassword(), userEntity.getPassword())) {
+            throw new AuthenticationException("Invalid username or password"); // Incorrect password
+        }
+
+        // 3. Map to UserDTO (excluding password)
+        UserDTO userDTO = userLogInMapper.toUserDTO(userEntity);
+        return userDTO;
     }
 }

@@ -140,12 +140,13 @@ CREATE TABLE Gender (
 
 -- Creating table PERSONALUSER
 CREATE TABLE PERSONALUSER (
-                              id             NUMBER,
-                              password       VARCHAR2(255) CONSTRAINT nn_USER_password NOT NULL,
-                              username       VARCHAR2(100) CONSTRAINT nn_USER_username NOT NULL,
+                              id               NUMBER,
+                              password         VARCHAR2(255) CONSTRAINT nn_USER_password NOT NULL,
+                              username         VARCHAR2(100) CONSTRAINT nn_USER_username NOT NULL,
                               registrationDate DATE        CONSTRAINT nn_USER_registrationDate NOT NULL,
-                              idPerson       NUMBER        CONSTRAINT nn_USER_idPerson NOT NULL,
-                              idAuditLog     NUMBER        CONSTRAINT nn_USER_idAuditLog NOT NULL,
+                              idUserStatus     NUMBER        CONSTRAINT nn_USER_idUserStatus NOT NULL,
+                              idPerson         NUMBER        CONSTRAINT nn_USER_idPerson NOT NULL,
+                              idAuditLog       NUMBER        CONSTRAINT nn_USER_idAuditLog NOT NULL,
                               CONSTRAINT pk_USER PRIMARY KEY (id)
                                   USING INDEX TABLESPACE CARPOOLING_INDX,
                               CONSTRAINT uk_USER_username UNIQUE (username)
@@ -267,8 +268,8 @@ CREATE TABLE Stop (
 -- Creating table COORDINATELOCATION
 CREATE TABLE CoordinateLocation (
                                     id          NUMBER,
-                                    yCoordinate NUMBER CONSTRAINT nn_yCoordinate NOT NULL,
-                                    xCoordinate NUMBER CONSTRAINT nn_xCoordinate NOT NULL,
+                                    yCoordinate FLOAT CONSTRAINT nn_yCoordinate NOT NULL,
+                                    xCoordinate FLOAT CONSTRAINT nn_xCoordinate NOT NULL,
                                     idAuditLog  NUMBER CONSTRAINT nn_Coordinates_idAuditLog NOT NULL,
                                     CONSTRAINT pk_CoordinateLocation PRIMARY KEY (id)
                                         USING INDEX TABLESPACE CARPOOLING_INDX

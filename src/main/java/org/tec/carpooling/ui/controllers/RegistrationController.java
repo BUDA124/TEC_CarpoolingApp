@@ -14,7 +14,8 @@ import java.util.List;
 @Component
 public class RegistrationController {
 
-    @FXML private ComboBox<GenderEntity> genderComboBox;
+    @FXML
+    private ComboBox<GenderEntity> genderComboBox;
 
     @Autowired
     private SimpleDataRetrievalService simpleDataRetrievalService;

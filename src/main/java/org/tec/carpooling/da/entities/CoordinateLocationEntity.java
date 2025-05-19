@@ -18,10 +18,10 @@ public class CoordinateLocationEntity implements Identifiable<Long> {
     private Long id;
 
     @Column(name = "YCOORDINATE", nullable = false)
-    private Double yCoordinate; // Using Double for coordinates, could be BigDecimal
+    private float yCoordinate;
 
     @Column(name = "XCOORDINATE", nullable = false)
-    private Double xCoordinate;
+    private float xCoordinate;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "IDAUDITLOG", nullable = false)
@@ -36,19 +36,19 @@ public class CoordinateLocationEntity implements Identifiable<Long> {
         this.id = id;
     }
 
-    public Double getyCoordinate() {
+    public float getyCoordinate() {
         return yCoordinate;
     }
 
-    public void setyCoordinate(Double yCoordinate) {
+    public void setyCoordinate(float yCoordinate) {
         this.yCoordinate = yCoordinate;
     }
 
-    public Double getxCoordinate() {
+    public float getxCoordinate() {
         return xCoordinate;
     }
 
-    public void setxCoordinate(Double xCoordinate) {
+    public void setxCoordinate(float xCoordinate) {
         this.xCoordinate = xCoordinate;
     }
 
