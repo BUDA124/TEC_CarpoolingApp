@@ -33,7 +33,7 @@
                   <Font name="SansSerif Bold" size="25.0" />
                </font>
             </Text>
-            <ImageView fitHeight="177.0" fitWidth="260.0" layoutY="390.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="210.0" fitWidth="350.0" layoutX="-38.0" layoutY="350.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../../../../images/logo.png" />
                </image>
@@ -42,71 +42,98 @@
       </AnchorPane>
       <AnchorPane prefHeight="700.0" prefWidth="400.0" style="-fx-border-radius: 30;">
          <children>
-            <TextField fx:id="personalEmailTextField" layoutX="28.0" layoutY="212.0" prefHeight="30.0" prefWidth="280.0" promptText="Personal Email" styleClass="adlam-text" />
-            <Text layoutX="225.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="alata-text" text="Sign-up" wrappingWidth="193.0">
+            <TextField fx:id="personalEmailTextField" layoutX="12.0" layoutY="221.0" prefHeight="40.0" prefWidth="380.0" promptText="Personal Email" styleClass="adlam-text">
+               <font>
+                  <Font size="14.0" />
+               </font></TextField>
+            <Text layoutX="321.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="alata-text" text="Sign-up" wrappingWidth="193.0">
                <font>
                   <Font name="SansSerif Bold" size="48.0" />
                </font>
             </Text>
-            <TextField fx:id="firstNameTextField" layoutX="28.0" layoutY="131.0" prefHeight="30.0" prefWidth="280.0" promptText="First Name" styleClass="adlam-text" />
-            <TextField fx:id="firstSurnameTextField" layoutX="28.0" layoutY="172.0" prefHeight="30.0" prefWidth="280.0" promptText="First Surname" styleClass="adlam-text" />
-            <ComboBox fx:id="idTypeComboBox" layoutX="28.0" layoutY="255.0" prefHeight="30.0" prefWidth="120.0" promptText="ID Type" styleClass="adlam-text" visibleRowCount="3" />
-            <TextField fx:id="idNumberTextField" layoutX="159.0" layoutY="255.0" prefHeight="30.0" prefWidth="280.0" promptText="ID Number" styleClass="adlam-text" />
-            <DatePicker fx:id="birthdateDatePicker" layoutX="318.0" layoutY="212.0" prefHeight="30.0" prefWidth="280.0" promptText="Birthdate" />
-            <Text fontSmoothingType="LCD" layoutX="26.0" layoutY="382.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="adlam-text" text="Account Details">
+            <TextField fx:id="firstNameTextField" layoutX="12.0" layoutY="126.0" prefHeight="40.0" prefWidth="380.0" promptText="First Name" styleClass="adlam-text">
+               <font>
+                  <Font size="14.0" />
+               </font></TextField>
+            <TextField fx:id="firstSurnameTextField" layoutX="12.0" layoutY="174.0" prefHeight="40.0" prefWidth="380.0" promptText="First Surname" styleClass="adlam-text">
+               <font>
+                  <Font size="14.0" />
+               </font></TextField>
+            <ComboBox fx:id="idTypeComboBox" layoutX="14.0" layoutY="270.0" prefHeight="40.0" prefWidth="120.0" promptText="ID Type" styleClass="adlam-text" visibleRowCount="3" />
+            <TextField fx:id="idNumberTextField" layoutX="140.0" layoutY="270.0" prefHeight="40.0" prefWidth="299.0" promptText="ID Number" styleClass="adlam-text">
+               <font>
+                  <Font size="14.0" />
+               </font></TextField>
+            <DatePicker fx:id="birthdateDatePicker" editable="false" layoutX="410.0" layoutY="221.0" prefHeight="40.0" prefWidth="380.0" promptText="Birthdate" />
+            <Text fontSmoothingType="LCD" layoutX="12.0" layoutY="405.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="adlam-text" text="Account Details">
                <font>
                   <Font name="SansSerif Bold" size="18.0" />
                </font>
             </Text>
-            <ComboBox layoutX="28.0" layoutY="469.0" prefHeight="30.0" prefWidth="100.0" promptText="Institution" styleClass="adlam-text" visibleRowCount="3" />
-            <TextField layoutX="140.0" layoutY="469.0" prefHeight="30.0" prefWidth="280.0" promptText="Institutional Email" styleClass="adlam-text" />
-            <ComboBox fx:id="genderComboBox" layoutX="465.0" layoutY="255.0" prefHeight="30.0" prefWidth="120.0" promptText="Gender" styleClass="adlam-text" visibleRowCount="3" />
-            <ImageView fitHeight="31.0" fitWidth="37.0" layoutX="26.0" layoutY="310.0" pickOnBounds="true" preserveRatio="true">
+            <ComboBox layoutX="326.0" layoutY="420.0" prefHeight="40.0" prefWidth="100.0" promptText="Institution" styleClass="adlam-text" visibleRowCount="3" />
+            <TextField layoutX="432.0" layoutY="420.0" prefHeight="40.0" prefWidth="358.0" promptText="Institutional Email" styleClass="adlam-text" />
+            <ComboBox fx:id="genderComboBox" layoutX="451.0" layoutY="270.0" prefHeight="40.0" prefWidth="126.0" promptText="Gender" styleClass="adlam-text" visibleRowCount="3" />
+            <ImageView fitHeight="31.0" fitWidth="37.0" layoutX="18.0" layoutY="331.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../../../../images/subir-foto.png" />
                </image>
             </ImageView>
-            <PasswordField fx:id="passwordTextField" layoutX="28.0" layoutY="431.0" prefHeight="30.0" prefWidth="280.0" promptText="Password" styleClass="adlam-text" />
-            <PasswordField layoutX="319.0" layoutY="431.0" prefHeight="30.0" prefWidth="280.0" promptText="Confirm Password" styleClass="adlam-text" />
-            <CheckBox layoutX="29.0" layoutY="511.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="119.0" styleClass="adlam-text" text="I accept the">
+            <PasswordField fx:id="passwordTextField" layoutX="12.0" layoutY="470.0" prefHeight="40.0" prefWidth="380.0" promptText="Password" styleClass="adlam-text">
                <font>
-                  <Font size="13.0" />
+                  <Font size="14.0" />
+               </font></PasswordField>
+            <PasswordField layoutX="410.0" layoutY="470.0" prefHeight="40.0" prefWidth="380.0" promptText="Confirm Password" styleClass="adlam-text">
+               <font>
+                  <Font size="14.0" />
+               </font></PasswordField>
+            <CheckBox layoutX="12.0" layoutY="530.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="119.0" styleClass="adlam-text" text="I accept the">
+               <font>
+                  <Font name="SansSerif Regular" size="14.0" />
                </font>
             </CheckBox>
-            <TextField fx:id="usernameTextField" layoutX="28.0" layoutY="396.0" prefHeight="30.0" prefWidth="280.0" promptText="Username" styleClass="adlam-text" />
-            <Text fill="#017efa" fontSmoothingType="LCD" layoutX="124.0" layoutY="531.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="adlam-text" text="Terms &amp; Conditions" wrappingWidth="127.0">
+            <TextField fx:id="usernameTextField" layoutX="12.0" layoutY="420.0" prefHeight="40.0" prefWidth="280.0" promptText="Username" styleClass="adlam-text">
+               <font>
+                  <Font size="14.0" />
+               </font></TextField>
+            <Text fill="#017efa" fontSmoothingType="LCD" layoutX="112.0" layoutY="552.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="adlam-text" text="Terms &amp; Conditions" wrappingWidth="132.5390625">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font>
             </Text>
-            <Button alignment="CENTER" layoutX="222.0" layoutY="567.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="200.0" style="-fx-background-color: #017efa;" styleClass="adlam-text" text="Sign-up" textAlignment="CENTER" textFill="WHITE">
+            <Button alignment="CENTER" layoutX="292.0" layoutY="580.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="280.0" style="-fx-background-color: #017efa;" styleClass="adlam-text" text="Sign-up" textAlignment="CENTER" textFill="WHITE">
                <font>
                   <Font name="SansSerif Bold" size="16.0" />
                </font>
             </Button>
-            <Text fontSmoothingType="LCD" layoutX="192.0" layoutY="632.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="adlam-text" text="Already have an account?" wrappingWidth="214.54296875">
+            <Text fontSmoothingType="LCD" layoutX="300.0" layoutY="645.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="adlam-text" text="Already have an account?" wrappingWidth="214.54296875">
                <font>
                   <Font name="SansSerif Bold" size="16.0" />
                </font>
             </Text>
-            <Text fill="#017efa" layoutX="393.0" layoutY="631.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="adlam-text" text="Log-In">
+            <Text fill="#017efa" layoutX="500.0" layoutY="645.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="adlam-text" text="Log-In">
                <font>
                   <Font name="SansSerif Bold" size="16.0" />
                </font>
             </Text>
-            <TextField fx:id="secondNameTextField" layoutX="318.0" layoutY="131.0" prefHeight="30.0" prefWidth="280.0" promptText="Optional: Second Name" styleClass="adlam-text" />
-            <TextField fx:id="secondSurnameTextField" layoutX="318.0" layoutY="172.0" prefHeight="30.0" prefWidth="280.0" promptText="Optional: Second Surname" styleClass="adlam-text" />
-            <Text fontSmoothingType="LCD" layoutX="26.0" layoutY="118.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="adlam-text" text="Personal Information">
+            <TextField fx:id="secondNameTextField" layoutX="410.0" layoutY="126.0" prefHeight="40.0" prefWidth="380.0" promptText="Optional: Second Name" styleClass="adlam-text">
+               <font>
+                  <Font size="14.0" />
+               </font></TextField>
+            <TextField fx:id="secondSurnameTextField" layoutX="410.0" layoutY="174.0" prefHeight="40.0" prefWidth="380.0" promptText="Optional: Second Surname" styleClass="adlam-text">
+               <font>
+                  <Font size="14.0" />
+               </font></TextField>
+            <Text fontSmoothingType="LCD" layoutX="12.0" layoutY="111.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="adlam-text" text="Personal Information">
                <font>
                   <Font name="SansSerif Bold" size="18.0" />
                </font>
             </Text>
-            <Text fontSmoothingType="LCD" layoutX="75.0" layoutY="330.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="adlam-text" text="Let your community know you! Upload your photo" wrappingWidth="435.6875">
+            <Text fontSmoothingType="LCD" layoutX="62.0" layoutY="354.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="adlam-text" text="Upload your photo! To let the community know you" wrappingWidth="435.6875">
                <font>
                   <Font name="SansSerif Bold" size="14.0" />
                </font>
             </Text>
-            <ComboBox fx:id="select" layoutX="319.0" layoutY="396.0" prefHeight="30.0" prefWidth="280.0" promptText="Select Your Country" styleClass="adlam-text" visibleRowCount="3" />
+            <ComboBox fx:id="select" layoutX="590.0" layoutY="270.0" prefHeight="40.0" prefWidth="200.0" promptText="Select Your Country" styleClass="adlam-text" visibleRowCount="3" />
          </children>
       </AnchorPane>
    </items>

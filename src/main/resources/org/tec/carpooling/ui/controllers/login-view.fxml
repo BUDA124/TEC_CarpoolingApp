@@ -9,15 +9,10 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<SplitPane dividerPositions="0.25"
-           prefHeight="700.0" prefWidth="1100.0"
-           stylesheets="@../../../../../css/styles.css"
-           xmlns="http://javafx.com/javafx/23.0.1"
-           xmlns:fx="http://javafx.com/fxml/1"
-           fx:controller="org.tec.carpooling.ui.controllers.LoginController">
+<SplitPane dividerPositions="0.25" prefHeight="700.0" prefWidth="1100.0" stylesheets="@../../../../../css/styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.tec.carpooling.ui.controllers.LoginController">
 
    <items>
-      <AnchorPane prefHeight="698.0" prefWidth="500.0" style="-fx-background-color: #081a51;">
+      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="698.0" prefWidth="281.0" style="-fx-background-color: #081a51;">
          <children>
             <Text fill="WHITE" layoutX="25.0" layoutY="165.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="adlam-text" text="Share your ride.">
                <font>
@@ -34,7 +29,7 @@
                   <Font name="SansSerif Bold" size="25.0" />
                </font>
             </Text>
-            <ImageView fitHeight="177.0" fitWidth="260.0" layoutY="390.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="210.0" fitWidth="350.0" layoutX="-40.0" layoutY="350.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../../../../images/logo.png" />
                </image>
@@ -43,32 +38,32 @@
       </AnchorPane>
       <AnchorPane prefHeight="698.0" prefWidth="644.0" style="-fx-border-radius: 30;">
          <children>
-            <Text layoutX="90.0" layoutY="160.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="alata-text" text="Login" wrappingWidth="150.0">
+            <Text layoutX="319.0" layoutY="87.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="alata-text" text="Log-In" wrappingWidth="210.0">
                <font>
-                  <Font name="SansSerif Regular" size="60.0" />
+                  <Font name="SansSerif Bold" size="48.0" />
                </font>
             </Text>
-            <PasswordField layoutX="90.0" layoutY="255.0" prefHeight="30.0" prefWidth="500.0" promptText="Password" styleClass="adlam-text">
+            <PasswordField layoutX="17.0" layoutY="253.0" prefHeight="44.0" prefWidth="780.0" promptText="Password" styleClass="adlam-text">
                <font>
                   <Font size="20.0" />
                </font>
             </PasswordField>
-            <Text fontSmoothingType="LCD" layoutX="248.0" layoutY="425.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="adlam-text" text="Don't have an account?">
+            <Text fontSmoothingType="LCD" layoutX="260.0" layoutY="440.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="adlam-text" text="Don't have an account?">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font>
             </Text>
-            <Text fill="#017efa" layoutX="435.0" layoutY="425.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="adlam-text" text="Sign-up here">
+            <Text fill="#017efa" layoutX="450.0" layoutY="440.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="adlam-text" text="Sign-up here">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font>
             </Text>
-            <PasswordField layoutX="90.0" layoutY="205.0" prefHeight="30.0" prefWidth="500.0" promptText="Email" styleClass="adlam-text">
+            <PasswordField accessibleRole="TEXT_FIELD" layoutX="17.0" layoutY="194.0" prefHeight="44.0" prefWidth="780.0" promptText="Email" styleClass="adlam-text">
                <font>
                   <Font size="20.0" />
                </font>
             </PasswordField>
-            <Button layoutX="222.0" layoutY="349.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="350.0" style="-fx-background-color: #017efa;" text="Login" textFill="WHITE">
+            <Button layoutX="235.0" layoutY="359.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="350.0" style="-fx-background-color: #017efa;" text="Login" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="25.0" />
                </font>
