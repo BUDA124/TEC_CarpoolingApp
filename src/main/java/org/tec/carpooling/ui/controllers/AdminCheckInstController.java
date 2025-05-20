@@ -1,21 +1,29 @@
 package org.tec.carpooling.ui.controllers;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ListView;
+import javafx.scene.control.SelectionMode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.tec.carpooling.bl.services.SimpleDataRetrievalService;
+import org.tec.carpooling.da.entities.InstitutionEntity;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 
 public class AdminCheckInstController {
 
-    @Autowired
-    public AdminCheckInstController() {}
-
     @FXML
-    public void initialize() {
+    private ListView<String> institutionListView;
 
-    }
+
+    @Autowired
+    private SimpleDataRetrievalService simpleDataRetrievalService;
 
     private void showError(String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -23,5 +31,21 @@ public class AdminCheckInstController {
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
+    }
+
+    @FXML
+    public void initialize() {
+        List<InstitutionEntity> institutions = simpleDataRetrievalService.getAllInstitutions();
+        ArrayList<String> institutionNames = new ArrayList<>();
+
+        for (InstitutionEntity institution : institutions) {
+            institutionNames.add(institution.getInstitutionName());
+        }
+
+        ObservableList<String> institutionObservableList = FXCollections.observableArrayList(institutionNames);
+        institutionListView.setItems(institutionObservableList);
+
+        // Habilitar selección múltiple
+        institutionListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
     }
 }

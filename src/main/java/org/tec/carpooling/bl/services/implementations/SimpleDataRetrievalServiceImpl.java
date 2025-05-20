@@ -41,6 +41,12 @@ public class SimpleDataRetrievalServiceImpl implements SimpleDataRetrievalServic
     }
 
     @Override
+    public List<InstitutionEntity> getAllInstitutions() {
+        return institutionRepository.findAll();
+    }
+
+
+    @Override
     public List<PersonEntity> getAllPersons() {
         return personRepository.findAll();
     }

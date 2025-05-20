@@ -49,8 +49,6 @@ public class AdminAddInstController {
     @Autowired
     private SimpleDataRetrievalService simpleDataRetrievalService;
 
-    @Autowired
-    public AdminAddInstController() {}
 
     @FXML
     private void onCreateInstitutionButton(ActionEvent event) {
