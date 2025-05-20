@@ -4,10 +4,8 @@ import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
 import javafx.util.StringConverter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.tec.carpooling.bl.services.SimpleDataRetrievalService;
 import org.tec.carpooling.da.entities.GenderEntity;
 import org.tec.carpooling.ui.SceneManager;
@@ -21,34 +19,30 @@ import org.springframework.stereotype.Controller;
 public class RegistrationController {
 
     @FXML
-    private TextField firstNameTextField;
+    private TextField TF_firstName;
     @FXML
-    private TextField secondNameTextField;
+    private TextField TF_secondName;
     @FXML
-    private TextField firstSurnameTextField;
+    private TextField TF_firstSurname;
     @FXML
-    private TextField secondSurnameTextField;
+    private TextField TF_secondSurname;
     @FXML
-    private TextField personalEmailTextField;
+    private TextField TF_personalEmail;
     @FXML
-    private TextField idNumberTextField;
+    private TextField TF_idNumber;
     @FXML
-    private TextField usernameTextField;
+    private TextField TF_username;
     @FXML
-    private TextField passwordTextField;
+    private TextField TF_password;
     @FXML
-    private TextField confirmPasswordTextField;
+    private TextField TF_confirmPassword;
     @FXML
-    private TextField institutionalEmailTextField;
-
+    private TextField TF_institutionalEmail;
     @FXML
-    private ComboBox<GenderEntity> genderComboBox;
+    private ComboBox<GenderEntity> CB_gender;
 
     @Autowired
     private SimpleDataRetrievalService simpleDataRetrievalService;
-
-    @Autowired
-    public RegistrationController() {}
 
     @FXML
     private void onSignUp(ActionEvent event) {
@@ -75,9 +69,9 @@ public class RegistrationController {
         // Load Genders
         List<GenderEntity> genders = simpleDataRetrievalService.getAllGenders();
 
-        genderComboBox.setItems(FXCollections.observableArrayList(genders));
+        CB_gender.setItems(FXCollections.observableArrayList(genders));
 
-        genderComboBox.setConverter(new StringConverter<GenderEntity>() {
+        CB_gender.setConverter(new StringConverter<GenderEntity>() {
             @Override
             public String toString(GenderEntity gender) {
                 return gender != null ? gender.getGenderName() : "";
@@ -85,7 +79,7 @@ public class RegistrationController {
 
             @Override
             public GenderEntity fromString(String string) {
-                return genderComboBox.getItems().stream()
+                return CB_gender.getItems().stream()
                         .filter(g -> g.getGenderName().equals(string))
                         .findFirst().orElse(null);
             }
