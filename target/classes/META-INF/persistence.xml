@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<persistence xmlns="https://jakarta.ee/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence https://jakarta.ee/xml/ns/persistence/persistence_3_1.xsd"
+             version="3.1">
+
+    <persistence-unit name="CarpoolingAppPU" transaction-type="RESOURCE_LOCAL">
+
+        <!-- JPA (Hibernate) -->
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+
+        <!-- List of all entity classes (@Entity) -->
+        <class>org.tec.carpooling.da.entities.AuditLogEntity</class>
+        <class>org.tec.carpooling.da.entities.PersonEntity</class>
+        <class>org.tec.carpooling.da.entities.InstitutionEntity</class>
+        <class>org.tec.carpooling.da.entities.DriverEntity</class>
+        <class>org.tec.carpooling.da.entities.PassengerEntity</class>
+        <class>org.tec.carpooling.da.entities.AdministratorEntity</class>
+        <class>org.tec.carpooling.da.entities.VehicleEntity</class>
+        <class>org.tec.carpooling.da.entities.TripEntity</class>
+        <class>org.tec.carpooling.da.entities.StopEntity</class>
+        <class>org.tec.carpooling.da.entities.DailyReportEntity</class>
+        <class>org.tec.carpooling.da.entities.ContactPhoneNumberEntity</class>
+        <class>org.tec.carpooling.da.entities.ContactEmailEntity</class>
+        <class>org.tec.carpooling.da.entities.AccessStatusEntity</class>
+        <class>org.tec.carpooling.da.entities.PhoneNumberEntity</class>
+        <class>org.tec.carpooling.da.entities.EmailEntity</class>
+        <class>org.tec.carpooling.da.entities.CredentialEntity</class>
+        <class>org.tec.carpooling.da.entities.TypeOfCredentialEntity</class>
+        <class>org.tec.carpooling.da.entities.GenderEntity</class>
+        <class>org.tec.carpooling.da.entities.PersonalUserEntity</class>
+        <class>org.tec.carpooling.da.entities.UserStatusEntity</class>
+        <class>org.tec.carpooling.da.entities.InstitutionalEmailEntity</class>
+        <class>org.tec.carpooling.da.entities.PriceStatusEntity</class>
+        <class>org.tec.carpooling.da.entities.TripStatusEntity</class>
+        <class>org.tec.carpooling.da.entities.CoordinateLocationEntity</class>
+        <class>org.tec.carpooling.da.entities.DistrictEntity</class>
+        <class>org.tec.carpooling.da.entities.CantonEntity</class>
+        <class>org.tec.carpooling.da.entities.ProvinceEntity</class>
+        <class>org.tec.carpooling.da.entities.CountryEntity</class>
+        <class>org.tec.carpooling.da.entities.PaymentMethodEntity</class>
+        <class>org.tec.carpooling.da.entities.ParameterEntity</class>
+        <class>org.tec.carpooling.da.entities.LogBookEntity</class>
+        <class>org.tec.carpooling.da.entities.EntityModifiedEntity</class>
+        <class>org.tec.carpooling.da.entities.AttributeModifiedEntity</class>
+        <!-- Join Table Entities -->
+        <class>org.tec.carpooling.da.entities.embeddable.TripReportDailyReportEntity</class>
+        <class>org.tec.carpooling.da.entities.embeddable.AdminManageInstitutionEntity</class>
+        <class>org.tec.carpooling.da.entities.embeddable.AdminReceiveDailyReportEntity</class>
+        <class>org.tec.carpooling.da.entities.embeddable.CredentialHasTypeOfCredentialEntity</class>
+        <class>org.tec.carpooling.da.entities.PassengerQueryTripEntity</class>
+        <class>org.tec.carpooling.da.entities.PassengerJoinTripEntity</class>
+        <class>org.tec.carpooling.da.entities.embeddable.TripHasTripStatusEntity</class>
+        <class>org.tec.carpooling.da.entities.embeddable.StopHasCoordinateLocationEntity</class>
+        <class>org.tec.carpooling.da.entities.embeddable.TripHasStopHasPaymentMethodEntity</class>
+        <class>org.tec.carpooling.da.entities.embeddable.TripHasStopEntity</class>
+        <class>org.tec.carpooling.da.entities.embeddable.LogBookHasEntityModifiedEntity</class>
+        <class>org.tec.carpooling.da.entities.AttrModHasEntModEntity</class>
+        <properties>
+            <!-- ========= JDBC Conection Properties ========= -->
+
+            <!-- Driver JDBC -->
+            <property name="jakarta.persistence.jdbc.driver" value="oracle.jdbc.OracleDriver"/>
+            <property name="jakarta.persistence.jdbc.url" value="jdbc:oracle:thin:@localhost:1521:FARADB"/>
+            <property name="jakarta.persistence.jdbc.user" value="system"/>
+            <property name="jakarta.persistence.jdbc.password" value="7564"/>
+
+
+            <!-- ========= Hibernate Specific Properties ========= -->
+            <property name="hibernate.dialect" value="org.hibernate.dialect.OracleDialect"/>
+            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.format_sql" value="true"/>
+            <property name="hibernate.hbm2ddl.auto" value="validate"/>
+        </properties>
+    </persistence-unit>
+</persistence>
+

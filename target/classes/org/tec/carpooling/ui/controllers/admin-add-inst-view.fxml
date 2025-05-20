@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<SplitPane dividerPositions="0.25" prefHeight="700.0" prefWidth="1100.0" stylesheets="@../../../../../css/styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.tec.carpooling.ui.controllers.AdminAddInstAdminController">
+   <items>
+      <AnchorPane disable="true" minHeight="0.0" minWidth="0.0" prefHeight="550.0" prefWidth="134.0" style="-fx-background-color: #081a51;">
+         <children>
+            <Text fill="WHITE" layoutX="86.0" layoutY="67.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="CarPool Hub" wrappingWidth="190.0">
+               <font>
+                  <Font name="SansSerif Bold" size="30.0" />
+               </font>
+            </Text>
+            <ImageView fitHeight="91.0" fitWidth="98.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../images/icono.png" />
+               </image>
+            </ImageView>
+            <Text fill="#51cbff" layoutX="15.0" layoutY="140.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Main Menu">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Text>
+            <Text fill="#51cbff" layoutX="14.0" layoutY="310.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Workspace">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Text>
+            <Pane fx:id="dailyReportText" layoutX="30.0" layoutY="160.0" onMouseClicked="#onDailyReportText" prefHeight="35.0" prefWidth="220.0" style="-fx-background-color: #1b2b65;">
+               <children>
+                  <Text fill="WHITE" layoutX="48.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Daily Report" textAlignment="CENTER" wrappingWidth="128.0">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+               </children>
+            </Pane>
+            <Pane fx:id="generalQueriesText" layoutX="30.0" layoutY="215.0" onMouseClicked="#onGeneralQueriesText" prefHeight="35.0" prefWidth="220.0" style="-fx-background-color: #1b2b65;">
+               <children>
+                  <Text fill="WHITE" layoutX="42.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="General queries" textAlignment="CENTER" wrappingWidth="145.0">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+               </children>
+            </Pane>
+            <Pane fx:id="historyPane" layoutX="30.0" layoutY="330.0" onMouseClicked="#onHistoryPane" prefHeight="35.0" prefWidth="220.0" style="-fx-background-color: #1b2b65;">
+               <children>
+                  <Text fill="WHITE" layoutX="48.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="History" textAlignment="CENTER" wrappingWidth="128.0">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+               </children>
+            </Pane>
+            <Pane fx:id="analyticsPane" layoutX="30.0" layoutY="385.0" onMouseClicked="#onAnalyticsPane" prefHeight="35.0" prefWidth="220.0" style="-fx-background-color: #1b2b65;">
+               <children>
+                  <Text fill="WHITE" layoutX="48.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Analytics" textAlignment="CENTER" wrappingWidth="128.0">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+               </children>
+            </Pane>
+            <Pane fx:id="requestsPane" layoutX="30.0" layoutY="440.0" prefHeight="35.0" prefWidth="220.0" style="-fx-background-color: #1b2b65;">
+               <children>
+                  <Text fill="WHITE" layoutX="48.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Requests" textAlignment="CENTER" wrappingWidth="128.0">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+               </children>
+            </Pane>
+            <Pane fx:id="viewInstitutionPane" layoutX="30.0" layoutY="538.0" onMouseClicked="#onViewInstitutionPane" prefHeight="35.0" prefWidth="220.0" style="-fx-background-color: #1b2b65;">
+               <children>
+                  <Text fill="WHITE" layoutX="48.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="View Institution" textAlignment="CENTER" wrappingWidth="128.0">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+               </children>
+            </Pane>
+            <Text fill="WHITE" layoutX="76.0" layoutY="515.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Add Institution" textAlignment="CENTER" wrappingWidth="128.0">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Text>
+            <Pane fx:id="viewInstitutionPane1" layoutX="30.0" layoutY="591.0" onMouseClicked="#onViewInstitutionPane" prefHeight="35.0" prefWidth="220.0" style="-fx-background-color: #1b2b65;">
+               <children>
+                  <Text fill="WHITE" layoutX="48.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Add Admin" textAlignment="CENTER" wrappingWidth="128.0">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+               </children>
+            </Pane>
+            <Pane fx:id="viewInstitutionPane11" layoutX="26.0" layoutY="643.0" onMouseClicked="#onViewInstitutionPane" prefHeight="35.0" prefWidth="220.0" style="-fx-background-color: #1b2b65;">
+               <children>
+                  <Text fill="WHITE" layoutX="48.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="View Admins" textAlignment="CENTER" wrappingWidth="128.0">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+               </children>
+            </Pane>
+         </children>
+      </AnchorPane>
+      <AnchorPane prefHeight="650.0" prefWidth="820.0" style="-fx-border-radius: 30;">
+         <children>
+            <Text layoutX="42.0" layoutY="90.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="alata-text" text="Add Institution" wrappingWidth="568.0">
+               <font>
+                  <Font name="SansSerif Regular" size="60.0" />
+               </font>
+            </Text>
+            <TextField fx:id="institutionNameTextField" layoutX="42.0" layoutY="145.0" prefHeight="40.0" prefWidth="700.0" promptText="Institution's Name" styleClass="akatab-text">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </TextField>
+            <TextField fx:id="institutionEmailTextField" layoutX="42.0" layoutY="190.0" prefHeight="40.0" prefWidth="700.0" promptText="Institution's Email Domain" styleClass="akatab-text">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </TextField>
+            <TextField fx:id="institutionWebsiteURLTextField" layoutX="42.0" layoutY="235.0" prefHeight="40.0" prefWidth="700.0" promptText="Website URL" styleClass="akatab-text">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </TextField>
+            <Button fx:id="createInstitutionButton" layoutX="332.0" layoutY="394.0" mnemonicParsing="false" onAction="#onCreateInstitutionButton" prefHeight="50.0" prefWidth="120.0" text="Create">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Button>
+            <ComboBox fx:id="addAdminComboBox" layoutX="42.0" layoutY="294.0" prefHeight="50.0" prefWidth="298.0" promptText="Add Admin" />
+         </children>
+      </AnchorPane>
+   </items>
+</SplitPane>

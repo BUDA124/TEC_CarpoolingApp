@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- debug="true" te mostrará información de inicialización de Logback en la consola. Útil si tienes problemas con esta configuración. -->
+<configuration debug="false">
+
+    <!-- =============================================================== -->
+    <!-- Propiedades (Variables)                                          -->
+    <!-- =============================================================== -->
+    <!-- Directorio donde se guardarán los archivos de log -->
+    <property name="LOGS_DIR" value="logs"/>
+    <!-- Nombre base del archivo de log -->
+    <property name="LOG_FILE_NAME" value="carpooling_app"/>
+    <!-- Patrón de formato de los mensajes de log -->
+    <property name="LOG_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n%ex"/>
+
+    <!-- =============================================================== -->
+    <!-- Appenders (Destinos del Log)                                   -->
+    <!-- =============================================================== -->
+
+    <!-- Appender para la Consola -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <!-- Usa el patrón definido arriba -->
+            <pattern>${LOG_PATTERN}</pattern>
+            <!-- Colorear la salida de la consola (opcional, puede no funcionar en todas las consolas) -->
+            <!-- <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %highlight(%-5level) %cyan(%logger{36}) - %msg%n%ex</pattern> -->
+        </encoder>
+    </appender>
+
+    <!-- Appender para Archivo Rotatorio (basado en tiempo) -->
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- Nombre del archivo de log actual -->
+        <file>${LOGS_DIR}/${LOG_FILE_NAME}.log</file>
+
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>${LOG_PATTERN}</pattern>
+        </encoder>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- Patrón para los archivos de log archivados (rota diariamente) -->
+            <!-- %d{yyyy-MM-dd} crea un archivo por día -->
+            <!-- .gz para comprimir los archivos viejos -->
+            <fileNamePattern>${LOGS_DIR}/${LOG_FILE_NAME}.%d{yyyy-MM-dd}.log.gz</fileNamePattern>
+
+            <!-- Número de días que se conservarán los archivos de log viejos -->
+            <maxHistory>30</maxHistory>
+
+            <!-- (Opcional) Limitar el tamaño total de todos los archivos de log archivados -->
+            <totalSizeCap>1GB</totalSizeCap>
+        </rollingPolicy>
+    </appender>
+
+    <!-- =============================================================== -->
+    <!-- Loggers (Configuración de niveles por paquete/clase)           -->
+    <!-- =============================================================== -->
+
+    <!-- Configura el nivel para tu paquete principal -->
+    <!-- Niveles comunes: TRACE, DEBUG, INFO, WARN, ERROR -->
+    <!-- Para desarrollo, puedes usar DEBUG -->
+    <!-- Para producción, INFO o WARN es más común -->
+    <logger name="org.tec.carpooling" level="INFO"/>
+    <!-- <logger name="org.tec.carpooling" level="DEBUG"/> -->
+
+    <!-- Configura niveles para librerías de terceros que pueden ser muy "ruidosas" -->
+    <logger name="org.hibernate" level="WARN"/>
+    <!-- Puedes habilitar el log SQL de Hibernate si necesitas depurar consultas -->
+    <!-- <logger name="org.hibernate.SQL" level="DEBUG"/> -->
+    <!-- <logger name="org.hibernate.type.descriptor.sql" level="TRACE"/> --> <!-- Para ver parámetros -->
+    <logger name="com.zaxxer.hikari" level="WARN"/> <!-- Pool de conexiones (si usas HikariCP con Hibernate) -->
+    <logger name="javafx" level="INFO"/>           <!-- Logs de JavaFX -->
+    <logger name="com.dlsc.gmapsfx" level="INFO"/>  <!-- Logs de GMapsFX -->
+
+
+    <!-- =============================================================== -->
+    <!-- Root Logger (Logger por defecto para todo lo no especificado)  -->
+    <!-- =============================================================== -->
+    <!-- Define el nivel raíz y a qué appenders enviar los logs -->
+    <root level="INFO"> <!-- Nivel por defecto global, INFO o WARN suele ser adecuado -->
+        <appender-ref ref="STDOUT"/> <!-- Envía logs al appender de Consola -->
+        <appender-ref ref="FILE"/>   <!-- Envía logs al appender de Archivo -->
+    </root>
+
+</configuration>

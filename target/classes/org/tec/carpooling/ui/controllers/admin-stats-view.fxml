@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<SplitPane dividerPositions="0.25"
+           prefHeight="700.0" prefWidth="1100.0"
+           stylesheets="@../../../../../css/styles.css"
+           xmlns="http://javafx.com/javafx/23.0.1"
+           xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="org.tec.carpooling.ui.controllers.AdminStatsController">
+   <items>
+      <AnchorPane disable="true" minHeight="0.0" minWidth="0.0" prefHeight="550.0" prefWidth="134.0" style="-fx-background-color: #081a51;">
+         <children>
+            <Text fill="WHITE" layoutX="86.0" layoutY="67.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="CarPool Hub" wrappingWidth="190.0">
+               <font>
+                  <Font name="SansSerif Bold" size="30.0" />
+               </font>
+            </Text>
+            <ImageView fitHeight="91.0" fitWidth="98.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../images/icono.png" />
+               </image>
+            </ImageView>
+            <Text fill="#51cbff" layoutX="15.0" layoutY="140.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Main Menu">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Text>
+            <Text fill="#51cbff" layoutX="14.0" layoutY="310.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Workspace">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Text>
+            <Pane layoutX="30.0" layoutY="160.0" prefHeight="35.0" prefWidth="220.0" style="-fx-background-color: #1b2b65;">
+               <children>
+                  <Text fill="WHITE" layoutX="48.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Daily Report" textAlignment="CENTER" wrappingWidth="128.0">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+               </children>
+            </Pane>
+            <Text fill="#51cbff" layoutX="14.0" layoutY="540.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="General">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Text>
+            <Pane layoutX="30.0" layoutY="215.0" prefHeight="35.0" prefWidth="220.0" style="-fx-background-color: #1b2b65;">
+               <children>
+                  <Text fill="WHITE" layoutX="42.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="General queries" textAlignment="CENTER" wrappingWidth="145.0">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+               </children>
+            </Pane>
+            <Pane layoutX="30.0" layoutY="330.0" prefHeight="35.0" prefWidth="220.0" style="-fx-background-color: #1b2b65;">
+               <children>
+                  <Text fill="WHITE" layoutX="48.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="History" textAlignment="CENTER" wrappingWidth="128.0">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+               </children>
+            </Pane>
+            <Pane layoutX="30.0" layoutY="385.0" prefHeight="35.0" prefWidth="220.0" style="-fx-background-color: #1b2b65;">
+               <children>
+                  <Text fill="WHITE" layoutX="48.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Analytics" textAlignment="CENTER" wrappingWidth="128.0">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+               </children>
+            </Pane>
+            <Pane layoutX="30.0" layoutY="560.0" prefHeight="35.0" prefWidth="220.0" style="-fx-background-color: #1b2b65;">
+               <children>
+                  <Text fill="WHITE" layoutX="48.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Settings" textAlignment="CENTER" wrappingWidth="128.0">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+               </children>
+            </Pane>
+            <Pane layoutX="30.0" layoutY="440.0" prefHeight="35.0" prefWidth="220.0" style="-fx-background-color: #1b2b65;">
+               <children>
+                  <Text fill="WHITE" layoutX="48.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Requests" textAlignment="CENTER" wrappingWidth="128.0">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+               </children>
+            </Pane>
+         </children>
+      </AnchorPane>
+      <AnchorPane prefHeight="650.0" prefWidth="820.0" style="-fx-border-radius: 30;">
+         <children>
+            <Text layoutX="42.0" layoutY="90.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="alata-text" text="Check General Statistics" wrappingWidth="686.0">
+               <font>
+                  <Font name="SansSerif Regular" size="60.0" />
+               </font>
+            </Text>
+            <PieChart layoutX="42.0" layoutY="111.0" prefHeight="300.0" prefWidth="102.0" style="-fx-background-color: #e0e0e0;" styleClass="akatab-text" />
+            <LineChart layoutX="137.0" layoutY="433.0" prefHeight="189.0" prefWidth="540.0" title="Peak Traffic per Hour">
+               <xAxis>
+                  <CategoryAxis side="BOTTOM" />
+               </xAxis>
+               <yAxis>
+                  <NumberAxis side="LEFT" />
+               </yAxis>
+            </LineChart>
+            <PieChart layoutX="317.0" layoutY="110.0" prefHeight="300.0" prefWidth="102.0" style="-fx-background-color: #e0e0e0;" styleClass="akatab-text" />
+            <PieChart layoutX="592.0" layoutY="110.0" prefHeight="300.0" prefWidth="102.0" style="-fx-background-color: #e0e0e0;" styleClass="akatab-text" />
+            <Text layoutX="74.0" layoutY="130.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Number of users per age group" wrappingWidth="137.63836669921875">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Text>
+            <Text layoutX="347.0" layoutY="130.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Drivers by gender and date range" wrappingWidth="142.9716796875">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Text>
+            <Text layoutX="605.0" layoutY="130.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Passangers by gender and date range" wrappingWidth="177.63836669921875">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Text>
+         </children>
+      </AnchorPane>
+   </items>
+</SplitPane>

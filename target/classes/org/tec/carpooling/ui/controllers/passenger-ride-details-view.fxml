@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<SplitPane dividerPositions="0.25"
+           maxHeight="-Infinity" maxWidth="-Infinity"
+           minHeight="-Infinity" minWidth="-Infinity"
+           prefHeight="700.0" prefWidth="1100.0"
+           xmlns="http://javafx.com/javafx/23.0.1"
+           xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="org.tec.carpooling.ui.controllers.PassengerRideDetailsController">
+   <items>
+      <AnchorPane disable="true" minHeight="0.0" minWidth="0.0" prefHeight="550.0" prefWidth="134.0" style="-fx-background-color: #081a51;">
+         <children>
+            <Text fill="WHITE" layoutX="86.0" layoutY="67.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="CarPool Hub" wrappingWidth="190.0">
+               <font>
+                  <Font name="SansSerif Bold" size="30.0" />
+               </font>
+            </Text>
+            <ImageView fitHeight="91.0" fitWidth="98.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../images/icono.png" />
+               </image>
+            </ImageView>
+            <Text fill="#51cbff" layoutX="15.0" layoutY="160.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Main Menu">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Text>
+            <Text fill="#51cbff" layoutX="14.0" layoutY="330.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Workspace">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Text>
+            <Pane layoutX="30.0" layoutY="180.0" prefHeight="35.0" prefWidth="220.0" style="-fx-background-color: #1b2b65;">
+               <children>
+                  <Text fill="WHITE" layoutX="48.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Look for a ride" textAlignment="CENTER" wrappingWidth="128.0">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+               </children>
+            </Pane>
+            <Text fill="#51cbff" layoutX="14.0" layoutY="505.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="General">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Text>
+            <Pane layoutX="30.0" layoutY="235.0" prefHeight="35.0" prefWidth="220.0" style="-fx-background-color: #1b2b65;">
+               <children>
+                  <Text fill="WHITE" layoutX="42.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Scheduled Rides" textAlignment="CENTER" wrappingWidth="145.0">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+               </children>
+            </Pane>
+            <Pane layoutX="30.0" layoutY="350.0" prefHeight="35.0" prefWidth="220.0" style="-fx-background-color: #1b2b65;">
+               <children>
+                  <Text fill="WHITE" layoutX="48.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="History" textAlignment="CENTER" wrappingWidth="128.0">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+               </children>
+            </Pane>
+            <Pane layoutX="30.0" layoutY="405.0" prefHeight="35.0" prefWidth="220.0" style="-fx-background-color: #1b2b65;">
+               <children>
+                  <Text fill="WHITE" layoutX="48.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Analytics" textAlignment="CENTER" wrappingWidth="128.0">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+               </children>
+            </Pane>
+            <Pane layoutX="30.0" layoutY="525.0" prefHeight="35.0" prefWidth="220.0" style="-fx-background-color: #1b2b65;">
+               <children>
+                  <Text fill="WHITE" layoutX="48.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Settings" textAlignment="CENTER" wrappingWidth="128.0">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+               </children>
+            </Pane>
+         </children>
+      </AnchorPane>
+      <AnchorPane prefHeight="650.0" prefWidth="820.0" style="-fx-border-radius: 30;">
+         <children>
+            <Text layoutX="42.0" layoutY="90.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="alata-text" text="Look for a ride" wrappingWidth="450.66668701171875">
+               <font>
+                  <Font name="SansSerif Regular" size="60.0" />
+               </font>
+            </Text>
+            <AnchorPane layoutX="50.0" layoutY="110.0" prefHeight="264.0" prefWidth="650.0" style="-fx-background-color: #eeeeee;">
+               <children>
+                  <Text fontSmoothingType="LCD" layoutX="15.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="alata-text" text="Ride Details">
+                     <font>
+                        <Font name="System Bold" size="24.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="190.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Driver: Driver's Full Name">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="190.0" layoutY="90.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Destiny of the trip: Location's Description">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="190.0" layoutY="120.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Passanger capacity: 0">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="190.0" layoutY="150.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Estimated duration of the ride: Calculated time">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="190.0" layoutY="180.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Date of the trip: Trips's Date">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+                  <Button layoutX="563.0" layoutY="216.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="80.0" text="Join">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Button>
+                  <Text layoutX="190.0" layoutY="213.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Vehicle Model: ">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="190.0" layoutY="243.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Vehicle Plate: ">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+               </children>
+            </AnchorPane>
+            <AnchorPane layoutX="50.0" layoutY="420.0" prefHeight="177.0" prefWidth="650.0" style="-fx-background-color: #eeeeee;">
+               <children>
+                  <Text fontSmoothingType="LCD" layoutX="15.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="alata-text" text="Stops">
+                     <font>
+                        <Font name="System Bold" size="24.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="18.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="First Stop: ">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="18.0" layoutY="90.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Payment method: ">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+                  <Text layoutX="18.0" layoutY="120.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Final Cost: ">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+                  <Text fill="#0000007e" layoutX="18.0" layoutY="150.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Arrival Time: 0:00 - Departure Time: 0:00">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Text>
+                  <ImageView fitHeight="27.0" fitWidth="30.0" layoutX="488.0" layoutY="69.0">
+                     <image>
+                        <Image url="@../../../../../images/radio-button.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </AnchorPane>
+         </children>
+      </AnchorPane>
+   </items>
+</SplitPane>
