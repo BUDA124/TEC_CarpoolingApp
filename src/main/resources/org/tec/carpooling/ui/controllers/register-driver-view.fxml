@@ -4,7 +4,7 @@
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
-<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.Spinner?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
@@ -13,12 +13,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<SplitPane dividerPositions="0.25"
-           prefHeight="700.0" prefWidth="1100.0"
-           stylesheets="@../../../../../css/styles.css"
-           xmlns="http://javafx.com/javafx/23.0.1"
-           xmlns:fx="http://javafx.com/fxml/1"
-              fx:controller="org.tec.carpooling.ui.controllers.RegisterDriverController">
+<SplitPane dividerPositions="0.25" prefHeight="700.0" prefWidth="1100.0" stylesheets="@../../../../../css/styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.tec.carpooling.ui.controllers.RegisterDriverController">
 
    <items>
       <AnchorPane prefHeight="400.0" prefWidth="260.0" style="-fx-background-color: #081a51;">
@@ -47,73 +42,102 @@
       </AnchorPane>
       <AnchorPane prefHeight="338.0" prefWidth="276.0" style="-fx-border-radius: 30;">
          <children>
-            <TextField layoutX="42.0" layoutY="212.0" prefHeight="30.0" prefWidth="280.0" promptText="Car’s Capacity" styleClass="adlam-text" />
             <Text layoutX="225.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="alata-text" text="Apply to be a driver" wrappingWidth="383.0">
                <font>
                   <Font name="SansSerif Bold" size="40.0" />
                </font>
             </Text>
-            <TextField layoutX="42.0" layoutY="131.0" prefHeight="30.0" prefWidth="280.0" promptText="Car’s model, color and year" styleClass="adlam-text" />
-            <TextField layoutX="42.0" layoutY="172.0" prefHeight="30.0" prefWidth="280.0" promptText="License plate" styleClass="adlam-text" />
-            <DatePicker layoutX="42.0" layoutY="370.0" prefHeight="30.0" prefWidth="280.0" promptText="Exp. Date" />
-            <Text fontSmoothingType="LCD" layoutX="42.0" layoutY="118.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="adlam-text" text="Vehicle Information">
+            <TextField fx:id="TF_carModel" layoutX="20.0" layoutY="131.0" prefHeight="40.0" prefWidth="340.0" promptText="Model" styleClass="adlam-text">
+               <font>
+                  <Font size="14.0" />
+               </font></TextField>
+            <TextField fx:id="TF_licencePlate" layoutX="20.0" layoutY="230.0" prefHeight="40.0" prefWidth="340.0" promptText="License plate" styleClass="adlam-text">
+               <font>
+                  <Font size="14.0" />
+               </font></TextField>
+            <DatePicker fx:id="DP_expirationDate" layoutX="20.0" layoutY="466.0" prefHeight="40.0" prefWidth="380.0" promptText="Expiration Date" />
+            <Text fontSmoothingType="LCD" layoutX="21.0" layoutY="116.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="adlam-text" text="Vehicle">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
             </Text>
-            <Text fontSmoothingType="LCD" layoutX="437.0" layoutY="194.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="adlam-text" text="Upload a photo of your vehicle">
+            <Text fontSmoothingType="LCD" layoutX="506.0" layoutY="256.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="adlam-text" text="Upload a photo of your vehicle">
                <font>
-                  <Font name="System Bold" size="18.0" />
+                  <Font name="System Bold" size="14.0" />
                </font>
             </Text>
-            <TextField layoutX="42.0" layoutY="303.0" prefHeight="30.0" prefWidth="280.0" promptText="License ID" styleClass="adlam-text" />
-            <ComboBox layoutX="285.0" layoutY="411.0" prefHeight="30.0" prefWidth="120.0" promptText="Years" styleClass="adlam-text" visibleRowCount="3" />
-            <PasswordField layoutX="42.0" layoutY="458.0" prefHeight="30.0" prefWidth="650.0" promptText="Motive of the request" styleClass="adlam-text" />
-            <CheckBox layoutX="233.0" layoutY="498.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="140.0" styleClass="adlam-text" text="I accept the">
+            <TextField fx:id="TF_licenseId" layoutX="20.0" layoutY="374.0" prefHeight="40.0" prefWidth="380.0" promptText="License ID" styleClass="adlam-text">
                <font>
-                  <Font size="18.0" />
+                  <Font size="14.0" />
+               </font></TextField>
+            <ComboBox fx:id="CB_experienceYears" layoutX="619.0" layoutY="378.0" prefHeight="30.0" prefWidth="120.0" promptText="Years" styleClass="adlam-text" visibleRowCount="3" />
+            <CheckBox fx:id="CheckB_termsAndConditions" layoutX="20.0" layoutY="530.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="140.0" styleClass="adlam-text" text="I accept the">
+               <font>
+                  <Font size="14.0" />
                </font>
             </CheckBox>
-            <Text fill="#017efa" fontSmoothingType="LCD" layoutX="364.0" layoutY="520.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="adlam-text" text="Terms &amp; Conditions" wrappingWidth="211.0">
+            <Text fill="#017efa" fontSmoothingType="LCD" layoutX="120.0" layoutY="550.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="adlam-text" text="Terms &amp; Conditions" wrappingWidth="211.0">
                <font>
-                  <Font name="System Bold" size="18.0" />
+                  <Font name="System Bold" size="14.0" />
                </font>
             </Text>
-            <Button alignment="CENTER" layoutX="285.0" layoutY="575.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="220.0" style="-fx-background-color: #017efa;" styleClass="adlam-text" text="Submit" textAlignment="CENTER" textFill="WHITE">
+            <Button fx:id="BTN_submitDriverRegistration" alignment="CENTER" layoutX="258.0" layoutY="580.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="280.0" style="-fx-background-color: #017efa;" styleClass="adlam-text" text="Submit" textAlignment="CENTER" textFill="WHITE">
                <font>
                   <Font size="18.0" />
                </font>
             </Button>
-            <Text fontSmoothingType="LCD" layoutX="42.0" layoutY="360.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="adlam-text" text="License Expiration Date:">
+            <Text fontSmoothingType="LCD" layoutX="20.0" layoutY="453.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="adlam-text" text="License Expiration Date">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Text>
+            <Text fontSmoothingType="LCD" layoutX="20.0" layoutY="335.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="adlam-text" text="Driver">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
             </Text>
-            <Text fontSmoothingType="LCD" layoutX="42.0" layoutY="290.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="adlam-text" text="Driver Information">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
-            </Text>
-            <ImageView fitHeight="31.0" fitWidth="37.0" layoutX="398.0" layoutY="172.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="Icon_vehiclePhoto" fitHeight="31.0" fitWidth="37.0" layoutX="450.0" layoutY="235.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../../../../images/subir-foto.png" />
                </image>
             </ImageView>
-            <Text fontSmoothingType="LCD" layoutX="437.0" layoutY="325.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="adlam-text" text="Upload a photo of your license">
+            <Text fontSmoothingType="LCD" layoutX="506.0" layoutY="491.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="adlam-text" text="Upload your license photo">
                <font>
-                  <Font name="System Bold" size="18.0" />
+                  <Font name="System Bold" size="14.0" />
                </font>
             </Text>
-            <ImageView fitHeight="31.0" fitWidth="37.0" layoutX="398.0" layoutY="303.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="Icon_photoLicense" fitHeight="31.0" fitWidth="37.0" layoutX="450.0" layoutY="471.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../../../../images/subir-foto.png" />
                </image>
             </ImageView>
-            <Text fontSmoothingType="LCD" layoutX="42.0" layoutY="430.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="adlam-text" text="Years of driving experience: ">
+            <Text fontSmoothingType="LCD" layoutX="417.0" layoutY="399.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="adlam-text" text="Years of driving experience: ">
                <font>
-                  <Font name="System Bold" size="18.0" />
+                  <Font name="System Bold" size="14.0" />
                </font>
             </Text>
+            <Text fontSmoothingType="LCD" layoutX="20.0" layoutY="364.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="adlam-text" text="License Expiration Date">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Text>
+            <Spinner fx:id="SB_capacityPassangers" layoutX="557.0" layoutY="180.0" prefHeight="40.0" prefWidth="200.0" />
+            <Text fontSmoothingType="LCD" layoutX="385.0" layoutY="205.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="adlam-text" text="Capacity of Passangers:">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Text>
+            <TextField fx:id="TF_carColor" layoutX="20.0" layoutY="180.0" prefHeight="40.0" prefWidth="340.0" promptText="Color" styleClass="adlam-text">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </TextField>
+            <Text fontSmoothingType="LCD" layoutX="460.0" layoutY="155.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="adlam-text" text="Model Year:">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Text>
+            <Spinner fx:id="SB_modelYear" layoutX="557.0" layoutY="130.0" prefHeight="40.0" prefWidth="200.0" />
          </children>
       </AnchorPane>
    </items>
