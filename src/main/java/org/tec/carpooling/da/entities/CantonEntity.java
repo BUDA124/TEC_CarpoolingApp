@@ -28,6 +28,9 @@ public class CantonEntity implements Identifiable<Long> {
     @JoinColumn(name = "IDAUDITLOG", nullable = false)
     private AuditLogEntity auditLog;
 
+    public CantonEntity(String montesDeOca, ProvinceEntity sanJoseProv, AuditLogEntity auditLogEntity) {
+    }
+
     // Getters and Setters
     public Long getId() {
         return id;

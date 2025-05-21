@@ -43,8 +43,6 @@ public class AdminAddInstController {
     private Pane requestsPane;
     @FXML
     private Pane viewInstitutionPane;
-    @FXML
-    private ListView<String>  addAdminListView;
 
     @Autowired
     private SimpleDataRetrievalService simpleDataRetrievalService;
@@ -55,9 +53,8 @@ public class AdminAddInstController {
         String institutionName = institutionNameTextField.getText();
         String institutionEmail = institutionEmailTextField.getText();
         String institutionWebsite = institutionWebsiteURLTextField.getText();
-        String selectedAdmin = addAdminComboBox.getValue();
 
-        if (institutionName.isEmpty() || institutionEmail.isEmpty() || institutionWebsite.isEmpty() || selectedAdmin == null || selectedAdmin.isEmpty()) {
+        if (institutionName.isEmpty() || institutionEmail.isEmpty() || institutionWebsite.isEmpty()) {
             showAlert("There Are Blank Spaces", Alert.AlertType.ERROR, "Fill all the fields.");
             return;
         }
@@ -85,7 +82,7 @@ public class AdminAddInstController {
             }
         }
         ObservableList<String> adminNames = FXCollections.observableArrayList(administratorNames);
-        addAdminComboBox.setItems(adminNames);
+        addAdminListView.setItems(adminNames);
     }
 
     private void showAlert(String title, Alert.AlertType alertType, String message) {

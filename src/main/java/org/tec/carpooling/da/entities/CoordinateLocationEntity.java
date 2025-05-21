@@ -18,16 +18,19 @@ public class CoordinateLocationEntity implements Identifiable<Long> {
     private Long id;
 
     @Column(name = "YCOORDINATE", nullable = false)
-    private float yCoordinate;
+    private float YCoordinate;
 
     @Column(name = "XCOORDINATE", nullable = false)
-    private float xCoordinate;
+    private float XCoordinate;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "IDAUDITLOG", nullable = false)
     private AuditLogEntity auditLog;
 
-    // Getters and Setters
+    public CoordinateLocationEntity(float v, float v1, AuditLogEntity auditLogEntity) {
+    }
+
+    @Override
     public Long getId() {
         return id;
     }
@@ -36,20 +39,20 @@ public class CoordinateLocationEntity implements Identifiable<Long> {
         this.id = id;
     }
 
-    public float getyCoordinate() {
-        return yCoordinate;
+    public float getYCoordinate() {
+        return YCoordinate;
     }
 
-    public void setyCoordinate(float yCoordinate) {
-        this.yCoordinate = yCoordinate;
+    public void setYCoordinate(float yCoordinate) {
+        this.YCoordinate = yCoordinate;
     }
 
-    public float getxCoordinate() {
-        return xCoordinate;
+    public float getXCoordinate() {
+        return XCoordinate;
     }
 
-    public void setxCoordinate(float xCoordinate) {
-        this.xCoordinate = xCoordinate;
+    public void setXCoordinate(float xCoordinate) {
+        this.XCoordinate = xCoordinate;
     }
 
     public AuditLogEntity getAuditLog() {
@@ -77,9 +80,9 @@ public class CoordinateLocationEntity implements Identifiable<Long> {
     public String toString() {
         return "CoordinateLocationEntity{" +
                 "id=" + id +
-                ", yCoordinate=" + yCoordinate +
-                ", xCoordinate=" + xCoordinate +
-                ", auditLogId=" + (auditLog != null ? auditLog.getId() : null) +
+                ", yCoordinate=" + YCoordinate +
+                ", xCoordinate=" + XCoordinate +
+                ", auditLog=" + auditLog +
                 '}';
     }
 }

@@ -28,6 +28,9 @@ public class TripHasTripStatusEntity implements Identifiable<TripHasTripStatusId
 
     public TripHasTripStatusEntity() {}
 
+    public TripHasTripStatusEntity(TripEntity tripEntity, TripStatusEntity tripStatusEntity, AuditLogEntity auditLogEntity) {
+    }
+
     // Getters and Setters
     public TripHasTripStatusId getId() { return id; }
     public void setId(TripHasTripStatusId id) { this.id = id; }

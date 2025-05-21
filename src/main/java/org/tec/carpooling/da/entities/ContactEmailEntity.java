@@ -28,6 +28,9 @@ public class ContactEmailEntity implements Identifiable<Long> {
     @JoinColumn(name = "IDAUDITLOG", nullable = false)
     private AuditLogEntity auditLog;
 
+    public ContactEmailEntity(String mail, InstitutionEntity ucr, AuditLogEntity auditLogEntity) {
+    }
+
     // Getters and Setters
     public Long getId() {
         return id;

@@ -37,6 +37,9 @@ public class TripHasStopEntity implements Identifiable<TripHasStopId> {
 
     public TripHasStopEntity() {}
 
+    public TripHasStopEntity(TripEntity tripEntity, StopEntity mallSanPedro, LocalDate of, double v, int i, AuditLogEntity auditLogEntity) {
+    }
+
     // Getters and Setters
     public TripHasStopId getId() { return id; }
     public void setId(TripHasStopId id) { this.id = id; }

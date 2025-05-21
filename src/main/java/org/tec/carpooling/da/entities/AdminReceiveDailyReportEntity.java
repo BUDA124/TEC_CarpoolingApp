@@ -27,6 +27,9 @@ public class AdminReceiveDailyReportEntity implements Identifiable<AdminReceiveD
 
     public AdminReceiveDailyReportEntity() {}
 
+    public AdminReceiveDailyReportEntity(AdministratorEntity administratorEntity, DailyReportEntity dailyReportEntity, AuditLogEntity auditLogEntity) {
+    }
+
     // Getters and Setters
     public AdminReceiveDailyReportId getId() { return id; }
     public void setId(AdminReceiveDailyReportId id) { this.id = id; }

@@ -31,6 +31,9 @@ public class CredentialEntity implements Identifiable<Long> {
     @JoinColumn(name = "IDAUDITLOG", nullable = false)
     private AuditLogEntity auditLog;
 
+    public CredentialEntity(int i, String s, PersonEntity carlosRodríguez, AuditLogEntity auditLogEntity) {
+    }
+
     // Getters and Setters
     public Long getId() {
         return id;

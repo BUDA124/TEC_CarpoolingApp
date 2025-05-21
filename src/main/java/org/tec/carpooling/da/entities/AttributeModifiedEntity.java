@@ -34,6 +34,9 @@ public class AttributeModifiedEntity implements Identifiable<Long> {
     @JoinColumn(name = "IDAUDITLOG", nullable = false)
     private AuditLogEntity auditLog;
 
+    public AttributeModifiedEntity(Object o, String programado, String status, EntityModifiedEntity em1, AuditLogEntity auditLogEntity) {
+    }
+
     // Getters and Setters
     public Long getId() {
         return id;

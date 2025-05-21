@@ -25,6 +25,9 @@ public class PassengerEntity implements Identifiable<Long> {
     public PassengerEntity() {
     }
 
+    public PassengerEntity(PersonEntity anaJiménez, AuditLogEntity auditLogEntity) {
+    }
+
     // Getters and Setters
     public Long getId() {
         return idPerson;

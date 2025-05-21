@@ -25,6 +25,9 @@ public class DriverEntity implements Identifiable<Long> {
     public DriverEntity() {
     }
 
+    public DriverEntity(PersonEntity carlosRodríguez, AuditLogEntity auditLogEntity) {
+    }
+
     // Getters and Setters
     public Long getId() {
         return idPerson;

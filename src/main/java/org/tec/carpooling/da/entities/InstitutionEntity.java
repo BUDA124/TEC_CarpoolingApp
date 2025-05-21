@@ -32,6 +32,9 @@ public class InstitutionEntity implements Identifiable<Long> {
     @JoinColumn(name = "IDAUDITLOG", nullable = false)
     private AuditLogEntity auditLog;
 
+    public InstitutionEntity(String universidadDeCostaRica, String s, String url, AuditLogEntity auditLogEntity) {
+    }
+
     // Getters and Setters
     public Long getId() {
         return id;

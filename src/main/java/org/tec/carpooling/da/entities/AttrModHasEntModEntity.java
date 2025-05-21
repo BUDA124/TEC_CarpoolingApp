@@ -27,6 +27,9 @@ public class AttrModHasEntModEntity implements Identifiable<AttrModHasEntModId> 
 
     public AttrModHasEntModEntity() {}
 
+    public AttrModHasEntModEntity(LogBookEntity logBookEntity, AttributeModifiedEntity attributeModifiedEntity, AuditLogEntity auditLogEntity) {
+    }
+
     // Getters and Setters
     public AttrModHasEntModId getId() { return id; }
     public void setId(AttrModHasEntModId id) { this.id = id; }

@@ -47,6 +47,9 @@ public class VehicleEntity implements Identifiable<Long> {
     @JoinColumn(name = "IDAUDITLOG", nullable = false)
     private AuditLogEntity auditLog;
 
+    public VehicleEntity(String toyota, String s, String s1, int i, int i1, DriverEntity carlosDriver, AuditLogEntity auditLogEntity) {
+    }
+
     // Getters and Setters
     public Long getId() {
         return id;

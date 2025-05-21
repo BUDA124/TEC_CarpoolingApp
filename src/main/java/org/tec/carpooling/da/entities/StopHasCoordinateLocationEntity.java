@@ -27,6 +27,9 @@ public class StopHasCoordinateLocationEntity implements Identifiable<StopHasCoor
     
     public StopHasCoordinateLocationEntity() {}
 
+    public StopHasCoordinateLocationEntity(StopEntity tecCampus, CoordinateLocationEntity tec, AuditLogEntity auditLogEntity) {
+    }
+
     // Getters and Setters
     public StopHasCoordinateLocationId getId() { return id; }
     public void setId(StopHasCoordinateLocationId id) { this.id = id; }

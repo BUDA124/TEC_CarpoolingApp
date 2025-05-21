@@ -46,6 +46,9 @@ public class TripEntity implements Identifiable<Long> {
     public TripEntity() {
     }
 
+    public TripEntity(int i, LocalDateTime of, LocalDateTime of1, int i1, DriverEntity driverEntity, VehicleEntity vehicleEntity, PriceStatusEntity conCosto, AuditLogEntity auditLogEntity) {
+    }
+
     // Getters and Setters
     public Long getId() {
         return id;

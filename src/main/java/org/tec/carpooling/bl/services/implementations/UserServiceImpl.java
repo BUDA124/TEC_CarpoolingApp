@@ -10,9 +10,10 @@ import org.tec.carpooling.bl.mappers.UserLogInMapper;
 import org.tec.carpooling.bl.mappers.UserRegistrationMapper;
 import org.tec.carpooling.bl.services.UserService;
 import org.tec.carpooling.common.exceptions.AuthenticationException;
+import org.tec.carpooling.common.utils.HashingUtil;
 import org.tec.carpooling.da.entities.*;
 import org.tec.carpooling.da.repositories.*;
-import org.tec.carpooling.common.utils.PasswordUtils;
+
 import java.time.LocalDate;
 import java.util.Optional;
 
@@ -74,7 +75,7 @@ public class UserServiceImpl implements UserService {
         PersonalUserEntity userEntity = userEntityOptional.get();
 
         // 2. Verify Password
-        if (!PasswordUtils.verifyPassword(logInDTO.getPassword(), userEntity.getPassword())) {
+        if (!HashingUtil.verifyPassword(logInDTO.getPassword(), userEntity.getPassword())) {
             throw new AuthenticationException("Invalid username or password"); // Incorrect password
         }
 

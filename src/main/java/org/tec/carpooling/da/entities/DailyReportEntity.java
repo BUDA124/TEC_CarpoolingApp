@@ -28,6 +28,9 @@ public class DailyReportEntity implements Identifiable<Long> {
     @JoinColumn(name = "IDAUDITLOG", nullable = false)
     private AuditLogEntity auditLog;
 
+    public DailyReportEntity(String viajesDelDía, InstitutionEntity tec, AuditLogEntity auditLogEntity) {
+    }
+
     // Getters and Setters
     public Long getId() {
         return id;

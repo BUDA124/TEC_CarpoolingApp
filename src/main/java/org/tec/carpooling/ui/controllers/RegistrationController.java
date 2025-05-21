@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.tec.carpooling.bl.services.SimpleDataRetrievalService;
 import org.tec.carpooling.da.entities.CountryEntity;
 import org.tec.carpooling.da.entities.GenderEntity;
+import org.tec.carpooling.da.entities.InstitutionEntity;
+import org.tec.carpooling.da.entities.TypeOfCredentialEntity;
 import org.tec.carpooling.ui.SceneManager;
 
 import java.io.IOException;
@@ -44,6 +46,10 @@ public class RegistrationController {
     private ComboBox<GenderEntity> CB_gender;
     @FXML
     private ComboBox<CountryEntity> CB_country;
+    @FXML
+    private ComboBox<TypeOfCredentialEntity> CB_typeId;
+    @FXML
+    private ComboBox<InstitutionEntity> CB_institution;
 
     @Autowired
     private SimpleDataRetrievalService simpleDataRetrievalService;
@@ -132,6 +138,25 @@ public class RegistrationController {
                         .filter(country -> country != null && country.getName().equalsIgnoreCase(string))
                         .findFirst()
                         .orElse(null); // Return null if no match is found
+            }
+        });
+
+        List<InstitutionEntity> institutionsList = simpleDataRetrievalService.getAllInstitutions();
+        ObservableList<InstitutionEntity> observableInstitutions = FXCollections.observableArrayList(institutionsList);
+
+        CB_institution.setItems(observableInstitutions);
+        CB_institution.setConverter(new StringConverter<InstitutionEntity>() {
+            @Override
+            public String toString(InstitutionEntity institution) {
+                return institution != null ? institution.getInstitutionName() : "";
+            }
+
+            @Override
+            public InstitutionEntity fromString(String string) {
+                return observableInstitutions.stream()
+                        .filter(institution -> institution != null && institution.getInstitutionName().equalsIgnoreCase(string))
+                        .findFirst()
+                        .orElse(null);
             }
         });
     }

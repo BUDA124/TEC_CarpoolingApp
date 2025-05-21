@@ -27,6 +27,9 @@ public class LogBookHasEntityModifiedEntity implements Identifiable<LogBookHasEn
 
     public LogBookHasEntityModifiedEntity() {}
 
+    public LogBookHasEntityModifiedEntity(LogBookEntity logBookEntity, EntityModifiedEntity entityModifiedEntity, AuditLogEntity auditLogEntity) {
+    }
+
     // Getters and Setters
     public LogBookHasEntityModifiedId getId() { return id; }
     public void setId(LogBookHasEntityModifiedId id) { this.id = id; }

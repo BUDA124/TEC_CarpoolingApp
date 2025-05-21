@@ -32,6 +32,9 @@ public class LogBookEntity implements Identifiable<Long> {
     @JoinColumn(name = "IDAUDITLOG", nullable = false)
     private AuditLogEntity auditLog;
 
+    public LogBookEntity(LocalDate of, LocalDateTime of1, String sistemaIniciado, AuditLogEntity auditLogEntity) {
+    }
+
     // Getters and Setters
     public Long getId() {
         return id;

@@ -42,6 +42,9 @@ PersonalUserEntity implements Identifiable<Long> {
     @JoinColumn(name = "IDAUDITLOG", nullable = false)
     private AuditLogEntity auditLog;
 
+    public PersonalUserEntity(String s, String password123, LocalDate of, UserStatusEntity userStatusEntity, PersonEntity carlosRodríguez, AuditLogEntity auditLogEntity) {
+    }
+
     // Getters and Setters
     public Long getId() {
         return id;

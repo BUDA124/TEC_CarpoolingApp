@@ -31,6 +31,9 @@ public class PassengerJoinTripEntity implements Identifiable<PassengerJoinTripId
 
     public PassengerJoinTripEntity() {}
 
+    public PassengerJoinTripEntity(PersonalUserEntity personalUserEntity, TripEntity tripEntity, LocalDate of, AuditLogEntity auditLogEntity) {
+    }
+
     // Getters and Setters
     public PassengerJoinTripId getId() { return id; }
     public void setId(PassengerJoinTripId id) { this.id = id; }

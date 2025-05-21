@@ -27,6 +27,9 @@ public class CredentialHasTypeOfCredentialEntity implements Identifiable<Credent
 
     public CredentialHasTypeOfCredentialEntity() {}
 
+    public CredentialHasTypeOfCredentialEntity(CredentialEntity credentialEntity, TypeOfCredentialEntity carnetEstudiantil, AuditLogEntity auditLogEntity) {
+    }
+
     // Getters and Setters
     public CredentialHasTypeOfCredentialId getId() { return id; }
     public void setId(CredentialHasTypeOfCredentialId id) { this.id = id; }

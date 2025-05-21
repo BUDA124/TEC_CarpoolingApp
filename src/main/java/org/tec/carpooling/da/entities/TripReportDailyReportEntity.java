@@ -35,6 +35,9 @@ public class TripReportDailyReportEntity implements Identifiable<TripReportDaily
 
     public TripReportDailyReportEntity() {}
 
+    public TripReportDailyReportEntity(TripEntity tripEntity, DailyReportEntity dailyReportEntity, LocalDate of, String s, AuditLogEntity auditLogEntity) {
+    }
+
     // Getters and Setters
     public TripReportDailyReportId getId() { return id; }
     public void setId(TripReportDailyReportId id) { this.id = id; }

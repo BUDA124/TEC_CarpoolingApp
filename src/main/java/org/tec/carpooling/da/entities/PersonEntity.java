@@ -53,6 +53,9 @@ public class PersonEntity implements Identifiable<Long> {
     public PersonEntity() {
     }
 
+    public PersonEntity(String carlos, String alberto, String rodríguez, Object o, LocalDate of, String costarricense, InstitutionEntity ucr, GenderEntity genderEntity, AuditLogEntity auditLogEntity) {
+    }
+
     public GenderEntity getIdGender() {
         return idGender;
     }
