@@ -15,6 +15,16 @@ public class VehicleEntity implements Identifiable<Long> {
     public VehicleEntity() {
     }
 
+    public VehicleEntity(String brand, String carModel, String plateNumber, int seatQuantity, int isVerified, DriverEntity driver, AuditLogEntity auditLogEntity) {
+        this.brand = brand;
+        this.carModel = carModel;
+        this.plateNumber = plateNumber;
+        this.seatQuantity = seatQuantity;
+        this.isVerified = isVerified;
+        this.driver = driver;
+        this.auditLog = auditLogEntity;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_vehicle_gen")
     @Column(name = "ID")
@@ -46,9 +56,6 @@ public class VehicleEntity implements Identifiable<Long> {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "IDAUDITLOG", nullable = false)
     private AuditLogEntity auditLog;
-
-    public VehicleEntity(String toyota, String s, String s1, int i, int i1, DriverEntity carlosDriver, AuditLogEntity auditLogEntity) {
-    }
 
     // Getters and Setters
     public Long getId() {

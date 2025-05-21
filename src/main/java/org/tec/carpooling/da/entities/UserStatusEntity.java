@@ -12,6 +12,11 @@ public class UserStatusEntity implements Identifiable<Long> {
     public UserStatusEntity() {
     }
 
+    public UserStatusEntity(String status, AuditLogEntity auditLogEntity) {
+        this.status = status;
+        this.auditLog = auditLogEntity;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_userstatus_gen")
     @Column(name = "ID")

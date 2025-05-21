@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -32,7 +33,7 @@
                   <Font size="18.0" />
                </font>
             </Text>
-            <Pane layoutX="30.0" layoutY="180.0" prefHeight="35.0" prefWidth="220.0" style="-fx-background-color: #1b2b65;">
+            <Pane fx:id="publishRidePane" layoutX="30.0" layoutY="180.0" onMouseClicked="#goToPublishRidePane" prefHeight="35.0" prefWidth="220.0" style="-fx-background-color: #1b2b65;">
                <children>
                   <Text fill="WHITE" layoutX="48.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Publish ride" textAlignment="CENTER" wrappingWidth="128.0">
                      <font>
@@ -46,7 +47,7 @@
                   <Font size="18.0" />
                </font>
             </Text>
-            <Pane layoutX="30.0" layoutY="235.0" prefHeight="35.0" prefWidth="220.0" style="-fx-background-color: #1b2b65;">
+            <Pane layoutX="30.0" layoutY="235.0" onMouseClicked="#goToScheduleRidePane" prefHeight="35.0" prefWidth="220.0" style="-fx-background-color: #1b2b65;">
                <children>
                   <Text fill="WHITE" layoutX="42.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Scheduled Rides" textAlignment="CENTER" wrappingWidth="145.0">
                      <font>
@@ -55,7 +56,7 @@
                   </Text>
                </children>
             </Pane>
-            <Pane layoutX="30.0" layoutY="350.0" prefHeight="35.0" prefWidth="220.0" style="-fx-background-color: #1b2b65;">
+            <Pane layoutX="30.0" layoutY="350.0" onMouseClicked="#goToHistoryPane" prefHeight="35.0" prefWidth="220.0" style="-fx-background-color: #1b2b65;">
                <children>
                   <Text fill="WHITE" layoutX="48.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="History" textAlignment="CENTER" wrappingWidth="128.0">
                      <font>
@@ -91,29 +92,7 @@
                   <Font name="SansSerif Regular" size="60.0" />
                </font>
             </Text>
-            <Pane layoutX="20.0" layoutY="140.0" prefHeight="47.0" prefWidth="787.0" style="-fx-background-color: #efefef;">
-               <children>
-                  <Text layoutX="24.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Trip starts in: Date - Destiny Location, Date, Departure time at 0:00">
-                     <font>
-                        <Font size="20.0" />
-                     </font>
-                  </Text>
-                  <Text fill="#017efa" layoutX="674.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="See Details &gt;">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Text>
-                  <Pane layoutX="640.0" layoutY="9.0" prefHeight="26.0" prefWidth="23.0" style="-fx-background-color: #017efa;">
-                     <children>
-                        <ImageView fitHeight="16.0" fitWidth="16.0" layoutX="3.5" layoutY="5.0">
-                           <image>
-                              <Image url="@../../../../../images/bin.png" />
-                           </image>
-                        </ImageView>
-                     </children>
-                  </Pane>
-               </children>
-            </Pane>
+            <ListView layoutX="42.0" layoutY="114.0" prefHeight="500.0" prefWidth="681.0" />
          </children>
       </AnchorPane>
    </items>

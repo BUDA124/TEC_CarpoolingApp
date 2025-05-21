@@ -25,7 +25,9 @@ public class PassengerEntity implements Identifiable<Long> {
     public PassengerEntity() {
     }
 
-    public PassengerEntity(PersonEntity anaJiménez, AuditLogEntity auditLogEntity) {
+    public PassengerEntity(PersonEntity person, AuditLogEntity auditLogEntity) {
+        this.person = person;
+        this.auditLog = auditLogEntity;
     }
 
     // Getters and Setters

@@ -61,7 +61,7 @@ public class PersonEntity implements Identifiable<Long> {
         this.firstSurname = firstSurname;
         this.birthdate = birthdate;
         this.nationality = nationality;
-        this.profilePicture = (Blob) profilePicture;
+        this.profilePicture = null;
         this.idInstitution = institution;
         this.idGender = gender;
         this.idAuditLog = auditLogEntity;

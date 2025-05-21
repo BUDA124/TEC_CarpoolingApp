@@ -24,7 +24,9 @@ public class PriceStatusEntity implements Identifiable<Long> {
     @JoinColumn(name = "IDAUDITLOG", nullable = false)
     private AuditLogEntity auditLog;
 
-    public PriceStatusEntity(String conCosto, AuditLogEntity auditLogEntity) {
+    public PriceStatusEntity(String status, AuditLogEntity auditLogEntity) {
+        this.status = status;
+        this.auditLog = auditLogEntity;
     }
 
     // Getters and Setters

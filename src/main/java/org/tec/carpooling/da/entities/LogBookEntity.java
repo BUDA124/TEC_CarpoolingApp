@@ -32,7 +32,11 @@ public class LogBookEntity implements Identifiable<Long> {
     @JoinColumn(name = "IDAUDITLOG", nullable = false)
     private AuditLogEntity auditLog;
 
-    public LogBookEntity(LocalDate of, LocalDateTime of1, String sistemaIniciado, AuditLogEntity auditLogEntity) {
+    public LogBookEntity(LocalDate logDate, LocalDateTime localDateTime, String description, AuditLogEntity auditLogEntity) {
+        this.logDate = logDate;
+        this.logTime = localDateTime;
+        this.description = description;
+        this.auditLog = auditLogEntity;
     }
 
     // Getters and Setters

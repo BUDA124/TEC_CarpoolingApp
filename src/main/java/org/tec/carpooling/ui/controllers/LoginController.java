@@ -13,12 +13,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import org.springframework.stereotype.Controller;
+import org.tec.carpooling.bl.dto.BL_DA.UserDTO;
 import org.tec.carpooling.bl.dto.UI_BL.LogInDTO;
 import org.tec.carpooling.bl.services.UserService;
 import org.tec.carpooling.common.constants.AppConstants;
+import org.tec.carpooling.da.entities.PersonEntity;
+import org.tec.carpooling.da.entities.PersonalUserEntity;
+import org.tec.carpooling.da.repositories.PersonRepository;
+import org.tec.carpooling.da.repositories.PersonalUserRepository;
 import org.tec.carpooling.ui.SceneManager;
+import org.tec.carpooling.ui.UserSession;
 
 import java.io.IOException;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -35,6 +42,12 @@ public class LoginController {
 
     @FXML
     private Text T_signUp;
+
+    @Autowired
+    private PersonalUserRepository personalUserRepository;
+
+    @Autowired
+    private PersonRepository personRepository;
 
     @Autowired
     UserService userService;
@@ -54,6 +67,9 @@ public class LoginController {
         if (violations.isEmpty()) {
             try {
                 if (userService.logInUser(logInDTO)) {
+                    UserDTO user = new UserDTO();
+                    user.setUsername(username);
+                    UserSession.getInstance().loginUser(user);
                     SceneManager.switchToScene(event, "pick-role-view.fxml");
                 }
                 else {
@@ -84,7 +100,6 @@ public class LoginController {
 
     @FXML
     public void initialize() {
-
     }
 
     private void showAlert(String title, Alert.AlertType alertType, String message) {

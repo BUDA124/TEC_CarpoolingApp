@@ -28,7 +28,10 @@ public class AccessStatusEntity implements Identifiable<Long> {
     @JoinColumn(name = "IDAUDITLOG", nullable = false)
     private AuditLogEntity auditLog;
 
-    public AccessStatusEntity(String accesoTotal, AdministratorEntity anaAdmin, AuditLogEntity auditLogEntity) {
+    public AccessStatusEntity(String status, AdministratorEntity administrator, AuditLogEntity auditLogEntity) {
+        this.status = status;
+        this.administrator = administrator;
+        this.auditLog = auditLogEntity;
     }
 
     // Getters and Setters

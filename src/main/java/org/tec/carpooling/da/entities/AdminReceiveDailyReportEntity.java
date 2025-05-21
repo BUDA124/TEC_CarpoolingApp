@@ -27,7 +27,11 @@ public class AdminReceiveDailyReportEntity implements Identifiable<AdminReceiveD
 
     public AdminReceiveDailyReportEntity() {}
 
-    public AdminReceiveDailyReportEntity(AdministratorEntity administratorEntity, DailyReportEntity dailyReportEntity, AuditLogEntity auditLogEntity) {
+    public AdminReceiveDailyReportEntity(AdministratorEntity administrator, DailyReportEntity dailyReport, AuditLogEntity auditLogEntity) {
+        this.id = new AdminReceiveDailyReportId();
+        this.administrator = administrator;
+        this.dailyReport = dailyReport;
+        this.auditLog = auditLogEntity;
     }
 
     // Getters and Setters

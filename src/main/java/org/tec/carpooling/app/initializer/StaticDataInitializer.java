@@ -44,7 +44,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @Component
-@Order(1)
+@Order(2)
 public class StaticDataInitializer implements ApplicationRunner {
 
     private static final Logger log = LoggerFactory.getLogger(StaticDataInitializer.class);

@@ -27,7 +27,11 @@ public class AdminManageInstitutionEntity implements Identifiable<AdminManageIns
 
     public AdminManageInstitutionEntity() {}
 
-    public AdminManageInstitutionEntity(AdministratorEntity administratorEntity, InstitutionEntity tec, AuditLogEntity auditLogEntity) {
+    public AdminManageInstitutionEntity(AdministratorEntity administrator, InstitutionEntity institution, AuditLogEntity auditLogEntity) {
+        this.id = new AdminManageInstitutionId();
+        this.administrator = administrator;
+        this.institution = institution;
+        this.auditLog = auditLogEntity;
     }
 
     // Getters and Setters

@@ -28,7 +28,11 @@ public class TripHasStopHasPaymentMethodEntity implements Identifiable<TripHasSt
 
     public TripHasStopHasPaymentMethodEntity() {}
 
-    public TripHasStopHasPaymentMethodEntity(PaymentMethodEntity paymentMethodEntity, TripEntity tripEntity, StopEntity mallSanPedro, AuditLogEntity auditLogEntity) {
+    public TripHasStopHasPaymentMethodEntity(PaymentMethodEntity paymentMethod, TripEntity trip, StopEntity stop, AuditLogEntity auditLog) {
+        this.id = new TripHasStopHasPaymentMethodId();
+        this.paymentMethod = paymentMethod;
+        this.trip = trip;
+        this.stop = stop;
     }
 
     // Getters and Setters

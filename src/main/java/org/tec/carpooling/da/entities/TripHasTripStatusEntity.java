@@ -28,7 +28,11 @@ public class TripHasTripStatusEntity implements Identifiable<TripHasTripStatusId
 
     public TripHasTripStatusEntity() {}
 
-    public TripHasTripStatusEntity(TripEntity tripEntity, TripStatusEntity tripStatusEntity, AuditLogEntity auditLogEntity) {
+    public TripHasTripStatusEntity(TripEntity trip, TripStatusEntity tripStatus, AuditLogEntity auditLogEntity) {
+        this.id = new TripHasTripStatusId();
+        this.trip = trip;
+        this.tripStatus = tripStatus;
+        this.auditLog = auditLogEntity;
     }
 
     // Getters and Setters

@@ -110,7 +110,7 @@
                   <Font name="SansSerif Bold" size="16.0" />
                </font>
             </Text>
-            <Text fx:id="T_LogIn" fill="#017efa" layoutX="500.0" layoutY="655.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="adlam-text" text="Log-In">
+            <Text fx:id="T_LogIn" fill="#017efa" layoutX="500.0" layoutY="655.0" onMouseClicked="#On_T_LogIn" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="adlam-text" text="Log-In">
                <font>
                   <Font name="SansSerif Bold" size="16.0" />
                </font>

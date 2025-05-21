@@ -12,6 +12,12 @@ public class EmailEntity implements Identifiable<Long> {
     public EmailEntity() {
     }
 
+    public EmailEntity(String mail, PersonEntity person, AuditLogEntity auditLogEntity) {
+        this.emailAddress = mail;
+        this.person = person;
+        this.auditLog = auditLogEntity;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_email_gen")
     @Column(name = "ID")
@@ -27,12 +33,6 @@ public class EmailEntity implements Identifiable<Long> {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "IDAUDITLOG", nullable = false)
     private AuditLogEntity auditLog;
-
-    public EmailEntity(String mail, PersonEntity person, AuditLogEntity auditLogEntity) {
-        this.emailAddress = mail;
-        this.person = person;
-        this.auditLog = auditLogEntity;
-    }
 
     // Getters and Setters
     public Long getId() {

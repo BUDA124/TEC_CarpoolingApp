@@ -26,7 +26,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Component
-@Order(2)
+@Order(3)
 public class TestDataInitializer implements ApplicationRunner {
 
     private static final Logger log = LoggerFactory.getLogger(TestDataInitializer.class);
@@ -75,20 +75,6 @@ public class TestDataInitializer implements ApplicationRunner {
     @Autowired private LogBookRepository logBookRepository;
     @Autowired private EntityModifiedRepository entityModifiedRepository;
     @Autowired private AttributeModifiedRepository attributeModifiedRepository;
-
-    // N:N Relationship Table Repositories
-    @Autowired private CredentialHasTypeOfCredentialRepository credentialHasTypeOfCredentialRepository;
-    @Autowired private AdminManageInstitutionRepository adminManageInstitutionRepository;
-    @Autowired private AdminReceiveDailyReportRepository adminReceiveDailyReportRepository;
-    @Autowired private PassengerQueryTripRepository passengerQueryTripRepository;
-    @Autowired private PassengerJoinTripRepository passengerJoinTripRepository;
-    @Autowired private TripHasTripStatusRepository tripHasTripStatusRepository;
-    @Autowired private StopHasCoordinateLocationRepository stopHasCoordinateLocationRepository;
-    @Autowired private TripHasStopHasPaymentMethodRepository tripHasStopHasPaymentMethodRepository;
-    @Autowired private TripHasStopRepository tripHasStopRepository;
-    @Autowired private TripReportDailyReportRepository tripReportDailyReportRepository;
-    @Autowired private LogBookHasEntityModifiedRepository logBookHasEntityModifiedRepository;
-    @Autowired private AttrModHasEntModRepository attrModHasEntModRepository;
 
 
     // Data Holders
@@ -149,19 +135,6 @@ public class TestDataInitializer implements ApplicationRunner {
         createSpecificParameters();
         createLogBookEntries();
         createAuditingDetails();
-
-        // N:N Relationships
-        createCredentialTypeLinks();
-        createAdminInstitutionLinks();
-        createPassengerTripLinks();
-        createTripStatusLinks();
-        createStopCoordinateLinks();
-        createTripStopLinks();
-        createTripStopPaymentMethodLinks();
-        createTripDailyReportLinks();
-        createAdminDailyReportLinks();
-        createLogBookEntityModifiedLinks();
-        createAttributeModifiedLogBookLinks();
     }
     
     private AuditLogEntity newAuditLog() {
@@ -435,13 +408,11 @@ public class TestDataInitializer implements ApplicationRunner {
         );
         credentials.put("2023345678", cred4);
     }
-    
-    // UserStatuses are loaded in loadStaticData. "Suspendido" created there if specific.
 
     private void createUsers() {
         log.info("Creating personal users...");
-        PersonalUserEntity carlosUser = personalUserRepository.findByUsername("carlos.rodriguez").orElseGet(() -> {
-            PersonalUserEntity u = new PersonalUserEntity("carlos.rodriguez", HashingUtil.hashPassword("password123"),
+        PersonalUserEntity carlosUser = personalUserRepository.findByUsername("Rodri").orElseGet(() -> {
+            PersonalUserEntity u = new PersonalUserEntity("Rodri", HashingUtil.hashPassword("/123AAaa"),
                                                       LocalDate.of(2025, Month.JANUARY, 15),
                                                       userStatuses.get(AppConstants.USER_STATUS_ACTIVE),
                                                       persons.get("Carlos Rodríguez"), newAuditLog());
@@ -450,7 +421,7 @@ public class TestDataInitializer implements ApplicationRunner {
         personalUsers.put("carlos.rodriguez", carlosUser);
 
         PersonalUserEntity mariaUser = personalUserRepository.findByUsername("maria.fernandez").orElseGet(() -> {
-            PersonalUserEntity u = new PersonalUserEntity("maria.fernandez", HashingUtil.hashPassword("password456"),
+            PersonalUserEntity u = new PersonalUserEntity("maria.fernandez", HashingUtil.hashPassword("/321AAaa"),
                                                       LocalDate.of(2025, Month.JANUARY, 20),
                                                       userStatuses.get(AppConstants.USER_STATUS_ACTIVE),
                                                       persons.get("María Fernández"), newAuditLog());
@@ -500,16 +471,15 @@ public class TestDataInitializer implements ApplicationRunner {
             AdministratorEntity admin = new AdministratorEntity(persons.get("Ana Jiménez"), newAuditLog());
             return administratorRepository.save(admin);
         });
-        administrators.put("ana.jimenez", anaAdmin); // Keyed by username for consistency
+        administrators.put("ana.jimenez", anaAdmin);
 
-        accessStatusRepository.findByAdministrator(anaAdmin).orElseGet(() -> // Assuming one access status per admin for simplicity
+        accessStatusRepository.findByAdministrator(anaAdmin).orElseGet(() ->
             accessStatusRepository.save(new AccessStatusEntity("Acceso total", anaAdmin, newAuditLog()))
         );
     }
 
     private void createDriversAndVehicles() {
         log.info("Creating drivers and vehicles...");
-        // Carlos Rodriguez as Driver
         DriverEntity carlosDriver = driverRepository.findById(persons.get("Carlos Rodríguez").getId()).orElseGet(() -> {
             DriverEntity driver = new DriverEntity(persons.get("Carlos Rodríguez"), newAuditLog());
             return driverRepository.save(driver);
@@ -537,7 +507,6 @@ public class TestDataInitializer implements ApplicationRunner {
     }
     
     private void createPassengers() {
-        log.info("Creating passenger role links...");
         passengerRepository.findById(persons.get("Carlos Rodríguez").getId()).orElseGet(() ->
             passengerRepository.save(new PassengerEntity(persons.get("Carlos Rodríguez"), newAuditLog())));
         passengerRepository.findById(persons.get("María Fernández").getId()).orElseGet(() ->
@@ -549,7 +518,6 @@ public class TestDataInitializer implements ApplicationRunner {
     }
 
     private void createStops() {
-        log.info("Creating stops...");
         StopEntity ucrStop = stopRepository.findByAddressAndDistrict("Campus Universitario UCR", districts.get("San Pedro")).orElseGet(() ->
             stopRepository.save(new StopEntity("Campus Universitario UCR", districts.get("San Pedro"), newAuditLog()))
         );
@@ -565,31 +533,22 @@ public class TestDataInitializer implements ApplicationRunner {
         );
         stops.put("Mall San Pedro", mallStop);
     }
-    
-    // PaymentMethods are loaded in loadStaticData.
 
     private void createSpecificPriceStatuses() {
-        log.info("Creating specific price statuses for tests (Con costo)...");
-        // AppConstants.PRICE_STATUS_FREE is already loaded.
-        // Create "Con costo" if it's specific for tests and not covered by other AppConstants
-        PriceStatusEntity conCosto = priceStatusRepository.findByStatus("Con costo").orElseGet(() -> {
-            PriceStatusEntity ps = new PriceStatusEntity("Con costo", newAuditLog());
+        PriceStatusEntity conCosto = priceStatusRepository.findByStatus(AppConstants.PRICE_STATUS_FIXED_TOTAL).orElseGet(() -> {
+            PriceStatusEntity ps = new PriceStatusEntity(AppConstants.PRICE_STATUS_FIXED_TOTAL, newAuditLog());
             return priceStatusRepository.save(ps);
         });
-        priceStatuses.put("Con costo", conCosto);
+        priceStatuses.put(AppConstants.PRICE_STATUS_FIXED_TOTAL, conCosto);
     }
 
-    // TripStatuses are loaded in loadStaticData.
-
     private void createTrips() {
-        log.info("Creating trips...");
-        // Trip 1 (Carlos) - Check based on driver and departure time to prevent duplicates if re-run
         TripEntity trip1 = tripRepository.findByDriverAndDepartureDateTime(drivers.get("carlos.rodriguez"), LocalDateTime.of(2025, 5, 18, 7, 0, 0))
             .orElseGet(() -> {
                 TripEntity t = new TripEntity(3, LocalDateTime.of(2025, 5, 18, 7, 0, 0),
                                             LocalDateTime.of(2025, 5, 18, 7, 30, 0), 30,
                                             drivers.get("carlos.rodriguez"), vehicles.get("SJO-123"),
-                                            priceStatuses.get("Con costo"), // Using specific "Con costo"
+                                            priceStatuses.get(AppConstants.PRICE_STATUS_FIXED_TOTAL),
                                             newAuditLog());
                 return tripRepository.save(t);
             });
@@ -601,7 +560,7 @@ public class TestDataInitializer implements ApplicationRunner {
                 TripEntity t = new TripEntity(3, LocalDateTime.of(2025, 5, 18, 17, 0, 0),
                                             LocalDateTime.of(2025, 5, 18, 17, 45, 0), 45,
                                             drivers.get("jose.vargas"), vehicles.get("CAR-456"),
-                                            priceStatuses.get(AppConstants.PRICE_STATUS_FREE), // Using static Free
+                                            priceStatuses.get(AppConstants.PRICE_STATUS_FREE),
                                             newAuditLog());
                 return tripRepository.save(t);
             });
@@ -609,8 +568,6 @@ public class TestDataInitializer implements ApplicationRunner {
     }
 
     private void createDailyReports() {
-        log.info("Creating daily reports...");
-        // Assuming report description + institution is unique enough for test data
         DailyReportEntity dr1 = dailyReportRepository.findByInstitution(institutions.get("UCR")).orElseGet(() ->
             dailyReportRepository.save(new DailyReportEntity("Viajes del día", institutions.get("UCR"), newAuditLog()))
         );
@@ -623,19 +580,16 @@ public class TestDataInitializer implements ApplicationRunner {
     }
 
     private void createSpecificParameters() {
-        log.info("Creating specific parameters for tests...");
-        // StaticDataInitializer creates its own parameters. These are additional for tests.
         parameterRepository.findByName("MAX_PASSENGERS_PER_TRIP").orElseGet(() ->
             parameterRepository.save(new ParameterEntity("MAX_PASSENGERS_PER_TRIP", "4", newAuditLog()))
         );
         parameterRepository.findByName("MIN_ADVANCE_BOOKING_HOURS").orElseGet(() ->
-            parameterRepository.save(new ParameterEntity("MIN_ADVANCE_BOOKING_HOURS", "2", newAuditLog()))
+            parameterRepository.save(new ParameterEntity("MIN_ADVANCE_BOOKING_HOURS", "1", newAuditLog()))
         );
     }
 
     private void createLogBookEntries() {
-        log.info("Creating logbook entries...");
-        // Using timestamp for uniqueness for test data
+
         LogBookEntity lb1 = logBookRepository.findByLogTimeAndDescription(LocalDateTime.of(2025,5,17,10,0,0), "Sistema iniciado").orElseGet(() ->
             logBookRepository.save(new LogBookEntity(LocalDate.of(2025,5,17), LocalDateTime.of(2025,5,17,10,0,0), "Sistema iniciado", newAuditLog()))
         );
@@ -648,8 +602,7 @@ public class TestDataInitializer implements ApplicationRunner {
     }
 
     private void createAuditingDetails() {
-        log.info("Creating entity/attribute modified records...");
-        // Entity Modified - Assuming entity name is unique for test data
+
         EntityModifiedEntity em1 = entityModifiedRepository.findByEntityName("Trip").orElseGet(() ->
             entityModifiedRepository.save(new EntityModifiedEntity("Trip", newAuditLog()))
         );
@@ -661,160 +614,14 @@ public class TestDataInitializer implements ApplicationRunner {
         entityModifiedRecords.put(2L, em2);
 
         // Attribute Modified - More complex to ensure uniqueness, linking to EntityModified
-        AttributeModifiedEntity am1 = attributeModifiedRepository.findByEntityModifiedAndAttributeNameAndOldValue(em1, "status", "Programado").orElseGet(() -> // Example: check old value too
-            attributeModifiedRepository.save(new AttributeModifiedEntity(null, "Programado", "status", em1, newAuditLog()))
+        AttributeModifiedEntity am1 = attributeModifiedRepository.findByEntityModifiedAndAttributeNameAndOldValue(em1, "status", AppConstants.TRIP_STATUS_SCHEDULED).orElseGet(() ->
+            attributeModifiedRepository.save(new AttributeModifiedEntity("", AppConstants.TRIP_STATUS_SCHEDULED, "status", em1, newAuditLog()))
         );
         attributeModifiedRecords.put(1L, am1);
 
-        AttributeModifiedEntity am2 = attributeModifiedRepository.findByEntityModifiedAndAttributeNameAndOldValueAndNewValue(em2, "userStatus", "Inactivo", "Activo").orElseGet(() ->
-            attributeModifiedRepository.save(new AttributeModifiedEntity("Inactivo", "Activo", "userStatus", em2, newAuditLog()))
+        AttributeModifiedEntity am2 = attributeModifiedRepository.findByEntityModifiedAndAttributeNameAndOldValueAndNewValue(em2, "userStatus", AppConstants.USER_STATUS_INACTIVE, AppConstants.USER_STATUS_ACTIVE).orElseGet(() ->
+            attributeModifiedRepository.save(new AttributeModifiedEntity(AppConstants.USER_STATUS_INACTIVE, AppConstants.USER_STATUS_ACTIVE, "userStatus", em2, newAuditLog()))
         );
         attributeModifiedRecords.put(2L, am2);
-    }
-
-    // --- N:N Relationship Creation Methods (with basic exists check) ---
-    private void createCredentialTypeLinks() {
-        log.info("Linking credentials to types...");
-        // Carlos: 123456789 -> Licencia
-        credentialHasTypeOfCredentialRepository.findByCredentialAndTypeOfCredential(
-            credentials.get("123456789"), typeOfCredentials.get(AppConstants.CREDENTIAL_TYPE_NATIONAL_ID)
-        ).orElseGet(() -> credentialHasTypeOfCredentialRepository.save(
-            new CredentialHasTypeOfCredentialEntity(credentials.get("123456789"), typeOfCredentials.get(AppConstants.CREDENTIAL_TYPE_NATIONAL_ID), newAuditLog())
-        ));
-        // Carlos: 2022098765 -> Carnet estudiantil
-        credentialHasTypeOfCredentialRepository.findByCredentialAndTypeOfCredential(
-            credentials.get("2022098765"), typeOfCredentials.get(AppConstants.CREDENTIAL_TYPE_DIMEX)
-        ).orElseGet(() -> credentialHasTypeOfCredentialRepository.save(
-            new CredentialHasTypeOfCredentialEntity(credentials.get("2022098765"), typeOfCredentials.get(AppConstants.CREDENTIAL_TYPE_DIMEX), newAuditLog())
-        ));
-        // Jose: LIC-987654321 -> Licencia
-        credentialHasTypeOfCredentialRepository.findByCredentialAndTypeOfCredential(
-            credentials.get("987654321"), typeOfCredentials.get(AppConstants.CREDENTIAL_TYPE_NATIONAL_ID)
-        ).orElseGet(() -> credentialHasTypeOfCredentialRepository.save(
-            new CredentialHasTypeOfCredentialEntity(credentials.get("987654321"), typeOfCredentials.get(AppConstants.CREDENTIAL_TYPE_NATIONAL_ID), newAuditLog())
-        ));
-    }
-
-    private void createAdminInstitutionLinks() {
-        adminManageInstitutionRepository.findByAdministratorAndInstitution(
-            administrators.get("ana.jimenez"), institutions.get("TEC")
-        ).orElseGet(() -> adminManageInstitutionRepository.save(
-            new AdminManageInstitutionEntity(administrators.get("ana.jimenez"), institutions.get("TEC"), newAuditLog())
-        ));
-    }
-    
-    private void createPassengerTripLinks() {
-        // Maria joins Carlos's trip (Trip 1)
-        passengerJoinTripRepository.findByPersonalUserAndTrip(
-            personalUsers.get("maria.fernandez"), trips.get(1L)
-        ).orElseGet(() -> passengerJoinTripRepository.save(
-            new PassengerJoinTripEntity(personalUsers.get("maria.fernandez"), trips.get(1L), LocalDate.of(2025, 5, 17), newAuditLog())
-        ));
-
-        // Ana queries José's trip (Trip 2)
-        // Assuming a query isn't typically "unique" in the same way a join is, but for test data, we might want one entry.
-        // If PassengerQueryTripEntity has a unique constraint on (user, trip), this is fine.
-        // Otherwise, this might create duplicates on re-runs if not designed carefully.
-        // For now, let's assume it's fine for initial population.
-        if (!passengerQueryTripRepository.existsByPersonalUserAndTrip(personalUsers.get("ana.jimenez"), trips.get(2L))) {
-             passengerQueryTripRepository.save(
-                new PassengerQueryTripEntity(personalUsers.get("ana.jimenez"), trips.get(2L), newAuditLog())
-            );
-        }
-    }
-
-    private void createTripStatusLinks() {
-        log.info("Linking trips to statuses...");
-        // Trip 1 -> Scheduled
-        // A trip usually has ONE current status. This N:N table might be for status history.
-        // For initial population, we set the initial status.
-        if (!tripHasTripStatusRepository.existsByTripAndTripStatus(trips.get(1L), tripStatuses.get(AppConstants.TRIP_STATUS_SCHEDULED))) {
-            tripHasTripStatusRepository.save(
-                new TripHasTripStatusEntity(trips.get(1L), tripStatuses.get(AppConstants.TRIP_STATUS_SCHEDULED), newAuditLog())
-            );
-        }
-        // Trip 2 -> Scheduled
-        if (!tripHasTripStatusRepository.existsByTripAndTripStatus(trips.get(2L), tripStatuses.get(AppConstants.TRIP_STATUS_SCHEDULED))) {
-            tripHasTripStatusRepository.save(
-                new TripHasTripStatusEntity(trips.get(2L), tripStatuses.get(AppConstants.TRIP_STATUS_SCHEDULED), newAuditLog())
-            );
-        }
-    }
-
-    private void createStopCoordinateLinks() {
-        log.info("Linking stops to coordinates...");
-        stopHasCoordinateLocationRepository.findByStopAndCoordinateLocation(
-            stops.get("UCR Campus"), coordinateLocations.get("UCR")
-        ).orElseGet(() -> stopHasCoordinateLocationRepository.save(
-            new StopHasCoordinateLocationEntity(stops.get("UCR Campus"), coordinateLocations.get("UCR"), newAuditLog())
-        ));
-        stopHasCoordinateLocationRepository.findByStopAndCoordinateLocation(
-            stops.get("TEC Campus"), coordinateLocations.get("TEC")
-        ).orElseGet(() -> stopHasCoordinateLocationRepository.save(
-            new StopHasCoordinateLocationEntity(stops.get("TEC Campus"), coordinateLocations.get("TEC"), newAuditLog())
-        ));
-    }
-
-    private void createTripStopLinks() {
-        log.info("Linking trips to stops (route definition)...");
-        // Trip 1, Stop 1 (Mall)
-        tripHasStopRepository.findByTripAndStopAndNumberStop(trips.get(1L), stops.get("Mall San Pedro"), 1).orElseGet(() ->
-            tripHasStopRepository.save(new TripHasStopEntity(trips.get(1L), stops.get("Mall San Pedro"), LocalDate.of(2025,5,18), 500.0, 1, newAuditLog()))
-        );
-        // Trip 1, Stop 2 (UCR)
-        tripHasStopRepository.findByTripAndStopAndNumberStop(trips.get(1L), stops.get("UCR Campus"), 2).orElseGet(() ->
-            tripHasStopRepository.save(new TripHasStopEntity(trips.get(1L), stops.get("UCR Campus"), LocalDate.of(2025,5,18), 0.0, 2, newAuditLog()))
-        );
-        // Trip 2, Stop 1 (TEC)
-        tripHasStopRepository.findByTripAndStopAndNumberStop(trips.get(2L), stops.get("TEC Campus"), 1).orElseGet(() ->
-            tripHasStopRepository.save(new TripHasStopEntity(trips.get(2L), stops.get("TEC Campus"), LocalDate.of(2025,5,18), 0.0, 1, newAuditLog()))
-        );
-    }
-    
-    private void createTripStopPaymentMethodLinks() {
-        log.info("Linking payment methods to trip stops...");
-        // Trip 1, Mall San Pedro -> Cash
-        tripHasStopHasPaymentMethodRepository.findByTripAndStopAndPaymentMethod(
-            trips.get(1L), stops.get("Mall San Pedro"), paymentMethods.get(AppConstants.PAYMENT_METHOD_CASH)
-        ).orElseGet(() -> tripHasStopHasPaymentMethodRepository.save(
-            new TripHasStopHasPaymentMethodEntity(paymentMethods.get(AppConstants.PAYMENT_METHOD_CASH), trips.get(1L), stops.get("Mall San Pedro"), newAuditLog())
-        ));
-        // Trip 1, Mall San Pedro -> SINPE
-        tripHasStopHasPaymentMethodRepository.findByTripAndStopAndPaymentMethod(
-            trips.get(1L), stops.get("Mall San Pedro"), paymentMethods.get(AppConstants.PAYMENT_METHOD_SINPE)
-        ).orElseGet(() -> tripHasStopHasPaymentMethodRepository.save(
-            new TripHasStopHasPaymentMethodEntity(paymentMethods.get(AppConstants.PAYMENT_METHOD_SINPE), trips.get(1L), stops.get("Mall San Pedro"), newAuditLog())
-        ));
-    }
-
-    private void createTripDailyReportLinks() {
-        log.info("Linking trips to daily reports...");
-        tripReportDailyReportRepository.findByTripAndDailyReport(trips.get(1L), dailyReports.get(1L)).orElseGet(() ->
-            tripReportDailyReportRepository.save(new TripReportDailyReportEntity(trips.get(1L), dailyReports.get(1L), LocalDate.of(2025,5,18), "RPT-UCR-001", newAuditLog()))
-        );
-        tripReportDailyReportRepository.findByTripAndDailyReport(trips.get(2L), dailyReports.get(2L)).orElseGet(() ->
-            tripReportDailyReportRepository.save(new TripReportDailyReportEntity(trips.get(2L), dailyReports.get(2L), LocalDate.of(2025,5,18), "RPT-TEC-001", newAuditLog()))
-        );
-    }
-
-    private void createAdminDailyReportLinks() {
-        log.info("Linking admins to daily reports received...");
-        adminReceiveDailyReportRepository.findByAdministratorAndDailyReport(administrators.get("ana.jimenez"), dailyReports.get(2L)).orElseGet(() ->
-            adminReceiveDailyReportRepository.save(new AdminReceiveDailyReportEntity(administrators.get("ana.jimenez"), dailyReports.get(2L), newAuditLog()))
-        );
-    }
-
-    private void createLogBookEntityModifiedLinks() {
-        log.info("Linking logbook entries to entity modified records...");
-        logBookHasEntityModifiedRepository.findByLogBookAndEntityModified(logBooks.get(2L), entityModifiedRecords.get(1L)).orElseGet(() ->
-            logBookHasEntityModifiedRepository.save(new LogBookHasEntityModifiedEntity(logBooks.get(2L), entityModifiedRecords.get(1L), newAuditLog()))
-        );
-    }
-
-    private void createAttributeModifiedLogBookLinks() {
-        log.info("Linking attribute modified records to logbook entries (via AttrModHasEntMod)...");
-        attrModHasEntModRepository.findByLogBookAndAttributeModified(logBooks.get(2L), attributeModifiedRecords.get(1L)).orElseGet(() ->
-            attrModHasEntModRepository.save(new AttrModHasEntModEntity(logBooks.get(2L), attributeModifiedRecords.get(1L), newAuditLog()))
-        );
     }
 }

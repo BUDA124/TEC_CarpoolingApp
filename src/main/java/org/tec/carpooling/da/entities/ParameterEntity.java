@@ -27,7 +27,10 @@ public class ParameterEntity implements Identifiable<Long> {
     @JoinColumn(name = "IDAUDITLOG", nullable = false)
     private AuditLogEntity auditLog;
 
-    public ParameterEntity(String minAdvanceBookingHours, String number, AuditLogEntity auditLogEntity) {
+    public ParameterEntity(String name, String value, AuditLogEntity auditLogEntity) {
+        this.name = name;
+        this.value = value;
+        this.auditLog = auditLogEntity;
     }
 
     // Getters and Setters

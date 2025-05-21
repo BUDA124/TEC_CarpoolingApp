@@ -12,6 +12,12 @@ public class PhoneNumberEntity implements Identifiable<Long> {
     public PhoneNumberEntity() {
     }
 
+    public PhoneNumberEntity(String phoneNumber, PersonEntity idPerson, AuditLogEntity auditLogEntity) {
+        this.phoneNumber = phoneNumber;
+        this.person = idPerson;
+        this.auditLog = auditLogEntity;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_phonenumber_gen")
     @Column(name = "ID")
@@ -27,12 +33,6 @@ public class PhoneNumberEntity implements Identifiable<Long> {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "IDAUDITLOG", nullable = false)
     private AuditLogEntity auditLog;
-
-    public PhoneNumberEntity(String phoneNumber, PersonEntity idPerson, AuditLogEntity auditLogEntity) {
-        this.phoneNumber = phoneNumber;
-        this.person = idPerson;
-        this.auditLog = auditLogEntity;
-    }
 
     // Getters and Setters
     public Long getId() {

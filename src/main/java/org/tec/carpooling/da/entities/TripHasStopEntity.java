@@ -37,7 +37,14 @@ public class TripHasStopEntity implements Identifiable<TripHasStopId> {
 
     public TripHasStopEntity() {}
 
-    public TripHasStopEntity(TripEntity tripEntity, StopEntity mallSanPedro, LocalDate of, double v, int i, AuditLogEntity auditLogEntity) {
+    public TripHasStopEntity(TripEntity trip, StopEntity stop, LocalDate estimatedArrival, float stopCost, int numberStop, AuditLogEntity auditLogEntity) {
+        this.id = new TripHasStopId();
+        this.trip = trip;
+        this.stop = stop;
+        this.stopCost = stopCost;
+        this.estimatedArrival = estimatedArrival;
+        this.numberStop = numberStop;
+        this.auditLog = auditLogEntity;
     }
 
     // Getters and Setters

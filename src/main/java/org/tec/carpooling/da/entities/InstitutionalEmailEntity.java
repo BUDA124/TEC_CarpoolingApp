@@ -28,7 +28,10 @@ public class InstitutionalEmailEntity implements Identifiable<Long> {
     @JoinColumn(name = "IDAUDITLOG", nullable = false)
     private AuditLogEntity auditLog;
 
-    public InstitutionalEmailEntity(String mail, PersonalUserEntity personalUserEntity, AuditLogEntity auditLogEntity) {
+    public InstitutionalEmailEntity(String emailAddress, PersonalUserEntity user, AuditLogEntity auditLogEntity) {
+        this.emailAddress = emailAddress;
+        this.personalUser = user;
+        this.auditLog = auditLogEntity;
     }
 
     // Getters and Setters

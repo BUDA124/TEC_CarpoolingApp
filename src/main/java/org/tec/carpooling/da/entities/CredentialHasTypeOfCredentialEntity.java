@@ -27,7 +27,11 @@ public class CredentialHasTypeOfCredentialEntity implements Identifiable<Credent
 
     public CredentialHasTypeOfCredentialEntity() {}
 
-    public CredentialHasTypeOfCredentialEntity(CredentialEntity credentialEntity, TypeOfCredentialEntity carnetEstudiantil, AuditLogEntity auditLogEntity) {
+    public CredentialHasTypeOfCredentialEntity(CredentialEntity credential, TypeOfCredentialEntity typeOfCredential, AuditLogEntity auditLogEntity) {
+        this.id = new CredentialHasTypeOfCredentialId();
+        this.credential = credential;
+        this.typeOfCredential = typeOfCredential;
+        this.auditLog = auditLogEntity;
     }
 
     // Getters and Setters

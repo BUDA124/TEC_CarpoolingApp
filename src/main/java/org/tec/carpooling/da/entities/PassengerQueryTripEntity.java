@@ -27,7 +27,11 @@ public class PassengerQueryTripEntity implements Identifiable<PassengerQueryTrip
     
     public PassengerQueryTripEntity() {}
 
-    public PassengerQueryTripEntity(PersonalUserEntity personalUserEntity, TripEntity tripEntity, AuditLogEntity auditLogEntity) {
+    public PassengerQueryTripEntity(PersonalUserEntity user, TripEntity trip, AuditLogEntity auditLogEntity) {
+        this.id = new PassengerQueryTripId();
+        this.personalUser = user;
+        this.trip = trip;
+        this.auditLog = auditLogEntity;
     }
 
     // Getters and Setters

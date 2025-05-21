@@ -31,7 +31,11 @@ public class CredentialEntity implements Identifiable<Long> {
     @JoinColumn(name = "IDAUDITLOG", nullable = false)
     private AuditLogEntity auditLog;
 
-    public CredentialEntity(int i, String s, PersonEntity carlosRodríguez, AuditLogEntity auditLogEntity) {
+    public CredentialEntity(int isActive, String numberOfCredential, PersonEntity person, AuditLogEntity auditLogEntity) {
+        this.isActive = isActive;
+        this.numberOfCredential = numberOfCredential;
+        this.person = person;
+        this.auditLog = auditLogEntity;
     }
 
     // Getters and Setters

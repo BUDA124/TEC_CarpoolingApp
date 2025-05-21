@@ -25,7 +25,9 @@ public class AdministratorEntity implements Identifiable<Long> {
     @JoinColumn(name = "IDAUDITLOG", nullable = false)
     private AuditLogEntity auditLog;
 
-    public AdministratorEntity(PersonEntity anaJiménez, AuditLogEntity auditLogEntity) {
+    public AdministratorEntity(PersonEntity person, AuditLogEntity auditLogEntity) {
+        this.person = person;
+        this.auditLog = auditLogEntity;
     }
 
     // Getters and Setters

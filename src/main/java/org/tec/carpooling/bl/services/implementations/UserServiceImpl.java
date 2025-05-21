@@ -6,10 +6,14 @@ import org.springframework.transaction.annotation.Transactional;
 import org.tec.carpooling.bl.dto.BL_DA.UserDTO;
 import org.tec.carpooling.bl.dto.UI_BL.LogInDTO;
 import org.tec.carpooling.bl.dto.UI_BL.UserRegistrationDTO;
+import org.tec.carpooling.bl.dto.UI_BL.VehicleDTO;
 import org.tec.carpooling.bl.mappers.UserLogInMapper;
 import org.tec.carpooling.bl.mappers.UserRegistrationMapper;
 import org.tec.carpooling.bl.services.UserService;
+import org.tec.carpooling.bl.dto.UI_BL.UserUpdateDTO;
 import org.tec.carpooling.common.exceptions.AuthenticationException;
+import org.tec.carpooling.common.exceptions.EntityNotFoundException;
+import org.tec.carpooling.common.exceptions.ValidationException;
 import org.tec.carpooling.common.utils.HashingUtil;
 import org.tec.carpooling.da.entities.*;
 import org.tec.carpooling.da.repositories.*;
@@ -79,5 +83,30 @@ public class UserServiceImpl implements UserService {
         }
 
         return true;
+    }
+
+    @Override
+    public UserDTO getUserProfile(long userId) {
+        return null;
+    }
+
+    @Override
+    public UserDTO updateUserProfile(long userId, UserUpdateDTO updateDTO) throws EntityNotFoundException, ValidationException {
+        return null;
+    }
+
+    @Override
+    public void acceptTermsAndConditions(long userId) throws EntityNotFoundException {
+
+    }
+
+    @Override
+    public VehicleDTO getVehiclesByDriver(long driverPersonId) throws EntityNotFoundException {
+        return null;
+    }
+
+    @Override
+    public long getUserInstitutionId(long userId) throws EntityNotFoundException {
+        return 0;
     }
 }

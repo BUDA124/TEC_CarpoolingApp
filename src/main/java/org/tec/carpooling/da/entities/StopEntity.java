@@ -36,7 +36,10 @@ public class StopEntity implements Identifiable<Long> {
     @JoinColumn(name = "IDAUDITLOG", nullable = false)
     private AuditLogEntity auditLog;
 
-    public StopEntity(String campusCentralTec, DistrictEntity oriental, AuditLogEntity auditLogEntity) {
+    public StopEntity(String address, DistrictEntity district, AuditLogEntity auditLogEntity) {
+        this.address = address;
+        this.district = district;
+        this.auditLog = auditLogEntity;
     }
 
     // Getters and Setters

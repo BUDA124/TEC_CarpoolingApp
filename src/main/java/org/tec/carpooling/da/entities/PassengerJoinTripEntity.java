@@ -31,7 +31,12 @@ public class PassengerJoinTripEntity implements Identifiable<PassengerJoinTripId
 
     public PassengerJoinTripEntity() {}
 
-    public PassengerJoinTripEntity(PersonalUserEntity personalUserEntity, TripEntity tripEntity, LocalDate of, AuditLogEntity auditLogEntity) {
+    public PassengerJoinTripEntity(PersonalUserEntity user, TripEntity trip, LocalDate joinDate, AuditLogEntity auditLogEntity) {
+        this.id = new PassengerJoinTripId();
+        this.personalUser = user;
+        this.trip = trip;
+        this.joinDate = joinDate;
+        this.auditLog = auditLogEntity;
     }
 
     // Getters and Setters

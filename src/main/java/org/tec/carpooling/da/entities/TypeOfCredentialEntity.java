@@ -12,6 +12,11 @@ public class TypeOfCredentialEntity implements Identifiable<Long> {
     public TypeOfCredentialEntity() {
     }
 
+    public TypeOfCredentialEntity(String type, AuditLogEntity auditLogEntity) {
+        this.type = type;
+        this.auditLog = auditLogEntity;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_typeofcredential_gen")
     @Column(name = "ID")
@@ -23,9 +28,6 @@ public class TypeOfCredentialEntity implements Identifiable<Long> {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "IDAUDITLOG", nullable = false)
     private AuditLogEntity auditLog;
-
-    public TypeOfCredentialEntity(String typeOfCredential, AuditLogEntity auditLogEntity) {
-    }
 
     // Getters and Setters
     public Long getId() {

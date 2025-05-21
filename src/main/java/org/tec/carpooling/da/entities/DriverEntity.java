@@ -25,7 +25,9 @@ public class DriverEntity implements Identifiable<Long> {
     public DriverEntity() {
     }
 
-    public DriverEntity(PersonEntity carlosRodríguez, AuditLogEntity auditLogEntity) {
+    public DriverEntity(PersonEntity person, AuditLogEntity auditLogEntity) {
+        this.person = person;
+        this.auditLog = auditLogEntity;
     }
 
     // Getters and Setters

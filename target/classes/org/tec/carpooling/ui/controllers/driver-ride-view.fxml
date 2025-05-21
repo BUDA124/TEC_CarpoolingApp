@@ -37,7 +37,7 @@
                   <Font size="18.0" />
                </font>
             </Text>
-            <Pane layoutX="30.0" layoutY="180.0" prefHeight="35.0" prefWidth="220.0" style="-fx-background-color: #1b2b65;">
+            <Pane fx:id="publishRidePane" layoutX="30.0" layoutY="180.0" onMouseClicked="#goToPublishRidePane" prefHeight="35.0" prefWidth="220.0" style="-fx-background-color: #1b2b65;">
                <children>
                   <Text fill="WHITE" layoutX="48.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Publish ride" textAlignment="CENTER" wrappingWidth="128.0">
                      <font>
@@ -51,7 +51,7 @@
                   <Font size="18.0" />
                </font>
             </Text>
-            <Pane layoutX="30.0" layoutY="235.0" prefHeight="35.0" prefWidth="220.0" style="-fx-background-color: #1b2b65;">
+            <Pane fx:id="scheduleRidePane" layoutX="30.0" layoutY="235.0" onMouseClicked="#goToScheduleRidePane" prefHeight="35.0" prefWidth="220.0" style="-fx-background-color: #1b2b65;">
                <children>
                   <Text fill="WHITE" layoutX="42.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Scheduled Rides" textAlignment="CENTER" wrappingWidth="145.0">
                      <font>
@@ -60,7 +60,7 @@
                   </Text>
                </children>
             </Pane>
-            <Pane layoutX="30.0" layoutY="350.0" prefHeight="35.0" prefWidth="220.0" style="-fx-background-color: #1b2b65;">
+            <Pane fx:id="historyPane" layoutX="30.0" layoutY="350.0" onMouseClicked="#goToHistoryPane" prefHeight="35.0" prefWidth="220.0" style="-fx-background-color: #1b2b65;">
                <children>
                   <Text fill="WHITE" layoutX="48.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="History" textAlignment="CENTER" wrappingWidth="128.0">
                      <font>
@@ -78,7 +78,7 @@
                   </Text>
                </children>
             </Pane>
-            <Pane layoutX="30.0" layoutY="525.0" prefHeight="35.0" prefWidth="220.0" style="-fx-background-color: #1b2b65;">
+            <Pane fx:id="settingsPane" layoutX="30.0" layoutY="525.0" prefHeight="35.0" prefWidth="220.0" style="-fx-background-color: #1b2b65;">
                <children>
                   <Text fill="WHITE" layoutX="48.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Settings" textAlignment="CENTER" wrappingWidth="128.0">
                      <font>
@@ -133,8 +133,8 @@
                         <Font size="18.0" />
                      </font>
                   </Text>
-                  <Spinner editable="true" layoutX="176.0" layoutY="104.0" prefHeight="26.0" prefWidth="80.0" />
-                  <DatePicker layoutX="147.0" layoutY="196.0" prefHeight="7.0" prefWidth="145.0" />
+                  <Spinner fx:id="passangerCapacitySpinner" editable="true" layoutX="176.0" layoutY="104.0" prefHeight="26.0" prefWidth="80.0" />
+                  <DatePicker fx:id="dateTripDatePicker" layoutX="147.0" layoutY="196.0" prefHeight="7.0" prefWidth="145.0" />
                </children>
             </AnchorPane>
             <AnchorPane layoutX="20.0" layoutY="350.0" prefHeight="218.0" prefWidth="795.0" style="-fx-background-color: #eeeeee;">
@@ -151,7 +151,7 @@
                               <Font size="16.0" />
                            </font>
                         </Text>
-                        <TextField layoutX="19.0" layoutY="27.0" prefHeight="26.0" prefWidth="87.0" />
+                        <TextField fx:id="arrivesAtTextField1" layoutX="19.0" layoutY="27.0" prefHeight="26.0" prefWidth="87.0" />
                      </children>
                   </Pane>
                   <Pane layoutX="150.0" layoutY="48.0" prefHeight="63.0" prefWidth="126.0" style="-fx-background-color: #eeeeee; -fx-border-color: #000000;">
@@ -161,7 +161,7 @@
                               <Font size="16.0" />
                            </font>
                         </Text>
-                        <TextField layoutX="19.0" layoutY="27.0" prefHeight="26.0" prefWidth="87.0" />
+                        <TextField fx:id="leavesAtTextField1" layoutX="19.0" layoutY="27.0" prefHeight="26.0" prefWidth="87.0" />
                      </children>
                   </Pane>
                   <Pane layoutX="430.0" layoutY="48.0" prefHeight="63.0" prefWidth="107.0" style="-fx-background-color: #eeeeee; -fx-border-color: #000000;">
@@ -171,34 +171,10 @@
                               <Font size="16.0" />
                            </font>
                         </Text>
-                        <TextField layoutX="19.0" layoutY="27.0" prefHeight="26.0" prefWidth="70.0" />
+                        <TextField fx:id="costTextField1" layoutX="19.0" layoutY="27.0" prefHeight="26.0" prefWidth="70.0" />
                      </children>
                   </Pane>
-                  <ComboBox layoutX="285.0" layoutY="48.0" prefHeight="63.0" prefWidth="138.0" promptText="Pay Method" />
-                  <Pane layoutX="545.0" layoutY="48.0" prefHeight="63.0" prefWidth="200.0" style="-fx-background-color: #eeeeee; -fx-border-color: #000000;">
-                     <children>
-                        <Text layoutX="17.0" layoutY="20.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Start Stop">
-                           <font>
-                              <Font size="16.0" />
-                           </font>
-                        </Text>
-                        <Text fill="#9e9e9e" layoutX="17.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Location Description">
-                           <font>
-                              <Font size="16.0" />
-                           </font>
-                        </Text>
-                        <ImageView fitHeight="24" fitWidth="24" layoutX="169.0" layoutY="4.0">
-                           <image>
-                              <Image url="@../../../../../images/bin.png" />
-                           </image>
-                        </ImageView>
-                        <ImageView fitHeight="24" fitWidth="24" layoutX="169.0" layoutY="33.0">
-                           <image>
-                              <Image url="@../../../../../images/pencil.png" />
-                           </image>
-                        </ImageView>
-                     </children>
-                  </Pane>
+                  <ComboBox fx:id="payMethodComboBox1" layoutX="285.0" layoutY="48.0" prefHeight="63.0" prefWidth="138.0" promptText="Pay Method" />
                   <Pane layoutX="15.0" layoutY="122.0" prefHeight="63.0" prefWidth="126.0" style="-fx-background-color: #eeeeee; -fx-border-color: #000000;">
                      <children>
                         <Text layoutX="28.0" layoutY="20.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Arrives at">
@@ -206,7 +182,7 @@
                               <Font size="16.0" />
                            </font>
                         </Text>
-                        <TextField layoutX="19.0" layoutY="27.0" prefHeight="26.0" prefWidth="87.0" />
+                        <TextField fx:id="arrivesAtTextField2" layoutX="19.0" layoutY="27.0" prefHeight="26.0" prefWidth="87.0" />
                      </children>
                   </Pane>
                   <Pane layoutX="150.0" layoutY="122.0" prefHeight="63.0" prefWidth="126.0" style="-fx-background-color: #eeeeee; -fx-border-color: #000000;">
@@ -216,7 +192,7 @@
                               <Font size="16.0" />
                            </font>
                         </Text>
-                        <TextField layoutX="19.0" layoutY="27.0" prefHeight="26.0" prefWidth="87.0" />
+                        <TextField fx:id="leavesAtTextField2" layoutX="19.0" layoutY="27.0" prefHeight="26.0" prefWidth="87.0" />
                      </children>
                   </Pane>
                   <Pane layoutX="430.0" layoutY="122.0" prefHeight="63.0" prefWidth="107.0" style="-fx-background-color: #eeeeee; -fx-border-color: #000000;">
@@ -226,46 +202,17 @@
                               <Font size="16.0" />
                            </font>
                         </Text>
-                        <TextField layoutX="19.0" layoutY="27.0" prefHeight="26.0" prefWidth="70.0" />
+                        <TextField fx:id="costTextField2" layoutX="19.0" layoutY="27.0" prefHeight="26.0" prefWidth="70.0" />
                      </children>
                   </Pane>
-                  <ComboBox layoutX="285.0" layoutY="122.0" prefHeight="63.0" prefWidth="138.0" promptText="Pay Method" />
-                  <Pane layoutX="545.0" layoutY="122.0" prefHeight="63.0" prefWidth="200.0" style="-fx-background-color: #eeeeee; -fx-border-color: #000000;">
-                     <children>
-                        <Text layoutX="17.0" layoutY="20.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Start Stop">
-                           <font>
-                              <Font size="16.0" />
-                           </font>
-                        </Text>
-                        <Text fill="#9e9e9e" layoutX="17.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Location Description">
-                           <font>
-                              <Font size="16.0" />
-                           </font>
-                        </Text>
-                        <ImageView fitHeight="24" fitWidth="24" layoutX="168.0" layoutY="4.0">
-                           <image>
-                              <Image url="@../../../../../images/bin.png" />
-                           </image>
-                        </ImageView>
-                        <ImageView fitHeight="24" fitWidth="24" layoutX="169.0" layoutY="33.0">
-                           <image>
-                              <Image url="@../../../../../images/pencil.png" />
-                           </image>
-                        </ImageView>
-                     </children>
-                  </Pane>
+                  <ComboBox fx:id="payMethodComboBox2" layoutX="285.0" layoutY="122.0" prefHeight="63.0" prefWidth="138.0" promptText="Pay Method" />
                </children>
             </AnchorPane>
-            <Button layoutX="332.0" layoutY="594.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="151.0" styleClass="akatab-text" text="Publish Ride">
+            <Button fx:id="publishRideButton" layoutX="332.0" layoutY="594.0" mnemonicParsing="false" onAction="#onPublishRideButton" prefHeight="42.0" prefWidth="151.0" styleClass="akatab-text" text="Publish Ride">
                <font>
                   <Font size="20.0" />
                </font>
             </Button>
-            <Text fill="#017efa" layoutX="341.0" layoutY="587.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="+ Add New Stop">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Text>
          </children>
       </AnchorPane>
    </items>

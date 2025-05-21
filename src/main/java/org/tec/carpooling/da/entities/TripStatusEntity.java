@@ -12,6 +12,11 @@ public class TripStatusEntity implements Identifiable<Long> {
     public TripStatusEntity() {
     }
 
+    public TripStatusEntity(String status, AuditLogEntity auditLogEntity) {
+        this.status = status;
+        this.auditLog = auditLogEntity;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_tripstatus_gen")
     @Column(name = "ID")

@@ -7,6 +7,8 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.text.Text;
 import javafx.util.StringConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.tec.carpooling.bl.dto.UI_BL.LogInDTO;
@@ -58,6 +60,8 @@ public class RegistrationController {
     private ComboBox<TypeOfCredentialEntity> CB_typeId;
     @FXML
     private ComboBox<InstitutionEntity> CB_institution;
+    @FXML
+    private Text T_LogIn;
 
     @Autowired
     private SimpleDataRetrievalService simpleDataRetrievalService;
@@ -92,14 +96,20 @@ public class RegistrationController {
         }
     }
 
+    @FXML
+    private void On_T_LogIn(MouseEvent event) {
+        try {
+            SceneManager.switchToScene(event, "login-view.fxml");
+        } catch (IOException e) {
+            e.printStackTrace();
 
+        }
+    }
     @FXML
     private void onSignUp(ActionEvent event) {
         try {
 
             UserRegistrationDTO registrationDTO = new UserRegistrationDTO();
-
-
 
             Set<ConstraintViolation<UserRegistrationDTO>> violations = validator.validate(registrationDTO);
             if (violations.isEmpty()) {
@@ -208,5 +218,5 @@ public class RegistrationController {
         alert.showAndWait();
     }
 
- }
+}
 

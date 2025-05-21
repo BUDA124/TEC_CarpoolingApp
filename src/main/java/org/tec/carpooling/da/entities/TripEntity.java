@@ -22,7 +22,7 @@ public class TripEntity implements Identifiable<Long> {
     private LocalDateTime departureDateTime;
 
     @Column(name = "DURATIONESTIMATE", nullable = false)
-    private Integer durationEstimate; // DDL shows NUMBER, could be Integer or Double based on typical units
+    private Integer durationEstimate;
 
     @Column(name = "ARRIVALDATETIME", nullable = false)
     private LocalDateTime arrivalDateTime;
@@ -46,7 +46,16 @@ public class TripEntity implements Identifiable<Long> {
     public TripEntity() {
     }
 
-    public TripEntity(int i, LocalDateTime of, LocalDateTime of1, int i1, DriverEntity driverEntity, VehicleEntity vehicleEntity, PriceStatusEntity conCosto, AuditLogEntity auditLogEntity) {
+    public TripEntity(int maximumPassengers, LocalDateTime departureDateTime, LocalDateTime arrivalDateTime, int durationEstimate, DriverEntity driverEntity,
+                      VehicleEntity vehicleEntity, PriceStatusEntity priceStatus, AuditLogEntity auditLogEntity) {
+        this.maximumPassengers = maximumPassengers;
+        this.departureDateTime = departureDateTime;
+        this.arrivalDateTime = arrivalDateTime;
+        this.durationEstimate = durationEstimate;
+        this.driver = driverEntity;
+        this.vehicle = vehicleEntity;
+        this.priceStatus = priceStatus;
+        this.auditLog = auditLogEntity;
     }
 
     // Getters and Setters

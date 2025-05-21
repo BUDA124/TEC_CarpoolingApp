@@ -27,7 +27,11 @@ public class LogBookHasEntityModifiedEntity implements Identifiable<LogBookHasEn
 
     public LogBookHasEntityModifiedEntity() {}
 
-    public LogBookHasEntityModifiedEntity(LogBookEntity logBookEntity, EntityModifiedEntity entityModifiedEntity, AuditLogEntity auditLogEntity) {
+    public LogBookHasEntityModifiedEntity(LogBookEntity logBook, EntityModifiedEntity entityModified, AuditLogEntity auditLogEntity) {
+        this.id = new LogBookHasEntityModifiedId();
+        this.logBook = logBook;
+        this.entityModified = entityModified;
+        this.auditLog = auditLogEntity;
     }
 
     // Getters and Setters

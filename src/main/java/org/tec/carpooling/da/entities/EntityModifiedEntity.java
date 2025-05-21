@@ -24,7 +24,9 @@ public class EntityModifiedEntity implements Identifiable<Long> {
     @JoinColumn(name = "IDAUDITLOG", nullable = false)
     private AuditLogEntity auditLog;
 
-    public EntityModifiedEntity(String trip, AuditLogEntity auditLogEntity) {
+    public EntityModifiedEntity(String entityName, AuditLogEntity auditLogEntity) {
+        this.entityName = entityName;
+        this.auditLog = auditLogEntity;
     }
 
     // Getters and Setters

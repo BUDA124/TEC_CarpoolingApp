@@ -12,6 +12,10 @@ public class PaymentMethodEntity implements Identifiable<Long> {
     public PaymentMethodEntity() {
     }
 
+    public PaymentMethodEntity(String method, AuditLogEntity auditLogEntity) {
+        this.method = method;
+        this.auditLog = auditLogEntity;
+    }
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_paymentmethod_gen")
     @Column(name = "ID")

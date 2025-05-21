@@ -34,7 +34,12 @@ public class AttributeModifiedEntity implements Identifiable<Long> {
     @JoinColumn(name = "IDAUDITLOG", nullable = false)
     private AuditLogEntity auditLog;
 
-    public AttributeModifiedEntity(Object o, String programado, String status, EntityModifiedEntity em1, AuditLogEntity auditLogEntity) {
+    public AttributeModifiedEntity(String oldValue, String newValue, String attributeName, EntityModifiedEntity entityModified, AuditLogEntity auditLogEntity) {
+        this.newValue = newValue;
+        this.oldValue = oldValue;
+        this.attributeName = attributeName;
+        this.entityModified = entityModified;
+        this.auditLog = auditLogEntity;
     }
 
     // Getters and Setters
