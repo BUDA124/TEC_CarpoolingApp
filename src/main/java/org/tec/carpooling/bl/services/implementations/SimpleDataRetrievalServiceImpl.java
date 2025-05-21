@@ -3,14 +3,8 @@ package org.tec.carpooling.bl.services.implementations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.tec.carpooling.bl.services.SimpleDataRetrievalService;
-import org.tec.carpooling.da.entities.AdministratorEntity;
-import org.tec.carpooling.da.entities.GenderEntity;
-import org.tec.carpooling.da.entities.InstitutionEntity;
-import org.tec.carpooling.da.entities.PersonEntity;
-import org.tec.carpooling.da.repositories.AdministratorRepository;
-import org.tec.carpooling.da.repositories.GenderRepository;
-import org.tec.carpooling.da.repositories.InstitutionRepository;
-import org.tec.carpooling.da.repositories.PersonRepository;
+import org.tec.carpooling.da.entities.*;
+import org.tec.carpooling.da.repositories.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -30,6 +24,9 @@ public class SimpleDataRetrievalServiceImpl implements SimpleDataRetrievalServic
     @Autowired
     private InstitutionRepository institutionRepository;
 
+    @Autowired
+    private CountryRepository countryRepository;
+
     @Override
     public List<GenderEntity> getAllGenders() {
         return genderRepository.findAll();
@@ -45,6 +42,10 @@ public class SimpleDataRetrievalServiceImpl implements SimpleDataRetrievalServic
         return institutionRepository.findAll();
     }
 
+    @Override
+    public List<CountryEntity> getAllCountries() {
+        return countryRepository.findAll();
+    }
 
     @Override
     public List<PersonEntity> getAllPersons() {

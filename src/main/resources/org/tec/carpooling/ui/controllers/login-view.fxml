@@ -53,7 +53,7 @@
                   <Font name="System Bold" size="16.0" />
                </font>
             </Text>
-            <Text fx:id="T_signUp" fill="#017efa" layoutX="450.0" layoutY="440.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="adlam-text" text="Sign-up here">
+            <Text fx:id="T_signUp" fill="#017efa" layoutX="450.0" layoutY="440.0" onMouseClicked="#On_T_signUp" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="adlam-text" text="Sign-up here">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font>
@@ -63,7 +63,7 @@
                   <Font size="20.0" />
                </font>
             </PasswordField>
-            <Button fx:id="BTN_enterLogIn" layoutX="235.0" layoutY="359.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="350.0" style="-fx-background-color: #017efa;" text="Enter" textFill="WHITE">
+            <Button fx:id="BTN_enterLogIn" layoutX="235.0" layoutY="359.0" mnemonicParsing="false" onAction="#On_BTN_enterLogIn" prefHeight="40.0" prefWidth="350.0" style="-fx-background-color: #017efa;" text="Enter" textFill="WHITE">
                <font>
                   <Font size="25.0" />
                </font>

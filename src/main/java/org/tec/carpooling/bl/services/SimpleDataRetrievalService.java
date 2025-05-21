@@ -1,9 +1,6 @@
 package org.tec.carpooling.bl.services;
 
-import org.tec.carpooling.da.entities.AdministratorEntity;
-import org.tec.carpooling.da.entities.GenderEntity;
-import org.tec.carpooling.da.entities.InstitutionEntity;
-import org.tec.carpooling.da.entities.PersonEntity;
+import org.tec.carpooling.da.entities.*;
 
 import java.util.List;
 
@@ -12,6 +9,7 @@ public interface SimpleDataRetrievalService {
     List<AdministratorEntity> getAllAdministrators();
     List<PersonEntity> getAllPersons();
     List<InstitutionEntity> getAllInstitutions();
+    List<CountryEntity> getAllCountries();
     String getPrimaryDomainForInstitution(Long institutionId);
 }
 

@@ -1,12 +1,14 @@
 package org.tec.carpooling.ui.controllers;
 
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.util.StringConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.tec.carpooling.bl.services.SimpleDataRetrievalService;
+import org.tec.carpooling.da.entities.CountryEntity;
 import org.tec.carpooling.da.entities.GenderEntity;
 import org.tec.carpooling.ui.SceneManager;
 
@@ -40,9 +42,37 @@ public class RegistrationController {
     private TextField TF_institutionalEmail;
     @FXML
     private ComboBox<GenderEntity> CB_gender;
+    @FXML
+    private ComboBox<CountryEntity> CB_country;
 
     @Autowired
     private SimpleDataRetrievalService simpleDataRetrievalService;
+
+    @FXML
+    private void BTN_enter(ActionEvent event) {
+        String username = TF_username.getText();
+        String password = TF_password.getText();
+        String confirmPassword = TF_confirmPassword.getText();
+        String institutionalEmail = TF_institutionalEmail.getText();
+
+        String idNumber = TF_idNumber.getText();
+        String firstName = TF_firstName.getText();
+        String surname = TF_firstSurname.getText();
+        String personalEmail = TF_personalEmail.getText();
+
+
+        if (username.isEmpty() || password.isEmpty()) {
+            showAlert("There Are Blank Spaces", Alert.AlertType.ERROR, "Fill all the fields.");
+            return;
+        }
+        try {
+            SceneManager.switchToScene(event, "pick-role-view.fxml");
+        } catch (IOException e) {
+            e.printStackTrace();
+
+        }
+    }
+
 
     @FXML
     private void onSignUp(ActionEvent event) {
@@ -64,6 +94,8 @@ public class RegistrationController {
         }
     }
 
+
+
     @FXML
     public void initialize() {
         // Load Genders
@@ -84,16 +116,34 @@ public class RegistrationController {
                         .findFirst().orElse(null);
             }
         });
+
+        List<CountryEntity> countriesList = simpleDataRetrievalService.getAllCountries();
+        ObservableList<CountryEntity> observableCountries = FXCollections.observableArrayList(countriesList);
+        CB_country.setItems(observableCountries);
+        CB_country.setConverter(new StringConverter<CountryEntity>() {
+            @Override
+            public String toString(CountryEntity country) {
+                return country != null ? country.getName() : "";
+            }
+
+            @Override
+            public CountryEntity fromString(String string) {
+                return observableCountries.stream()
+                        .filter(country -> country != null && country.getName().equalsIgnoreCase(string))
+                        .findFirst()
+                        .orElse(null); // Return null if no match is found
+            }
+        });
     }
 
-    @FXML
-    private void handleRegister() {}
 
-    private void showError(String message) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Registration Error");
+    private void showAlert(String title, Alert.AlertType alertType, String message) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
     }
-}
+
+ }
+

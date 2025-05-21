@@ -70,13 +70,13 @@ VALUES (seq_contactemail.NEXTVAL, 'info@tec.ac.cr', 2, 1);
 -- 6. Insertar géneros
 -- ============================================================================
 INSERT INTO Gender (id, genderName, idAuditLog)
-VALUES (seq_gender.NEXTVAL, 'Masculino', 1);
+VALUES (seq_gender.NEXTVAL, 'Male', 1);
 
 INSERT INTO Gender (id, genderName, idAuditLog)
-VALUES (seq_gender.NEXTVAL, 'Femenino', 1);
+VALUES (seq_gender.NEXTVAL, 'Female', 1);
 
 INSERT INTO Gender (id, genderName, idAuditLog)
-VALUES (seq_gender.NEXTVAL, 'No Binario', 1);
+VALUES (seq_gender.NEXTVAL, 'No Binary', 1);
 
 -- ============================================================================
 -- 7. Insertar personas
