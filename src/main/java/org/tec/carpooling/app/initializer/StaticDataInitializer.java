@@ -108,7 +108,7 @@ public class StaticDataInitializer implements ApplicationRunner {
         );
 
         for (String statusName : statuses) {
-            if (userStatusRepository.findByStatus(statusName) == null) {
+            if (userStatusRepository.findByStatus(statusName).isEmpty()) {
                 UserStatusEntity statusEntity = new UserStatusEntity();
                 statusEntity.setStatus(statusName);
                 statusEntity.setAuditLog(auditService.createInitialAuditLog(AppConstants.SYSTEM_USER));

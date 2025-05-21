@@ -29,6 +29,9 @@ public class ContactEmailEntity implements Identifiable<Long> {
     private AuditLogEntity auditLog;
 
     public ContactEmailEntity(String mail, InstitutionEntity ucr, AuditLogEntity auditLogEntity) {
+        this.address = mail;
+        this.institution = ucr;
+        this.auditLog = auditLogEntity;
     }
 
     // Getters and Setters

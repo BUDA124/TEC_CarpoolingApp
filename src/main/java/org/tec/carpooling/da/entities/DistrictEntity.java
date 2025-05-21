@@ -28,7 +28,10 @@ public class DistrictEntity implements Identifiable<Long> {
     @JoinColumn(name = "IDAUDITLOG", nullable = false)
     private AuditLogEntity auditLog;
 
-    public DistrictEntity(String sanPedro, CantonEntity montesDeOca, AuditLogEntity auditLogEntity) {
+    public DistrictEntity(String district, CantonEntity canton, AuditLogEntity auditLogEntity) {
+        this.name = district;
+        this.canton = canton;
+        this.auditLog = auditLogEntity;
     }
 
     // Getters and Setters

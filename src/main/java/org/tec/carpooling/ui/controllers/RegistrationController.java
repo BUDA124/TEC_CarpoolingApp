@@ -1,5 +1,7 @@
 package org.tec.carpooling.ui.controllers;
 
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.Validator;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -7,7 +9,11 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.util.StringConverter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.tec.carpooling.bl.dto.UI_BL.LogInDTO;
+import org.tec.carpooling.bl.dto.UI_BL.UserRegistrationDTO;
 import org.tec.carpooling.bl.services.SimpleDataRetrievalService;
+import org.tec.carpooling.bl.services.UserService;
+import org.tec.carpooling.common.constants.AppConstants;
 import org.tec.carpooling.da.entities.CountryEntity;
 import org.tec.carpooling.da.entities.GenderEntity;
 import org.tec.carpooling.da.entities.InstitutionEntity;
@@ -16,6 +22,8 @@ import org.tec.carpooling.ui.SceneManager;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Controller;
 
@@ -54,6 +62,11 @@ public class RegistrationController {
     @Autowired
     private SimpleDataRetrievalService simpleDataRetrievalService;
 
+    @Autowired
+    UserService userService;
+
+    private final Validator validator = AppConstants.getValidator();
+
     @FXML
     private void BTN_enter(ActionEvent event) {
         String username = TF_username.getText();
@@ -83,6 +96,31 @@ public class RegistrationController {
     @FXML
     private void onSignUp(ActionEvent event) {
         try {
+
+            UserRegistrationDTO registrationDTO = new UserRegistrationDTO();
+
+
+
+            Set<ConstraintViolation<UserRegistrationDTO>> violations = validator.validate(registrationDTO);
+            if (violations.isEmpty()) {
+                try {
+                    if (userService.registerNewUser(registrationDTO)) {
+                        SceneManager.switchToScene(event, "pick-role-view.fxml");
+                    }
+                    else {
+                        showAlert("Login Failed", Alert.AlertType.ERROR, "Information is not correct."
+                        );
+                    }
+                } catch (Exception e) {
+                    showAlert("Error", Alert.AlertType.ERROR, "Information is not correct.");
+                }
+            } else {
+                // Hay violaciones, muestra los mensajes de error
+                String errorMessages = violations.stream()
+                        .map(ConstraintViolation::getMessage)
+                        .collect(Collectors.joining("\n"));
+                showAlert("Validation Error", Alert.AlertType.ERROR, errorMessages);
+            }
             SceneManager.switchToScene(event, "pick-role-view.fxml");
         } catch (IOException e) {
             e.printStackTrace();

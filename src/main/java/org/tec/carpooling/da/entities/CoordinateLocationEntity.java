@@ -28,6 +28,9 @@ public class CoordinateLocationEntity implements Identifiable<Long> {
     private AuditLogEntity auditLog;
 
     public CoordinateLocationEntity(float v, float v1, AuditLogEntity auditLogEntity) {
+        this.YCoordinate = v;
+        this.XCoordinate = v1;
+        this.auditLog = auditLogEntity;
     }
 
     @Override

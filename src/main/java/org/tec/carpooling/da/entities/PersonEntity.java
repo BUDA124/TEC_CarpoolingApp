@@ -53,7 +53,18 @@ public class PersonEntity implements Identifiable<Long> {
     public PersonEntity() {
     }
 
-    public PersonEntity(String carlos, String alberto, String rodríguez, Object o, LocalDate of, String costarricense, InstitutionEntity ucr, GenderEntity genderEntity, AuditLogEntity auditLogEntity) {
+
+    public PersonEntity(String firstName, String secondName, String firstSurname, Object profilePicture,
+                        LocalDate birthdate, String nationality, InstitutionEntity institution, GenderEntity gender, AuditLogEntity auditLogEntity) {
+        this.firstName = firstName;
+        this.secondName = secondName;
+        this.firstSurname = firstSurname;
+        this.birthdate = birthdate;
+        this.nationality = nationality;
+        this.profilePicture = (Blob) profilePicture;
+        this.idInstitution = institution;
+        this.idGender = gender;
+        this.idAuditLog = auditLogEntity;
     }
 
     public GenderEntity getIdGender() {

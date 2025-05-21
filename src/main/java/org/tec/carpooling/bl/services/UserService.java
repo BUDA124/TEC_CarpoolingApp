@@ -6,5 +6,5 @@ import org.tec.carpooling.bl.dto.UI_BL.UserRegistrationDTO;
 
 public interface UserService {
     boolean registerNewUser(UserRegistrationDTO dto);
-    UserDTO logInUser(LogInDTO logInDTO);
+    boolean logInUser(LogInDTO logInDTO);
 }

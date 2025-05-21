@@ -1,6 +1,18 @@
 package org.tec.carpooling.common.constants;
 
+import jakarta.validation.Validation;
+import jakarta.validation.Validator;
+import jakarta.validation.ValidatorFactory;
+
 public class AppConstants {
+
+    private static final ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+    private static final Validator validator = factory.getValidator();
+
+    public static Validator getValidator() {
+        return validator;
+    }
+
     // System User for Audit Logs
     public static final String SYSTEM_USER = "CARPOOLING_APP_USER";
 

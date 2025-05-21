@@ -32,7 +32,11 @@ public class InstitutionEntity implements Identifiable<Long> {
     @JoinColumn(name = "IDAUDITLOG", nullable = false)
     private AuditLogEntity auditLog;
 
-    public InstitutionEntity(String universidadDeCostaRica, String s, String url, AuditLogEntity auditLogEntity) {
+    public InstitutionEntity(String university, String emailDomain, String url, AuditLogEntity auditLogEntity) {
+        this.emailDomain = emailDomain;
+        this.institutionName = university;
+        this.website = url;
+        this.auditLog = auditLogEntity;
     }
 
     // Getters and Setters

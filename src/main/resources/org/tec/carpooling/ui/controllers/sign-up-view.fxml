@@ -70,7 +70,7 @@
                   <Font name="SansSerif Bold" size="18.0" />
                </font>
             </Text>
-            <ComboBox fx:id="CB_institution" layoutX="12.0" layoutY="454.0" prefHeight="40.0" prefWidth="100.0" promptText="Institution" styleClass="adlam-text" visibleRowCount="3" />
+            <ComboBox fx:id="CB_institution" layoutX="14.0" layoutY="454.0" prefHeight="40.0" prefWidth="100.0" promptText="Institution" styleClass="adlam-text" visibleRowCount="3" />
             <TextField fx:id="TF_institutionalEmail" layoutX="121.0" layoutY="454.0" prefHeight="40.0" prefWidth="358.0" promptText="Institutional Email" styleClass="adlam-text" />
             <ComboBox fx:id="CB_gender" layoutX="410.0" layoutY="270.0" prefHeight="40.0" prefWidth="180.0" promptText="Gender" styleClass="adlam-text" visibleRowCount="3" />
             <ImageView fx:id="Icon_personPhoto" fitHeight="31.0" fitWidth="37.0" layoutX="12.0" layoutY="328.0" pickOnBounds="true" preserveRatio="true">

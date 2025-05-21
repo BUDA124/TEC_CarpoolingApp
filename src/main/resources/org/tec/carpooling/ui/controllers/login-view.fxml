@@ -3,6 +3,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -43,9 +44,9 @@
                   <Font name="SansSerif Bold" size="48.0" />
                </font>
             </Text>
-            <PasswordField fx:id="TF_password" layoutX="17.0" layoutY="253.0" prefHeight="44.0" prefWidth="780.0" promptText="Password" styleClass="adlam-text">
+            <PasswordField fx:id="TF_password" layoutX="17.0" layoutY="269.0" prefHeight="40.0" prefWidth="780.0" promptText="Password" styleClass="adlam-text">
                <font>
-                  <Font size="20.0" />
+                  <Font size="18.0" />
                </font>
             </PasswordField>
             <Text fontSmoothingType="LCD" layoutX="260.0" layoutY="440.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="adlam-text" text="Don't have an account?">
@@ -58,16 +59,16 @@
                   <Font name="System Bold" size="16.0" />
                </font>
             </Text>
-            <PasswordField fx:id="TF_username" accessibleRole="TEXT_FIELD" layoutX="17.0" layoutY="194.0" prefHeight="44.0" prefWidth="780.0" promptText="Username" styleClass="adlam-text">
-               <font>
-                  <Font size="20.0" />
-               </font>
-            </PasswordField>
             <Button fx:id="BTN_enterLogIn" layoutX="235.0" layoutY="359.0" mnemonicParsing="false" onAction="#On_BTN_enterLogIn" prefHeight="40.0" prefWidth="350.0" style="-fx-background-color: #017efa;" text="Enter" textFill="WHITE">
                <font>
                   <Font size="25.0" />
                </font>
             </Button>
+            <TextField fx:id="TF_username" layoutX="17.0" layoutY="215.0" prefHeight="40.0" prefWidth="780.0" promptText="Username">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </TextField>
          </children>
       </AnchorPane>
    </items>

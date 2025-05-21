@@ -17,6 +17,11 @@ public class LogInDTO {
 
     public LogInDTO() {}
 
+    public LogInDTO(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
+
     public @NotBlank(message = "Username is required.") @Size(min = 3, max = 30, message = "Username must be between 3 and 30 characters.") @Pattern(regexp = "^[a-zA-Z0-9_.-]+$", message = "Username can only contain alphanumeric characters, underscores, dots, or hyphens.") String getUsername() {
         return username;
     }

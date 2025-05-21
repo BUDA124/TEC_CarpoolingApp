@@ -1,21 +1,20 @@
 package org.tec.carpooling.app;
 
+import jakarta.validation.Validation;
 import javafx.application.Application;
-import javafx.application.Platform; // Import Platform for safe shutdown
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
-// Ya no necesitas PersistenceManager aquí, Spring lo gestionará
-// import org.tec.carpooling.common.utils.PersistenceManager;
+import jakarta.validation.Validator;
+import jakarta.validation.ValidatorFactory;
 
 import java.io.IOException;
 import java.net.URL;
 
 public class CarpoolingApplication extends Application {
-
 
     private ConfigurableApplicationContext springContext;
 

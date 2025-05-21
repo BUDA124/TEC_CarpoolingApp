@@ -28,7 +28,10 @@ public class ProvinceEntity implements Identifiable<Long> {
     @JoinColumn(name = "IDAUDITLOG", nullable = false)
     private AuditLogEntity auditLog;
 
-    public ProvinceEntity(String cartago, CountryEntity costaRica, AuditLogEntity auditLogEntity) {
+    public ProvinceEntity(String provinceName, CountryEntity country, AuditLogEntity auditLogEntity) {
+        this.name = provinceName;
+        this.country = country;
+        this.auditLog = auditLogEntity;
     }
 
     // Getters and Setters

@@ -24,7 +24,7 @@ public class TypeOfCredentialEntity implements Identifiable<Long> {
     @JoinColumn(name = "IDAUDITLOG", nullable = false)
     private AuditLogEntity auditLog;
 
-    public TypeOfCredentialEntity(String carnetEstudiantil, AuditLogEntity auditLogEntity) {
+    public TypeOfCredentialEntity(String typeOfCredential, AuditLogEntity auditLogEntity) {
     }
 
     // Getters and Setters

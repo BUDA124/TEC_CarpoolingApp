@@ -28,7 +28,10 @@ public class PhoneNumberEntity implements Identifiable<Long> {
     @JoinColumn(name = "IDAUDITLOG", nullable = false)
     private AuditLogEntity auditLog;
 
-    public PhoneNumberEntity(String s, PersonEntity carlos, AuditLogEntity auditLogEntity) {
+    public PhoneNumberEntity(String phoneNumber, PersonEntity idPerson, AuditLogEntity auditLogEntity) {
+        this.phoneNumber = phoneNumber;
+        this.person = idPerson;
+        this.auditLog = auditLogEntity;
     }
 
     // Getters and Setters

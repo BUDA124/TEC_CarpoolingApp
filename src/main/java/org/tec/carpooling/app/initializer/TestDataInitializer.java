@@ -1,4 +1,4 @@
-package org.tec.carpooling.common.utils;
+package org.tec.carpooling.app.initializer;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,6 +13,7 @@ import org.tec.carpooling.bl.services.AuditLogService;
 import org.tec.carpooling.common.constants.AppConstants;
 
 // Entities
+import org.tec.carpooling.common.utils.HashingUtil;
 import org.tec.carpooling.da.entities.*;
 
 // Repositories
@@ -219,7 +220,6 @@ public class TestDataInitializer implements ApplicationRunner {
     }
 
     private void loadStaticData() {
-        log.info("Loading pre-existing static data (Countries, Provinces, Cantons, Genders, Statuses, etc.)...");
         // Geographic
         countries.put(AppConstants.COUNTRY_COSTA_RICA, fetchCountryOrFail(AppConstants.COUNTRY_COSTA_RICA));
         provinces.put(AppConstants.PROVINCE_SAN_JOSE, fetchProvinceOrFail(AppConstants.PROVINCE_SAN_JOSE, countries.get(AppConstants.COUNTRY_COSTA_RICA)));
@@ -262,18 +262,14 @@ public class TestDataInitializer implements ApplicationRunner {
     }
 
     private void createGeographicDataExtensions() {
-        log.info("Creating additional geographic data for tests...");
         CountryEntity costaRica = countries.get(AppConstants.COUNTRY_COSTA_RICA); // Already fetched
 
-        // San Jose Province is already fetched. We need Cartago province for tests.
         ProvinceEntity cartagoProv = provinceRepository.findByNameAndCountry("Cartago", costaRica).orElseGet(() -> {
             ProvinceEntity p = new ProvinceEntity("Cartago", costaRica, newAuditLog());
             return provinceRepository.save(p);
         });
         provinces.put("Cartago", cartagoProv);
 
-        // For San Jose Province (already fetched), we need Montes de Oca Canton.
-        // StaticDataInitializer created "San José Central" canton.
         ProvinceEntity sanJoseProv = provinces.get(AppConstants.PROVINCE_SAN_JOSE);
         CantonEntity montesDeOca = cantonRepository.findByNameAndProvince("Montes de Oca", sanJoseProv).orElseGet(() -> {
             CantonEntity cn = new CantonEntity("Montes de Oca", sanJoseProv, newAuditLog());
@@ -281,22 +277,18 @@ public class TestDataInitializer implements ApplicationRunner {
         });
         cantons.put("Montes de Oca", montesDeOca);
 
-        // For Cartago Province, we need Cartago Canton.
         CantonEntity cartagoCanton = cantonRepository.findByNameAndProvince("Cartago", cartagoProv).orElseGet(() -> {
             CantonEntity cn = new CantonEntity("Cartago", cartagoProv, newAuditLog());
             return cantonRepository.save(cn);
         });
         cantons.put("Cartago Canton", cartagoCanton);
 
-        // For Montes de Oca Canton, we need San Pedro District.
-        // StaticDataInitializer created "Carmen" district in "San José Central" canton.
         DistrictEntity sanPedro = districtRepository.findByNameAndCanton("San Pedro", montesDeOca).orElseGet(() -> {
             DistrictEntity d = new DistrictEntity("San Pedro", montesDeOca, newAuditLog());
             return districtRepository.save(d);
         });
         districts.put("San Pedro", sanPedro);
 
-        // For Cartago Canton, we need Oriental District.
         DistrictEntity oriental = districtRepository.findByNameAndCanton("Oriental", cartagoCanton).orElseGet(() -> {
             DistrictEntity d = new DistrictEntity("Oriental", cartagoCanton, newAuditLog());
             return districtRepository.save(d);
@@ -407,22 +399,20 @@ public class TestDataInitializer implements ApplicationRunner {
     }
 
     private void createSpecificCredentialTypes() {
-        log.info("Creating specific credential types for tests (Licencia, Carnet estudiantil)...");
-        TypeOfCredentialEntity licencia = typeOfCredentialRepository.findByType("Licencia").orElseGet(() -> {
-            TypeOfCredentialEntity tc = new TypeOfCredentialEntity("Licencia", newAuditLog());
+        TypeOfCredentialEntity credential = typeOfCredentialRepository.findByType(AppConstants.CREDENTIAL_TYPE_NATIONAL_ID).orElseGet(() -> {
+            TypeOfCredentialEntity tc = new TypeOfCredentialEntity(AppConstants.CREDENTIAL_TYPE_NATIONAL_ID, newAuditLog());
             return typeOfCredentialRepository.save(tc);
         });
-        typeOfCredentials.put("Licencia", licencia);
+        typeOfCredentials.put(AppConstants.CREDENTIAL_TYPE_NATIONAL_ID, credential);
 
-        TypeOfCredentialEntity carnet = typeOfCredentialRepository.findByType("Carnet estudiantil").orElseGet(() -> {
-            TypeOfCredentialEntity tc = new TypeOfCredentialEntity("Carnet estudiantil", newAuditLog());
+        TypeOfCredentialEntity carnet = typeOfCredentialRepository.findByType(AppConstants.CREDENTIAL_TYPE_NITE).orElseGet(() -> {
+            TypeOfCredentialEntity tc = new TypeOfCredentialEntity(AppConstants.CREDENTIAL_TYPE_NITE, newAuditLog());
             return typeOfCredentialRepository.save(tc);
         });
-        typeOfCredentials.put("Carnet estudiantil", carnet);
+        typeOfCredentials.put(AppConstants.CREDENTIAL_TYPE_NITE, carnet);
     }
 
     private void createCredentials() {
-        log.info("Creating credentials linking to persons...");
         // Carlos's Credentials
         CredentialEntity cred1 = credentialRepository.findByNumberOfCredential("LIC-123456789").orElseGet(() ->
             credentialRepository.save(new CredentialEntity(1, "LIC-123456789", persons.get("Carlos Rodríguez"), newAuditLog()))

@@ -41,7 +41,6 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public boolean registerNewUser(UserRegistrationDTO dto) {
-        // Mapear DTO a entidades
         PersonEntity person = userRegistrationMapper.toPersonEntity(dto);
         person = personRepository.save(person);
 
@@ -64,7 +63,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional(readOnly = true)
-    public UserDTO logInUser(LogInDTO logInDTO) {
+    public boolean logInUser(LogInDTO logInDTO) {
         // 1.  Retrieve user by username
         Optional<PersonalUserEntity> userEntityOptional = personalUserRepository.findByUsername(logInDTO.getUsername());
 
@@ -79,8 +78,6 @@ public class UserServiceImpl implements UserService {
             throw new AuthenticationException("Invalid username or password"); // Incorrect password
         }
 
-        // 3. Map to UserDTO (excluding password)
-        UserDTO userDTO = userLogInMapper.toUserDTO(userEntity);
-        return userDTO;
+        return true;
     }
 }
