@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -27,7 +28,7 @@
                   <Font size="18.0" />
                </font>
             </Text>
-            <Pane layoutX="30.0" layoutY="160.0" prefHeight="35.0" prefWidth="220.0" style="-fx-background-color: #1b2b65;">
+            <Pane fx:id="institutionsPane" layoutX="30.0" layoutY="160.0" prefHeight="35.0" prefWidth="220.0" style="-fx-background-color: #1b2b65;">
                <children>
                   <Text fill="WHITE" layoutX="48.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Institutions" textAlignment="CENTER" wrappingWidth="128.0">
                      <font>
@@ -36,27 +37,27 @@
                   </Text>
                </children>
             </Pane>
-            <Pane layoutX="30.0" layoutY="215.0" prefHeight="35.0" prefWidth="220.0" style="-fx-background-color: #1b2b65;">
+            <Pane fx:id="addInstitutionPane" layoutX="30.0" layoutY="215.0" prefHeight="35.0" prefWidth="220.0" style="-fx-background-color: #1b2b65;">
                <children>
-                  <Text fill="WHITE" layoutX="42.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Add Institutions" textAlignment="CENTER" wrappingWidth="145.0">
+                  <Text fill="WHITE" layoutX="42.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Add Institution" textAlignment="CENTER" wrappingWidth="145.0">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Text>
                </children>
             </Pane>
-            <Pane layoutX="30.0" layoutY="271.0" prefHeight="35.0" prefWidth="220.0" style="-fx-background-color: #1b2b65;">
+            <Pane fx:id="administratorsPane" layoutX="30.0" layoutY="271.0" prefHeight="35.0" prefWidth="220.0" style="-fx-background-color: #1b2b65;">
                <children>
-                  <Text fill="WHITE" layoutX="48.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Create Admin" textAlignment="CENTER" wrappingWidth="128.0">
+                  <Text fill="WHITE" layoutX="48.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Administrators" textAlignment="CENTER" wrappingWidth="128.0">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Text>
                </children>
             </Pane>
-            <Pane layoutX="30.0" layoutY="325.0" prefHeight="35.0" prefWidth="220.0" style="-fx-background-color: #1b2b65;">
+            <Pane fx:id="addAdministratorPane" layoutX="30.0" layoutY="325.0" prefHeight="35.0" prefWidth="220.0" style="-fx-background-color: #1b2b65;">
                <children>
-                  <Text fill="WHITE" layoutX="48.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Delete Admin" textAlignment="CENTER" wrappingWidth="128.0">
+                  <Text fill="WHITE" layoutX="38.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Add Administrator" textAlignment="CENTER" wrappingWidth="145.0">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -72,20 +73,7 @@
                   <Font name="SansSerif Regular" size="60.0" />
                </font>
             </Text>
-            <Pane layoutX="42.0" layoutY="120.0" prefHeight="47.0" prefWidth="718.0" style="-fx-background-color: #efefef;">
-               <children>
-                  <Text layoutX="24.0" layoutY="28.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Institution #1 - Date">
-                     <font>
-                        <Font size="20.0" />
-                     </font>
-                  </Text>
-                  <Text fill="#017efa" layoutX="593.0" layoutY="28.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="See Details &gt;">
-                     <font>
-                        <Font size="20.0" />
-                     </font>
-                  </Text>
-               </children>
-            </Pane>
+            <ListView fx:id="institutionListView" layoutX="42.0" layoutY="126.0" prefHeight="497.0" prefWidth="681.0" />
          </children>
       </AnchorPane>
    </items>

@@ -44,7 +44,7 @@ public class AdminAddInstController {
     @FXML
     private Pane viewInstitutionPane;
     @FXML
-    private ComboBox<String>  addAdminComboBox;
+    private ListView<String>  addAdminListView;
 
     @Autowired
     private SimpleDataRetrievalService simpleDataRetrievalService;
@@ -65,65 +65,8 @@ public class AdminAddInstController {
         showAlert("Institution Added Succesfully ", Alert.AlertType.INFORMATION, "The institution has been added successfully.");
     }
 
-    @FXML
-    private void onDailyReportText(MouseEvent event) {
-        try {
-            SceneManager.switchToScene(event, "admin-report-view.fxml");
-        } catch (IOException e) {
-            e.printStackTrace();
 
-        }
-    }
 
-    @FXML
-    private void onGeneralQueriesText(MouseEvent event) {
-        try {
-            SceneManager.switchToScene(event, "admin-queries-view.fxml");
-        } catch (IOException e) {
-            e.printStackTrace();
-
-        }
-    }
-
-    @FXML
-    private void onHistoryPane(MouseEvent event) {
-        try {
-            SceneManager.switchToScene(event, "admin-history-view.fxml");
-        } catch (IOException e) {
-            e.printStackTrace();
-
-        }
-    }
-
-    @FXML
-    private void onAnalyticsPane(MouseEvent event) {
-        try {
-            SceneManager.switchToScene(event, "admin-stats-view.fxml");
-        } catch (IOException e) {
-            e.printStackTrace();
-
-        }
-    }
-
-    @FXML
-    private void onRequestPane(MouseEvent event) {
-        try {
-            SceneManager.switchToScene(event, "admin-requests-view.fxml");
-        } catch (IOException e) {
-            e.printStackTrace();
-
-        }
-    }
-
-    @FXML
-    private void onViewInstitutionPane(MouseEvent event) {
-        try {
-            SceneManager.switchToScene(event, "admin-check-inst-view.fxml");
-        } catch (IOException e) {
-            e.printStackTrace();
-
-        }
-    }
 
     @FXML
     public void initialize() {
