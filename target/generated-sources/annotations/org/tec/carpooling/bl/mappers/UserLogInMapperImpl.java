@@ -3,7 +3,6 @@ package org.tec.carpooling.bl.mappers;
 import java.time.LocalDate;
 import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
-import org.tec.carpooling.bl.dto.BL_DA.UserDTO;
 import org.tec.carpooling.da.entities.InstitutionEntity;
 import org.tec.carpooling.da.entities.PersonEntity;
 import org.tec.carpooling.da.entities.PersonalUserEntity;

@@ -3,7 +3,6 @@ package org.tec.carpooling.bl.mappers;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
-import org.tec.carpooling.bl.dto.BL_DA.UserDTO;
 import org.tec.carpooling.da.entities.PersonalUserEntity;
 
 @Mapper(componentModel = "spring")

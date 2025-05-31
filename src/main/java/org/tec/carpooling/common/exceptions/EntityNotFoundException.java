@@ -5,3 +5,5 @@ public class EntityNotFoundException extends RuntimeException {
         super(message);
     }
 }
+
+

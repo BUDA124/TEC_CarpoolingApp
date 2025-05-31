@@ -10,9 +10,6 @@ import org.springframework.stereotype.Controller;
 @Controller
 public class PassengerStatsController {
 
-    @Autowired
-    public PassengerStatsController() {}
-
     @FXML
     public void initialize() {
 

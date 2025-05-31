@@ -5,6 +5,10 @@ import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import org.tec.carpooling.bl.validators.constraints.PasswordComplexity;
 
+/**
+ * Data Transfer Object for carrying user login credentials (username/email and password)
+ * from the UI to the BL for authentication.
+ */
 public class LogInDTO {
     @NotBlank(message = "Username is required.")
     @Size(min = 3, max = 30, message = "Username must be between 3 and 30 characters.")

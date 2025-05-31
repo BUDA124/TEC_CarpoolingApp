@@ -21,8 +21,6 @@ public interface UserRegistrationMapper {
         }
         InstitutionEntity institution = new InstitutionEntity();
         institution.setId(id);
-        // Nota: Otros campos de InstitutionEntity no se llenan aquí.
-        // JPA usará este objeto con ID para la relación.
         return institution;
     }
 
@@ -47,6 +45,12 @@ public interface UserRegistrationMapper {
     }
 
     @Mapping(target = "id", ignore = true) // ID es autogenerado
+    @Mapping(target = "firstName", source = "firstName") // Explicit, but would map automatically
+    @Mapping(target = "secondName", source = "secondName")
+    @Mapping(target = "firstSurname", source = "firstSurname")
+    @Mapping(target = "secondSurname", source = "secondSurname")
+    @Mapping(target = "birthdate", source = "birthdate")
+    @Mapping(target = "nationality", source = "nationality")
     @Mapping(target = "profilePicture", ignore = true)
     @Mapping(target = "idInstitution", source = "idInstitution", qualifiedByName = "longToInstitutionEntity")
     @Mapping(target = "idGender", source = "idGender", qualifiedByName = "longToGenderEntity")

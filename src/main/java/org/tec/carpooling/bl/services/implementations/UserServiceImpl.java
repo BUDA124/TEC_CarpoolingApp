@@ -3,17 +3,14 @@ package org.tec.carpooling.bl.services.implementations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.tec.carpooling.bl.dto.BL_DA.UserDTO;
+import org.tec.carpooling.bl.dto.BL_DA.UserInstitutionInfoDTO;
 import org.tec.carpooling.bl.dto.UI_BL.LogInDTO;
+import org.tec.carpooling.bl.dto.UI_BL.UserAcceptTermsDTO;
 import org.tec.carpooling.bl.dto.UI_BL.UserRegistrationDTO;
-import org.tec.carpooling.bl.dto.UI_BL.VehicleDTO;
 import org.tec.carpooling.bl.mappers.UserLogInMapper;
 import org.tec.carpooling.bl.mappers.UserRegistrationMapper;
 import org.tec.carpooling.bl.services.UserService;
-import org.tec.carpooling.bl.dto.UI_BL.UserUpdateDTO;
 import org.tec.carpooling.common.exceptions.AuthenticationException;
-import org.tec.carpooling.common.exceptions.EntityNotFoundException;
-import org.tec.carpooling.common.exceptions.ValidationException;
 import org.tec.carpooling.common.utils.HashingUtil;
 import org.tec.carpooling.da.entities.*;
 import org.tec.carpooling.da.repositories.*;
@@ -68,7 +65,6 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional(readOnly = true)
     public boolean logInUser(LogInDTO logInDTO) {
-        // 1.  Retrieve user by username
         Optional<PersonalUserEntity> userEntityOptional = personalUserRepository.findByUsername(logInDTO.getUsername());
 
         if (userEntityOptional.isEmpty()) {
@@ -77,7 +73,6 @@ public class UserServiceImpl implements UserService {
 
         PersonalUserEntity userEntity = userEntityOptional.get();
 
-        // 2. Verify Password
         if (!HashingUtil.verifyPassword(logInDTO.getPassword(), userEntity.getPassword())) {
             throw new AuthenticationException("Invalid username or password"); // Incorrect password
         }
@@ -86,27 +81,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDTO getUserProfile(long userId) {
+    public boolean acceptTermsAndConditions(UserAcceptTermsDTO dto) {
+        return false;
+    }
+
+    @Override
+    public UserInstitutionInfoDTO getUserInstitutionInfo(String username) {
         return null;
     }
 
-    @Override
-    public UserDTO updateUserProfile(long userId, UserUpdateDTO updateDTO) throws EntityNotFoundException, ValidationException {
-        return null;
-    }
 
-    @Override
-    public void acceptTermsAndConditions(long userId) throws EntityNotFoundException {
-
-    }
-
-    @Override
-    public VehicleDTO getVehiclesByDriver(long driverPersonId) throws EntityNotFoundException {
-        return null;
-    }
-
-    @Override
-    public long getUserInstitutionId(long userId) throws EntityNotFoundException {
-        return 0;
-    }
 }

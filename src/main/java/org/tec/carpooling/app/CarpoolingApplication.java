@@ -39,7 +39,7 @@ public class CarpoolingApplication extends Application {
         try {
             URL fxmlUrl = getClass().getResource("/org/tec/carpooling/ui/controllers/login-view.fxml");
             if (fxmlUrl == null) {
-                System.err.println("ERROR: Cannot find FXML file: /views/login-view.fxml");
+                System.err.println("ERROR: Cannot find FXML file: /views/pick-role-view.fxml");
                 return;
             }
 

@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import org.springframework.stereotype.Controller;
-import org.tec.carpooling.bl.dto.BL_DA.UserDTO;
 import org.tec.carpooling.da.entities.PersonEntity;
 import org.tec.carpooling.da.entities.PersonalUserEntity;
 import org.tec.carpooling.da.repositories.DriverRepository;
@@ -48,6 +47,16 @@ public class PickRoleController {
     private void onPassangerPane(MouseEvent event) {
         try {
             SceneManager.switchToScene(event, "passenger-view.fxml");
+        } catch (IOException e) {
+            e.printStackTrace();
+
+        }
+    }
+
+    @FXML
+    private void On_AP_driverWheel(ActionEvent event) {
+        try {
+            SceneManager.switchToScene(event, "driver-ride.fxml");
         } catch (IOException e) {
             e.printStackTrace();
 

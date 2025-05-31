@@ -7,6 +7,11 @@ import org.tec.carpooling.bl.validators.constraints.ValidInstitutionalEmail;
 
 import java.time.LocalDate;
 
+/**
+ * Data Transfer Object for carrying all necessary information from the UI to the BL
+ * for registering a new user, including personal details, contact info, credentials,
+ * institutional affiliation, and role preferences.
+ */
 public class UserRegistrationDTO {
 
     @NotBlank(message = "First name is required.")

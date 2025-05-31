@@ -1,11 +1,11 @@
 package org.tec.carpooling.ui;
 
-import org.tec.carpooling.bl.dto.BL_DA.UserDTO;
+import org.tec.carpooling.bl.dto.UI_BL.LogInDTO;
 
 public final class UserSession {
 
     private static UserSession instance;
-    private UserDTO currentUser;
+    private LogInDTO currentUser;
 
     private UserSession() {}
 
@@ -16,7 +16,7 @@ public final class UserSession {
         return instance;
     }
 
-    public void loginUser(UserDTO user) {
+    public void loginUser(LogInDTO user) {
         this.currentUser = user;
     }
 
@@ -24,15 +24,11 @@ public final class UserSession {
         this.currentUser = null;
     }
 
-    public UserDTO getCurrentUser() {
+    public LogInDTO getCurrentUser() {
         return currentUser;
     }
 
     public boolean isLoggedIn() {
         return currentUser != null;
-    }
-
-    public Long getCurrentIdPerson() {
-        return isLoggedIn() ? currentUser.getId() : null;
     }
 }
