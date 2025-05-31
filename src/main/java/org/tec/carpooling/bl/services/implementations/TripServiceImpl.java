@@ -1,5 +1,6 @@
 package org.tec.carpooling.bl.services.implementations;
 
+import org.tec.carpooling.bl.dto.BL_DA.UserInstitutionInfoDTO;
 import org.tec.carpooling.bl.dto.UI_BL.*;
 import org.tec.carpooling.bl.services.TripService;
 

@@ -38,7 +38,7 @@ public class UserRegistrationDTO {
     private String institutionalEmail;
 
     @NotNull(message = "Birthdate is required.")
-    @Past(message = "Birthdate must be in the past.") // Basic check, @MinimumAge is more specific
+    @Past(message = "Birthdate must be in the past.")
     @MinimumAge(value = 16, message = "User must be at least 16 years old.")
     private LocalDate birthdate;
 

@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import org.springframework.stereotype.Controller;
+import org.tec.carpooling.bl.dto.UI_BL.LogInDTO;
 import org.tec.carpooling.da.entities.PersonEntity;
 import org.tec.carpooling.da.entities.PersonalUserEntity;
 import org.tec.carpooling.da.repositories.DriverRepository;
@@ -66,9 +67,7 @@ public class PickRoleController {
     @FXML
     private void onDriverPane(MouseEvent event) {
         UserSession session = UserSession.getInstance();
-        UserDTO currentUser = session.getCurrentUser();
-
-        String username = currentUser.getUsername();
+        String username = session.getCurrentUser();
 
         Optional<PersonalUserEntity> optionalUser = personalUserRepository.findByUsername(username);
 
@@ -80,7 +79,7 @@ public class PickRoleController {
 
 
         } else {
-            showError("Usuario no encontrado.");
+            showError("User not found.");
         }
     }
 

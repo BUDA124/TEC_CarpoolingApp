@@ -42,6 +42,7 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public boolean registerNewUser(UserRegistrationDTO dto) {
+
         PersonEntity person = userRegistrationMapper.toPersonEntity(dto);
         person = personRepository.save(person);
 

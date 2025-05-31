@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.tec.carpooling.bl.dto.UI_BL.LogInDTO;
 import org.tec.carpooling.bl.services.UserService;
 import org.tec.carpooling.common.constants.AppConstants;
+import org.tec.carpooling.common.exceptions.AuthenticationException;
 import org.tec.carpooling.da.repositories.PersonRepository;
 import org.tec.carpooling.da.repositories.PersonalUserRepository;
 import org.tec.carpooling.ui.SceneManager;
@@ -54,20 +55,18 @@ public class LoginController {
 
         LogInDTO logInDTO = new LogInDTO(username, password);
 
-        // 1. Validar el DTO
         Set<ConstraintViolation<LogInDTO>> violations = validator.validate(logInDTO);
 
         if (violations.isEmpty()) {
             try {
                 if (userService.logInUser(logInDTO)) {
-                    LogInDTO user = new LogInDTO();
-                    user.setUsername(username);
-                    UserSession.getInstance().loginUser(user);
+                    UserSession.getInstance().setLogInUser(logInDTO.getUsername());
                     SceneManager.switchToScene(event, "pick-role-view.fxml");
-                }
-                else {
+                } else {
                     showAlert("Login Failed", Alert.AlertType.ERROR, "Invalid username or password.");
                 }
+            } catch (AuthenticationException e) {
+                showAlert("Authentication Error", Alert.AlertType.ERROR, e.getMessage());
             } catch (Exception e) {
                 String errorMessage = "An unexpected error occurred while logging in.";
                 showAlert("Login Error", Alert.AlertType.ERROR, errorMessage);

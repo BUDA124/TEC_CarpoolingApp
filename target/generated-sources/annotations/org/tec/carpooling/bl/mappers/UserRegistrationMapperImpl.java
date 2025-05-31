@@ -11,7 +11,7 @@ import org.tec.carpooling.da.entities.PersonalUserEntity;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-05-21T15:27:28-0600",
+    date = "2025-05-31T09:25:16-0600",
     comments = "version: 1.6.2, compiler: javac, environment: Java 22.0.2 (Oracle Corporation)"
 )
 @Component
@@ -25,14 +25,14 @@ public class UserRegistrationMapperImpl implements UserRegistrationMapper {
 
         PersonEntity personEntity = new PersonEntity();
 
+        personEntity.setFirstName( dto.getFirstName() );
+        personEntity.setSecondName( dto.getSecondName() );
+        personEntity.setFirstSurname( dto.getFirstSurname() );
+        personEntity.setSecondSurname( dto.getSecondSurname() );
+        personEntity.setBirthdate( dto.getBirthdate() );
+        personEntity.setNationality( dto.getNationality() );
         personEntity.setIdInstitution( longToInstitutionEntity( dto.getIdInstitution() ) );
         personEntity.setIdGender( longToGenderEntity( dto.getIdGender() ) );
-        personEntity.setNationality( dto.getNationality() );
-        personEntity.setBirthdate( dto.getBirthdate() );
-        personEntity.setSecondSurname( dto.getSecondSurname() );
-        personEntity.setFirstSurname( dto.getFirstSurname() );
-        personEntity.setSecondName( dto.getSecondName() );
-        personEntity.setFirstName( dto.getFirstName() );
 
         return personEntity;
     }

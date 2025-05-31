@@ -61,45 +61,7 @@ public class RegisterDriverController {
         LocalDate expirationDate = DP_expirationDate.getValue();
         boolean termsAccepted = CheckB_termsAndConditions.isSelected();
 
-        StringBuilder errors = new StringBuilder();
 
-        if (carModel == null || carModel.isBlank()) errors.append("- El modelo del auto es obligatorio.\n");
-        if (carColor == null || carColor.isBlank()) errors.append("- El color del auto es obligatorio.\n");
-        if (licencePlate == null || licencePlate.isBlank()) errors.append("- La placa es obligatoria.\n");
-        if (licenseId == null || licenseId.isBlank()) errors.append("- El ID de licencia es obligatorio.\n");
-        if (modelYear == null) errors.append("- El año del modelo es obligatorio.\n");
-        if (capacityPassengers == null) errors.append("- La capacidad de pasajeros es obligatoria.\n");
-        if (yearsExperience == null) errors.append("- Los años de experiencia son obligatorios.\n");
-        if (expirationDate == null) errors.append("- La fecha de expiración es obligatoria.\n");
-        if (!termsAccepted) errors.append("- Debes aceptar los términos y condiciones.\n");
-
-        if (licenseId != null && !licenseId.matches("\\d+"))
-            errors.append("- El ID de licencia debe contener solo números.\n");
-
-        if (licencePlate != null && !licencePlate.matches("\\d+"))
-            errors.append("- La placa debe contener solo números.\n");
-
-        int currentYear = Year.now().getValue();
-        if (modelYear != null && modelYear > currentYear)
-            errors.append("- El año del modelo no puede ser mayor al actual.\n");
-
-        if (yearsExperience != null && yearsExperience > 50)
-            errors.append("- Los años de experiencia no pueden ser mayores a 50.\n");
-
-        if (expirationDate != null && !expirationDate.isAfter(LocalDate.now()))
-            errors.append("- La fecha de expiración debe ser posterior al día de hoy.\n");
-
-        if (errors.length() > 0) {
-            showAlert("Errores de validación", Alert.AlertType.ERROR, errors.toString());
-        } else {
-            showAlert("Registro exitoso", Alert.AlertType.INFORMATION, "Los datos fueron registrados correctamente.");
-            try {
-                SceneManager.switchToScene(event, "pick-role-view.fxml");
-            } catch (IOException e) {
-                e.printStackTrace();
-
-            }
-        }
 
     }
 

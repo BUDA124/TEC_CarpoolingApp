@@ -45,7 +45,7 @@ public interface UserRegistrationMapper {
     }
 
     @Mapping(target = "id", ignore = true) // ID es autogenerado
-    @Mapping(target = "firstName", source = "firstName") // Explicit, but would map automatically
+    @Mapping(target = "firstName", source = "firstName")
     @Mapping(target = "secondName", source = "secondName")
     @Mapping(target = "firstSurname", source = "firstSurname")
     @Mapping(target = "secondSurname", source = "secondSurname")

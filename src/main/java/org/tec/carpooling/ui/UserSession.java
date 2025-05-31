@@ -5,7 +5,7 @@ import org.tec.carpooling.bl.dto.UI_BL.LogInDTO;
 public final class UserSession {
 
     private static UserSession instance;
-    private LogInDTO currentUser;
+    private String currentUser;
 
     private UserSession() {}
 
@@ -16,7 +16,7 @@ public final class UserSession {
         return instance;
     }
 
-    public void loginUser(LogInDTO user) {
+    public void setLogInUser(String user) {
         this.currentUser = user;
     }
 
@@ -24,7 +24,7 @@ public final class UserSession {
         this.currentUser = null;
     }
 
-    public LogInDTO getCurrentUser() {
+    public String getCurrentUser() {
         return currentUser;
     }
 
