@@ -100,7 +100,7 @@
                   <Font name="System Bold" size="13.0" />
                </font>
             </Text>
-            <Button fx:id="BTN_enter" alignment="CENTER" layoutX="292.0" layoutY="590.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="280.0" style="-fx-background-color: #017efa;" styleClass="adlam-text" text="Enter" textAlignment="CENTER" textFill="WHITE">
+            <Button fx:id="BTN_enter" alignment="CENTER" layoutX="292.0" layoutY="590.0" mnemonicParsing="false" onAction="#on_BTN_enter" prefHeight="40.0" prefWidth="280.0" style="-fx-background-color: #017efa;" styleClass="adlam-text" text="Enter" textAlignment="CENTER" textFill="WHITE">
                <font>
                   <Font name="SansSerif Bold" size="16.0" />
                </font>

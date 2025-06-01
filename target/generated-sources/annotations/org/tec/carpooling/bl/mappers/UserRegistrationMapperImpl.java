@@ -11,7 +11,7 @@ import org.tec.carpooling.da.entities.PersonalUserEntity;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-05-31T09:25:16-0600",
+    date = "2025-05-31T14:14:20-0600",
     comments = "version: 1.6.2, compiler: javac, environment: Java 22.0.2 (Oracle Corporation)"
 )
 @Component

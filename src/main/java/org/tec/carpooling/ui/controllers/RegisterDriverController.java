@@ -2,7 +2,15 @@ package org.tec.carpooling.ui.controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.Window;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -26,6 +34,7 @@ public class RegisterDriverController {
     @FXML private DatePicker DP_expirationDate;
     @FXML private CheckBox CheckB_termsAndConditions;
     @FXML private Button BTN_submitDriverRegistration;
+    @FXML private Button BTN_cancelDriverRegistration;
 
     @FXML
     public void initialize() {
@@ -63,6 +72,21 @@ public class RegisterDriverController {
 
 
 
+
+    }
+
+    @FXML
+    private void On_BTN_cancelDriverRegistration(MouseEvent event) {
+        try {
+            ConfirmationController controller = SceneManager.showPopupWindowAndGetController(event, "confirmation-view.fxml");
+
+            if (controller != null && controller.isOkPressed()) { // If "OK" was pressed on the popup
+                SceneManager.switchToScene(event, "pick-role-view.fxml");
+            }
+        } catch (IOException e) {
+            System.err.println("Failed to load confirmation dialog: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 
 

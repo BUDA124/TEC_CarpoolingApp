@@ -84,5 +84,4 @@ public interface UserRegistrationMapper {
     @Mapping(target = "person", ignore = true) // Se asignará en la capa de servicio
     @Mapping(target = "auditLog", ignore = true) // Se asignará en la capa de servicio
     CredentialEntity toCredentialEntity(UserRegistrationDTO dto);
-
 }

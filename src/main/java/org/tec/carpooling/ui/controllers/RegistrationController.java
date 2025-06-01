@@ -24,6 +24,7 @@ import org.tec.carpooling.ui.SceneManager;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -32,36 +33,22 @@ import org.springframework.stereotype.Controller;
 @Controller
 public class RegistrationController {
 
-    @FXML
-    private TextField TF_firstName;
-    @FXML
-    private TextField TF_secondName;
-    @FXML
-    private TextField TF_firstSurname;
-    @FXML
-    private TextField TF_secondSurname;
-    @FXML
-    private TextField TF_personalEmail;
-    @FXML
-    private TextField TF_idNumber;
-    @FXML
-    private TextField TF_username;
-    @FXML
-    private TextField TF_password;
-    @FXML
-    private TextField TF_confirmPassword;
-    @FXML
-    private TextField TF_institutionalEmail;
-    @FXML
-    private ComboBox<GenderEntity> CB_gender;
-    @FXML
-    private ComboBox<CountryEntity> CB_country;
-    @FXML
-    private ComboBox<TypeOfCredentialEntity> CB_typeId;
-    @FXML
-    private ComboBox<InstitutionEntity> CB_institution;
-    @FXML
-    private Text T_LogIn;
+    @FXML private TextField TF_firstName;
+    @FXML private TextField TF_secondName;
+    @FXML private TextField TF_firstSurname;
+    @FXML private TextField TF_secondSurname;
+    @FXML private TextField TF_personalEmail;
+    @FXML private TextField TF_idNumber;
+    @FXML private TextField TF_username;
+    @FXML private TextField TF_password;
+    @FXML private TextField TF_confirmPassword;
+    @FXML private TextField TF_institutionalEmail;
+    @FXML private ComboBox<GenderEntity> CB_gender;
+    @FXML private ComboBox<CountryEntity> CB_country;
+    @FXML private ComboBox<TypeOfCredentialEntity> CB_typeId;
+    @FXML private ComboBox<InstitutionEntity> CB_institution;
+    @FXML private Text T_LogIn;
+    @FXML private Button BTN_enter;
 
     @Autowired
     private SimpleDataRetrievalService simpleDataRetrievalService;
@@ -72,44 +59,68 @@ public class RegistrationController {
     private final Validator validator = AppConstants.getValidator();
 
     @FXML
-    private void BTN_enter(ActionEvent event) {
+    private void on_BTN_enter(ActionEvent event) {
+        String firstName = TF_firstName.getText();
+        String secondName = TF_secondName.getText();
+        String firstSurname = TF_firstSurname.getText();
+        String secondSurname = TF_secondSurname.getText();
+        String personalEmail = TF_personalEmail.getText();
+        String idNumber = TF_idNumber.getText();
+        Optional<TypeOfCredentialEntity> typeOfCredentialEntityOptional = Optional.ofNullable(CB_typeId.getValue()); // Correctly named variable
+
         String username = TF_username.getText();
         String password = TF_password.getText();
         String confirmPassword = TF_confirmPassword.getText();
         String institutionalEmail = TF_institutionalEmail.getText();
 
-        String idNumber = TF_idNumber.getText();
-        String firstName = TF_firstName.getText();
-        String surname = TF_firstSurname.getText();
-        String personalEmail = TF_personalEmail.getText();
+        // Basic check for the ComboBox selection (you might want more robust validation)
+        if (!typeOfCredentialEntityOptional.isPresent()) {
+            showAlert("Validation Error", Alert.AlertType.ERROR, "Please select a Type of Credential.");
+            return;
+        }
+        // You should also check other ComboBoxes: CB_gender, CB_country, CB_institution
+        if (CB_gender.getValue() == null) {
+            showAlert("Validation Error", Alert.AlertType.ERROR, "Please select a Gender.");
+            return;
+        }
+        if (CB_country.getValue() == null) {
+            showAlert("Validation Error", Alert.AlertType.ERROR, "Please select a Country.");
+            return;
+        }
+        if (CB_institution.getValue() == null) {
+            showAlert("Validation Error", Alert.AlertType.ERROR, "Please select an Institution.");
+            return;
+        }
 
 
-        if (username.isEmpty() || password.isEmpty()) {
+        if (username.isEmpty() || password.isEmpty() /* || other fields are empty */) {
             showAlert("There Are Blank Spaces", Alert.AlertType.ERROR, "Fill all the fields.");
             return;
         }
+
         try {
-            SceneManager.switchToScene(event, "pick-role-view.fxml");
-        } catch (IOException e) {
-            e.printStackTrace();
-
-        }
-    }
-
-    @FXML
-    private void On_T_LogIn(MouseEvent event) {
-        try {
-            SceneManager.switchToScene(event, "login-view.fxml");
-        } catch (IOException e) {
-            e.printStackTrace();
-
-        }
-    }
-    @FXML
-    private void onSignUp(ActionEvent event) {
-        try {
-
             UserRegistrationDTO registrationDTO = new UserRegistrationDTO();
+            registrationDTO.setFirstName(firstName);
+            registrationDTO.setSecondName(secondName);
+            registrationDTO.setFirstSurname(firstSurname);
+            registrationDTO.setSecondSurname(secondSurname);
+            registrationDTO.setEmail(personalEmail);
+            registrationDTO.setCredentialNumber(idNumber);
+            registrationDTO.setUsername(username);
+            registrationDTO.setPassword(password);
+            // registrationDTO.setConfirmPassword(confirmPassword); // DTOs usually don't store confirmPassword
+            registrationDTO.setInstitutionalEmail(institutionalEmail);
+
+            // Set values from ComboBoxes
+            registrationDTO.setIdGender(CB_gender.getValue());
+            registrationDTO.setNationality(CB_country.getValue());
+            registrationDTO.setIdInstitution(CB_institution.getValue());
+            registrationDTO.setIdTypeOfCredential(CB_typeId.getValue());
+
+
+            // Or if you stored an ID:
+            // typeOfCredentialEntityOptional.ifPresent(entity -> registrationDTO.setTypeOfCredentialId(entity.getId()));
+
 
             Set<ConstraintViolation<UserRegistrationDTO>> violations = validator.validate(registrationDTO);
             if (violations.isEmpty()) {
@@ -137,9 +148,8 @@ public class RegistrationController {
 
         }
     }
-
     @FXML
-    private void onLogIn(ActionEvent event) {
+    private void On_T_LogIn(MouseEvent event) {
         try {
             SceneManager.switchToScene(event, "login-view.fxml");
         } catch (IOException e) {
@@ -147,8 +157,6 @@ public class RegistrationController {
 
         }
     }
-
-
 
     @FXML
     public void initialize() {

@@ -4,6 +4,10 @@ import jakarta.validation.constraints.*;
 import org.tec.carpooling.bl.validators.constraints.MinimumAge;
 import org.tec.carpooling.bl.validators.constraints.PasswordComplexity;
 import org.tec.carpooling.bl.validators.constraints.ValidInstitutionalEmail;
+import org.tec.carpooling.da.entities.CountryEntity;
+import org.tec.carpooling.da.entities.GenderEntity;
+import org.tec.carpooling.da.entities.InstitutionEntity;
+import org.tec.carpooling.da.entities.TypeOfCredentialEntity;
 
 import java.time.LocalDate;
 
@@ -44,7 +48,7 @@ public class UserRegistrationDTO {
 
     @NotBlank(message = "Nationality is required.")
     @Size(max = 50, message = "Nationality must not exceed 50 characters.")
-    private String nationality;
+    private CountryEntity nationality;
 
     @NotBlank(message = "Credential number is required.")
     @Size(min = 3, max = 30, message = "Credential number must be between 6 and 30 characters.")
@@ -61,15 +65,15 @@ public class UserRegistrationDTO {
 
     @NotNull(message = "Institution ID is required.")
     @Positive(message = "Institution ID must be a positive number.")
-    private Long idInstitution;
+    private InstitutionEntity idInstitution;
 
     @NotNull(message = "Gender ID is required.")
     @Positive(message = "Gender ID must be a positive number.")
-    private Long idGender;
+    private GenderEntity idGender;
 
     @NotNull(message = "Credential ID is required.")
     @Positive(message = "Credential ID must be a positive number.")
-    private Long idTypeOfCredential;
+    private TypeOfCredentialEntity idTypeOfCredential;
 
     public UserRegistrationDTO() {}
 
@@ -129,11 +133,11 @@ public class UserRegistrationDTO {
         this.birthdate = birthdate;
     }
 
-    public @NotBlank(message = "Nationality is required.") @Size(max = 50, message = "Nationality must not exceed 50 characters.") String getNationality() {
+    public @NotBlank(message = "Nationality is required.") @Size(max = 50, message = "Nationality must not exceed 50 characters.") CountryEntity getNationality() {
         return nationality;
     }
 
-    public void setNationality(@NotBlank(message = "Nationality is required.") @Size(max = 50, message = "Nationality must not exceed 50 characters.") String nationality) {
+    public void setNationality(@NotBlank(message = "Nationality is required.") @Size(max = 50, message = "Nationality must not exceed 50 characters.") CountryEntity nationality) {
         this.nationality = nationality;
     }
 
@@ -161,27 +165,27 @@ public class UserRegistrationDTO {
         this.password = password;
     }
 
-    public @NotNull(message = "Institution ID is required.") @Positive(message = "Institution ID must be a positive number.") Long getIdInstitution() {
+    public @NotNull(message = "Institution ID is required.") @Positive(message = "Institution ID must be a positive number.") InstitutionEntity getIdInstitution() {
         return idInstitution;
     }
 
-    public void setIdInstitution(@NotNull(message = "Institution ID is required.") @Positive(message = "Institution ID must be a positive number.") Long idInstitution) {
+    public void setIdInstitution(@NotNull(message = "Institution ID is required.") @Positive(message = "Institution ID must be a positive number.") InstitutionEntity idInstitution) {
         this.idInstitution = idInstitution;
     }
 
-    public @NotNull(message = "Gender ID is required.") @Positive(message = "Gender ID must be a positive number.") Long getIdGender() {
+    public @NotNull(message = "Gender ID is required.") @Positive(message = "Gender ID must be a positive number.") GenderEntity getIdGender() {
         return idGender;
     }
 
-    public void setIdGender(@NotNull(message = "Gender ID is required.") @Positive(message = "Gender ID must be a positive number.") Long idGender) {
+    public void setIdGender(@NotNull(message = "Gender ID is required.") @Positive(message = "Gender ID must be a positive number.") GenderEntity idGender) {
         this.idGender = idGender;
     }
 
-    public @NotNull(message = "Credential ID is required.") @Positive(message = "Credential ID must be a positive number.") Long getIdTypeOfCredential() {
+    public @NotNull(message = "Credential ID is required.") @Positive(message = "Credential ID must be a positive number.") TypeOfCredentialEntity getIdTypeOfCredential() {
         return idTypeOfCredential;
     }
 
-    public void setIdTypeOfCredential(@NotNull(message = "Credential ID is required.") @Positive(message = "Credential ID must be a positive number.") Long idTypeOfCredential) {
+    public void setIdTypeOfCredential(@NotNull(message = "Credential ID is required.") @Positive(message = "Credential ID must be a positive number.") TypeOfCredentialEntity idTypeOfCredential) {
         this.idTypeOfCredential = idTypeOfCredential;
     }
 }

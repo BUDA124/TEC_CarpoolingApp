@@ -79,7 +79,7 @@
                   <Font name="System Bold" size="14.0" />
                </font>
             </Text>
-            <Button fx:id="BTN_submitDriverRegistration" alignment="CENTER" layoutX="258.0" layoutY="580.0" mnemonicParsing="false" onAction="#On_BTN_submitDriverRegistration" prefHeight="40.0" prefWidth="280.0" style="-fx-background-color: #017efa;" styleClass="adlam-text" text="Submit" textAlignment="CENTER" textFill="WHITE">
+            <Button fx:id="BTN_submitDriverRegistration" alignment="CENTER" layoutX="70.0" layoutY="585.0" mnemonicParsing="false" onAction="#On_BTN_submitDriverRegistration" prefHeight="40.0" prefWidth="280.0" style="-fx-background-color: #017efa;" styleClass="adlam-text" text="Submit" textAlignment="CENTER" textFill="WHITE">
                <font>
                   <Font size="18.0" />
                </font>
@@ -137,6 +137,11 @@
             </Text>
             <Spinner fx:id="SB_modelYear" layoutX="557.0" layoutY="130.0" prefHeight="40.0" prefWidth="200.0" />
             <Spinner fx:id="SB_yearsExperience" layoutX="604.0" layoutY="374.0" prefHeight="40.0" prefWidth="200.0" />
+            <Button fx:id="BTN_cancelDriverRegistration" alignment="CENTER" layoutX="453.0" layoutY="585.0" mnemonicParsing="false" onAction="#On_BTN_submitDriverRegistration" onMouseClicked="#On_BTN_cancelDriverRegistration" prefHeight="40.0" prefWidth="280.0" style="-fx-background-color: #808080;" styleClass="adlam-text" text="Cancel" textAlignment="CENTER" textFill="WHITE">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
          </children>
       </AnchorPane>
    </items>

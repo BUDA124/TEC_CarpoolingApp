@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<SplitPane dividerPositions="0.25" prefHeight="700.0" prefWidth="1100.0" stylesheets="@../../../../../../css/styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.tec.carpooling.ui.controllers.admin.AdminAddInstAdminController">
+   <items>
+      <AnchorPane disable="true" minHeight="0.0" minWidth="0.0" prefHeight="550.0" prefWidth="134.0" style="-fx-background-color: #081a51;">
+         <children>
+            <Text fill="WHITE" layoutX="86.0" layoutY="67.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="CarPool Hub" wrappingWidth="190.0">
+               <font>
+                  <Font name="SansSerif Bold" size="30.0" />
+               </font>
+            </Text>
+            <ImageView fitHeight="91.0" fitWidth="98.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../../images/icono.png" />
+               </image>
+            </ImageView>
+            <Text fill="#51cbff" layoutX="15.0" layoutY="140.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Main Menu">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Text>
+            <Text fill="#51cbff" layoutX="14.0" layoutY="310.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Workspace">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Text>
+            <Pane layoutX="30.0" layoutY="160.0" prefHeight="35.0" prefWidth="220.0" style="-fx-background-color: #1b2b65;">
+               <children>
+                  <Text fill="WHITE" layoutX="48.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Daily Report" textAlignment="CENTER" wrappingWidth="128.0">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+               </children>
+            </Pane>
+            <Pane layoutX="30.0" layoutY="215.0" prefHeight="35.0" prefWidth="220.0" style="-fx-background-color: #1b2b65;">
+               <children>
+                  <Text fill="WHITE" layoutX="42.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="General queries" textAlignment="CENTER" wrappingWidth="145.0">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+               </children>
+            </Pane>
+            <Pane layoutX="30.0" layoutY="330.0" prefHeight="35.0" prefWidth="220.0" style="-fx-background-color: #1b2b65;">
+               <children>
+                  <Text fill="WHITE" layoutX="48.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="History" textAlignment="CENTER" wrappingWidth="128.0">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+               </children>
+            </Pane>
+            <Pane layoutX="30.0" layoutY="385.0" prefHeight="35.0" prefWidth="220.0" style="-fx-background-color: #1b2b65;">
+               <children>
+                  <Text fill="WHITE" layoutX="48.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Analytics" textAlignment="CENTER" wrappingWidth="128.0">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+               </children>
+            </Pane>
+            <Pane layoutX="30.0" layoutY="496.0" prefHeight="35.0" prefWidth="220.0" style="-fx-background-color: #1b2b65;">
+               <children>
+                  <Text fill="WHITE" layoutX="46.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Add Institution" textAlignment="CENTER" wrappingWidth="128.0">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+               </children>
+            </Pane>
+            <Pane layoutX="30.0" layoutY="440.0" prefHeight="35.0" prefWidth="220.0" style="-fx-background-color: #1b2b65;">
+               <children>
+                  <Text fill="WHITE" layoutX="48.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Requests" textAlignment="CENTER" wrappingWidth="128.0">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+               </children>
+            </Pane>
+            <Pane layoutX="30.0" layoutY="555.0" prefHeight="35.0" prefWidth="220.0" style="-fx-background-color: #1b2b65;">
+               <children>
+                  <Text fill="WHITE" layoutX="46.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="View Institution" textAlignment="CENTER" wrappingWidth="128.0">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+               </children>
+            </Pane>
+         </children>
+      </AnchorPane>
+      <AnchorPane prefHeight="650.0" prefWidth="820.0" style="-fx-border-radius: 30;">
+         <children>
+            <Text layoutX="42.0" layoutY="90.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="alata-text" text="Add Institution Admin" wrappingWidth="622.0">
+               <font>
+                  <Font name="SansSerif Regular" size="60.0" />
+               </font>
+            </Text>
+            <TextField layoutX="42.0" layoutY="135.0" prefHeight="40.0" prefWidth="700.0" promptText="Full Name" styleClass="akatab-text">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </TextField>
+            <TextField layoutX="42.0" layoutY="180.0" prefHeight="40.0" prefWidth="700.0" promptText="Surname" styleClass="akatab-text">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </TextField>
+            <TextField layoutX="42.0" layoutY="225.0" prefHeight="40.0" prefWidth="700.0" promptText="Email" styleClass="akatab-text">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </TextField>
+            <Button layoutX="350.0" layoutY="533.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="95.0" text="Add">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
+            <ComboBox layoutX="42.0" layoutY="325.0" prefHeight="30.0" prefWidth="120.0" promptText="Gender" />
+            <ComboBox layoutX="42.0" layoutY="365.0" prefHeight="30.0" prefWidth="120.0" promptText="Institution" />
+            <TextField layoutX="42.0" layoutY="404.0" prefHeight="40.0" prefWidth="700.0" promptText="Username" styleClass="akatab-text">
+               <font>
+                  <Font size="18.0" />
+               </font></TextField>
+            <TextField layoutX="42.0" layoutY="450.0" prefHeight="40.0" prefWidth="700.0" promptText="Password" styleClass="akatab-text">
+               <font>
+                  <Font size="18.0" />
+               </font></TextField>
+            <DatePicker layoutX="129.0" layoutY="282.0" prefHeight="26.0" prefWidth="174.0" />
+            <Text layoutX="42.0" layoutY="299.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Birthdate:">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Text>
+         </children>
+      </AnchorPane>
+   </items>
+</SplitPane>
