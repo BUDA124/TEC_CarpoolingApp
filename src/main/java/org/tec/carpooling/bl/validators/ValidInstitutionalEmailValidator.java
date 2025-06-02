@@ -33,7 +33,7 @@ public class ValidInstitutionalEmailValidator implements ConstraintValidator<Val
         }
 
         String email = dto.getInstitutionalEmail();
-        Long institutionId = dto.getIdInstitution();
+        Long institutionId = dto.getIdInstitution().getId();
         
         if (!EMAIL_BASIC_PATTERN.matcher(email.trim()).matches()) {
             return true;

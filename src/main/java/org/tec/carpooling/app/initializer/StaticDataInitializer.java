@@ -13,17 +13,7 @@ import org.tec.carpooling.bl.services.AuditLogService;
 import org.tec.carpooling.common.constants.AppConstants;
 
 // Entidades (asumimos que existen estas clases en org.tec.carpooling.da.entities)
-import org.tec.carpooling.da.entities.GenderEntity;
-import org.tec.carpooling.da.entities.UserStatusEntity;
-import org.tec.carpooling.da.entities.TypeOfCredentialEntity;
-import org.tec.carpooling.da.entities.PaymentMethodEntity;
-import org.tec.carpooling.da.entities.PriceStatusEntity;
-import org.tec.carpooling.da.entities.TripStatusEntity;
-import org.tec.carpooling.da.entities.CountryEntity;
-import org.tec.carpooling.da.entities.ProvinceEntity;
-import org.tec.carpooling.da.entities.CantonEntity;
-import org.tec.carpooling.da.entities.DistrictEntity;
-import org.tec.carpooling.da.entities.ParameterEntity;
+import org.tec.carpooling.da.entities.*;
 
 
 // Repositorios (asumimos que existen estas interfaces en org.tec.carpooling.da.repositories)
@@ -41,7 +31,9 @@ import org.tec.carpooling.da.repositories.ParameterRepository;
 
 
 import java.util.Arrays;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 @Component
 @Order(2)
@@ -70,6 +62,8 @@ public class StaticDataInitializer implements ApplicationRunner {
     public void run(ApplicationArguments args) throws Exception {
 
         initializeGenders();
+        initializeCountries();
+        initializeCostaRicaLocations();
         initializeUserStatuses();
         initializeTypeOfCredentials();
         initializePaymentMethods();
@@ -77,6 +71,218 @@ public class StaticDataInitializer implements ApplicationRunner {
         initializeTripStatuses();
         initializeLocations();
         initializeParameters();
+    }
+
+    private void initializeCountries() {
+        List<String> countryNames = Arrays.asList(
+                "Afganistán", "Alemania", "Andorra", "Angola",
+                "Arabia Saudita", "Argelia", "Argentina", "Armenia", "Australia",
+                "Azerbaiyán", "Bahamas", "Bangladés", "Barbados",
+                "Belice", "Brasil", "Costa Rica", "Croacia",
+                "Ruanda", "Rumania", "Samoa"
+        );
+
+        for (String countryName : countryNames) {
+            if (countryRepository.findByName(countryName).isEmpty()) {
+                CountryEntity country = new CountryEntity();
+                country.setName(countryName);
+                country.setAuditLog(auditService.createInitialAuditLog(AppConstants.SYSTEM_USER));
+                countryRepository.save(country);
+            } else {
+                log.info("País '{}' ya existe, omitiendo.", countryName);
+            }
+        }
+    }
+
+    private void initializeCostaRicaLocations() {
+        log.info("Inicializando Ubicaciones de Costa Rica (Provincia, Cantón, Distrito)...");
+
+        String paisCostaRicaNombre = "Costa Rica";
+        CountryEntity costaRica = countryRepository.findByName(paisCostaRicaNombre).orElseGet(() -> {
+            CountryEntity country = new CountryEntity();
+            country.setName(paisCostaRicaNombre);
+            country.setAuditLog(auditService.createInitialAuditLog(AppConstants.SYSTEM_USER));
+            log.info("País '{}' creado.", paisCostaRicaNombre);
+            return countryRepository.save(country);
+        });
+
+        Map<String, Map<String, List<String>>> costaRicaDivisions = new LinkedHashMap<>();
+
+        // ------------------------ PROVINCIA SAN JOSÉ ------------------------
+        String provinciaSanJoseNombre = "San José";
+        Map<String, List<String>> sanJoseCantones = new LinkedHashMap<>();
+
+        sanJoseCantones.put("San José", Arrays.asList( // Cantón San José (101)
+                "Carmen", "Merced", "Hospital", "Catedral", "Zapote", "San Francisco de Dos Ríos",
+                "Uruca", "Mata Redonda", "Pavas", "Hatillo", "San Sebastián"
+        ));
+        sanJoseCantones.put("Escazú", Arrays.asList( // Cantón Escazú (102)
+                "Escazú", "San Antonio", "San Rafael"
+        ));
+        sanJoseCantones.put("Desamparados", Arrays.asList( // Cantón Desamparados (103)
+                "Desamparados", "San Miguel", "San Juan de Dios", "San Rafael Arriba", "San Antonio",
+                "Frailes", "Patarrá", "San Cristóbal", "Rosario", "Damas", "San Rafael Abajo",
+                "Gravilias", "Los Guido"
+        ));
+        sanJoseCantones.put("Puriscal", Arrays.asList( // Cantón Puriscal (104)
+                "Santiago", "Mercedes Sur", "Barbacoas", "Grifo Alto", "San Rafael",
+                "Candelaria", "Desamparaditos", "San Antonio", "Chires"
+        ));
+        sanJoseCantones.put("Tarrazú", Arrays.asList( // Cantón Tarrazú (105)
+                "San Marcos", "San Lorenzo", "San Carlos"
+        ));
+        sanJoseCantones.put("Aserrí", Arrays.asList( // Cantón Aserrí (106)
+                "Aserrí", "Tarbaca o Praga", "Vuelta de Jorco", "San Gabriel", "La Legua",
+                "Monterrey", "Salitrillos"
+        ));
+        sanJoseCantones.put("Mora", Arrays.asList( // Cantón Mora (107)
+                "Colón", "Guayabo", "Tabarcia", "Piedras Negras", "Picagres"
+        ));
+        sanJoseCantones.put("Goicoechea", Arrays.asList( // Cantón Goicoechea (108)
+                "Guadalupe", "San Francisco", "Calle Blancos", "Mata de Plátano", "Ipís",
+                "Rancho Redondo", "Purral"
+        ));
+        sanJoseCantones.put("Santa Ana", Arrays.asList( // Cantón Santa Ana (109)
+                "Santa Ana", "Salitral", "Pozos o Concepción", "Uruca o San Joaquín", "Piedades", "Brasil"
+        ));
+        sanJoseCantones.put("Alajuelita", Arrays.asList( // Cantón Alajuelita (110)
+                "Alajuelita", "San Josecito", "San Antonio", "Concepción", "San Felipe"
+        ));
+        sanJoseCantones.put("Coronado", Arrays.asList( // Cantón Vázquez de Coronado (111)
+                "San Isidro", "San Rafael", "Dulce Nombre o Jesús", "Patalillo", "Cascajal"
+        ));
+        sanJoseCantones.put("Acosta", Arrays.asList( // Cantón Acosta (112)
+                "San Ignacio", "Guaitil", "Palmichal", "Cangrejal", "Sabanillas"
+        ));
+        sanJoseCantones.put("Tibás", Arrays.asList( // Cantón Tibás (113)
+                "San Juan", "Cinco Esquinas", "Anselmo Llorente", "León XIII", "Colima"
+        ));
+        sanJoseCantones.put("Moravia", Arrays.asList( // Cantón Moravia (114)
+                "San Vicente", "San Jerónimo", "La Trinidad"
+        ));
+        sanJoseCantones.put("Montes de Oca", Arrays.asList( // Cantón Montes de Oca (115)
+                "San Pedro", "Sabanilla", "Mercedes o Betania", "San Rafael"
+        ));
+        sanJoseCantones.put("Turrubares", Arrays.asList( // Cantón Turrubares (116)
+                "San Pablo", "San Pedro", "San Juan de Mata", "San Luis", "Carara"
+        ));
+        sanJoseCantones.put("Dota", Arrays.asList( // Cantón Dota (117)
+                "Santa María", "Jardín", "Copey"
+        ));
+        sanJoseCantones.put("Curridabat", Arrays.asList( // Cantón Curridabat (118)
+                "Curridabat", "Granadilla", "Sánchez", "Tirrases"
+        ));
+        sanJoseCantones.put("Pérez Zeledón", Arrays.asList( // Cantón Pérez Zeledón (119)
+                "San Isidro", "General", "Daniel Flores", "Rivas", "San Pedro", "Platanares",
+                "Pejibaye", "Cajón o Carmen", "Barú", "Río Nuevo", "Páramo"
+        ));
+        sanJoseCantones.put("León Cortés", Arrays.asList( // Cantón León Cortés Castro (120)
+                "San Pablo", "San Andrés", "Llano Bonito", "San Isidro", "Santa Cruz", "San Antonio"
+        ));
+        costaRicaDivisions.put(provinciaSanJoseNombre, sanJoseCantones);
+
+        // -------------------- PROVINCIA ALAJUELA (Ejemplo Parcial) --------------------
+        String provinciaAlajuelaNombre = "Alajuela";
+        Map<String, List<String>> alajuelaCantones = new LinkedHashMap<>();
+        alajuelaCantones.put("Alajuela", Arrays.asList( // Cantón Alajuela (201)
+                "Alajuela", "San José", "Carrizal", "San Antonio", "Guácima", "San Isidro", "Sabanilla",
+                "San Rafael", "Río Segundo", "Desamparados", "Turrúcares", "Tambor", "La Garita", "Sarapiquí"
+        ));
+        alajuelaCantones.put("San Ramón", Arrays.asList( // Cantón San Ramón (202)
+                "San Ramón", "Santiago", "San Juan", "Piedades Norte", "Piedades Sur", "San Rafael",
+                "San Isidro", "Ángeles", "Alfaro", "Volio", "Concepción", "Zapotal", "San Isidro de Peñas Blancas"
+        ));
+        costaRicaDivisions.put(provinciaAlajuelaNombre, alajuelaCantones);
+
+        // -------------------- PROVINCIA CARTAGO (Ejemplo Parcial) --------------------
+        String provinciaCartagoNombre = "Cartago";
+        Map<String, List<String>> cartagoCantones = new LinkedHashMap<>();
+        cartagoCantones.put("Cartago", Arrays.asList( // Cantón Cartago (301)
+                "Oriental", "Occidental", "Carmen", "San Nicolás", "Aguacaliente (San Francisco)", // DTE dice "Aguacaliente (San Francisco)"
+                "Guadalupe (Arenilla)", "Corralillo", "Tierra Blanca", "Dulce Nombre", "Llano Grande", "Quebradilla"
+        ));
+        costaRicaDivisions.put(provinciaCartagoNombre, cartagoCantones);
+
+        // -------------------- PROVINCIA HEREDIA (Ejemplo Parcial) --------------------
+        String provinciaHerediaNombre = "Heredia";
+        Map<String, List<String>> herediaCantones = new LinkedHashMap<>();
+        herediaCantones.put("Heredia", Arrays.asList( // Cantón Heredia (401)
+                "Heredia", "Mercedes", "San Francisco", "Ulloa", "Varablanca"
+        ));
+        costaRicaDivisions.put(provinciaHerediaNombre, herediaCantones);
+
+        // -------------------- PROVINCIA GUANACASTE (Ejemplo Parcial) --------------------
+        String provinciaGuanacasteNombre = "Guanacaste";
+        Map<String, List<String>> guanacasteCantones = new LinkedHashMap<>();
+        guanacasteCantones.put("Liberia", Arrays.asList( // Cantón Liberia (501)
+                "Liberia", "Cañas Dulces", "Mayorga", "Nacascolo", "Curubandé"
+        ));
+        costaRicaDivisions.put(provinciaGuanacasteNombre, guanacasteCantones);
+
+        // -------------------- PROVINCIA PUNTARENAS (Ejemplo Parcial) --------------------
+        String provinciaPuntarenasNombre = "Puntarenas";
+        Map<String, List<String>> puntarenasCantones = new LinkedHashMap<>();
+        puntarenasCantones.put("Puntarenas", Arrays.asList( // Cantón Puntarenas (601)
+                "Puntarenas", "Pitahaya", "Chomes", "Lepanto", "Paquera", "Manzanillo", "Guacimal", "Barranca",
+                "Monte Verde", "Isla del Coco", "Cóbano", "Chacarita", "Chira (Isla)", "Acapulco", "El Roble", "Arancibia"
+        ));
+        costaRicaDivisions.put(provinciaPuntarenasNombre, puntarenasCantones);
+
+        // -------------------- PROVINCIA LIMÓN (Ejemplo Parcial) --------------------
+        String provinciaLimonNombre = "Limón";
+        Map<String, List<String>> limonCantones = new LinkedHashMap<>();
+        limonCantones.put("Limón", Arrays.asList( // Cantón Limón (701)
+                "Limón", "Valle La Estrella", "Río Blanco", "Matama"
+        ));
+        costaRicaDivisions.put(provinciaLimonNombre, limonCantones);
+
+
+        // Iterar sobre la estructura de datos para crear las entidades
+        for (Map.Entry<String, Map<String, List<String>>> provinceEntry : costaRicaDivisions.entrySet()) {
+            String provinceName = provinceEntry.getKey();
+            Map<String, List<String>> cantonesMap = provinceEntry.getValue();
+
+            AuditLogEntity provinceAuditLog = auditService.createInitialAuditLog(AppConstants.SYSTEM_USER);
+            ProvinceEntity province = provinceRepository.findByNameAndCountry(provinceName, costaRica).orElseGet(() -> {
+                ProvinceEntity newProvince = new ProvinceEntity();
+                newProvince.setName(provinceName);
+                newProvince.setCountry(costaRica);
+                newProvince.setAuditLog(provinceAuditLog);
+                log.info("Provincia '{}' creada en {}.", provinceName, costaRica.getName());
+                return provinceRepository.save(newProvince);
+            });
+
+            for (Map.Entry<String, List<String>> cantonEntry : cantonesMap.entrySet()) {
+                String cantonName = cantonEntry.getKey();
+                List<String> districtNames = cantonEntry.getValue();
+
+                AuditLogEntity cantonAuditLog = auditService.createInitialAuditLog(AppConstants.SYSTEM_USER);
+                CantonEntity canton = cantonRepository.findByNameAndProvince(cantonName, province).orElseGet(() -> {
+                    CantonEntity newCanton = new CantonEntity();
+                    newCanton.setName(cantonName);
+                    newCanton.setProvince(province);
+                    newCanton.setAuditLog(cantonAuditLog);
+                    log.info("Cantón '{}' creado en {}.", cantonName, province.getName());
+                    return cantonRepository.save(newCanton);
+                });
+
+                for (String districtName : districtNames) {
+                    // No es necesario crear un nuevo AuditLogEntity por cada distrito si todos comparten la misma info de auditoría inicial.
+                    // Pero si cada uno debe tener su propio registro de auditoría individual (con su propio ID), entonces está bien.
+                    // Para datos estáticos masivos, a veces se usa un solo log o se optimiza.
+                    // Siguiendo el patrón de las entidades provistas, cada una tiene su propio AuditLog.
+                    AuditLogEntity districtAuditLog = auditService.createInitialAuditLog(AppConstants.SYSTEM_USER);
+                    districtRepository.findByNameAndCanton(districtName, canton).orElseGet(() -> {
+                        DistrictEntity newDistrict = new DistrictEntity();
+                        newDistrict.setName(districtName);
+                        newDistrict.setCanton(canton);
+                        newDistrict.setAuditLog(districtAuditLog);
+                        log.info("Distrito '{}' creado en {}.", districtName, canton.getName());
+                        return districtRepository.save(newDistrict);
+                    });
+                }
+            }
+        }
     }
 
     private void initializeGenders() {

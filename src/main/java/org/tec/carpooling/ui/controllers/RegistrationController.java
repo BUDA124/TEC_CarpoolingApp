@@ -11,7 +11,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.util.StringConverter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.tec.carpooling.bl.dto.UI_BL.LogInDTO;
 import org.tec.carpooling.bl.dto.UI_BL.UserRegistrationDTO;
 import org.tec.carpooling.bl.services.SimpleDataRetrievalService;
 import org.tec.carpooling.bl.services.UserService;
@@ -23,9 +22,7 @@ import org.tec.carpooling.da.entities.TypeOfCredentialEntity;
 import org.tec.carpooling.ui.SceneManager;
 
 import java.io.IOException;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Controller;
@@ -59,6 +56,61 @@ public class RegistrationController {
     private final Validator validator = AppConstants.getValidator();
 
     @FXML
+    public void initialize() {
+        List<GenderEntity> genderNames = simpleDataRetrievalService.getAllGenders();
+        ObservableList<GenderEntity> observableGenders = FXCollections.observableArrayList(genderNames);
+        CB_gender.setItems(FXCollections.observableArrayList(genderNames));
+        CB_gender.setConverter(new StringConverter<GenderEntity>() {
+            @Override
+            public String toString(GenderEntity gender) {
+                return gender != null ? gender.getGenderName() : "";
+            }
+
+            @Override
+            public GenderEntity fromString(String string) {
+                return observableGenders.stream()
+                        .filter(g -> g.getGenderName().equals(string))
+                        .findFirst().orElse(null);
+            }
+        });
+
+        List<CountryEntity> countryNames = simpleDataRetrievalService.getAllCountries();
+        ObservableList<CountryEntity> observableCountries = FXCollections.observableArrayList(countryNames);
+        CB_country.setItems(FXCollections.observableArrayList(countryNames));
+        CB_country.setConverter(new StringConverter<CountryEntity>() {
+            @Override
+            public String toString(CountryEntity country) {
+                return country != null ? country.getName() : "";
+            }
+
+            @Override
+            public CountryEntity fromString(String string) {
+                return observableCountries.stream()
+                        .filter(c -> c.getName().equals(string))
+                        .findFirst().orElse(null);
+            }
+        });
+
+        List<InstitutionEntity> institutionsList = simpleDataRetrievalService.getAllInstitutions();
+        ObservableList<InstitutionEntity> observableInstitutions = FXCollections.observableArrayList(institutionsList);
+        CB_institution.setItems(observableInstitutions);
+        CB_institution.setConverter(new StringConverter<InstitutionEntity>() {
+            @Override
+            public String toString(InstitutionEntity institution) {
+                return institution != null ? institution.getInstitutionName() : "";
+            }
+
+            @Override
+            public InstitutionEntity fromString(String string) {
+                return observableInstitutions.stream()
+                        .filter(institution -> institution != null && institution.getInstitutionName().equalsIgnoreCase(string))
+                        .findFirst()
+                        .orElse(null);
+            }
+        });
+    }
+
+    @FXML
     private void on_BTN_enter(ActionEvent event) {
         String firstName = TF_firstName.getText();
         String secondName = TF_secondName.getText();
@@ -66,36 +118,91 @@ public class RegistrationController {
         String secondSurname = TF_secondSurname.getText();
         String personalEmail = TF_personalEmail.getText();
         String idNumber = TF_idNumber.getText();
-        Optional<TypeOfCredentialEntity> typeOfCredentialEntityOptional = Optional.ofNullable(CB_typeId.getValue()); // Correctly named variable
-
+        Optional<TypeOfCredentialEntity> typeOfCredentialEntityOptional = Optional.ofNullable(CB_typeId.getValue());
         String username = TF_username.getText();
         String password = TF_password.getText();
         String confirmPassword = TF_confirmPassword.getText();
         String institutionalEmail = TF_institutionalEmail.getText();
 
-        // Basic check for the ComboBox selection (you might want more robust validation)
-        if (!typeOfCredentialEntityOptional.isPresent()) {
-            showAlert("Validation Error", Alert.AlertType.ERROR, "Please select a Type of Credential.");
-            return;
-        }
-        // You should also check other ComboBoxes: CB_gender, CB_country, CB_institution
-        if (CB_gender.getValue() == null) {
-            showAlert("Validation Error", Alert.AlertType.ERROR, "Please select a Gender.");
-            return;
-        }
-        if (CB_country.getValue() == null) {
-            showAlert("Validation Error", Alert.AlertType.ERROR, "Please select a Country.");
-            return;
-        }
-        if (CB_institution.getValue() == null) {
-            showAlert("Validation Error", Alert.AlertType.ERROR, "Please select an Institution.");
-            return;
+        boolean isValid = true;
+
+        if (firstName.isBlank()) {
+            System.out.println("Error: El primer nombre es obligatorio.");
+            isValid = false;
+        } else {
+            System.out.println("Primer nombre: OK");
         }
 
+        if (!secondName.isBlank()) {
+            System.out.println("Segundo nombre ingresado: " + secondName);
+        } else {
+            System.out.println("Segundo nombre: (Opcional - vacío)");
+        }
 
-        if (username.isEmpty() || password.isEmpty() /* || other fields are empty */) {
-            showAlert("There Are Blank Spaces", Alert.AlertType.ERROR, "Fill all the fields.");
-            return;
+        if (firstSurname.isBlank()) {
+            System.out.println("Error: El primer apellido es obligatorio.");
+            isValid = false;
+        } else {
+            System.out.println("Primer apellido: OK");
+        }
+
+        if (!secondSurname.isBlank()) {
+            System.out.println("Segundo apellido ingresado: " + secondSurname);
+        } else {
+            System.out.println("Segundo apellido: (Opcional - vacío)");
+        }
+
+        if (personalEmail.isBlank()) {
+            System.out.println("Error: El correo electrónico personal es obligatorio.");
+            isValid = false;
+        } else {
+              System.out.println("Correo personal: OK");
+        }
+
+        if (idNumber.isBlank()) {
+            System.out.println("Error: El número de identificación es obligatorio.");
+            isValid = false;
+        } else {
+            System.out.println("Número de ID: OK");
+        }
+
+        if (typeOfCredentialEntityOptional.isEmpty()) {
+            System.out.println("Error: Debe seleccionar un tipo de identificación.");
+            isValid = false;
+        } else {
+            System.out.println("Tipo de ID seleccionado: " + typeOfCredentialEntityOptional.get());
+        }
+
+        if (username.isBlank()) {
+            System.out.println("Error: El nombre de usuario es obligatorio.");
+            isValid = false;
+        } else {
+            System.out.println("Nombre de usuario: OK");
+        }
+
+        if (password.isBlank()) {
+            System.out.println("Error: La contraseña es obligatoria.");
+            isValid = false;
+        } else {
+            System.out.println("Contraseña: OK (cumple longitud mínima)");
+        }
+
+        if (confirmPassword.isBlank()) {
+            System.out.println("Error: La confirmación de contraseña es obligatoria.");
+            isValid = false;
+        } else {
+            System.out.println("Confirmación de contraseña: OK (coincide)");
+        }
+
+        if (institutionalEmail.isBlank()) {
+            System.out.println("Error: El correo electrónico institucional es obligatorio.");
+            isValid = false;
+        } else {
+            System.out.println("Correo institucional: OK");
+        }
+
+        if (!isValid) {
+            System.out.println("Hay errores en el formulario.");
         }
 
         try {
@@ -108,7 +215,7 @@ public class RegistrationController {
             registrationDTO.setCredentialNumber(idNumber);
             registrationDTO.setUsername(username);
             registrationDTO.setPassword(password);
-            // registrationDTO.setConfirmPassword(confirmPassword); // DTOs usually don't store confirmPassword
+
             registrationDTO.setInstitutionalEmail(institutionalEmail);
 
             // Set values from ComboBoxes
@@ -116,10 +223,6 @@ public class RegistrationController {
             registrationDTO.setNationality(CB_country.getValue());
             registrationDTO.setIdInstitution(CB_institution.getValue());
             registrationDTO.setIdTypeOfCredential(CB_typeId.getValue());
-
-
-            // Or if you stored an ID:
-            // typeOfCredentialEntityOptional.ifPresent(entity -> registrationDTO.setTypeOfCredentialId(entity.getId()));
 
 
             Set<ConstraintViolation<UserRegistrationDTO>> violations = validator.validate(registrationDTO);
@@ -157,66 +260,6 @@ public class RegistrationController {
 
         }
     }
-
-    @FXML
-    public void initialize() {
-        // Load Genders
-        List<GenderEntity> genders = simpleDataRetrievalService.getAllGenders();
-
-        CB_gender.setItems(FXCollections.observableArrayList(genders));
-
-        CB_gender.setConverter(new StringConverter<GenderEntity>() {
-            @Override
-            public String toString(GenderEntity gender) {
-                return gender != null ? gender.getGenderName() : "";
-            }
-
-            @Override
-            public GenderEntity fromString(String string) {
-                return CB_gender.getItems().stream()
-                        .filter(g -> g.getGenderName().equals(string))
-                        .findFirst().orElse(null);
-            }
-        });
-
-        List<CountryEntity> countriesList = simpleDataRetrievalService.getAllCountries();
-        ObservableList<CountryEntity> observableCountries = FXCollections.observableArrayList(countriesList);
-        CB_country.setItems(observableCountries);
-        CB_country.setConverter(new StringConverter<CountryEntity>() {
-            @Override
-            public String toString(CountryEntity country) {
-                return country != null ? country.getName() : "";
-            }
-
-            @Override
-            public CountryEntity fromString(String string) {
-                return observableCountries.stream()
-                        .filter(country -> country != null && country.getName().equalsIgnoreCase(string))
-                        .findFirst()
-                        .orElse(null); // Return null if no match is found
-            }
-        });
-
-        List<InstitutionEntity> institutionsList = simpleDataRetrievalService.getAllInstitutions();
-        ObservableList<InstitutionEntity> observableInstitutions = FXCollections.observableArrayList(institutionsList);
-
-        CB_institution.setItems(observableInstitutions);
-        CB_institution.setConverter(new StringConverter<InstitutionEntity>() {
-            @Override
-            public String toString(InstitutionEntity institution) {
-                return institution != null ? institution.getInstitutionName() : "";
-            }
-
-            @Override
-            public InstitutionEntity fromString(String string) {
-                return observableInstitutions.stream()
-                        .filter(institution -> institution != null && institution.getInstitutionName().equalsIgnoreCase(string))
-                        .findFirst()
-                        .orElse(null);
-            }
-        });
-    }
-
 
     private void showAlert(String title, Alert.AlertType alertType, String message) {
         Alert alert = new Alert(alertType);
