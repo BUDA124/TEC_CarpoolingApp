@@ -53,7 +53,6 @@ public class PersonEntity implements Identifiable<Long> {
     public PersonEntity() {
     }
 
-
     public PersonEntity(String firstName, String secondName, String firstSurname, Object profilePicture,
                         LocalDate birthdate, String nationality, InstitutionEntity institution, GenderEntity gender, AuditLogEntity auditLogEntity) {
         this.firstName = firstName;
