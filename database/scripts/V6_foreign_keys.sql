@@ -1,978 +1,262 @@
-DECLARE
-    v_index_tablespace VARCHAR2(30) := 'CARPOOLING_INDX';
+-- Switch to the target database
+USE CARPOOLING_DB;
 
-    PROCEDURE add_fk_and_index_if_missing (
-        p_table_name        IN VARCHAR2,
-        p_constraint_name   IN VARCHAR2,
-        p_fk_column         IN VARCHAR2,
-        p_ref_table         IN VARCHAR2,
-        p_ref_column        IN VARCHAR2,
-        p_index_name        IN VARCHAR2
-    ) IS
-        v_exists NUMBER;
-        l_constraint_name_upper VARCHAR2(128) := UPPER(p_constraint_name);
-        l_table_name_upper      VARCHAR2(128) := UPPER(p_table_name);
-        l_index_name_upper      VARCHAR2(128) := UPPER(p_index_name);
-    BEGIN
-        -- Check if constraint exists
-        SELECT COUNT(*)
-        INTO v_exists
-        FROM user_constraints
-        WHERE constraint_name = l_constraint_name_upper
-          AND table_name = l_table_name_upper;
+-- Drop the procedure if it already exists to allow re-creation
+DROP PROCEDURE IF EXISTS AddForeignKeyAndIndexIfNotExists;
 
-        IF v_exists = 0 THEN
-            BEGIN
-                EXECUTE IMMEDIATE '
-                ALTER TABLE ' || DBMS_ASSERT.ENQUOTE_NAME(p_table_name, FALSE) || '
-                    ADD CONSTRAINT ' || DBMS_ASSERT.ENQUOTE_NAME(p_constraint_name, FALSE) || '
-                        FOREIGN KEY (' || DBMS_ASSERT.ENQUOTE_NAME(p_fk_column, FALSE) || ')
-                            REFERENCES ' || DBMS_ASSERT.ENQUOTE_NAME(p_ref_table, FALSE) ||
-                                  ' (' || DBMS_ASSERT.ENQUOTE_NAME(p_ref_column, FALSE) || ')';
-                DBMS_OUTPUT.PUT_LINE('Constraint ' || p_constraint_name || ' added.');
-            EXCEPTION
-                WHEN OTHERS THEN
-                    DBMS_OUTPUT.PUT_LINE('Error adding constraint ' || p_constraint_name || ': ' || SQLERRM);
-            END;
-        ELSE
-            DBMS_OUTPUT.PUT_LINE('Constraint ' || p_constraint_name || ' already existed.');
-        END IF;
+DELIMITER //
 
-        -- Check if index exists
-        SELECT COUNT(*)
-        INTO v_exists
-        FROM user_indexes
-        WHERE index_name = l_index_name_upper
-          AND table_name = l_table_name_upper;
-
-        IF v_exists = 0 THEN
-            BEGIN
-                EXECUTE IMMEDIATE '
-                 CREATE INDEX ' || DBMS_ASSERT.ENQUOTE_NAME(p_index_name, FALSE) || '
-                 ON ' || DBMS_ASSERT.ENQUOTE_NAME(p_table_name, FALSE) || ' (' || DBMS_ASSERT.ENQUOTE_NAME(p_fk_column, FALSE) || ')
-                 TABLESPACE ' || DBMS_ASSERT.ENQUOTE_NAME(v_index_tablespace, FALSE);
-                DBMS_OUTPUT.PUT_LINE('Index ' || p_index_name || ' created in tablespace ' || v_index_tablespace || '.');
-            EXCEPTION
-                WHEN OTHERS THEN
-                    DBMS_OUTPUT.PUT_LINE('Error creating index ' || p_index_name || ': ' || SQLERRM);
-            END;
-        ELSE
-            DBMS_OUTPUT.PUT_LINE('Index ' || p_index_name || ' already existed.');
-        END IF;
-
-    EXCEPTION
-        WHEN OTHERS THEN
-            -- Catch potential errors in the SELECT statements or parameter handling
-            DBMS_OUTPUT.PUT_LINE('Unhandled error in procedure for ' || p_constraint_name || ' or ' || p_index_name || ': ' || SQLERRM);
-        -- RAISE;
-    END add_fk_and_index_if_missing;
-
+CREATE PROCEDURE AddForeignKeyAndIndexIfNotExists (
+    IN p_table_name        VARCHAR(128),
+    IN p_constraint_name   VARCHAR(128),
+    IN p_fk_column         VARCHAR(128),
+    IN p_ref_table         VARCHAR(128),
+    IN p_ref_column        VARCHAR(128),
+    IN p_index_name        VARCHAR(128)
+)
 BEGIN
-    DBMS_OUTPUT.ENABLE(NULL); -- Enable output buffer
-
-    --Table DailyReport
-    add_fk_and_index_if_missing(
-            p_table_name        => 'DAILYREPORT',
-            p_constraint_name   => 'FK_DAILYREPORT_INSTITUTION',
-            p_fk_column         => 'IDINSTITUTION',
-            p_ref_table         => 'INSTITUTION',
-            p_ref_column        => 'ID',
-            p_index_name        => 'IX_DAILYREPORT_IDINSTITUTION'
-    );
-
-    add_fk_and_index_if_missing(
-            p_table_name        => 'DAILYREPORT',
-            p_constraint_name   => 'FK_DAILYREPORT_AUDITLOG',
-            p_fk_column         => 'IDAUDITLOG',
-            p_ref_table         => 'AUDITLOG',
-            p_ref_column        => 'ID',
-            p_index_name        => 'IX_DAILYREPORT_IDAUDITLOG'
-    );
-
-    -- Table Institution
-    add_fk_and_index_if_missing(
-            p_table_name        => 'INSTITUTION',
-            p_constraint_name   => 'FK_INST_AUDITLOG',
-            p_fk_column         => 'IDAUDITLOG',
-            p_ref_table         => 'AUDITLOG',
-            p_ref_column        => 'ID',
-            p_index_name        => 'IX_INST_AUDITLOG'
-    );
-
-    -- Table ContactPhoneNumber
-    add_fk_and_index_if_missing(
-            p_table_name        => 'CONTACTPHONENUMBER',
-            p_constraint_name   => 'FK_CPN_INSTITUTION',
-            p_fk_column         => 'IDINSTITUTION',
-            p_ref_table         => 'INSTITUTION',
-            p_ref_column        => 'ID',
-            p_index_name        => 'IX_CPN_INSTITUTION'
-    );
-
-    add_fk_and_index_if_missing(
-            p_table_name        => 'CONTACTPHONENUMBER',
-            p_constraint_name   => 'FK_CPN_AUDITLOG',
-            p_fk_column         => 'IDAUDITLOG',
-            p_ref_table         => 'AUDITLOG',
-            p_ref_column        => 'ID',
-            p_index_name        => 'IX_CPN_AUDITLOG'
-    );
-
-    -- Table ContactEmail
-    add_fk_and_index_if_missing(
-            p_table_name        => 'CONTACTEMAIL',
-            p_constraint_name   => 'FK_CE_INSTITUTION',
-            p_fk_column         => 'IDINSTITUTION',
-            p_ref_table         => 'INSTITUTION',
-            p_ref_column        => 'ID',
-            p_index_name        => 'IX_CE_INSTITUTION'
-    );
-
-    add_fk_and_index_if_missing(
-            p_table_name        => 'CONTACTEMAIL',
-            p_constraint_name   => 'FK_CE_AUDITLOG',
-            p_fk_column         => 'IDAUDITLOG',
-            p_ref_table         => 'AUDITLOG',
-            p_ref_column        => 'ID',
-            p_index_name        => 'IX_CE_AUDITLOG'
-    );
-
-    -- Table Person
-    add_fk_and_index_if_missing(
-            p_table_name        => 'PERSON',
-            p_constraint_name   => 'FK_PERSON_INSTITUTION',
-            p_fk_column         => 'IDINSTITUTION',
-            p_ref_table         => 'INSTITUTION',
-            p_ref_column        => 'ID',
-            p_index_name        => 'IX_PERSON_INSTITUTION'
-    );
-
-    add_fk_and_index_if_missing(
-            p_table_name        => 'PERSON',
-            p_constraint_name   => 'FK_PERSON_AUDITLOG',
-            p_fk_column         => 'IDAUDITLOG',
-            p_ref_table         => 'AUDITLOG',
-            p_ref_column        => 'ID',
-            p_index_name        => 'IX_PERSON_AUDITLOG'
-    );
-
-    add_fk_and_index_if_missing(
-            p_table_name        => 'PERSON',
-            p_constraint_name   => 'FK_PERSON_GENDER',
-            p_fk_column         => 'IDGENDER',
-            p_ref_table         => 'GENDER',
-            p_ref_column        => 'ID',
-            p_index_name        => 'IX_PERSON_AUDITLOG'
-    );
-
-    -- Table PhoneNumber
-    add_fk_and_index_if_missing(
-            p_table_name        => 'PHONENUMBER',
-            p_constraint_name   => 'FK_PHONENUMBER_PERSON',
-            p_fk_column         => 'IDPERSON',
-            p_ref_table         => 'PERSON',
-            p_ref_column        => 'ID',
-            p_index_name        => 'IX_PHONENUMBER_PERSON'
-    );
-
-    add_fk_and_index_if_missing(
-            p_table_name        => 'PHONENUMBER',
-            p_constraint_name   => 'FK_PHONENUMBER_AUDITLOG',
-            p_fk_column         => 'IDAUDITLOG',
-            p_ref_table         => 'AUDITLOG',
-            p_ref_column        => 'ID',
-            p_index_name        => 'IX_PHONENUMBER_AUDITLOG'
-    );
-
-    -- Table Email
-    add_fk_and_index_if_missing(
-            p_table_name        => 'EMAIL',
-            p_constraint_name   => 'FK_EMAIL_PERSON',
-            p_fk_column         => 'IDPERSON',
-            p_ref_table         => 'PERSON',
-            p_ref_column        => 'ID',
-            p_index_name        => 'IX_EMAIL_PERSON'
-    );
-
-    add_fk_and_index_if_missing(
-            p_table_name        => 'EMAIL',
-            p_constraint_name   => 'FK_EMAIL_AUDITLOG',
-            p_fk_column         => 'IDAUDITLOG',
-            p_ref_table         => 'AUDITLOG',
-            p_ref_column        => 'ID',
-            p_index_name        => 'IX_EMAIL_AUDITLOG'
-    );
-
-    -- Table Credential
-    add_fk_and_index_if_missing(
-            p_table_name        => 'CREDENTIAL',
-            p_constraint_name   => 'FK_CRED_PERSON',
-            p_fk_column         => 'IDPERSON',
-            p_ref_table         => 'PERSON',
-            p_ref_column        => 'ID',
-            p_index_name        => 'IX_CRED_PERSON'
-    );
-
-    add_fk_and_index_if_missing(
-            p_table_name        => 'CREDENTIAL',
-            p_constraint_name   => 'FK_CRED_AUDITLOG',
-            p_fk_column         => 'IDAUDITLOG',
-            p_ref_table         => 'AUDITLOG',
-            p_ref_column        => 'ID',
-            p_index_name        => 'IX_CRED_AUDITLOG'
-    );
-
-    -- Table TypeOfCredential
-    add_fk_and_index_if_missing(
-            p_table_name        => 'TYPEOFCREDENTIAL',
-            p_constraint_name   => 'FK_TOC_AUDITLOG',
-            p_fk_column         => 'IDAUDITLOG',
-            p_ref_table         => 'AUDITLOG',
-            p_ref_column        => 'ID',
-            p_index_name        => 'IX_TOC_AUDITLOG'
-    );
-
-    -- Table Gender
-    add_fk_and_index_if_missing(
-            p_table_name        => 'GENDER',
-            p_constraint_name   => 'FK_GENDER_AUDITLOG',
-            p_fk_column         => 'IDAUDITLOG',
-            p_ref_table         => 'AUDITLOG',
-            p_ref_column        => 'ID',
-            p_index_name        => 'IX_GENDER_AUDITLOG'
-    );
-
-    -- Table PERSONALUSER
-    add_fk_and_index_if_missing(
-            p_table_name        => 'PERSONALUSER',
-            p_constraint_name   => 'FK_USER_PERSON',
-            p_fk_column         => 'IDPERSON',
-            p_ref_table         => 'PERSON',
-            p_ref_column        => 'ID',
-            p_index_name        => 'IX_USER_PERSON'
-    );
-
-    add_fk_and_index_if_missing(
-            p_table_name        => 'PERSONALUSER',
-            p_constraint_name   => 'FK_USER_AUDITLOG',
-            p_fk_column         => 'IDAUDITLOG',
-            p_ref_table         => 'AUDITLOG',
-            p_ref_column        => 'ID',
-            p_index_name        => 'IX_USER_AUDITLOG'
-    );
-
-    add_fk_and_index_if_missing(
-            p_table_name        => 'PERSONALUSER',
-            p_constraint_name   => 'FK_USER_USERSTATUS',
-            p_fk_column         => 'IDUSERSTATUS',
-            p_ref_table         => 'USERSTATUS',
-            p_ref_column        => 'ID',
-            p_index_name        => 'IX_USER_USERSTATUS'
-    );
-
-    -- Table USERSTATUS
-    add_fk_and_index_if_missing(
-            p_table_name        => 'USERSTATUS',
-            p_constraint_name   => 'FK_USERSTATUS_AUDITLOG',
-            p_fk_column         => 'IDAUDITLOG',
-            p_ref_table         => 'AUDITLOG',
-            p_ref_column        => 'ID',
-            p_index_name        => 'IX_USERSTATUS_AUDITLOG'
-    );
-
-    -- Table InstitutionalEmail
-    add_fk_and_index_if_missing(
-            p_table_name        => 'INSTITUTIONALEMAIL',
-            p_constraint_name   => 'FK_INSTEMAIL_USER',
-            p_fk_column         => 'IDUSER',
-            p_ref_table         => 'PERSONALUSER',
-            p_ref_column        => 'ID',
-            p_index_name        => 'IX_INSTEMAIL_USER'
-    );
-
-    add_fk_and_index_if_missing(
-            p_table_name        => 'INSTITUTIONALEMAIL',
-            p_constraint_name   => 'FK_INSTEMAIL_AUDITLOG',
-            p_fk_column         => 'IDAUDITLOG',
-            p_ref_table         => 'AUDITLOG',
-            p_ref_column        => 'ID',
-            p_index_name        => 'IX_INSTEMAIL_AUDITLOG'
-    );
-
-    -- Table AccessStatus
-    add_fk_and_index_if_missing(
-            p_table_name        => 'ACCESSSTATUS',
-            p_constraint_name   => 'FK_ACCSTS_ADMIN',
-            p_fk_column         => 'IDADMINISTRATOR',
-            p_ref_table         => 'ADMINISTRATOR',
-            p_ref_column        => 'IDPERSON',
-            p_index_name        => 'IX_ACCSTS_ADMIN'
-    );
-    add_fk_and_index_if_missing(
-            p_table_name        => 'ACCESSSTATUS',
-            p_constraint_name   => 'FK_ACCSTS_AUDITLOG',
-            p_fk_column         => 'IDAUDITLOG',
-            p_ref_table         => 'AUDITLOG',
-            p_ref_column        => 'ID',
-            p_index_name        => 'IX_ACCSTS_AUDITLOG'
-    );
-
-    -- Table Driver
-    add_fk_and_index_if_missing(
-            p_table_name        => 'DRIVER',
-            p_constraint_name   => 'FK_DRIVER_PERSON',
-            p_fk_column         => 'IDPERSON',
-            p_ref_table         => 'PERSON',
-            p_ref_column        => 'ID',
-            p_index_name        => 'IX_DRIVER_PERSON'
-    );
-
-    add_fk_and_index_if_missing(
-            p_table_name        => 'DRIVER',
-            p_constraint_name   => 'FK_DRIVER_AUDITLOG',
-            p_fk_column         => 'IDAUDITLOG',
-            p_ref_table         => 'AUDITLOG',
-            p_ref_column        => 'ID',
-            p_index_name        => 'IX_DRIVER_AUDITLOG'
-    );
-
-
-    -- Table Vehicle
-    add_fk_and_index_if_missing(
-            p_table_name        => 'VEHICLE',
-            p_constraint_name   => 'FK_VEHICLE_DRIVER',
-            p_fk_column         => 'IDDRIVER',
-            p_ref_table         => 'DRIVER',
-            p_ref_column        => 'IDPERSON',
-            p_index_name        => 'IX_VEHICLE_DRIVER'
-    );
-
-    add_fk_and_index_if_missing(
-            p_table_name        => 'VEHICLE',
-            p_constraint_name   => 'FK_VEHICLE_AUDITLOG',
-            p_fk_column         => 'IDAUDITLOG',
-            p_ref_table         => 'AUDITLOG',
-            p_ref_column        => 'ID',
-            p_index_name        => 'IX_VEHICLE_AUDITLOG'
-    );
-
-    -- Table PASSENGER
-    add_fk_and_index_if_missing(
-            p_table_name        => 'PASSENGER',
-            p_constraint_name   => 'FK_PASSENGER_PERSON',
-            p_fk_column         => 'IDPERSON',
-            p_ref_table         => 'PERSON',
-            p_ref_column        => 'ID',
-            p_index_name        => 'IX_PASSENGER_PERSON'
-    );
-
-    add_fk_and_index_if_missing(
-            p_table_name        => 'PASSENGER',
-            p_constraint_name   => 'FK_PASSENGER_AUDITLOG',
-            p_fk_column         => 'IDAUDITLOG',
-            p_ref_table         => 'AUDITLOG',
-            p_ref_column        => 'ID',
-            p_index_name        => 'IX_PASSENGER_AUDITLOG'
-    );
-
-    -- Table Trip
-    add_fk_and_index_if_missing(
-            p_table_name        => 'TRIP',
-            p_constraint_name   => 'FK_TRIP_DRIVER',
-            p_fk_column         => 'IDDRIVER',
-            p_ref_table         => 'DRIVER',
-            p_ref_column        => 'IDPERSON',
-            p_index_name        => 'IX_TRIP_DRIVER'
-    );
-
-    add_fk_and_index_if_missing(
-            p_table_name        => 'TRIP',
-            p_constraint_name   => 'FK_TRIP_PRICESTATUS',
-            p_fk_column         => 'IDPRICESTATUS',
-            p_ref_table         => 'PRICESTATUS',
-            p_ref_column        => 'ID',
-            p_index_name        => 'IX_TRIP_PRICESTATUS'
-    );
-
-    add_fk_and_index_if_missing(
-            p_table_name        => 'TRIP',
-            p_constraint_name   => 'FK_TRIP_VEHICLE',
-            p_fk_column         => 'IDVEHICLE',
-            p_ref_table         => 'VEHICLE',
-            p_ref_column        => 'ID',
-            p_index_name        => 'IX_TRIP_VEHICLE'
-    );
-
-    add_fk_and_index_if_missing(
-            p_table_name        => 'TRIP',
-            p_constraint_name   => 'FK_TRIP_AUDITLOG',
-            p_fk_column         => 'IDAUDITLOG',
-            p_ref_table         => 'AUDITLOG',
-            p_ref_column        => 'ID',
-            p_index_name        => 'IX_TRIP_AUDITLOG'
-    );
-
-    -- Table PRICESTATUS
-    add_fk_and_index_if_missing(
-            p_table_name        => 'PRICESTATUS',
-            p_constraint_name   => 'FK_PRICESTATUS_AUDITLOG',
-            p_fk_column         => 'IDAUDITLOG',
-            p_ref_table         => 'AUDITLOG',
-            p_ref_column        => 'ID',
-            p_index_name        => 'IX_PRICESTATUS_AUDITLOG'
-    );
-
-    -- Table TripStatus
-    add_fk_and_index_if_missing(
-            p_table_name        => 'TRIPSTATUS',
-            p_constraint_name   => 'FK_TRIPSTATUS_AUDITLOG',
-            p_fk_column         => 'IDAUDITLOG',
-            p_ref_table         => 'AUDITLOG',
-            p_ref_column        => 'ID',
-            p_index_name        => 'IX_TRIPSTATUS_AUDITLOG'
-    );
-
-    -- Table Stop
-    add_fk_and_index_if_missing(
-            p_table_name        => 'STOP',
-            p_constraint_name   => 'FK_STOP_DISTRICT',
-            p_fk_column         => 'IDDISTRICT',
-            p_ref_table         => 'DISTRICT',
-            p_ref_column        => 'ID',
-            p_index_name        => 'IX_STOP_DISTRICT'
-    );
-
-    add_fk_and_index_if_missing(
-            p_table_name        => 'STOP',
-            p_constraint_name   => 'FK_STOP_STARTTRIP', -- Example name
-            p_fk_column         => 'IDSTARTRIP',
-            p_ref_table         => 'TRIP',
-            p_ref_column        => 'ID',
-            p_index_name        => 'IX_STOP_STARTTRIP'  -- Example name
-    );
-    add_fk_and_index_if_missing(
-            p_table_name        => 'STOP',
-            p_constraint_name   => 'FK_STOP_ENDTRIP',   -- Example name
-            p_fk_column         => 'IDENDTRIP',
-            p_ref_table         => 'TRIP',
-            p_ref_column        => 'ID',
-            p_index_name        => 'IX_STOP_ENDTRIP'    -- Example name
-    );
-
-    add_fk_and_index_if_missing(
-            p_table_name        => 'STOP',
-            p_constraint_name   => 'FK_STOP_AUDITLOG',
-            p_fk_column         => 'IDAUDITLOG',
-            p_ref_table         => 'AUDITLOG',
-            p_ref_column        => 'ID',
-            p_index_name        => 'IX_STOP_AUDITLOG'
-    );
-
-    -- Table CoordinateLocation
-    add_fk_and_index_if_missing(
-            p_table_name        => 'COORDINATELOCATION',
-            p_constraint_name   => 'FK_COORDLOC_AUDITLOG',
-            p_fk_column         => 'IDAUDITLOG',
-            p_ref_table         => 'AUDITLOG',
-            p_ref_column        => 'ID',
-            p_index_name        => 'IX_COORDLOC_AUDITLOG'
-    );
-
-    -- Table District
-    add_fk_and_index_if_missing(
-            p_table_name        => 'DISTRICT',
-            p_constraint_name   => 'FK_DISTRICT_CANTON',
-            p_fk_column         => 'IDCANTON',
-            p_ref_table         => 'CANTON',
-            p_ref_column        => 'ID',
-            p_index_name        => 'IX_DISTRICT_CANTON'
-    );
-
-    add_fk_and_index_if_missing(
-            p_table_name        => 'DISTRICT',
-            p_constraint_name   => 'FK_DISTRICT_AUDITLOG',
-            p_fk_column         => 'IDAUDITLOG',
-            p_ref_table         => 'AUDITLOG',
-            p_ref_column        => 'ID',
-            p_index_name        => 'IX_DISTRICT_AUDITLOG'
-    );
-
-    -- Table Canton
-    add_fk_and_index_if_missing(
-            p_table_name        => 'CANTON',
-            p_constraint_name   => 'FK_CANTON_PROVINCE',
-            p_fk_column         => 'IDPROVINCE',
-            p_ref_table         => 'PROVINCE',
-            p_ref_column        => 'ID',
-            p_index_name        => 'IX_CANTON_PROVINCE'
-    );
-
-    add_fk_and_index_if_missing(
-            p_table_name        => 'CANTON',
-            p_constraint_name   => 'FK_CANTON_AUDITLOG',
-            p_fk_column         => 'IDAUDITLOG',
-            p_ref_table         => 'AUDITLOG',
-            p_ref_column        => 'ID',
-            p_index_name        => 'IX_CANTON_AUDITLOG'
-    );
-
-    -- Table Province
-    add_fk_and_index_if_missing(
-            p_table_name        => 'PROVINCE',
-            p_constraint_name   => 'FK_PROVINCE_COUNTRY',
-            p_fk_column         => 'IDCOUNTRY',
-            p_ref_table         => 'COUNTRY',
-            p_ref_column        => 'ID',
-            p_index_name        => 'IX_PROVINCE_COUNTRY'
-    );
-
-    add_fk_and_index_if_missing(
-            p_table_name        => 'PROVINCE',
-            p_constraint_name   => 'FK_PROVINCE_AUDITLOG',
-            p_fk_column         => 'IDAUDITLOG',
-            p_ref_table         => 'AUDITLOG',
-            p_ref_column        => 'ID',
-            p_index_name        => 'IX_PROVINCE_AUDITLOG'
-    );
-
-    -- Table Country
-    add_fk_and_index_if_missing(
-            p_table_name        => 'COUNTRY',
-            p_constraint_name   => 'FK_COUNTRY_AUDITLOG',
-            p_fk_column         => 'IDAUDITLOG',
-            p_ref_table         => 'AUDITLOG',
-            p_ref_column        => 'ID',
-            p_index_name        => 'IX_COUNTRY_AUDITLOG'
-    );
-
-    -- Table PaymentMethod
-    add_fk_and_index_if_missing(
-            p_table_name        => 'PAYMENTMETHOD',
-            p_constraint_name   => 'FK_PAYMETHOD_AUDITLOG',
-            p_fk_column         => 'IDAUDITLOG',
-            p_ref_table         => 'AUDITLOG',
-            p_ref_column        => 'ID',
-            p_index_name        => 'IX_PAYMETHOD_AUDITLOG'
-    );
-
-    -- Table Parameter
-    add_fk_and_index_if_missing(
-            p_table_name        => 'PARAMETER',
-            p_constraint_name   => 'FK_PARAMETER_AUDITLOG',
-            p_fk_column         => 'IDAUDITLOG',
-            p_ref_table         => 'AUDITLOG',
-            p_ref_column        => 'ID',
-            p_index_name        => 'IX_PARAMETER_AUDITLOG'
-    );
-
-    -- Table LogBook
-    add_fk_and_index_if_missing(
-            p_table_name        => 'LOGBOOK',
-            p_constraint_name   => 'FK_LOGBOOK_AUDITLOG',
-            p_fk_column         => 'IDAUDITLOG',
-            p_ref_table         => 'AUDITLOG',
-            p_ref_column        => 'ID',
-            p_index_name        => 'IX_LOGBOOK_AUDITLOG'
-    );
-
-    -- Table EntityModified
-    add_fk_and_index_if_missing(
-            p_table_name        => 'ENTITYMODIFIED',
-            p_constraint_name   => 'FK_ENTMOD_AUDITLOG',
-            p_fk_column         => 'IDAUDITLOG',
-            p_ref_table         => 'AUDITLOG',
-            p_ref_column        => 'ID',
-            p_index_name        => 'IX_ENTMOD_AUDITLOG'
-    );
-
-    -- Table AttributeModified
-    add_fk_and_index_if_missing(
-            p_table_name        => 'ATTRIBUTEMODIFIED',
-            p_constraint_name   => 'FK_ATTRMOD_ENTMOD',
-            p_fk_column         => 'IDENTITYMODIFIED',
-            p_ref_table         => 'ENTITYMODIFIED',
-            p_ref_column        => 'ID',
-            p_index_name        => 'IX_ATTRMOD_ENTMOD'
-    );
-
-    add_fk_and_index_if_missing(
-            p_table_name        => 'ATTRIBUTEMODIFIED',
-            p_constraint_name   => 'FK_ATTRMOD_AUDITLOG',
-            p_fk_column         => 'IDAUDITLOG',
-            p_ref_table         => 'AUDITLOG',
-            p_ref_column        => 'ID',
-            p_index_name        => 'IX_ATTRMOD_AUDITLOG'
-    );
-
-    --------------------------
-    -- FK De tablas NXN --
-    --------------------------
-
-    --Table TripReportDailyReport
-    add_fk_and_index_if_missing(
-            p_table_name        => 'TRIPREPORTDAILYREPORT',
-            p_constraint_name   => 'FK_TRPDR_TRIP',
-            p_fk_column         => 'IDTRIP',
-            p_ref_table         => 'TRIP',
-            p_ref_column        => 'ID',
-            p_index_name        => 'IX_TRPDR_TRIP'
-    );
-
-    add_fk_and_index_if_missing(
-            p_table_name        => 'TRIPREPORTDAILYREPORT',
-            p_constraint_name   => 'FK_TRPDR_DAILYREPORT',
-            p_fk_column         => 'IDDAILYREPORT',
-            p_ref_table         => 'DAILYREPORT',
-            p_ref_column        => 'ID',
-            p_index_name        => 'IX_TRPDR_DAILYREPORT'
-    );
-
-    add_fk_and_index_if_missing(
-            p_table_name        => 'TRIPREPORTDAILYREPORT',
-            p_constraint_name   => 'FK_TRPDR_AUDITLOG',
-            p_fk_column         => 'IDAUDITLOG',
-            p_ref_table         => 'AUDITLOG',
-            p_ref_column        => 'ID',
-            p_index_name        => 'IX_TRPDR_AUDITLOG'
-    );
-
-    --Tabla Administrator
-    add_fk_and_index_if_missing(
-            p_table_name        => 'ADMINISTRATOR',
-            p_constraint_name   => 'FK_ADMIN_PERSON',
-            p_fk_column         => 'IDPERSON',
-            p_ref_table         => 'PERSON',
-            p_ref_column        => 'ID',
-            p_index_name        => 'IX_ADMIN_PERSON'
-    );
-
-    add_fk_and_index_if_missing(
-            p_table_name        => 'ADMINISTRATOR',
-            p_constraint_name   => 'FK_ADMIN_AUDITLOG',
-            p_fk_column         => 'IDAUDITLOG',
-            p_ref_table         => 'AUDITLOG',
-            p_ref_column        => 'ID',
-            p_index_name        => 'IX_ADMIN_AUDITLOG'
-    );
-
-    --Tabla AdminManagesInstitution
-    add_fk_and_index_if_missing(
-            p_table_name        => 'ADMINMANAGEINSTITUTION',
-            p_constraint_name   => 'FK_ADMNINS_ADMIN',
-            p_fk_column         => 'IDPERSON',
-            p_ref_table         => 'ADMINISTRATOR',
-            p_ref_column        => 'IDPERSON',
-            p_index_name        => 'IX_ADMNINS_PERSON'
-    );
-
-    add_fk_and_index_if_missing(
-            p_table_name        => 'ADMINMANAGEINSTITUTION',
-            p_constraint_name   => 'FK_ADMNINS_INST',
-            p_fk_column         => 'IDINSTITUTION',
-            p_ref_table         => 'INSTITUTION',
-            p_ref_column        => 'ID',
-            p_index_name        => 'IX_ADMNINS_INST'
-    );
-
-    add_fk_and_index_if_missing(
-            p_table_name        => 'ADMINMANAGEINSTITUTION',
-            p_constraint_name   => 'FK_ADMNINS_AUDITLOG',
-            p_fk_column         => 'IDAUDITLOG',
-            p_ref_table         => 'AUDITLOG',
-            p_ref_column        => 'ID',
-            p_index_name        => 'IX_ADMNINS_AUDITLOG'
-    );
-
-    -- Table AdminReceiveDailyReport
-    add_fk_and_index_if_missing(
-            p_table_name        => 'ADMINRECEIVEDAILYREPORT',
-            p_constraint_name   => 'FK_ADRDR_ADMIN',
-            p_fk_column         => 'IDADMINISTRATOR',
-            p_ref_table         => 'ADMINISTRATOR',
-            p_ref_column        => 'IDPERSON',
-            p_index_name        => 'IX_ADRDR_ADMIN'
-    );
-
-    add_fk_and_index_if_missing(
-            p_table_name        => 'ADMINRECEIVEDAILYREPORT',
-            p_constraint_name   => 'FK_ADRDR_DAILYREPORT',
-            p_fk_column         => 'IDDAILYREPORT',
-            p_ref_table         => 'DAILYREPORT',
-            p_ref_column        => 'ID',
-            p_index_name        => 'IX_ADRDR_DAILYREPORT'
-    );
-
-    add_fk_and_index_if_missing(
-            p_table_name        => 'ADMINRECEIVEDAILYREPORT',
-            p_constraint_name   => 'FK_ADRDR_AUDITLOG',
-            p_fk_column         => 'IDAUDITLOG',
-            p_ref_table         => 'AUDITLOG',
-            p_ref_column        => 'ID',
-            p_index_name        => 'IX_ADRDR_AUDITLOG'
-    );
-
-    -- Table CredentialHasTypeOfCredential
-    add_fk_and_index_if_missing(
-            p_table_name        => 'CREDENTIALHASTYPEOFCREDENTIAL',
-            p_constraint_name   => 'FK_CHTC_CREDENTIAL',
-            p_fk_column         => 'IDCREDENTIAL',
-            p_ref_table         => 'CREDENTIAL',
-            p_ref_column        => 'ID',
-            p_index_name        => 'IX_CHTC_CREDENTIAL'
-    );
-
-    add_fk_and_index_if_missing(
-            p_table_name        => 'CREDENTIALHASTYPEOFCREDENTIAL',
-            p_constraint_name   => 'FK_CHTC_TYPEOFCREDENTIAL',
-            p_fk_column         => 'IDTYPEOFCREDENTIAL',
-            p_ref_table         => 'TYPEOFCREDENTIAL',
-            p_ref_column        => 'ID',
-            p_index_name        => 'IX_CHTC_TYPEOFCREDENTIAL'
-    );
-
-    add_fk_and_index_if_missing(
-            p_table_name        => 'CREDENTIALHASTYPEOFCREDENTIAL',
-            p_constraint_name   => 'FK_CHTC_AUDITLOG',
-            p_fk_column         => 'IDAUDITLOG',
-            p_ref_table         => 'AUDITLOG',
-            p_ref_column        => 'ID',
-            p_index_name        => 'IX_CHTC_AUDITLOG'
-    );
-
-    --Table PASSENGERQUERYTRIP
-    add_fk_and_index_if_missing(
-            p_table_name        => 'PASSENGERQUERYTRIP',
-            p_constraint_name   => 'FK_PQTRIP_USER',   -- Name references conceptual 'User'
-            p_fk_column         => 'IDUSER',
-            p_ref_table         => 'PERSONALUSER',
-            p_ref_column        => 'ID',
-            p_index_name        => 'IX_PQTRIP_USER'    -- Name references conceptual 'User'
-    );
-
-    add_fk_and_index_if_missing(
-            p_table_name        => 'PASSENGERQUERYTRIP',
-            p_constraint_name   => 'FK_PQTRIP_TRIP',
-            p_fk_column         => 'IDTRIP',
-            p_ref_table         => 'TRIP',
-            p_ref_column        => 'ID',
-            p_index_name        => 'IX_PQTRIP_TRIP'
-    );
-
-    add_fk_and_index_if_missing(
-            p_table_name        => 'PASSENGERQUERYTRIP',
-            p_constraint_name   => 'FK_PQTRIP_AUDITLOG',
-            p_fk_column         => 'IDAUDITLOG',
-            p_ref_table         => 'AUDITLOG',
-            p_ref_column        => 'ID',
-            p_index_name        => 'IX_PQTRIP_AUDITLOG'
-    );
-
-    --Table PASSENGERJOINTRIP
-    add_fk_and_index_if_missing(
-            p_table_name        => 'PASSENGERJOINTRIP',
-            p_constraint_name   => 'FK_PJTRIP_USER',  -- Name references conceptual 'User'
-            p_fk_column         => 'IDUSER',
-            p_ref_table         => 'PERSONALUSER',
-            p_ref_column        => 'ID',
-            p_index_name        => 'IX_PJTRIP_USER'   -- Name references conceptual 'User'
-    );
-
-    add_fk_and_index_if_missing(
-            p_table_name        => 'PASSENGERJOINTRIP',
-            p_constraint_name   => 'FK_PJTRIP_TRIP',
-            p_fk_column         => 'IDTRIP',
-            p_ref_table         => 'TRIP',
-            p_ref_column        => 'ID',
-            p_index_name        => 'IX_PJTRIP_TRIP'
-    );
-
-    add_fk_and_index_if_missing(
-            p_table_name        => 'PASSENGERJOINTRIP',
-            p_constraint_name   => 'FK_PJTRIP_AUDITLOG',
-            p_fk_column         => 'IDAUDITLOG',
-            p_ref_table         => 'AUDITLOG',
-            p_ref_column        => 'ID',
-            p_index_name        => 'IX_PJTRIP_AUDITLOG'
-    );
-
-    --Table TripHasTripStatus
-    add_fk_and_index_if_missing(
-            p_table_name        => 'TRIPHASTRIPSTATUS',
-            p_constraint_name   => 'FK_THTS_TRIP',
-            p_fk_column         => 'IDTRIP',
-            p_ref_table         => 'TRIP',
-            p_ref_column        => 'ID',
-            p_index_name        => 'IX_THTS_TRIP'
-    );
-
-    add_fk_and_index_if_missing(
-            p_table_name        => 'TRIPHASTRIPSTATUS',
-            p_constraint_name   => 'FK_THTS_TRIPSTATUS',
-            p_fk_column         => 'IDTRIPSTATUS',
-            p_ref_table         => 'TRIPSTATUS',
-            p_ref_column        => 'ID',
-            p_index_name        => 'IX_THTS_TRIPSTATUS'
-    );
-
-    add_fk_and_index_if_missing(
-            p_table_name        => 'TRIPHASTRIPSTATUS',
-            p_constraint_name   => 'FK_THTS_AUDITLOG',
-            p_fk_column         => 'IDAUDITLOG',
-            p_ref_table         => 'AUDITLOG',
-            p_ref_column        => 'ID',
-            p_index_name        => 'IX_THTS_AUDITLOG'
-    );
-
-    --Table StopHasCoordinateLocation
-    add_fk_and_index_if_missing(
-            p_table_name        => 'STOPHASCOORDINATELOCATION',
-            p_constraint_name   => 'FK_SHCL_STOP',
-            p_fk_column         => 'IDSTOP',
-            p_ref_table         => 'STOP',
-            p_ref_column        => 'ID',
-            p_index_name        => 'IX_SHCL_STOP'
-    );
-
-    add_fk_and_index_if_missing(
-            p_table_name        => 'STOPHASCOORDINATELOCATION',
-            p_constraint_name   => 'FK_SHCL_COORDLOC',
-            p_fk_column         => 'IDCOORDINATELOCATION',
-            p_ref_table         => 'COORDINATELOCATION',
-            p_ref_column        => 'ID',
-            p_index_name        => 'IX_SHCL_COORDLOC'
-    );
-
-    add_fk_and_index_if_missing(
-            p_table_name        => 'STOPHASCOORDINATELOCATION',
-            p_constraint_name   => 'FK_SHCL_AUDITLOG',
-            p_fk_column         => 'IDAUDITLOG',
-            p_ref_table         => 'AUDITLOG',
-            p_ref_column        => 'ID',
-            p_index_name        => 'IX_SHCL_AUDITLOG'
-    );
-
-    --Table TripHasStopHasPaymentMethod
-    add_fk_and_index_if_missing(
-            p_table_name        => 'TRIPHASSTOPHASPAYMENTMETHOD',
-            p_constraint_name   => 'FK_THSHPM_PAYMETHOD',
-            p_fk_column         => 'IDPAYMENTMETHOD',
-            p_ref_table         => 'PAYMENTMETHOD',
-            p_ref_column        => 'ID',
-            p_index_name        => 'IX_THSHPM_PAYMETHOD'
-    );
-
-    add_fk_and_index_if_missing(
-            p_table_name        => 'TRIPHASSTOPHASPAYMENTMETHOD',
-            p_constraint_name   => 'FK_THSHPM_TRIP',
-            p_fk_column         => 'IDTRIP',
-            p_ref_table         => 'TRIP',
-            p_ref_column        => 'ID',
-            p_index_name        => 'IX_THSHPM_TRIP'
-    );
-
-    add_fk_and_index_if_missing(
-            p_table_name        => 'TRIPHASSTOPHASPAYMENTMETHOD',
-            p_constraint_name   => 'FK_THSHPM_STOP',
-            p_fk_column         => 'IDSTOP',
-            p_ref_table         => 'STOP',
-            p_ref_column        => 'ID',
-            p_index_name        => 'IX_THSHPM_STOP'
-    );
-
-    add_fk_and_index_if_missing(
-            p_table_name        => 'TRIPHASSTOPHASPAYMENTMETHOD',
-            p_constraint_name   => 'FK_THSHPM_AUDITLOG',
-            p_fk_column         => 'IDAUDITLOG',
-            p_ref_table         => 'AUDITLOG',
-            p_ref_column        => 'ID',
-            p_index_name        => 'IX_THSHPM_AUDITLOG'
-    );
-
-    --Table TripHasStop
-    add_fk_and_index_if_missing(
-            p_table_name        => 'TRIPHASSTOP',
-            p_constraint_name   => 'FK_THS_TRIP',
-            p_fk_column         => 'IDTRIP',
-            p_ref_table         => 'TRIP',
-            p_ref_column        => 'ID',
-            p_index_name        => 'IX_THS_TRIP'
-    );
-
-    add_fk_and_index_if_missing(
-            p_table_name        => 'TRIPHASSTOP',
-            p_constraint_name   => 'FK_THS_STOP',
-            p_fk_column         => 'IDSTOP',
-            p_ref_table         => 'STOP',
-            p_ref_column        => 'ID',
-            p_index_name        => 'IX_THS_STOP'
-    );
-
-    add_fk_and_index_if_missing(
-            p_table_name        => 'TRIPHASSTOP',
-            p_constraint_name   => 'FK_THS_AUDITLOG',
-            p_fk_column         => 'IDAUDITLOG',
-            p_ref_table         => 'AUDITLOG',
-            p_ref_column        => 'ID',
-            p_index_name        => 'IX_THS_AUDITLOG'
-    );
-
-    --Table LogBookHasEntityModified
-    add_fk_and_index_if_missing(
-            p_table_name        => 'LOGBOOKHASENTITYMODIFIED',
-            p_constraint_name   => 'FK_LBHEM_LOGBOOK',
-            p_fk_column         => 'IDLOGBOOK',
-            p_ref_table         => 'LOGBOOK',
-            p_ref_column        => 'ID',
-            p_index_name        => 'IX_LBHEM_LOGBOOK'
-    );
-
-    add_fk_and_index_if_missing(
-            p_table_name        => 'LOGBOOKHASENTITYMODIFIED',
-            p_constraint_name   => 'FK_LBHEM_ENTMOD',
-            p_fk_column         => 'IDENTITYMODIFIED',
-            p_ref_table         => 'ENTITYMODIFIED',
-            p_ref_column        => 'ID',
-            p_index_name        => 'IX_LBHEM_ENTMOD'
-    );
-
-    add_fk_and_index_if_missing(
-            p_table_name        => 'LOGBOOKHASENTITYMODIFIED',
-            p_constraint_name   => 'FK_LBHEM_AUDITLOG',
-            p_fk_column         => 'IDAUDITLOG',
-            p_ref_table         => 'AUDITLOG',
-            p_ref_column        => 'ID',
-            p_index_name        => 'IX_LBHEM_AUDITLOG'
-    );
-
-    -- Table ATTRMODHASENTMOD
-    add_fk_and_index_if_missing(
-            p_table_name        => 'ATTRMODHASENTMOD',
-            p_constraint_name   => 'FK_AMHEM_LOGBOOK',
-            p_fk_column         => 'IDLOGBOOK',
-            p_ref_table         => 'LOGBOOK',
-            p_ref_column        => 'ID',
-            p_index_name        => 'IX_AMHEM_LOGBOOK'
-    );
-
-    add_fk_and_index_if_missing(
-            p_table_name        => 'ATTRMODHASENTMOD',
-            p_constraint_name   => 'FK_AMHEM_ATTRMOD',
-            p_fk_column         => 'IDATTRIBUTEMODIFIED',
-            p_ref_table         => 'ATTRIBUTEMODIFIED',
-            p_ref_column        => 'ID',
-            p_index_name        => 'IX_AMHEM_ATTRMOD'
-    );
-
-    add_fk_and_index_if_missing(
-            p_table_name        => 'ATTRMODHASENTMOD',
-            p_constraint_name   => 'FK_AMHEM_AUDITLOG',
-            p_fk_column         => 'IDAUDITLOG',
-            p_ref_table         => 'AUDITLOG',
-            p_ref_column        => 'ID',
-            p_index_name        => 'IX_AMHEM_AUDITLOG'
-    );
-
-    DBMS_OUTPUT.PUT_LINE('Foreign key and index check/creation process completed.');
-
-END;
-/
+    DECLARE v_constraint_exists INT DEFAULT 0;
+        DECLARE v_index_exists INT DEFAULT 0;
+        DECLARE current_db_name VARCHAR(64);
+
+        -- Handler for SQL exceptions
+        DECLARE CONTINUE HANDLER FOR SQLEXCEPTION
+    BEGIN
+        GET DIAGNOSTICS CONDITION 1
+        @p1 = MYSQL_ERRNO, @p2 = MESSAGE_TEXT;
+    END;
+
+    SELECT DATABASE() INTO current_db_name;
+
+    -- Check if constraint exists
+    SELECT COUNT(*)
+    INTO v_constraint_exists
+    FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS
+    WHERE CONSTRAINT_SCHEMA = current_db_name
+      AND TABLE_NAME = p_table_name
+      AND CONSTRAINT_NAME = p_constraint_name
+      AND CONSTRAINT_TYPE = 'FOREIGN KEY';
+
+    IF v_constraint_exists = 0 THEN
+        SET @sql_stmt_fk = CONCAT('ALTER TABLE `', p_table_name, '` ',
+                                  'ADD CONSTRAINT `', p_constraint_name, '` ',
+                                  'FOREIGN KEY (`', p_fk_column, '`) ',
+                                  'REFERENCES `', p_ref_table, '` (`', p_ref_column, '`)');
+        PREPARE stmt_fk FROM @sql_stmt_fk;
+        EXECUTE stmt_fk;
+        DEALLOCATE PREPARE stmt_fk;
+        SELECT CONCAT('Constraint ', p_constraint_name, ' added to table ', p_table_name, '.') AS OperationStatus;
+    ELSE
+        SELECT CONCAT('Constraint ', p_constraint_name, ' already exists on table ', p_table_name, '.') AS OperationStatus;
+    END IF;
+
+    SELECT COUNT(*)
+    INTO v_index_exists
+    FROM INFORMATION_SCHEMA.STATISTICS
+    WHERE TABLE_SCHEMA = current_db_name
+      AND TABLE_NAME = p_table_name
+      AND INDEX_NAME = p_index_name;
+
+    IF v_index_exists = 0 THEN
+        SET @sql_stmt_idx = CONCAT('CREATE INDEX `', p_index_name, '` ',
+                                   'ON `', p_table_name, '` (`', p_fk_column, '`)');
+        PREPARE stmt_idx FROM @sql_stmt_idx;
+        EXECUTE stmt_idx;
+        DEALLOCATE PREPARE stmt_idx;
+        SELECT CONCAT('Index ', p_index_name, ' created on table ', p_table_name, ' for column ', p_fk_column, '.') AS OperationStatus;
+    ELSE
+        SELECT CONCAT('Index ', p_index_name, ' already exists on table ', p_table_name, '.') AS OperationStatus;
+    END IF;
+
+END //
+
+DELIMITER ;
+
+-- Table DailyReport
+CALL AddForeignKeyAndIndexIfNotExists('DailyReport', 'FK_DAILYREPORT_INSTITUTION', 'idInstitution', 'Institution', 'id', 'IX_DAILYREPORT_IDINSTITUTION');
+CALL AddForeignKeyAndIndexIfNotExists('DailyReport', 'FK_DAILYREPORT_AUDITLOG', 'idAuditLog', 'AuditLog', 'id', 'IX_DAILYREPORT_IDAUDITLOG');
+
+-- Table Institution
+CALL AddForeignKeyAndIndexIfNotExists('Institution', 'FK_INST_AUDITLOG', 'idAuditLog', 'AuditLog', 'id', 'IX_INST_AUDITLOG');
+
+-- Table ContactPhoneNumber
+CALL AddForeignKeyAndIndexIfNotExists('ContactPhoneNumber', 'FK_CPN_INSTITUTION', 'idInstitution', 'Institution', 'id', 'IX_CPN_INSTITUTION');
+CALL AddForeignKeyAndIndexIfNotExists('ContactPhoneNumber', 'FK_CPN_AUDITLOG', 'idAuditLog', 'AuditLog', 'id', 'IX_CPN_AUDITLOG');
+
+-- Table ContactEmail
+CALL AddForeignKeyAndIndexIfNotExists('ContactEmail', 'FK_CE_INSTITUTION', 'idInstitution', 'Institution', 'id', 'IX_CE_INSTITUTION');
+CALL AddForeignKeyAndIndexIfNotExists('ContactEmail', 'FK_CE_AUDITLOG', 'idAuditLog', 'AuditLog', 'id', 'IX_CE_AUDITLOG');
+
+-- Table Person
+CALL AddForeignKeyAndIndexIfNotExists('Person', 'FK_PERSON_INSTITUTION', 'idInstitution', 'Institution', 'id', 'IX_PERSON_IDINSTITUTION');
+CALL AddForeignKeyAndIndexIfNotExists('Person', 'FK_PERSON_AUDITLOG', 'idAuditLog', 'AuditLog', 'id', 'IX_PERSON_IDAUDITLOG');
+CALL AddForeignKeyAndIndexIfNotExists('Person', 'FK_PERSON_GENDER', 'idGender', 'Gender', 'id', 'IX_PERSON_IDGENDER'); -- Corrected index name
+
+-- Table PhoneNumber
+CALL AddForeignKeyAndIndexIfNotExists('PhoneNumber', 'FK_PHONENUMBER_PERSON', 'idPerson', 'Person', 'id', 'IX_PHONENUMBER_IDPERSON');
+CALL AddForeignKeyAndIndexIfNotExists('PhoneNumber', 'FK_PHONENUMBER_AUDITLOG', 'idAuditLog', 'AuditLog', 'id', 'IX_PHONENUMBER_IDAUDITLOG');
+
+-- Table Email
+CALL AddForeignKeyAndIndexIfNotExists('Email', 'FK_EMAIL_PERSON', 'idPerson', 'Person', 'id', 'IX_EMAIL_IDPERSON');
+CALL AddForeignKeyAndIndexIfNotExists('Email', 'FK_EMAIL_AUDITLOG', 'idAuditLog', 'AuditLog', 'id', 'IX_EMAIL_IDAUDITLOG');
+
+-- Table Credential
+CALL AddForeignKeyAndIndexIfNotExists('Credential', 'FK_CRED_PERSON', 'idPerson', 'Person', 'id', 'IX_CRED_IDPERSON');
+CALL AddForeignKeyAndIndexIfNotExists('Credential', 'FK_CRED_AUDITLOG', 'idAuditLog', 'AuditLog', 'id', 'IX_CRED_IDAUDITLOG');
+
+-- Table TypeOfCredential
+CALL AddForeignKeyAndIndexIfNotExists('TypeOfCredential', 'FK_TOC_AUDITLOG', 'idAuditLog', 'AuditLog', 'id', 'IX_TOC_IDAUDITLOG');
+
+-- Table Gender
+CALL AddForeignKeyAndIndexIfNotExists('Gender', 'FK_GENDER_AUDITLOG', 'idAuditLog', 'AuditLog', 'id', 'IX_GENDER_IDAUDITLOG');
+
+-- Table PersonalUser
+CALL AddForeignKeyAndIndexIfNotExists('PersonalUser', 'FK_USER_PERSON', 'idPerson', 'Person', 'id', 'IX_USER_IDPERSON');
+CALL AddForeignKeyAndIndexIfNotExists('PersonalUser', 'FK_USER_AUDITLOG', 'idAuditLog', 'AuditLog', 'id', 'IX_USER_IDAUDITLOG');
+CALL AddForeignKeyAndIndexIfNotExists('PersonalUser', 'FK_USER_USERSTATUS', 'idUserStatus', 'UserStatus', 'id', 'IX_USER_IDUSERSTATUS');
+
+-- Table UserStatus
+CALL AddForeignKeyAndIndexIfNotExists('UserStatus', 'FK_USERSTATUS_AUDITLOG', 'idAuditLog', 'AuditLog', 'id', 'IX_USERSTATUS_IDAUDITLOG');
+
+-- Table InstitutionalEmail
+CALL AddForeignKeyAndIndexIfNotExists('InstitutionalEmail', 'FK_INSTEMAIL_USER', 'idUser', 'PersonalUser', 'id', 'IX_INSTEMAIL_IDUSER');
+CALL AddForeignKeyAndIndexIfNotExists('InstitutionalEmail', 'FK_INSTEMAIL_AUDITLOG', 'idAuditLog', 'AuditLog', 'id', 'IX_INSTEMAIL_IDAUDITLOG');
+
+-- Table AccessStatus
+CALL AddForeignKeyAndIndexIfNotExists('AccessStatus', 'FK_ACCSTS_ADMIN', 'idAdministrator', 'Administrator', 'idPerson', 'IX_ACCSTS_IDADMIN');
+CALL AddForeignKeyAndIndexIfNotExists('AccessStatus', 'FK_ACCSTS_AUDITLOG', 'idAuditLog', 'AuditLog', 'id', 'IX_ACCSTS_IDAUDITLOG');
+
+-- Table Driver
+CALL AddForeignKeyAndIndexIfNotExists('Driver', 'FK_DRIVER_PERSON', 'idPerson', 'Person', 'id', 'IX_DRIVER_IDPERSON');
+CALL AddForeignKeyAndIndexIfNotExists('Driver', 'FK_DRIVER_AUDITLOG', 'idAuditLog', 'AuditLog', 'id', 'IX_DRIVER_IDAUDITLOG');
+
+-- Table Vehicle
+CALL AddForeignKeyAndIndexIfNotExists('Vehicle', 'FK_VEHICLE_DRIVER', 'idDriver', 'Driver', 'idPerson', 'IX_VEHICLE_IDDRIVER');
+CALL AddForeignKeyAndIndexIfNotExists('Vehicle', 'FK_VEHICLE_AUDITLOG', 'idAuditLog', 'AuditLog', 'id', 'IX_VEHICLE_IDAUDITLOG');
+
+-- Table Passenger
+CALL AddForeignKeyAndIndexIfNotExists('Passenger', 'FK_PASSENGER_PERSON', 'idPerson', 'Person', 'id', 'IX_PASSENGER_IDPERSON');
+CALL AddForeignKeyAndIndexIfNotExists('Passenger', 'FK_PASSENGER_AUDITLOG', 'idAuditLog', 'AuditLog', 'id', 'IX_PASSENGER_IDAUDITLOG');
+
+-- Table Trip
+CALL AddForeignKeyAndIndexIfNotExists('Trip', 'FK_TRIP_DRIVER', 'idDriver', 'Driver', 'idPerson', 'IX_TRIP_IDDRIVER');
+CALL AddForeignKeyAndIndexIfNotExists('Trip', 'FK_TRIP_PRICESTATUS', 'idPriceStatus', 'PriceStatus', 'id', 'IX_TRIP_IDPRICESTATUS');
+CALL AddForeignKeyAndIndexIfNotExists('Trip', 'FK_TRIP_VEHICLE', 'idVehicle', 'Vehicle', 'id', 'IX_TRIP_IDVEHICLE');
+CALL AddForeignKeyAndIndexIfNotExists('Trip', 'FK_TRIP_AUDITLOG', 'idAuditLog', 'AuditLog', 'id', 'IX_TRIP_IDAUDITLOG');
+
+-- Table PriceStatus
+CALL AddForeignKeyAndIndexIfNotExists('PriceStatus', 'FK_PRICESTATUS_AUDITLOG', 'idAuditLog', 'AuditLog', 'id', 'IX_PRICESTATUS_IDAUDITLOG');
+
+-- Table TripStatus
+CALL AddForeignKeyAndIndexIfNotExists('TripStatus', 'FK_TRIPSTATUS_AUDITLOG', 'idAuditLog', 'AuditLog', 'id', 'IX_TRIPSTATUS_IDAUDITLOG');
+
+-- Table Stop
+CALL AddForeignKeyAndIndexIfNotExists('Stop', 'FK_STOP_DISTRICT', 'idDistrict', 'District', 'id', 'IX_STOP_IDDISTRICT');
+CALL AddForeignKeyAndIndexIfNotExists('Stop', 'FK_STOP_STARTTRIP', 'idStarTrip', 'Trip', 'id', 'IX_STOP_IDSTARTRIP');
+CALL AddForeignKeyAndIndexIfNotExists('Stop', 'FK_STOP_ENDTRIP', 'idEndTrip', 'Trip', 'id', 'IX_STOP_IDENDTRIP');
+CALL AddForeignKeyAndIndexIfNotExists('Stop', 'FK_STOP_AUDITLOG', 'idAuditLog', 'AuditLog', 'id', 'IX_STOP_IDAUDITLOG');
+
+-- Table CoordinateLocation
+CALL AddForeignKeyAndIndexIfNotExists('CoordinateLocation', 'FK_COORDLOC_AUDITLOG', 'idAuditLog', 'AuditLog', 'id', 'IX_COORDLOC_IDAUDITLOG');
+
+-- Table District
+CALL AddForeignKeyAndIndexIfNotExists('District', 'FK_DISTRICT_CANTON', 'idCanton', 'Canton', 'id', 'IX_DISTRICT_IDCANTON');
+CALL AddForeignKeyAndIndexIfNotExists('District', 'FK_DISTRICT_AUDITLOG', 'idAuditLog', 'AuditLog', 'id', 'IX_DISTRICT_IDAUDITLOG');
+
+-- Table Canton
+CALL AddForeignKeyAndIndexIfNotExists('Canton', 'FK_CANTON_PROVINCE', 'idProvince', 'Province', 'id', 'IX_CANTON_IDPROVINCE');
+CALL AddForeignKeyAndIndexIfNotExists('Canton', 'FK_CANTON_AUDITLOG', 'idAuditLog', 'AuditLog', 'id', 'IX_CANTON_IDAUDITLOG');
+
+-- Table Province
+CALL AddForeignKeyAndIndexIfNotExists('Province', 'FK_PROVINCE_COUNTRY', 'idCountry', 'Country', 'id', 'IX_PROVINCE_IDCOUNTRY');
+CALL AddForeignKeyAndIndexIfNotExists('Province', 'FK_PROVINCE_AUDITLOG', 'idAuditLog', 'AuditLog', 'id', 'IX_PROVINCE_IDAUDITLOG');
+
+-- Table Country
+CALL AddForeignKeyAndIndexIfNotExists('Country', 'FK_COUNTRY_AUDITLOG', 'idAuditLog', 'AuditLog', 'id', 'IX_COUNTRY_IDAUDITLOG');
+
+-- Table PaymentMethod
+CALL AddForeignKeyAndIndexIfNotExists('PaymentMethod', 'FK_PAYMETHOD_AUDITLOG', 'idAuditLog', 'AuditLog', 'id', 'IX_PAYMETHOD_IDAUDITLOG');
+
+-- Table Parameter
+CALL AddForeignKeyAndIndexIfNotExists('Parameter', 'FK_PARAMETER_AUDITLOG', 'idAuditLog', 'AuditLog', 'id', 'IX_PARAMETER_IDAUDITLOG');
+
+-- Table LogBook
+CALL AddForeignKeyAndIndexIfNotExists('LogBook', 'FK_LOGBOOK_AUDITLOG', 'idAuditLog', 'AuditLog', 'id', 'IX_LOGBOOK_IDAUDITLOG');
+
+-- Table EntityModified
+CALL AddForeignKeyAndIndexIfNotExists('EntityModified', 'FK_ENTMOD_AUDITLOG', 'idAuditLog', 'AuditLog', 'id', 'IX_ENTMOD_IDAUDITLOG');
+
+-- Table AttributeModified
+CALL AddForeignKeyAndIndexIfNotExists('AttributeModified', 'FK_ATTRMOD_ENTMOD', 'idEntityModified', 'EntityModified', 'id', 'IX_ATTRMOD_IDENTITYMODIFIED');
+CALL AddForeignKeyAndIndexIfNotExists('AttributeModified', 'FK_ATTRMOD_AUDITLOG', 'idAuditLog', 'AuditLog', 'id', 'IX_ATTRMOD_IDAUDITLOG');
+
+-- --------------------------
+-- -- FK De tablas NXN --
+-- --------------------------
+
+-- Table TripReportDailyReport
+CALL AddForeignKeyAndIndexIfNotExists('TripReportDailyReport', 'FK_TRPDR_TRIP', 'idTrip', 'Trip', 'id', 'IX_TRPDR_IDTRIP');
+CALL AddForeignKeyAndIndexIfNotExists('TripReportDailyReport', 'FK_TRPDR_DAILYREPORT', 'idDailyReport', 'DailyReport', 'id', 'IX_TRPDR_IDDAILYREPORT');
+CALL AddForeignKeyAndIndexIfNotExists('TripReportDailyReport', 'FK_TRPDR_AUDITLOG', 'idAuditLog', 'AuditLog', 'id', 'IX_TRPDR_IDAUDITLOG');
+
+-- Table Administrator
+CALL AddForeignKeyAndIndexIfNotExists('Administrator', 'FK_ADMIN_PERSON', 'idPerson', 'Person', 'id', 'IX_ADMIN_IDPERSON');
+CALL AddForeignKeyAndIndexIfNotExists('Administrator', 'FK_ADMIN_AUDITLOG', 'idAuditLog', 'AuditLog', 'id', 'IX_ADMIN_IDAUDITLOG');
+
+-- Table AdminManageInstitution
+CALL AddForeignKeyAndIndexIfNotExists('AdminManageInstitution', 'FK_ADMNINS_ADMIN', 'idPerson', 'Administrator', 'idPerson', 'IX_ADMNINS_IDPERSON');
+CALL AddForeignKeyAndIndexIfNotExists('AdminManageInstitution', 'FK_ADMNINS_INST', 'idInstitution', 'Institution', 'id', 'IX_ADMNINS_IDINST');
+CALL AddForeignKeyAndIndexIfNotExists('AdminManageInstitution', 'FK_ADMNINS_AUDITLOG', 'idAuditLog', 'AuditLog', 'id', 'IX_ADMNINS_IDAUDITLOG');
+
+-- Table AdminReceiveDailyReport
+CALL AddForeignKeyAndIndexIfNotExists('AdminReceiveDailyReport', 'FK_ADRDR_ADMIN', 'idAdministrator', 'Administrator', 'idPerson', 'IX_ADRDR_IDADMIN');
+CALL AddForeignKeyAndIndexIfNotExists('AdminReceiveDailyReport', 'FK_ADRDR_DAILYREPORT', 'idDailyReport', 'DailyReport', 'id', 'IX_ADRDR_IDDAILYREPORT');
+CALL AddForeignKeyAndIndexIfNotExists('AdminReceiveDailyReport', 'FK_ADRDR_AUDITLOG', 'idAuditLog', 'AuditLog', 'id', 'IX_ADRDR_IDAUDITLOG');
+
+-- Table CredentialHasTypeOfCredential
+CALL AddForeignKeyAndIndexIfNotExists('CredentialHasTypeOfCredential', 'FK_CHTC_CREDENTIAL', 'idCredential', 'Credential', 'id', 'IX_CHTC_IDCREDENTIAL');
+CALL AddForeignKeyAndIndexIfNotExists('CredentialHasTypeOfCredential', 'FK_CHTC_TYPEOFCREDENTIAL', 'idTypeOfCredential', 'TypeOfCredential', 'id', 'IX_CHTC_IDTYPEOFCRED');
+CALL AddForeignKeyAndIndexIfNotExists('CredentialHasTypeOfCredential', 'FK_CHTC_AUDITLOG', 'idAuditLog', 'AuditLog', 'id', 'IX_CHTC_IDAUDITLOG');
+
+-- Table PassengerQueryTrip
+CALL AddForeignKeyAndIndexIfNotExists('PassengerQueryTrip', 'FK_PQTRIP_USER', 'idUser', 'PersonalUser', 'id', 'IX_PQTRIP_IDUSER');
+CALL AddForeignKeyAndIndexIfNotExists('PassengerQueryTrip', 'FK_PQTRIP_TRIP', 'idTrip', 'Trip', 'id', 'IX_PQTRIP_IDTRIP');
+CALL AddForeignKeyAndIndexIfNotExists('PassengerQueryTrip', 'FK_PQTRIP_AUDITLOG', 'idAuditLog', 'AuditLog', 'id', 'IX_PQTRIP_IDAUDITLOG');
+
+-- Table PassengerJoinTrip
+CALL AddForeignKeyAndIndexIfNotExists('PassengerJoinTrip', 'FK_PJTRIP_USER', 'idUser', 'PersonalUser', 'id', 'IX_PJTRIP_IDUSER');
+CALL AddForeignKeyAndIndexIfNotExists('PassengerJoinTrip', 'FK_PJTRIP_TRIP', 'idTrip', 'Trip', 'id', 'IX_PJTRIP_IDTRIP');
+CALL AddForeignKeyAndIndexIfNotExists('PassengerJoinTrip', 'FK_PJTRIP_AUDITLOG', 'idAuditLog', 'AuditLog', 'id', 'IX_PJTRIP_IDAUDITLOG');
+
+-- Table TripHasTripStatus
+CALL AddForeignKeyAndIndexIfNotExists('TripHasTripStatus', 'FK_THTS_TRIP', 'idTrip', 'Trip', 'id', 'IX_THTS_IDTRIP');
+CALL AddForeignKeyAndIndexIfNotExists('TripHasTripStatus', 'FK_THTS_TRIPSTATUS', 'idTripStatus', 'TripStatus', 'id', 'IX_THTS_IDTRIPSTATUS');
+CALL AddForeignKeyAndIndexIfNotExists('TripHasTripStatus', 'FK_THTS_AUDITLOG', 'idAuditLog', 'AuditLog', 'id', 'IX_THTS_IDAUDITLOG');
+
+-- Table StopHasCoordinateLocation
+CALL AddForeignKeyAndIndexIfNotExists('StopHasCoordinateLocation', 'FK_SHCL_STOP', 'idStop', 'Stop', 'id', 'IX_SHCL_IDSTOP');
+CALL AddForeignKeyAndIndexIfNotExists('StopHasCoordinateLocation', 'FK_SHCL_COORDLOC', 'idCoordinateLocation', 'CoordinateLocation', 'id', 'IX_SHCL_IDCOORDLOC');
+CALL AddForeignKeyAndIndexIfNotExists('StopHasCoordinateLocation', 'FK_SHCL_AUDITLOG', 'idAuditLog', 'AuditLog', 'id', 'IX_SHCL_IDAUDITLOG');
+
+-- Table TripHasStopHasPaymentMethod
+CALL AddForeignKeyAndIndexIfNotExists('TripHasStopHasPaymentMethod', 'FK_THSHPM_PAYMETHOD', 'idPaymentMethod', 'PaymentMethod', 'id', 'IX_THSHPM_IDPAYMETHOD');
+CALL AddForeignKeyAndIndexIfNotExists('TripHasStopHasPaymentMethod', 'FK_THSHPM_TRIP', 'idTrip', 'Trip', 'id', 'IX_THSHPM_IDTRIP');
+CALL AddForeignKeyAndIndexIfNotExists('TripHasStopHasPaymentMethod', 'FK_THSHPM_STOP', 'idStop', 'Stop', 'id', 'IX_THSHPM_IDSTOP');
+CALL AddForeignKeyAndIndexIfNotExists('TripHasStopHasPaymentMethod', 'FK_THSHPM_AUDITLOG', 'idAuditLog', 'AuditLog', 'id', 'IX_THSHPM_IDAUDITLOG');
+
+-- Table TripHasStop
+CALL AddForeignKeyAndIndexIfNotExists('TripHasStop', 'FK_THS_TRIP', 'idTrip', 'Trip', 'id', 'IX_THS_IDTRIP');
+CALL AddForeignKeyAndIndexIfNotExists('TripHasStop', 'FK_THS_STOP', 'idStop', 'Stop', 'id', 'IX_THS_IDSTOP');
+CALL AddForeignKeyAndIndexIfNotExists('TripHasStop', 'FK_THS_AUDITLOG', 'idAuditLog', 'AuditLog', 'id', 'IX_THS_IDAUDITLOG');
+
+-- Table LogBookHasEntityModified
+CALL AddForeignKeyAndIndexIfNotExists('LogBookHasEntityModified', 'FK_LBHEM_LOGBOOK', 'idLogBook', 'LogBook', 'id', 'IX_LBHEM_IDLOGBOOK');
+CALL AddForeignKeyAndIndexIfNotExists('LogBookHasEntityModified', 'FK_LBHEM_ENTMOD', 'idEntityModified', 'EntityModified', 'id', 'IX_LBHEM_IDENTITYMOD');
+CALL AddForeignKeyAndIndexIfNotExists('LogBookHasEntityModified', 'FK_LBHEM_AUDITLOG', 'idAuditLog', 'AuditLog', 'id', 'IX_LBHEM_IDAUDITLOG');
+
+-- Table AttrModHasEntMod
+CALL AddForeignKeyAndIndexIfNotExists('AttrModHasEntMod', 'FK_AMHEM_LOGBOOK', 'idLogBook', 'LogBook', 'id', 'IX_AMHEM_IDLOGBOOK');
+CALL AddForeignKeyAndIndexIfNotExists('AttrModHasEntMod', 'FK_AMHEM_ATTRMOD', 'idAttributeModified', 'AttributeModified', 'id', 'IX_AMHEM_IDATTRMOD');
+CALL AddForeignKeyAndIndexIfNotExists('AttrModHasEntMod', 'FK_AMHEM_AUDITLOG', 'idAuditLog', 'AuditLog', 'id', 'IX_AMHEM_IDAUDITLOG');
+
+SELECT 'Foreign key and index check/creation process completed.' AS FinalStatus;

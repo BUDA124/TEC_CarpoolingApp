@@ -21,18 +21,18 @@ import org.tec.carpooling.ui.SceneManager;
 import org.tec.carpooling.ui.UserSession;
 import org.yaml.snakeyaml.nodes.AnchorNode;
 
+import javax.swing.text.html.ImageView;
 import java.io.IOException;
 import java.util.Optional;
 
 @Controller
 public class PickRoleController {
 
-    @FXML
-    private AnchorPane AP_driverWheel;
-    @FXML
-    private AnchorPane AP_passangerSeat;
-    @FXML
-    private Button registerDriverButton;
+    @FXML private AnchorPane AP_driverWheel;
+    @FXML private AnchorPane AP_passangerSeat;
+    @FXML private Button registerDriverButton;
+    @FXML private ImageView IV_imageDriver;
+    @FXML private ImageView IV_imagePassanger;
 
 
     @Autowired
@@ -48,16 +48,6 @@ public class PickRoleController {
     private void onPassangerPane(MouseEvent event) {
         try {
             SceneManager.switchToScene(event, "passenger-view.fxml");
-        } catch (IOException e) {
-            e.printStackTrace();
-
-        }
-    }
-
-    @FXML
-    private void On_AP_driverWheel(ActionEvent event) {
-        try {
-            SceneManager.switchToScene(event, "driver-ride.fxml");
         } catch (IOException e) {
             e.printStackTrace();
 
@@ -88,13 +78,9 @@ public class PickRoleController {
     @FXML
     private void onRegisterDriverButton(ActionEvent event) {
         try {
-
-
-
             SceneManager.switchToScene(event, "register-driver-view.fxml");
         } catch (IOException e) {
             e.printStackTrace();
-
         }
     }
 

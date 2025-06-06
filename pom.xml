@@ -26,7 +26,7 @@
         <mockito.version>5.8.0</mockito.version>
         <hibernate.version>6.4.4.Final</hibernate.version>
         <logback.version>1.5.13</logback.version>
-        <oracle.driver.version>21.17.0.0</oracle.driver.version>
+        <mariaDb.driver.version>3.5.3</mariaDb.driver.version>
         <gmapsfx.version>11.0.7</gmapsfx.version>
         <h2.version>2.2.224</h2.version>
         <mapStruct.version>1.6.2</mapStruct.version>
@@ -45,13 +45,15 @@
 
     <dependencies>
         <!-- ======================================== -->
-        <!-- Oracle Driver                            -->
+        <!-- MariaDB Driver                            -->
         <!-- ======================================== -->
-            <dependency>
-                <groupId>com.oracle.database.jdbc</groupId>
-                <artifactId>ojdbc11</artifactId>
-                <version>${oracle.driver.version}</version>
-            </dependency>
+
+        <dependency>
+            <groupId>org.mariadb.jdbc</groupId>
+            <artifactId>mariadb-java-client</artifactId>
+            <version>${mariaDb.driver.version}</version>
+        </dependency>
+
 
         <!-- ======================================== -->
         <!-- JavaFX Modules                         -->
