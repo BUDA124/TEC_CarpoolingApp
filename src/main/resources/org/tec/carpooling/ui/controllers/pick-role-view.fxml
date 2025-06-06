@@ -30,7 +30,7 @@
                                 <Font name="SansSerif Bold" size="25.0" />
                             </font>
                         </Text>
-                        <ImageView fx:id="IV_imageDriver" disable="true" fitHeight="230.0" fitWidth="230.0" layoutX="31.0" layoutY="30.0" onMouseClicked="#On_AP_driverWheel" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="IV_imageDriver" disable="true" fitHeight="230.0" fitWidth="230.0" layoutX="31.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
                             <image>
                                 <Image url="@../../../../../images/driver.png" />
                             </image>
