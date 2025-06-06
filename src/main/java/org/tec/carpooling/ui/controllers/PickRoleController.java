@@ -31,8 +31,6 @@ public class PickRoleController {
     @FXML private AnchorPane AP_driverWheel;
     @FXML private AnchorPane AP_passangerSeat;
     @FXML private Button registerDriverButton;
-    @FXML private ImageView IV_imageDriver;
-    @FXML private ImageView IV_imagePassanger;
 
 
     @Autowired
