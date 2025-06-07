@@ -6,14 +6,13 @@ import org.tec.carpooling.common.utils.HashingUtil;
 
 @Entity
 @Table(name = "ENTITYMODIFIED")
-@SequenceGenerator(name = "seq_entitymodified_gen", sequenceName = "SEQ_ENTITYMODIFIED", allocationSize = 1)
 public class EntityModifiedEntity implements Identifiable<Long> {
 
     public EntityModifiedEntity() {
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_entitymodified_gen")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
     private Long id;
 

@@ -6,14 +6,13 @@ import org.tec.carpooling.common.utils.HashingUtil;
 
 @Entity
 @Table(name = "COORDINATELOCATION")
-@SequenceGenerator(name = "seq_coordinatelocation_gen", sequenceName = "SEQ_COORDINATELOCATION", allocationSize = 1)
 public class CoordinateLocationEntity implements Identifiable<Long> {
 
     public CoordinateLocationEntity() {
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_coordinatelocation_gen")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
     private Long id;
 

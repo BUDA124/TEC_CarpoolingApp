@@ -6,14 +6,13 @@ import org.tec.carpooling.common.utils.HashingUtil;
 
 @Entity
 @Table(name = "DAILYREPORT")
-@SequenceGenerator(name = "seq_dailyreport_gen", sequenceName = "SEQ_DAILYREPORT", allocationSize = 1)
 public class DailyReportEntity implements Identifiable<Long> {
 
     public DailyReportEntity() {
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_dailyreport_gen")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
     private Long id;
 

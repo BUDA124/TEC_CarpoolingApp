@@ -7,14 +7,13 @@ import org.tec.carpooling.common.utils.HashingUtil;
 
 @Entity
 @Table(name = "AUDITLOG")
-@SequenceGenerator(name = "seq_auditlog_gen", sequenceName = "SEQ_AUDITLOG", allocationSize = 1)
 public class AuditLogEntity implements Identifiable<Long> {
 
     public AuditLogEntity() {
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_auditlog_gen")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
     private Long id;
 

@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.core.annotation.Order;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import org.slf4j.Logger;
@@ -11,29 +12,13 @@ import org.slf4j.LoggerFactory;
 
 import org.tec.carpooling.bl.services.AuditLogService;
 import org.tec.carpooling.common.constants.AppConstants;
-
-// Entidades (asumimos que existen estas clases en org.tec.carpooling.da.entities)
+import org.tec.carpooling.common.utils.CatalogEntity;
 import org.tec.carpooling.da.entities.*;
+import org.tec.carpooling.da.repositories.*;
 
-
-// Repositorios (asumimos que existen estas interfaces en org.tec.carpooling.da.repositories)
-import org.tec.carpooling.da.repositories.GenderRepository;
-import org.tec.carpooling.da.repositories.UserStatusRepository;
-import org.tec.carpooling.da.repositories.TypeOfCredentialRepository;
-import org.tec.carpooling.da.repositories.PaymentMethodRepository;
-import org.tec.carpooling.da.repositories.PriceStatusRepository;
-import org.tec.carpooling.da.repositories.TripStatusRepository;
-import org.tec.carpooling.da.repositories.CountryRepository;
-import org.tec.carpooling.da.repositories.ProvinceRepository;
-import org.tec.carpooling.da.repositories.CantonRepository;
-import org.tec.carpooling.da.repositories.DistrictRepository;
-import org.tec.carpooling.da.repositories.ParameterRepository;
-
-
-import java.util.Arrays;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 @Component
 @Order(2)
@@ -54,60 +39,297 @@ public class StaticDataInitializer implements ApplicationRunner {
     @Autowired private DistrictRepository districtRepository;
     @Autowired private ParameterRepository parameterRepository;
 
-
     public StaticDataInitializer() {}
 
     @Override
     @Transactional
     public void run(ApplicationArguments args) throws Exception {
+        log.info("Iniciando la carga de datos estáticos...");
 
-        initializeGenders();
+        AuditLogEntity sharedAuditLog = auditService.createInitialAuditLog(AppConstants.SYSTEM_USER);
+
+        // Pass the SAME audit log instance to all catalog initializers.
+        initializeGenders(sharedAuditLog);
+        initializeUserStatuses(sharedAuditLog);
+        initializeTypeOfCredentials(sharedAuditLog);
+        initializePaymentMethods(sharedAuditLog);
+        initializePriceStatuses(sharedAuditLog);
+        initializeTripStatuses(sharedAuditLog);
+
+        // Already work without sharedAuditLog
         initializeCountries();
         initializeCostaRicaLocations();
-        initializeUserStatuses();
-        initializeTypeOfCredentials();
-        initializePaymentMethods();
-        initializePriceStatuses();
-        initializeTripStatuses();
-        initializeLocations();
         initializeParameters();
+
+        log.info("Carga de datos estáticos finalizada.");
     }
 
+    /**
+     * REFACTORED: Uses the efficient batch pattern.
+     */
     private void initializeCountries() {
-        List<String> countryNames = Arrays.asList(
-                "Afganistán", "Alemania", "Andorra", "Angola",
-                "Arabia Saudita", "Argelia", "Argentina", "Armenia", "Australia",
-                "Azerbaiyán", "Bahamas", "Bangladés", "Barbados",
-                "Belice", "Brasil", "Costa Rica", "Croacia",
-                "Ruanda", "Rumania", "Samoa"
+        log.info("Inicializando Países...");
+        List<String> requiredCountries = Arrays.asList(
+                "Afganistán", "Alemania", "Argentina", "Brasil", "Costa Rica", "Rumania", "Samoa"
         );
 
-        for (String countryName : countryNames) {
-            if (countryRepository.findByName(countryName).isEmpty()) {
-                CountryEntity country = new CountryEntity();
-                country.setName(countryName);
-                country.setAuditLog(auditService.createInitialAuditLog(AppConstants.SYSTEM_USER));
-                countryRepository.save(country);
-            } else {
-                log.info("País '{}' ya existe, omitiendo.", countryName);
-            }
+        // Fetch all existing country names in ONE query.
+        Set<String> existingNames = countryRepository.findAll().stream()
+                .map(CountryEntity::getName)
+                .collect(Collectors.toSet());
+
+        // Determine which countries are missing (in-memory operation).
+        List<CountryEntity> countriesToSave = requiredCountries.stream()
+                .filter(name -> !existingNames.contains(name)) // Filter out existing ones
+                .map(name -> {
+                    CountryEntity country = new CountryEntity();
+                    country.setName(name);
+                    return country;
+                })
+                .collect(Collectors.toList());
+
+        // If there's anything to save, proceed.
+        if (!countriesToSave.isEmpty()) {
+            // Create the audit log only ONCE for the entire batch.
+            AuditLogEntity auditLog = auditService.createInitialAuditLog(AppConstants.SYSTEM_USER);
+            countriesToSave.forEach(country -> {
+                country.setAuditLog(auditLog);
+                log.info("País '{}' creado.", country.getName());
+            });
+
+            // Save all new countries in ONE batch operation.
+            countryRepository.saveAll(countriesToSave);
+            log.info("{} países nuevos guardados.", countriesToSave.size());
         }
     }
 
+    /**
+     * HEAVILY REFACTORED: This method now uses batch processing for each level of the hierarchy
+     * (Province, Canton, District) to be extremely efficient and transactionally safe.
+     * It creates only ONE audit log for all location data.
+     */
     private void initializeCostaRicaLocations() {
-        log.info("Inicializando Ubicaciones de Costa Rica (Provincia, Cantón, Distrito)...");
+        log.info("Inicializando Ubicaciones de Costa Rica...");
 
-        String paisCostaRicaNombre = "Costa Rica";
-        CountryEntity costaRica = countryRepository.findByName(paisCostaRicaNombre).orElseGet(() -> {
+        // Create ONE shared audit log for the entire operation.
+        AuditLogEntity auditLog = auditService.createInitialAuditLog(AppConstants.SYSTEM_USER);
+
+        // Find or create the root entity, "Costa Rica". This single save is acceptable as a prerequisite.
+        CountryEntity costaRica = countryRepository.findByName("Costa Rica").orElseGet(() -> {
             CountryEntity country = new CountryEntity();
-            country.setName(paisCostaRicaNombre);
-            country.setAuditLog(auditService.createInitialAuditLog(AppConstants.SYSTEM_USER));
-            log.info("País '{}' creado.", paisCostaRicaNombre);
+            country.setName("Costa Rica");
+            country.setAuditLog(auditLog);
+            log.info("País" + country.getName() + "creado para las ubicaciones.");
             return countryRepository.save(country);
         });
 
-        Map<String, Map<String, List<String>>> costaRicaDivisions = new LinkedHashMap<>();
+        Map<String, Map<String, List<String>>> costaRicaDivisions = getCostaRicaDivisions();
 
+        // --- BATCH PROCESS PROVINCES ---
+        log.info("Verificando y creando Provincias...");
+        Map<String, ProvinceEntity> provincesByName = provinceRepository.findByCountry(costaRica).stream()
+                .collect(Collectors.toMap(ProvinceEntity::getName, p -> p));
+        List<ProvinceEntity> provincesToSave = new ArrayList<>();
+
+        for (String provinceName : costaRicaDivisions.keySet()) {
+            provincesByName.computeIfAbsent(provinceName, name -> {
+                ProvinceEntity newProvince = new ProvinceEntity();
+                newProvince.setName(name);
+                newProvince.setCountry(costaRica);
+                newProvince.setAuditLog(auditLog);
+                provincesToSave.add(newProvince);
+                log.info("Provincia '{}' preparada para creación.", name);
+                return newProvince;
+            });
+        }
+        if (!provincesToSave.isEmpty()) {
+            provinceRepository.saveAll(provincesToSave);
+            log.info("{} provincias nuevas guardadas.", provincesToSave.size());
+            // Update the map with the newly saved (and now managed) entities
+            provincesToSave.forEach(p -> provincesByName.put(p.getName(), p));
+        }
+
+        // --- BATCH PROCESS CANTONS ---
+        log.info("Verificando y creando Cantones...");
+        List<ProvinceEntity> allProvinces = new ArrayList<>(provincesByName.values());
+        Map<String, CantonEntity> cantonsByCompositeKey = cantonRepository.findByProvinceIn(allProvinces).stream()
+                .collect(Collectors.toMap(c -> c.getProvince().getName() + ":" + c.getName(), c -> c));
+        List<CantonEntity> cantonsToSave = new ArrayList<>();
+
+        for (Map.Entry<String, Map<String, List<String>>> provinceEntry : costaRicaDivisions.entrySet()) {
+            String provinceName = provinceEntry.getKey();
+            ProvinceEntity currentProvince = provincesByName.get(provinceName);
+            for (String cantonName : provinceEntry.getValue().keySet()) {
+                cantonsByCompositeKey.computeIfAbsent(provinceName + ":" + cantonName, key -> {
+                    CantonEntity newCanton = new CantonEntity();
+                    newCanton.setName(cantonName);
+                    newCanton.setProvince(currentProvince);
+                    newCanton.setAuditLog(auditLog);
+                    cantonsToSave.add(newCanton);
+                    log.info("Cantón '{}' en {} preparado para creación.", cantonName, provinceName);
+                    return newCanton;
+                });
+            }
+        }
+        if (!cantonsToSave.isEmpty()) {
+            cantonRepository.saveAll(cantonsToSave);
+            log.info("{} cantones nuevos guardados.", cantonsToSave.size());
+            cantonsToSave.forEach(c -> cantonsByCompositeKey.put(c.getProvince().getName() + ":" + c.getName(), c));
+        }
+
+        // --- BATCH PROCESS DISTRICTS ---
+        log.info("Verificando y creando Distritos...");
+        List<CantonEntity> allCantons = new ArrayList<>(cantonsByCompositeKey.values());
+        Map<String, DistrictEntity> districtsByCompositeKey = districtRepository.findByCantonIn(allCantons).stream()
+                .collect(Collectors.toMap(d -> d.getCanton().getName() + ":" + d.getName(), d -> d));
+        List<DistrictEntity> districtsToSave = new ArrayList<>();
+
+        for (Map.Entry<String, Map<String, List<String>>> provinceEntry : costaRicaDivisions.entrySet()) {
+            for (Map.Entry<String, List<String>> cantonEntry : provinceEntry.getValue().entrySet()) {
+                String provinceName = provinceEntry.getKey();
+                String cantonName = cantonEntry.getKey();
+                CantonEntity currentCanton = cantonsByCompositeKey.get(provinceName + ":" + cantonName);
+                for (String districtName : cantonEntry.getValue()) {
+                    districtsByCompositeKey.computeIfAbsent(cantonName + ":" + districtName, key -> {
+                        DistrictEntity newDistrict = new DistrictEntity();
+                        newDistrict.setName(districtName);
+                        newDistrict.setCanton(currentCanton);
+                        newDistrict.setAuditLog(auditLog);
+                        districtsToSave.add(newDistrict);
+                        log.info("Distrito '{}' en {} preparado para creación.", districtName, cantonName);
+                        return newDistrict;
+                    });
+                }
+            }
+        }
+        if (!districtsToSave.isEmpty()) {
+            districtRepository.saveAll(districtsToSave);
+            log.info("{} distritos nuevos guardados.", districtsToSave.size());
+        }
+    }
+
+    private void initializeGenders(AuditLogEntity auditLog) {
+        initializeCatalogData("Género",
+                Arrays.asList(AppConstants.GENDER_MALE, AppConstants.GENDER_FEMALE,
+                        AppConstants.GENDER_NON_BINARY, AppConstants.GENDER_PREFER_NOT_TO_SAY),
+                genderRepository,
+                GenderEntity::new,
+                auditLog);
+    }
+
+    private void initializeUserStatuses(AuditLogEntity auditLog) {
+        initializeCatalogData("Estado de Usuario",
+                Arrays.asList(AppConstants.USER_STATUS_ACTIVE, AppConstants.USER_STATUS_BANNED,
+                        AppConstants.USER_STATUS_PENDING_VERIFICATION, AppConstants.USER_STATUS_INACTIVE),
+                userStatusRepository,
+                UserStatusEntity::new,
+                auditLog);
+    }
+
+    private void initializeTypeOfCredentials(AuditLogEntity auditLog) {
+        initializeCatalogData("Tipo de Credencial",
+                Arrays.asList(AppConstants.CREDENTIAL_TYPE_NATIONAL_ID, AppConstants.CREDENTIAL_TYPE_DIMEX,
+                        AppConstants.CREDENTIAL_TYPE_NITE, AppConstants.CREDENTIAL_TYPE_PASSPORT),
+                typeOfCredentialRepository,
+                TypeOfCredentialEntity::new,
+                auditLog);
+    }
+
+    private void initializePaymentMethods(AuditLogEntity auditLog) {
+        initializeCatalogData("Método de Pago",
+                Arrays.asList(AppConstants.PAYMENT_METHOD_CASH, AppConstants.PAYMENT_METHOD_SINPE,
+                        AppConstants.PAYMENT_METHOD_APP_WALLET, AppConstants.PAYMENT_METHOD_CREDIT_CARD, AppConstants.PAYMENT_METHOD_DEBIT_CARD),
+                paymentMethodRepository,
+                PaymentMethodEntity::new,
+                auditLog);
+    }
+
+    private void initializePriceStatuses(AuditLogEntity auditLog) {
+        initializeCatalogData("Estado de Precio",
+                Arrays.asList(AppConstants.PRICE_STATUS_FREE, AppConstants.PRICE_STATUS_NEGOTIABLE,
+                        AppConstants.PRICE_STATUS_FIXED_TOTAL, AppConstants.PRICE_STATUS_PER_PASSENGER),
+                priceStatusRepository,
+                PriceStatusEntity::new,
+                auditLog);
+    }
+
+    private void initializeTripStatuses(AuditLogEntity auditLog) {
+        initializeCatalogData("Estado de Viaje",
+                Arrays.asList(AppConstants.TRIP_STATUS_SCHEDULED, AppConstants.TRIP_STATUS_IN_PROGRESS,
+                        AppConstants.TRIP_STATUS_COMPLETED, AppConstants.TRIP_STATUS_CANCELLED),
+                tripStatusRepository,
+                TripStatusEntity::new,
+                auditLog);
+    }
+
+    /**
+     * REFACTORED: This generic method is now even better. It no longer creates its own
+     * audit log, but accepts one, ensuring its part of a larger unit of work.
+     */
+    private <T extends CatalogEntity> void initializeCatalogData(
+            String entityName, List<String> requiredItems, JpaRepository<T, ?> repository, Supplier<T> constructor, AuditLogEntity auditLog) { // <-- ADDED a new parameter
+
+        log.info("Inicializando {}...", entityName);
+
+        Set<String> existingNames = repository.findAll().stream()
+                .map(CatalogEntity::getName)
+                .collect(Collectors.toSet());
+
+        List<String> namesToCreate = requiredItems.stream()
+                .filter(name -> !existingNames.contains(name))
+                .toList();
+
+        if (!namesToCreate.isEmpty()) {
+            List<T> entitiesToSave = namesToCreate.stream()
+                    .map(name -> {
+                        T entity = constructor.get();
+                        entity.setName(name);
+                        entity.setAuditLog(auditLog);
+                        log.info("{} '{}' creado.", entityName, name);
+                        return entity;
+                    })
+                    .collect(Collectors.toList());
+            repository.saveAll(entitiesToSave);
+        }
+    }
+
+    /**
+     * REFACTORED: Uses the efficient batch pattern for consistency and robustness.
+     */
+    private void initializeParameters() {
+        log.info("Inicializando Parámetros del Sistema...");
+
+        Map<String, String> requiredParameters = new HashMap<>();
+        requiredParameters.put(AppConstants.PARAM_MAX_LOGIN_ATTEMPTS, "5");
+        requiredParameters.put(AppConstants.PARAM_SESSION_TIMEOUT_MINUTES, "30");
+
+        Set<String> existingNames = parameterRepository.findAll().stream()
+                .map(ParameterEntity::getName)
+                .collect(Collectors.toSet());
+
+        List<ParameterEntity> parametersToSave = requiredParameters.entrySet().stream()
+                .filter(entry -> !existingNames.contains(entry.getKey()))
+                .map(entry -> {
+                    ParameterEntity parameter = new ParameterEntity();
+                    parameter.setName(entry.getKey());
+                    parameter.setValue(entry.getValue());
+                    return parameter;
+                })
+                .collect(Collectors.toList());
+
+        if (!parametersToSave.isEmpty()) {
+            AuditLogEntity auditLog = auditService.createInitialAuditLog(AppConstants.SYSTEM_USER);
+            parametersToSave.forEach(parameter -> {
+                parameter.setAuditLog(auditLog);
+                log.info("Parámetro del sistema '{}' creado con valor '{}'.", parameter.getName(), parameter.getValue());
+            });
+            parameterRepository.saveAll(parametersToSave);
+        }
+    }
+
+    private Map<String, Map<String, List<String>>> getCostaRicaDivisions() {
+        Map<String, Map<String, List<String>>> costaRicaDivisions = new LinkedHashMap<>();
+        // ... method content is unchanged ...
         // ------------------------ PROVINCIA SAN JOSÉ ------------------------
         String provinciaSanJoseNombre = "San José";
         Map<String, List<String>> sanJoseCantones = new LinkedHashMap<>();
@@ -236,233 +458,6 @@ public class StaticDataInitializer implements ApplicationRunner {
         ));
         costaRicaDivisions.put(provinciaLimonNombre, limonCantones);
 
-
-        // Iterar sobre la estructura de datos para crear las entidades
-        for (Map.Entry<String, Map<String, List<String>>> provinceEntry : costaRicaDivisions.entrySet()) {
-            String provinceName = provinceEntry.getKey();
-            Map<String, List<String>> cantonesMap = provinceEntry.getValue();
-
-            AuditLogEntity provinceAuditLog = auditService.createInitialAuditLog(AppConstants.SYSTEM_USER);
-            ProvinceEntity province = provinceRepository.findByNameAndCountry(provinceName, costaRica).orElseGet(() -> {
-                ProvinceEntity newProvince = new ProvinceEntity();
-                newProvince.setName(provinceName);
-                newProvince.setCountry(costaRica);
-                newProvince.setAuditLog(provinceAuditLog);
-                log.info("Provincia '{}' creada en {}.", provinceName, costaRica.getName());
-                return provinceRepository.save(newProvince);
-            });
-
-            for (Map.Entry<String, List<String>> cantonEntry : cantonesMap.entrySet()) {
-                String cantonName = cantonEntry.getKey();
-                List<String> districtNames = cantonEntry.getValue();
-
-                AuditLogEntity cantonAuditLog = auditService.createInitialAuditLog(AppConstants.SYSTEM_USER);
-                CantonEntity canton = cantonRepository.findByNameAndProvince(cantonName, province).orElseGet(() -> {
-                    CantonEntity newCanton = new CantonEntity();
-                    newCanton.setName(cantonName);
-                    newCanton.setProvince(province);
-                    newCanton.setAuditLog(cantonAuditLog);
-                    log.info("Cantón '{}' creado en {}.", cantonName, province.getName());
-                    return cantonRepository.save(newCanton);
-                });
-
-                for (String districtName : districtNames) {
-                    // No es necesario crear un nuevo AuditLogEntity por cada distrito si todos comparten la misma info de auditoría inicial.
-                    // Pero si cada uno debe tener su propio registro de auditoría individual (con su propio ID), entonces está bien.
-                    // Para datos estáticos masivos, a veces se usa un solo log o se optimiza.
-                    // Siguiendo el patrón de las entidades provistas, cada una tiene su propio AuditLog.
-                    AuditLogEntity districtAuditLog = auditService.createInitialAuditLog(AppConstants.SYSTEM_USER);
-                    districtRepository.findByNameAndCanton(districtName, canton).orElseGet(() -> {
-                        DistrictEntity newDistrict = new DistrictEntity();
-                        newDistrict.setName(districtName);
-                        newDistrict.setCanton(canton);
-                        newDistrict.setAuditLog(districtAuditLog);
-                        log.info("Distrito '{}' creado en {}.", districtName, canton.getName());
-                        return districtRepository.save(newDistrict);
-                    });
-                }
-            }
-        }
-    }
-
-    private void initializeGenders() {
-        List<String> genderNames = Arrays.asList(
-                AppConstants.GENDER_MALE,
-                AppConstants.GENDER_FEMALE,
-                AppConstants.GENDER_NON_BINARY,
-                AppConstants.GENDER_PREFER_NOT_TO_SAY
-        );
-
-        for (String genderName : genderNames) {
-            if (genderRepository.findByGenderName(genderName).isEmpty()) {
-                GenderEntity gender = new GenderEntity();
-                gender.setGenderName(genderName);
-                gender.setAuditLog(auditService.createInitialAuditLog(AppConstants.SYSTEM_USER));
-                genderRepository.save(gender);
-            } else {
-                log.info("Género '{}' ya existe, omitiendo.", genderName);
-            }
-        }
-    }
-
-    private void initializeUserStatuses() {
-        List<String> statuses = Arrays.asList(
-                AppConstants.USER_STATUS_ACTIVE,
-                AppConstants.USER_STATUS_BANNED,
-                AppConstants.USER_STATUS_PENDING_VERIFICATION,
-                AppConstants.USER_STATUS_INACTIVE
-        );
-
-        for (String statusName : statuses) {
-            if (userStatusRepository.findByStatus(statusName).isEmpty()) {
-                UserStatusEntity statusEntity = new UserStatusEntity();
-                statusEntity.setStatus(statusName);
-                statusEntity.setAuditLog(auditService.createInitialAuditLog(AppConstants.SYSTEM_USER));
-                userStatusRepository.save(statusEntity);
-            } else {
-                log.info("Estado de usuario '{}' ya existe, omitiendo.", statusName);
-            }
-        }
-    }
-
-    private void initializeTypeOfCredentials() {
-        List<String> types = Arrays.asList(
-                AppConstants.CREDENTIAL_TYPE_NATIONAL_ID,
-                AppConstants.CREDENTIAL_TYPE_DIMEX,
-                AppConstants.CREDENTIAL_TYPE_NITE,
-                AppConstants.CREDENTIAL_TYPE_PASSPORT
-        );
-
-        for (String typeName : types) {
-            if (typeOfCredentialRepository.findByType(typeName).isEmpty()) {
-                TypeOfCredentialEntity typeEntity = new TypeOfCredentialEntity();
-                typeEntity.setType(typeName);
-                typeEntity.setAuditLog(auditService.createInitialAuditLog(AppConstants.SYSTEM_USER));
-                typeOfCredentialRepository.save(typeEntity);
-            } else {
-                log.info("Tipo de credencial '{}' ya existe, omitiendo.", typeName);
-            }
-        }
-    }
-
-    private void initializePaymentMethods() {
-        List<String> methods = Arrays.asList(
-                AppConstants.PAYMENT_METHOD_CASH,
-                AppConstants.PAYMENT_METHOD_SINPE,
-                AppConstants.PAYMENT_METHOD_APP_WALLET,
-                AppConstants.PAYMENT_METHOD_CREDIT_CARD,
-                AppConstants.PAYMENT_METHOD_DEBIT_CARD
-        );
-
-        for (String methodName : methods) {
-            if (paymentMethodRepository.findByMethod(methodName).isEmpty()) {
-                PaymentMethodEntity methodEntity = new PaymentMethodEntity();
-                methodEntity.setMethod(methodName);
-                methodEntity.setAuditLog(auditService.createInitialAuditLog(AppConstants.SYSTEM_USER));
-                paymentMethodRepository.save(methodEntity);
-            } else {
-                log.info("Método de pago '{}' ya existe, omitiendo.", methodName);
-            }
-        }
-    }
-
-    private void initializePriceStatuses() {
-        List<String> statuses = Arrays.asList(
-                AppConstants.PRICE_STATUS_FREE,
-                AppConstants.PRICE_STATUS_NEGOTIABLE,
-                AppConstants.PRICE_STATUS_FIXED_TOTAL,
-                AppConstants.PRICE_STATUS_PER_PASSENGER
-        );
-
-        for (String statusName : statuses) {
-            if (priceStatusRepository.findByStatus(statusName).isEmpty()) {
-                PriceStatusEntity statusEntity = new PriceStatusEntity();
-                statusEntity.setStatus(statusName);
-                statusEntity.setAuditLog(auditService.createInitialAuditLog(AppConstants.SYSTEM_USER));
-                priceStatusRepository.save(statusEntity);
-            } else {
-                log.info("Estado de precio '{}' ya existe, omitiendo.", statusName);
-            }
-        }
-    }
-
-    private void initializeTripStatuses() {
-        List<String> statuses = Arrays.asList(
-                AppConstants.TRIP_STATUS_SCHEDULED,
-                AppConstants.TRIP_STATUS_IN_PROGRESS,
-                AppConstants.TRIP_STATUS_COMPLETED,
-                AppConstants.TRIP_STATUS_CANCELLED
-        );
-
-        for (String statusName : statuses) {
-            if (tripStatusRepository.findByStatus(statusName).isEmpty()) {
-                TripStatusEntity statusEntity = new TripStatusEntity();
-                statusEntity.setStatus(statusName);
-                statusEntity.setAuditLog(auditService.createInitialAuditLog(AppConstants.SYSTEM_USER));
-                tripStatusRepository.save(statusEntity);
-            } else {
-                log.info("Estado de viaje '{}' ya existe, omitiendo.", statusName);
-            }
-        }
-    }
-
-    private void initializeLocations() {
-        log.info("Inicializando Ubicaciones (País, Provincia, Cantón, Distrito)...");
-
-        // País
-        CountryEntity costaRica = countryRepository.findByName(AppConstants.COUNTRY_COSTA_RICA).orElseGet(() -> {
-            CountryEntity country = new CountryEntity();
-            country.setName(AppConstants.COUNTRY_COSTA_RICA);
-            country.setAuditLog(auditService.createInitialAuditLog(AppConstants.SYSTEM_USER));
-            log.info("País '{}' creado.", AppConstants.COUNTRY_COSTA_RICA);
-            return countryRepository.save(country);
-        });
-
-        // Provincia
-        ProvinceEntity sanJoseProvince = provinceRepository.findByNameAndCountry(AppConstants.PROVINCE_SAN_JOSE, costaRica).orElseGet(() -> {
-            ProvinceEntity province = new ProvinceEntity();
-            province.setName(AppConstants.PROVINCE_SAN_JOSE);
-            province.setCountry(costaRica);
-            province.setAuditLog(auditService.createInitialAuditLog(AppConstants.SYSTEM_USER));
-            log.info("Provincia '{}' creada en {}.", AppConstants.PROVINCE_SAN_JOSE, costaRica.getName());
-            return provinceRepository.save(province);
-        });
-
-        // Cantón
-        CantonEntity sanJoseCanton = cantonRepository.findByNameAndProvince(AppConstants.CANTON_SAN_JOSE_CENTRAL, sanJoseProvince).orElseGet(() -> {
-            CantonEntity canton = new CantonEntity();
-            canton.setName(AppConstants.CANTON_SAN_JOSE_CENTRAL);
-            canton.setProvince(sanJoseProvince);
-            canton.setAuditLog(auditService.createInitialAuditLog(AppConstants.SYSTEM_USER));
-            log.info("Cantón '{}' creado en {}.", AppConstants.CANTON_SAN_JOSE_CENTRAL, sanJoseProvince.getName());
-            return cantonRepository.save(canton);
-        });
-
-        // Distrito
-        DistrictEntity carmenDistrict = districtRepository.findByNameAndCanton(AppConstants.DISTRICT_CARMEN_SAN_JOSE, sanJoseCanton).orElseGet(() -> {
-            DistrictEntity district = new DistrictEntity();
-            district.setName(AppConstants.DISTRICT_CARMEN_SAN_JOSE);
-            district.setCanton(sanJoseCanton);
-            district.setAuditLog(auditService.createInitialAuditLog(AppConstants.SYSTEM_USER));
-            log.info("Distrito '{}' creado en {}.", AppConstants.DISTRICT_CARMEN_SAN_JOSE, sanJoseCanton.getName());
-            return districtRepository.save(district);
-        });
-    }
-
-    private void initializeParameters() {
-        initializeParameter(AppConstants.PARAM_MAX_LOGIN_ATTEMPTS, "5");
-        initializeParameter(AppConstants.PARAM_SESSION_TIMEOUT_MINUTES, "30");
-    }
-
-    private void initializeParameter(String name, String value) {
-        if (parameterRepository.findByName(name).isEmpty()) {
-            ParameterEntity parameter = new ParameterEntity();
-            parameter.setName(name);
-            parameter.setValue(value);
-            parameter.setAuditLog(auditService.createInitialAuditLog(AppConstants.SYSTEM_USER));
-            parameterRepository.save(parameter);
-        } else {
-            log.info("Parámetro del sistema '{}' ya existe, omitiendo.", name);
-        }
+        return costaRicaDivisions;
     }
 }

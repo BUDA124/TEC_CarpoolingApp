@@ -2,22 +2,17 @@ package org.tec.carpooling.da.entities;
 
 import jakarta.persistence.*;
 import java.util.Objects;
+
+import org.tec.carpooling.common.utils.Auditable;
+import org.tec.carpooling.common.utils.CatalogEntity;
 import org.tec.carpooling.common.utils.HashingUtil;
 
 @Entity
 @Table(name = "PAYMENTMETHOD")
-@SequenceGenerator(name = "seq_paymentmethod_gen", sequenceName = "SEQ_PAYMENTMETHOD", allocationSize = 1)
-public class PaymentMethodEntity implements Identifiable<Long> {
+public class PaymentMethodEntity implements Identifiable<Long>, CatalogEntity {
 
-    public PaymentMethodEntity() {
-    }
-
-    public PaymentMethodEntity(String method, AuditLogEntity auditLogEntity) {
-        this.method = method;
-        this.auditLog = auditLogEntity;
-    }
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_paymentmethod_gen")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
     private Long id;
 
@@ -27,6 +22,8 @@ public class PaymentMethodEntity implements Identifiable<Long> {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "IDAUDITLOG", nullable = false)
     private AuditLogEntity auditLog;
+
+    public PaymentMethodEntity() {}
 
     // Getters and Setters
     public Long getId() {
@@ -73,5 +70,15 @@ public class PaymentMethodEntity implements Identifiable<Long> {
                 ", method='" + method + '\'' +
                 ", auditLogId=" + (auditLog != null ? auditLog.getId() : null) +
                 '}';
+    }
+
+    @Override
+    public String getName() {
+        return this.method;
+    }
+
+    @Override
+    public void setName(String name) {
+        this.method = name;
     }
 }

@@ -6,7 +6,6 @@ import org.tec.carpooling.common.utils.HashingUtil;
 
 @Entity
 @Table(name = "PASSENGER")
-// No SequenceGenerator, PK is derived from PersonEntity
 public class PassengerEntity implements Identifiable<Long> {
 
     @Id

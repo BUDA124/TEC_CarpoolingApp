@@ -6,18 +6,17 @@ import org.tec.carpooling.common.utils.HashingUtil;
 
 @Entity
 @Table(name = "CREDENTIAL")
-@SequenceGenerator(name = "seq_credential_gen", sequenceName = "SEQ_CREDENTIAL", allocationSize = 1)
 public class CredentialEntity implements Identifiable<Long> {
 
     public CredentialEntity() {
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_credential_gen")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
     private Long id;
 
-    @Column(name = "ISACTIVE", nullable = false, columnDefinition = "NUMBER(1)") // Mapped as Integer due to 0/1 values
+    @Column(name = "ISACTIVE", nullable = false, columnDefinition = "TINYINT(1)")
     private Integer isActive;
 
     @Column(name = "NUMBEROFCREDENTIAL", nullable = false, length = 255)

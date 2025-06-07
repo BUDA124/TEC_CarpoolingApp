@@ -19,14 +19,14 @@ public class AuditLogServiceImpl implements AuditLogService {
     private AuditLogRepository auditLogRepository;
 
     /**
-     * Creates a new AuditLogEntity for system-initiated actions or initial data.
-     * This method should run in its own transaction or propagate an existing one
-     * to ensure the AuditLogEntity is persisted before being associated with other entities.
+     * Creates a new AuditLogEntity.
+     * This method will join an existing transaction if one is present, or create a new
+     * one otherwise. This ensures the AuditLog and the data it tracks are saved atomically.
      * @param creator The user/system creating the log.
-     * @return The persisted AuditLogEntity.
+     * @return The new, uncommitted AuditLogEntity, ready to be associated.
      */
     @Override
-    @Transactional(propagation = Propagation.REQUIRES_NEW) // Ensures it gets its own transaction if needed
+    @Transactional
     public AuditLogEntity createInitialAuditLog(String creator) {
         AuditLogEntity auditLog = new AuditLogEntity();
         auditLog.setCreationDate(LocalDateTime.now());
@@ -34,8 +34,15 @@ public class AuditLogServiceImpl implements AuditLogService {
         return auditLogRepository.save(auditLog);
     }
 
+    /**
+     * Updates an existing AuditLogEntity.
+     * This method will also join the caller's transaction.
+     * @param auditLog The entity to update.
+     * @param updater The user/system performing the update.
+     * @return The updated, uncommitted AuditLogEntity.
+     */
     @Override
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    @Transactional
     public AuditLogEntity updateAuditLog(AuditLogEntity auditLog, String updater) {
         auditLog.setLastUpdateDate(LocalDateTime.now());
         auditLog.setUpdatedBy(updater);

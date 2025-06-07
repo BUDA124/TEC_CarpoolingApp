@@ -5,17 +5,14 @@ import java.util.Objects;
 import org.tec.carpooling.common.utils.HashingUtil;
 
 @Entity
-@Table(name = "INSTITUTION", uniqueConstraints = {
-    @UniqueConstraint(columnNames = {"EMAILDOMAIN"}, name = "UK_INSTITUTION_EMAILDOMAIN")
-})
-@SequenceGenerator(name = "seq_institution_gen", sequenceName = "SEQ_INSTITUTION", allocationSize = 1)
+@Table(name = "INSTITUTION")
 public class InstitutionEntity implements Identifiable<Long> {
 
     public InstitutionEntity() {
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_institution_gen")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
     private Long id;
 

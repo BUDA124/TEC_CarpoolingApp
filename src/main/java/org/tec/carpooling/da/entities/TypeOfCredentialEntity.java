@@ -2,12 +2,14 @@ package org.tec.carpooling.da.entities;
 
 import jakarta.persistence.*;
 import java.util.Objects;
+
+import org.tec.carpooling.common.utils.Auditable;
+import org.tec.carpooling.common.utils.CatalogEntity;
 import org.tec.carpooling.common.utils.HashingUtil;
 
 @Entity
 @Table(name = "TYPEOFCREDENTIAL")
-@SequenceGenerator(name = "seq_typeofcredential_gen", sequenceName = "SEQ_TYPEOFCREDENTIAL", allocationSize = 1)
-public class TypeOfCredentialEntity implements Identifiable<Long> {
+public class TypeOfCredentialEntity implements Identifiable<Long>, CatalogEntity {
 
     public TypeOfCredentialEntity() {
     }
@@ -18,7 +20,7 @@ public class TypeOfCredentialEntity implements Identifiable<Long> {
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_typeofcredential_gen")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
     private Long id;
 
@@ -74,5 +76,15 @@ public class TypeOfCredentialEntity implements Identifiable<Long> {
                 ", type='" + type + '\'' +
                 ", auditLogId=" + (auditLog != null ? auditLog.getId() : null) +
                 '}';
+    }
+
+    @Override
+    public String getName() {
+        return this.type;
+    }
+
+    @Override
+    public void setName(String name) {
+        this.type = name;
     }
 }

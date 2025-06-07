@@ -1,7 +1,4 @@
--- Switch to the target database
-USE CARPOOLING_DB;
-
--- Drop the procedure if it already exists to allow re-creation
+-- Elimina el procedimiento si ya existe para permitir la recreación
 DROP PROCEDURE IF EXISTS AddForeignKeyAndIndexIfNotExists;
 
 DELIMITER //
@@ -16,19 +13,41 @@ CREATE PROCEDURE AddForeignKeyAndIndexIfNotExists (
 )
 BEGIN
     DECLARE v_constraint_exists INT DEFAULT 0;
-        DECLARE v_index_exists INT DEFAULT 0;
-        DECLARE current_db_name VARCHAR(64);
+    DECLARE v_index_exists INT DEFAULT 0;
+    DECLARE current_db_name VARCHAR(64);
+    DECLARE v_error_message VARCHAR(255);
 
-        -- Handler for SQL exceptions
-        DECLARE CONTINUE HANDLER FOR SQLEXCEPTION
-    BEGIN
-        GET DIAGNOSTICS CONDITION 1
-        @p1 = MYSQL_ERRNO, @p2 = MESSAGE_TEXT;
-    END;
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+
+        BEGIN
+            ROLLBACK;
+            GET DIAGNOSTICS CONDITION 1
+                @p1 = MYSQL_ERRNO, @p2 = MESSAGE_TEXT;
+            SET v_error_message = CONCAT('Error executing DDL (', @p1, '): ', @p2);
+            SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = v_error_message;
+        END;
 
     SELECT DATABASE() INTO current_db_name;
 
-    -- Check if constraint exists
+    START TRANSACTION;
+
+    -- Verificar y crear el ÍNDICE primero.
+    SELECT COUNT(*)
+    INTO v_index_exists
+    FROM INFORMATION_SCHEMA.STATISTICS
+    WHERE TABLE_SCHEMA = current_db_name
+      AND TABLE_NAME = p_table_name
+      AND INDEX_NAME = p_index_name;
+
+    IF v_index_exists = 0 THEN
+        SET @sql_stmt_idx = CONCAT('CREATE INDEX `', p_index_name, '` ',
+                                   'ON `', p_table_name, '` (`', p_fk_column, '`)');
+        PREPARE stmt_idx FROM @sql_stmt_idx;
+        EXECUTE stmt_idx;
+        DEALLOCATE PREPARE stmt_idx;
+    END IF;
+
+    -- Verificar y crear la restricción de FOREIGN KEY.
     SELECT COUNT(*)
     INTO v_constraint_exists
     FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS
@@ -45,28 +64,9 @@ BEGIN
         PREPARE stmt_fk FROM @sql_stmt_fk;
         EXECUTE stmt_fk;
         DEALLOCATE PREPARE stmt_fk;
-        SELECT CONCAT('Constraint ', p_constraint_name, ' added to table ', p_table_name, '.') AS OperationStatus;
-    ELSE
-        SELECT CONCAT('Constraint ', p_constraint_name, ' already exists on table ', p_table_name, '.') AS OperationStatus;
     END IF;
 
-    SELECT COUNT(*)
-    INTO v_index_exists
-    FROM INFORMATION_SCHEMA.STATISTICS
-    WHERE TABLE_SCHEMA = current_db_name
-      AND TABLE_NAME = p_table_name
-      AND INDEX_NAME = p_index_name;
-
-    IF v_index_exists = 0 THEN
-        SET @sql_stmt_idx = CONCAT('CREATE INDEX `', p_index_name, '` ',
-                                   'ON `', p_table_name, '` (`', p_fk_column, '`)');
-        PREPARE stmt_idx FROM @sql_stmt_idx;
-        EXECUTE stmt_idx;
-        DEALLOCATE PREPARE stmt_idx;
-        SELECT CONCAT('Index ', p_index_name, ' created on table ', p_table_name, ' for column ', p_fk_column, '.') AS OperationStatus;
-    ELSE
-        SELECT CONCAT('Index ', p_index_name, ' already exists on table ', p_table_name, '.') AS OperationStatus;
-    END IF;
+    COMMIT;
 
 END //
 
@@ -152,7 +152,7 @@ CALL AddForeignKeyAndIndexIfNotExists('TripStatus', 'FK_TRIPSTATUS_AUDITLOG', 'i
 
 -- Table Stop
 CALL AddForeignKeyAndIndexIfNotExists('Stop', 'FK_STOP_DISTRICT', 'idDistrict', 'District', 'id', 'IX_STOP_IDDISTRICT');
-CALL AddForeignKeyAndIndexIfNotExists('Stop', 'FK_STOP_STARTTRIP', 'idStarTrip', 'Trip', 'id', 'IX_STOP_IDSTARTRIP');
+CALL AddForeignKeyAndIndexIfNotExists('Stop', 'FK_STOP_STARTTRIP', 'idStartTrip', 'Trip', 'id', 'IX_STOP_IDSTARTTRIP');
 CALL AddForeignKeyAndIndexIfNotExists('Stop', 'FK_STOP_ENDTRIP', 'idEndTrip', 'Trip', 'id', 'IX_STOP_IDENDTRIP');
 CALL AddForeignKeyAndIndexIfNotExists('Stop', 'FK_STOP_AUDITLOG', 'idAuditLog', 'AuditLog', 'id', 'IX_STOP_IDAUDITLOG');
 
@@ -259,4 +259,3 @@ CALL AddForeignKeyAndIndexIfNotExists('AttrModHasEntMod', 'FK_AMHEM_LOGBOOK', 'i
 CALL AddForeignKeyAndIndexIfNotExists('AttrModHasEntMod', 'FK_AMHEM_ATTRMOD', 'idAttributeModified', 'AttributeModified', 'id', 'IX_AMHEM_IDATTRMOD');
 CALL AddForeignKeyAndIndexIfNotExists('AttrModHasEntMod', 'FK_AMHEM_AUDITLOG', 'idAuditLog', 'AuditLog', 'id', 'IX_AMHEM_IDAUDITLOG');
 
-SELECT 'Foreign key and index check/creation process completed.' AS FinalStatus;

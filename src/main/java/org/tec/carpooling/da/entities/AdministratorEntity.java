@@ -6,7 +6,6 @@ import org.tec.carpooling.common.utils.HashingUtil;
 
 @Entity
 @Table(name = "ADMINISTRATOR")
-// No SequenceGenerator, PK is derived from PersonEntity
 public class AdministratorEntity implements Identifiable<Long> {
 
     public AdministratorEntity() {
@@ -17,7 +16,7 @@ public class AdministratorEntity implements Identifiable<Long> {
     private Long idPerson;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @MapsId // This maps the idPerson field to the id of PersonEntity for the PK
+    @MapsId
     @JoinColumn(name = "IDPERSON", referencedColumnName = "ID")
     private PersonEntity person;
 

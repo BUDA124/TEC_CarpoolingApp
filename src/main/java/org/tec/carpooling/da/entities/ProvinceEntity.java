@@ -6,14 +6,13 @@ import org.tec.carpooling.common.utils.HashingUtil;
 
 @Entity
 @Table(name = "PROVINCE")
-@SequenceGenerator(name = "seq_province_gen", sequenceName = "SEQ_PROVINCE", allocationSize = 1)
 public class ProvinceEntity implements Identifiable<Long> {
 
     public ProvinceEntity() {
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_province_gen")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
     private Long id;
 

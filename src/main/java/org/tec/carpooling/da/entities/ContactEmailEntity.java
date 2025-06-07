@@ -6,14 +6,13 @@ import org.tec.carpooling.common.utils.HashingUtil;
 
 @Entity
 @Table(name = "CONTACTEMAIL")
-@SequenceGenerator(name = "seq_contactemail_gen", sequenceName = "SEQ_CONTACTEMAIL", allocationSize = 1)
 public class ContactEmailEntity implements Identifiable<Long> {
 
     public ContactEmailEntity() {
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_contactemail_gen")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
     private Long id;
 

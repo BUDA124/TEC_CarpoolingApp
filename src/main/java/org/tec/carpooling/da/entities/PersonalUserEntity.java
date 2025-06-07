@@ -6,10 +6,7 @@ import java.util.Objects;
 import org.tec.carpooling.common.utils.HashingUtil;
 
 @Entity
-@Table(name = "PERSONALUSER", uniqueConstraints = {
-    @UniqueConstraint(columnNames = {"USERNAME"}, name = "UK_USER_USERNAME")
-})
-@SequenceGenerator(name = "seq_personaluser_gen", sequenceName = "SEQ_PERSONALUSER", allocationSize = 1)
+@Table(name = "PERSONALUSER")
 public class
 PersonalUserEntity implements Identifiable<Long> {
 
@@ -17,7 +14,7 @@ PersonalUserEntity implements Identifiable<Long> {
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_personaluser_gen")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
     private Long id;
 

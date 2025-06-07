@@ -12,7 +12,7 @@ public class AdminManageInstitutionEntity implements Identifiable<AdminManageIns
     private AdminManageInstitutionId id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @MapsId("idPerson") // refers to AdminManageInstitutionId.idPerson which maps to Administrator's Person ID
+    @MapsId("idPerson")
     @JoinColumn(name = "IDPERSON", referencedColumnName = "IDPERSON", insertable = false, updatable = false)
     private AdministratorEntity administrator;
 

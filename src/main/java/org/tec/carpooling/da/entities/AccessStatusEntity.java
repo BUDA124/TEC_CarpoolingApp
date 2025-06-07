@@ -6,14 +6,14 @@ import org.tec.carpooling.common.utils.HashingUtil;
 
 @Entity
 @Table(name = "ACCESSSTATUS")
-@SequenceGenerator(name = "seq_accessstatus_gen", sequenceName = "SEQ_ACCESSSTATUS", allocationSize = 1)
+// Se elimina la anotación @SequenceGenerator porque es para Oracle, no para MariaDB.
 public class AccessStatusEntity implements Identifiable<Long> {
 
     public AccessStatusEntity() {
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_accessstatus_gen")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
     private Long id;
 
@@ -34,7 +34,7 @@ public class AccessStatusEntity implements Identifiable<Long> {
         this.auditLog = auditLogEntity;
     }
 
-    // Getters and Setters
+    // Getters and Setters (sin cambios)
     public Long getId() {
         return id;
     }

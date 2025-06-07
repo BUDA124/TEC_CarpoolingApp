@@ -6,14 +6,13 @@ import org.tec.carpooling.common.utils.HashingUtil;
 
 @Entity
 @Table(name = "STOP")
-@SequenceGenerator(name = "seq_stop_gen", sequenceName = "SEQ_STOP", allocationSize = 1)
 public class StopEntity implements Identifiable<Long> {
 
     public StopEntity() {
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_stop_gen")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
     private Long id;
 
@@ -25,7 +24,7 @@ public class StopEntity implements Identifiable<Long> {
     private DistrictEntity district;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "IDSTARTRIP") // Nullable
+    @JoinColumn(name = "IDSTARTTRIP") // Nullable
     private TripEntity startTrip;
 
     @ManyToOne(fetch = FetchType.LAZY)

@@ -6,10 +6,7 @@ import java.util.Objects;
 import org.tec.carpooling.common.utils.HashingUtil;
 
 @Entity
-@Table(name = "VEHICLE", uniqueConstraints = {
-    @UniqueConstraint(columnNames = {"PLATENUMBER"}, name = "UK_VEHICLE_PLATENUMBER")
-})
-@SequenceGenerator(name = "seq_vehicle_gen", sequenceName = "SEQ_VEHICLE", allocationSize = 1)
+@Table(name = "VEHICLE")
 public class VehicleEntity implements Identifiable<Long> {
 
     public VehicleEntity() {
@@ -26,11 +23,11 @@ public class VehicleEntity implements Identifiable<Long> {
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_vehicle_gen")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
     private Long id;
 
-    @Column(name = "ISVERIFIED", nullable = false, columnDefinition = "NUMBER(1)") // Mapped as Integer
+    @Column(name = "ISVERIFIED", nullable = false, columnDefinition = "TINYINT(1)") // Mapped as Integer
     private Integer isVerified;
 
     @Column(name = "BRAND", nullable = false, length = 100)

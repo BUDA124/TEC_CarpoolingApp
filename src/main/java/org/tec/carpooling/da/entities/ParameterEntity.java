@@ -2,18 +2,20 @@ package org.tec.carpooling.da.entities;
 
 import jakarta.persistence.*;
 import java.util.Objects;
+
+import org.tec.carpooling.common.utils.Auditable;
+import org.tec.carpooling.common.utils.CatalogEntity;
 import org.tec.carpooling.common.utils.HashingUtil;
 
 @Entity
 @Table(name = "PARAMETER")
-@SequenceGenerator(name = "seq_parameter_gen", sequenceName = "SEQ_PARAMETER", allocationSize = 1)
-public class ParameterEntity implements Identifiable<Long> {
+public class ParameterEntity implements Identifiable<Long>, CatalogEntity {
 
     public ParameterEntity() {
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_parameter_gen")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
     private Long id;
 
@@ -42,10 +44,12 @@ public class ParameterEntity implements Identifiable<Long> {
         this.id = id;
     }
 
+    @Override
     public String getName() {
         return name;
     }
 
+    @Override
     public void setName(String name) {
         this.name = name;
     }
@@ -73,6 +77,7 @@ public class ParameterEntity implements Identifiable<Long> {
         ParameterEntity that = (ParameterEntity) o;
         return Objects.equals(id, that.id);
     }
+
 
     @Override
     public int hashCode() {

@@ -2,18 +2,20 @@ package org.tec.carpooling.da.entities;
 
 import jakarta.persistence.*;
 import java.util.Objects;
+
+import org.tec.carpooling.common.utils.Auditable;
+import org.tec.carpooling.common.utils.CatalogEntity;
 import org.tec.carpooling.common.utils.HashingUtil;
 
 @Entity
 @Table(name = "PRICESTATUS")
-@SequenceGenerator(name = "seq_pricestatus_gen", sequenceName = "SEQ_PRICESTATUS", allocationSize = 1)
-public class PriceStatusEntity implements Identifiable<Long> {
+public class PriceStatusEntity implements Identifiable<Long>, CatalogEntity {
 
     public PriceStatusEntity() {
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_pricestatus_gen")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
     private Long id;
 
@@ -74,5 +76,15 @@ public class PriceStatusEntity implements Identifiable<Long> {
                 ", status='" + status + '\'' +
                 ", auditLogId=" + (auditLog != null ? auditLog.getId() : null) +
                 '}';
+    }
+
+    @Override
+    public String getName() {
+        return this.status;
+    }
+
+    @Override
+    public void setName(String name) {
+        this.status = name;
     }
 }
