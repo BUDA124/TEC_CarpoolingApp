@@ -24,9 +24,8 @@ public class AppConstants {
 
 
     // User Status
-    public static final String USER_STATUS_ACTIVE = "Active";
-    public static final String USER_STATUS_BANNED = "Banned";
-    public static final String USER_STATUS_PENDING_VERIFICATION = "Pending Verification";
+    public static final String USER_STATUS_IS_DRIVER = "Driver";
+    public static final String USER_STATUS_IS_PASSENGER = "Passenger";
     public static final String USER_STATUS_INACTIVE = "Inactive";
 
     // Credential Types

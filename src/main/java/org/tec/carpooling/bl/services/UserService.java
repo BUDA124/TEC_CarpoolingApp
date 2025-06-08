@@ -49,4 +49,6 @@ public interface UserService {
      * @throws NotFoundException If the user is not found.
      */
     UserInstitutionInfoDTO getUserInstitutionInfo(String username);
+
+    boolean IsUserDriver(String username);
 }

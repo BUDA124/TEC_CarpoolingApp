@@ -12,8 +12,11 @@ import org.springframework.stereotype.Component;
 
 import org.springframework.stereotype.Controller;
 import org.tec.carpooling.bl.dto.UI_BL.LogInDTO;
+import org.tec.carpooling.bl.services.UserService;
+import org.tec.carpooling.common.constants.AppConstants;
 import org.tec.carpooling.da.entities.PersonEntity;
 import org.tec.carpooling.da.entities.PersonalUserEntity;
+import org.tec.carpooling.da.entities.UserStatusEntity;
 import org.tec.carpooling.da.repositories.DriverRepository;
 import org.tec.carpooling.da.repositories.PersonRepository;
 import org.tec.carpooling.da.repositories.PersonalUserRepository;
@@ -32,20 +35,16 @@ public class PickRoleController {
     @FXML private AnchorPane AP_passangerSeat;
     @FXML private Button registerDriverButton;
 
+    @Autowired private PersonalUserRepository personalUserRepository;
+    @Autowired private PersonRepository personRepository;
+    @Autowired private DriverRepository driverRepository;
 
-    @Autowired
-    private PersonalUserRepository personalUserRepository;
-
-    @Autowired
-    private PersonRepository personRepository;
-
-    @Autowired
-    private DriverRepository driverRepository;
+    @Autowired private UserService userService;
 
     @FXML
     private void onPassangerPane(MouseEvent event) {
         try {
-            SceneManager.switchToScene(event, "passenger-view.fxml");
+            SceneManager.switchToScene(event, "passenger/passenger-view.fxml");
         } catch (IOException e) {
             e.printStackTrace();
 
@@ -54,21 +53,26 @@ public class PickRoleController {
 
     @FXML
     private void onDriverPane(MouseEvent event) {
-        UserSession session = UserSession.getInstance();
-        String username = session.getCurrentUser();
+        String username = UserSession.getInstance().getCurrentUser();
 
-        Optional<PersonalUserEntity> optionalUser = personalUserRepository.findByUsername(username);
+        if (username == null || username.isEmpty()) {
+            showError("User not found.");
+            return;
+        }
 
-        if (optionalUser.isPresent()) {
-            Optional<PersonEntity> person = personRepository.findById(optionalUser.get().getPerson().getId());
-            if (person.isPresent()) {
-                person.get().getId();
+        boolean isDriver = userService.IsUserDriver(username);
+
+        try {
+            if (isDriver) {
+                SceneManager.switchToScene(event, "driver/driver-ride-view.fxml");
+            } else {
+                showWarning("Please register as a driver first.");
             }
 
-
-        } else {
-            showError("User not found.");
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+
     }
 
 
@@ -87,6 +91,13 @@ public class PickRoleController {
 
     }
 
+    private void showWarning(String message) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Error");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
 
     private void showError(String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);

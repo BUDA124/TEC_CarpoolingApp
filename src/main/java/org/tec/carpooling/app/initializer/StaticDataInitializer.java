@@ -219,8 +219,8 @@ public class StaticDataInitializer implements ApplicationRunner {
 
     private void initializeUserStatuses(AuditLogEntity auditLog) {
         initializeCatalogData("Estado de Usuario",
-                Arrays.asList(AppConstants.USER_STATUS_ACTIVE, AppConstants.USER_STATUS_BANNED,
-                        AppConstants.USER_STATUS_PENDING_VERIFICATION, AppConstants.USER_STATUS_INACTIVE),
+                Arrays.asList(AppConstants.USER_STATUS_IS_DRIVER, AppConstants.USER_STATUS_IS_PASSENGER,
+                        AppConstants.USER_STATUS_INACTIVE),
                 userStatusRepository,
                 UserStatusEntity::new,
                 auditLog);

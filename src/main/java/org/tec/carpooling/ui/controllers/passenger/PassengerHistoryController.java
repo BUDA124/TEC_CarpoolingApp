@@ -1,8 +1,9 @@
-package org.tec.carpooling.ui.controllers.passanger;
+package org.tec.carpooling.ui.controllers.passenger;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 
 import org.springframework.stereotype.Controller;
 import org.tec.carpooling.ui.SceneManager;
@@ -10,7 +11,21 @@ import org.tec.carpooling.ui.SceneManager;
 import java.io.IOException;
 
 @Controller
-public class PassengerScheduledController {
+public class PassengerHistoryController {
+
+    @FXML
+    private Pane P_lookForRide;
+
+    @FXML
+    private Pane P_scheduledRides;
+
+    @FXML
+    private Pane P_history;
+
+    @FXML
+    public void initialize() {
+        // Inicialización si es necesaria
+    }
 
     @FXML
     private void goToLookForRide(MouseEvent event) {
@@ -39,11 +54,6 @@ public class PassengerScheduledController {
         }
     }
 
-
-    @FXML
-    public void initialize() {
-
-    }
 
     private void showError(String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);

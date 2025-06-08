@@ -7,7 +7,6 @@ import org.tec.carpooling.bl.dto.BL_DA.UserInstitutionInfoDTO;
 import org.tec.carpooling.bl.dto.UI_BL.LogInDTO;
 import org.tec.carpooling.bl.dto.UI_BL.UserAcceptTermsDTO;
 import org.tec.carpooling.bl.dto.UI_BL.UserRegistrationDTO;
-import org.tec.carpooling.bl.mappers.UserLogInMapper;
 import org.tec.carpooling.bl.mappers.UserRegistrationMapper;
 import org.tec.carpooling.bl.services.UserService;
 import org.tec.carpooling.common.exceptions.AuthenticationException;
@@ -21,23 +20,12 @@ import java.util.Optional;
 @Service
 public class UserServiceImpl implements UserService {
 
-    @Autowired
-    private PersonRepository personRepository;
+    @Autowired private PersonRepository personRepository;
+    @Autowired private PersonalUserRepository personalUserRepository;
+    @Autowired private InstitutionalEmailRepository institutionalEmailRepository;
+    @Autowired private CredentialRepository credentialRepository;
+    @Autowired private UserRegistrationMapper userRegistrationMapper;
 
-    @Autowired
-    private PersonalUserRepository personalUserRepository;
-
-    @Autowired
-    private InstitutionalEmailRepository institutionalEmailRepository;
-
-    @Autowired
-    private CredentialRepository credentialRepository;
-
-    @Autowired
-    private UserRegistrationMapper userRegistrationMapper;
-
-    @Autowired
-    private UserLogInMapper userLogInMapper;
 
     @Override
     @Transactional
@@ -89,6 +77,22 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserInstitutionInfoDTO getUserInstitutionInfo(String username) {
         return null;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public boolean IsUserDriver(String username) {
+
+        Optional<PersonalUserEntity> userEntityOptional = personalUserRepository.findByUsername(username);
+        UserStatusEntity userStatusEntity;
+
+        if (userEntityOptional.isPresent()) {
+            userStatusEntity = userEntityOptional.get().getUserStatus();
+        } else {
+            return false;
+        }
+
+        return userStatusEntity.getName().equals("Driver");
     }
 
 

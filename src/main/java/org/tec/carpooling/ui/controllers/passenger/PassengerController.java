@@ -1,12 +1,13 @@
-package org.tec.carpooling.ui.controllers.passanger;
+package org.tec.carpooling.ui.controllers.passenger;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Controller;
 
 @Controller
-public class PassengerSettingsController {
+public class PassengerController {
 
     @FXML
     public void initialize() {

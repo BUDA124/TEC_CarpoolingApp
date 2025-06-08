@@ -1,4 +1,4 @@
-package org.tec.carpooling.ui.controllers.passanger;
+package org.tec.carpooling.ui.controllers.passenger;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;

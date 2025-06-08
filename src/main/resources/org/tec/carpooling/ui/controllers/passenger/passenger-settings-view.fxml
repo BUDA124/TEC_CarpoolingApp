@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
@@ -10,7 +12,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<SplitPane dividerPositions="0.25" prefHeight="700.0" prefWidth="1100.0" stylesheets="@../../../../../../css/styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.tec.carpooling.ui.controllers.passanger.PassengerController">
+<SplitPane dividerPositions="0.25" prefHeight="700.0" prefWidth="1100.0" stylesheets="@../../../../../../css/styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.tec.carpooling.ui.controllers.passenger.PassengerSettingsController">
    <items>
       <AnchorPane disable="true" minHeight="0.0" minWidth="0.0" prefHeight="550.0" prefWidth="134.0" style="-fx-background-color: #081a51;">
          <children>
@@ -88,29 +90,82 @@
       </AnchorPane>
       <AnchorPane prefHeight="650.0" prefWidth="820.0" style="-fx-border-radius: 30;">
          <children>
-            <TextField fx:id="TF_enterYourDestination" layoutX="256.0" layoutY="110.0" prefHeight="40.0" prefWidth="250.0" promptText="Enter your destination" styleClass="adlam-text">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </TextField>
-            <Text layoutX="31.0" layoutY="89.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="alata-text" text="Look for a ride" wrappingWidth="393.33331298828125">
+            <Text layoutX="263.0" layoutY="79.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="alata-text" text="Edit Profile" wrappingWidth="295.0">
                <font>
                   <Font name="SansSerif Regular" size="60.0" />
                </font>
             </Text>
-            <Text fontSmoothingType="LCD" layoutX="31.0" layoutY="137.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="alata-text" text="Search for a specific ride">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
-            </Text>
-            <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="185.0" layoutY="105.0">
+            <ImageView fx:id="Icon_profilePicture" fitHeight="151.0" fitWidth="139.0" layoutX="50.0" layoutY="90.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@/images/search.png" />
+                  <Image url="@../../../../../../images/default-pfp.png" />
                </image>
             </ImageView>
-            <ComboBox fx:id="CB_day" layoutX="522.0" layoutY="110.0" prefHeight="40.0" prefWidth="80.0" promptText="Day" styleClass="akatab-text" />
-            <ComboBox layoutX="617.0" layoutY="110.0" prefHeight="40.0" prefWidth="80.0" promptText="Month" styleClass="akatab-text" />
-            <ComboBox layoutX="711.0" layoutY="110.0" prefHeight="40.0" prefWidth="80.0" promptText="Year" styleClass="akatab-text" />
+            <Text layoutX="217.0" layoutY="150.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="adlam-text" text="Full Name:">
+               <font>
+                  <Font name="System Bold" size="26.0" />
+               </font>
+            </Text>
+            <Text layoutX="218.0" layoutY="190.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="adlam-text" text="ID:">
+               <font>
+                  <Font name="System Bold" size="26.0" />
+               </font>
+            </Text>
+            <Pane fx:id="P_iconEditProfile" layoutX="154.0" layoutY="191.0" prefHeight="38.0" prefWidth="33.0" style="-fx-background-color: #017efa;">
+               <children>
+                  <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="6.5" layoutY="9.0">
+                     <image>
+                        <Image url="@../../../../../../images/pencil.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+            <TextField fx:id="TF_personalEmail" layoutX="50.0" layoutY="250.0" prefHeight="40.0" prefWidth="608.0" promptText="Name@example">
+               <font>
+                  <Font size="13.0" />
+               </font>
+            </TextField>
+            <TextField fx:id="TF_istitutionalEmail" layoutX="50.0" layoutY="300.0" prefHeight="40.0" prefWidth="608.0" promptText="InstitutionName@example">
+               <font>
+                  <Font size="13.0" />
+               </font>
+            </TextField>
+            <Text layoutX="217.0" layoutY="384.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="adlam-text" text="Birthdate:" wrappingWidth="108.6054573059082">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Text>
+            <DatePicker fx:id="DP_birthdate" layoutX="300.0" layoutY="357.0" prefHeight="40.0" prefWidth="280.0" />
+            <ComboBox fx:id="CB_gender" layoutX="50.0" layoutY="357.0" prefHeight="40.0" prefWidth="140.0" promptText="Gender" styleClass="akatab-text" />
+            <TextField fx:id="TF_currentPassword" layoutX="50.0" layoutY="410.0" prefHeight="40.0" prefWidth="608.0" promptText="Current Password">
+               <font>
+                  <Font size="13.0" />
+               </font>
+            </TextField>
+            <TextField fx:id="TF_confirmNewPassword" layoutX="50.0" layoutY="504.0" prefHeight="40.0" prefWidth="608.0" promptText="Confirm New Password">
+               <font>
+                  <Font size="13.0" />
+               </font>
+            </TextField>
+            <TextField fx:id="TF_newPassword" layoutX="50.0" layoutY="456.0" prefHeight="40.0" prefWidth="608.0" promptText="New Password">
+               <font>
+                  <Font size="13.0" />
+               </font>
+            </TextField>
+            <Button fx:id="BTN_edit" layoutX="294.0" layoutY="575.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="200.0" styleClass="adlam-text" text="Edit">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
+            <Text fx:id="T_fullName" layoutX="362.0" layoutY="150.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="adlam-text" text="Name">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Text>
+            <Text fx:id="T_idProfile" layoutX="261.0" layoutY="190.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="adlam-text" text="Id">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Text>
          </children>
       </AnchorPane>
    </items>

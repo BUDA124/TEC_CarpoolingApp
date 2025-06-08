@@ -206,10 +206,9 @@ public class TestDataInitializer implements ApplicationRunner {
         genders.put(AppConstants.GENDER_PREFER_NOT_TO_SAY, fetchGenderOrFail(AppConstants.GENDER_PREFER_NOT_TO_SAY));
 
         // User Statuses
-        userStatuses.put(AppConstants.USER_STATUS_ACTIVE, fetchUserStatusOrFail(AppConstants.USER_STATUS_ACTIVE));
+        userStatuses.put(AppConstants.USER_STATUS_IS_DRIVER, fetchUserStatusOrFail(AppConstants.USER_STATUS_IS_DRIVER));
+        userStatuses.put(AppConstants.USER_STATUS_IS_PASSENGER, fetchUserStatusOrFail(AppConstants.USER_STATUS_IS_PASSENGER));
         userStatuses.put(AppConstants.USER_STATUS_INACTIVE, fetchUserStatusOrFail(AppConstants.USER_STATUS_INACTIVE));
-        userStatuses.put(AppConstants.USER_STATUS_BANNED, fetchUserStatusOrFail(AppConstants.USER_STATUS_BANNED));
-        userStatuses.put(AppConstants.USER_STATUS_PENDING_VERIFICATION, fetchUserStatusOrFail(AppConstants.USER_STATUS_PENDING_VERIFICATION));
 
         // Type Of Credentials (Static ones)
         typeOfCredentials.put(AppConstants.CREDENTIAL_TYPE_NATIONAL_ID, fetchTypeOfCredentialOrFail(AppConstants.CREDENTIAL_TYPE_NATIONAL_ID));
@@ -413,36 +412,39 @@ public class TestDataInitializer implements ApplicationRunner {
         log.info("Creating personal users...");
         PersonalUserEntity carlosUser = personalUserRepository.findByUsername("Rodri").orElseGet(() -> {
             PersonalUserEntity u = new PersonalUserEntity("Rodri", HashingUtil.hashPassword("/123AAaa"),
-                                                      LocalDate.of(2025, Month.JANUARY, 15),
-                                                      userStatuses.get(AppConstants.USER_STATUS_ACTIVE),
-                                                      persons.get("Carlos Rodríguez"), newAuditLog());
+                    LocalDate.of(2025, Month.JANUARY, 15),
+                    userStatuses.get(AppConstants.USER_STATUS_IS_DRIVER),
+                    persons.get("Carlos Rodríguez"), newAuditLog());
             return personalUserRepository.save(u);
         });
         personalUsers.put("carlos.rodriguez", carlosUser);
 
         PersonalUserEntity mariaUser = personalUserRepository.findByUsername("maria.fernandez").orElseGet(() -> {
             PersonalUserEntity u = new PersonalUserEntity("maria.fernandez", HashingUtil.hashPassword("/321AAaa"),
-                                                      LocalDate.of(2025, Month.JANUARY, 20),
-                                                      userStatuses.get(AppConstants.USER_STATUS_ACTIVE),
-                                                      persons.get("María Fernández"), newAuditLog());
+                    LocalDate.of(2025, Month.JANUARY, 20),
+                    // Change this line
+                    userStatuses.get(AppConstants.USER_STATUS_IS_PASSENGER),
+                    persons.get("María Fernández"), newAuditLog());
             return personalUserRepository.save(u);
         });
         personalUsers.put("maria.fernandez", mariaUser);
-        
+
+        // José is a Driver, so this is correct
         PersonalUserEntity joseUser = personalUserRepository.findByUsername("jose.vargas").orElseGet(() -> {
             PersonalUserEntity u = new PersonalUserEntity("jose.vargas", HashingUtil.hashPassword("password789"),
-                                                      LocalDate.of(2025, Month.FEBRUARY, 10),
-                                                      userStatuses.get(AppConstants.USER_STATUS_ACTIVE),
-                                                      persons.get("José Vargas"), newAuditLog());
+                    LocalDate.of(2025, Month.FEBRUARY, 10),
+                    userStatuses.get(AppConstants.USER_STATUS_IS_DRIVER),
+                    persons.get("José Vargas"), newAuditLog());
             return personalUserRepository.save(u);
         });
         personalUsers.put("jose.vargas", joseUser);
 
         PersonalUserEntity anaUser = personalUserRepository.findByUsername("ana.jimenez").orElseGet(() -> {
             PersonalUserEntity u = new PersonalUserEntity("ana.jimenez", HashingUtil.hashPassword("password012"),
-                                                      LocalDate.of(2025, Month.FEBRUARY, 15),
-                                                      userStatuses.get(AppConstants.USER_STATUS_ACTIVE),
-                                                      persons.get("Ana Jiménez"), newAuditLog());
+                    LocalDate.of(2025, Month.FEBRUARY, 15),
+                    // Change this line
+                    userStatuses.get(AppConstants.USER_STATUS_IS_PASSENGER),
+                    persons.get("Ana Jiménez"), newAuditLog());
             return personalUserRepository.save(u);
         });
         personalUsers.put("ana.jimenez", anaUser);
@@ -619,8 +621,8 @@ public class TestDataInitializer implements ApplicationRunner {
         );
         attributeModifiedRecords.put(1L, am1);
 
-        AttributeModifiedEntity am2 = attributeModifiedRepository.findByEntityModifiedAndAttributeNameAndOldValueAndNewValue(em2, "userStatus", AppConstants.USER_STATUS_INACTIVE, AppConstants.USER_STATUS_ACTIVE).orElseGet(() ->
-            attributeModifiedRepository.save(new AttributeModifiedEntity(AppConstants.USER_STATUS_INACTIVE, AppConstants.USER_STATUS_ACTIVE, "userStatus", em2, newAuditLog()))
+        AttributeModifiedEntity am2 = attributeModifiedRepository.findByEntityModifiedAndAttributeNameAndOldValueAndNewValue(em2, "userStatus", AppConstants.USER_STATUS_INACTIVE, AppConstants.USER_STATUS_IS_DRIVER).orElseGet(() ->
+            attributeModifiedRepository.save(new AttributeModifiedEntity(AppConstants.USER_STATUS_INACTIVE, AppConstants.USER_STATUS_IS_DRIVER, "userStatus", em2, newAuditLog()))
         );
         attributeModifiedRecords.put(2L, am2);
     }
