@@ -5,9 +5,11 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import javafx.scene.layout.Pane;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.tec.carpooling.bl.services.SimpleDataRetrievalService;
 import org.tec.carpooling.da.entities.AdministratorEntity;
 import org.tec.carpooling.da.entities.PersonEntity;
+import org.tec.carpooling.ui.SceneManager;
 
 @Controller
 public class AdminAddInstController {
@@ -53,11 +56,11 @@ public class AdminAddInstController {
         String institutionWebsite = institutionWebsiteURLTextField.getText();
 
         if (institutionName.isEmpty() || institutionEmail.isEmpty() || institutionWebsite.isEmpty()) {
-            showAlert("There Are Blank Spaces", Alert.AlertType.ERROR, "Fill all the fields.");
+            showError("There Are Blank Spaces");
             return;
         }
 
-        showAlert("Institution Added Succesfully ", Alert.AlertType.INFORMATION, "The institution has been added successfully.");
+        showError("Institution Added Succesfully ");
     }
 
 
@@ -83,9 +86,92 @@ public class AdminAddInstController {
         addAdminListView.setItems(adminNames);
     }
 
-    private void showAlert(String title, Alert.AlertType alertType, String message) {
-        Alert alert = new Alert(alertType);
-        alert.setTitle(title);
+
+    @FXML
+    private void goToDailyReport(MouseEvent event) {
+        try {
+            SceneManager.switchToScene(event, "admin/admin-report-view.fxml");
+        } catch (IOException e) {
+            e.printStackTrace();
+            showError("Could not load Daily Report view.");
+        }
+    }
+
+    @FXML
+    private void goToGeneralQueries(MouseEvent event) {
+        try {
+            SceneManager.switchToScene(event, "admin/admin-queries-view.fxml");
+        } catch (IOException e) {
+            e.printStackTrace();
+            showError("Could not load General Queries view.");
+        }
+    }
+
+    @FXML
+    private void goToHistory(MouseEvent event) {
+        try {
+            SceneManager.switchToScene(event, "admin/admin-history-view.fxml");
+        } catch (IOException e) {
+            e.printStackTrace();
+            showError("Could not load History view.");
+        }
+    }
+
+    @FXML
+    private void goToAnalytics(MouseEvent event) {
+        try {
+            SceneManager.switchToScene(event, "admin/admin-stats-view.fxml");
+        } catch (IOException e) {
+            e.printStackTrace();
+            showError("Could not load Analytics view.");
+        }
+    }
+
+    @FXML
+    private void goToRequests(MouseEvent event) {
+        try {
+            SceneManager.switchToScene(event, "admin/admin-requests-view.fxml");
+        } catch (IOException e) {
+            e.printStackTrace();
+            showError("Could not load Requests view.");
+        }
+    }
+
+    @FXML
+    private void goToAddInstitution(MouseEvent event) {
+        try {
+            SceneManager.switchToScene(event, "admin/admin-add-inst-view.fxml");
+        } catch (IOException e) {
+            e.printStackTrace();
+            showError("Could not load Add Institution view.");
+        }
+    }
+
+    @FXML
+    private void goToViewInstitution(MouseEvent event) {
+        try {
+            SceneManager.switchToScene(event, "admin/admin-check-inst-view.fxml");
+        } catch (IOException e) {
+            e.printStackTrace();
+            showError("Could not load View Institution view.");
+        }
+    }
+
+    @FXML
+    private void goToSignOut(MouseEvent event) {
+        try {
+            SceneManager.switchToScene(event, "login-view.fxml");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
+
+    private void showError(String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error");
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();

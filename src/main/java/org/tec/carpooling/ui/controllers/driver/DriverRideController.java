@@ -315,14 +315,58 @@ public class DriverRideController {
         alert.showAndWait();
     }
 
-    @FXML private void goToHistoryPane(MouseEvent event) throws IOException {
-        SceneManager.switchToScene(event, "driver/driver-history-view.fxml");
+    @FXML
+    private void goToPublishRidePane(MouseEvent event) {
+        try {
+            SceneManager.switchToScene(event, "driver/driver-ride-view.fxml");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
-    @FXML private void goToScheduleRidePane(MouseEvent event) throws IOException {
-        SceneManager.switchToScene(event, "driver/driver-scheduled-view.fxml");
+
+    @FXML
+    private void goToScheduleRidePane(MouseEvent event) {
+        try {
+            SceneManager.switchToScene(event, "driver/driver-scheduled-view.fxml");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
-    @FXML private void goToPublishRidePane(MouseEvent event)throws IOException {
-        SceneManager.switchToScene(event, "driver-ride-view.fxml");
+
+    @FXML
+    private void goToHistoryPane(MouseEvent event) {
+        try {
+            SceneManager.switchToScene(event, "driver/driver-history-view.fxml");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void goToSettings(MouseEvent event) {
+        try {
+            SceneManager.switchToScene(event, "driver/driver-settings-view.fxml");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void goToSignOut(MouseEvent event) {
+        try {
+            SceneManager.switchToScene(event, "login-view.fxml");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void goToAnalytics(MouseEvent event) {
+        try {
+            SceneManager.switchToScene(event, "driver/driver-stats-view.fxml");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private static class TwoDigitConverter extends StringConverter<Integer> {

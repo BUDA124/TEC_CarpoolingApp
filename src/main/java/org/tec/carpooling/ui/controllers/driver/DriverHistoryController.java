@@ -22,9 +22,9 @@ public class DriverHistoryController {
     private javafx.scene.layout.Pane publishRidePane;
 
     @FXML
-    private void goToHistoryPane(MouseEvent event) {
+    private void goToPublishRidePane(MouseEvent event) {
         try {
-            SceneManager.switchToScene(event, "driver-history-view.fxml");
+            SceneManager.switchToScene(event, "driver/driver-ride-view.fxml");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -33,20 +33,48 @@ public class DriverHistoryController {
     @FXML
     private void goToScheduleRidePane(MouseEvent event) {
         try {
-            SceneManager.switchToScene(event, "driver-scheduled-view.fxml");
+            SceneManager.switchToScene(event, "driver/driver-scheduled-view.fxml");
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     @FXML
-    private void goToPublishRidePane(MouseEvent event) {
+    private void goToHistoryPane(MouseEvent event) {
         try {
-            SceneManager.switchToScene(event, "driver-ride-view.fxml");
+            SceneManager.switchToScene(event, "driver/driver-history-view.fxml");
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
+    @FXML
+    private void goToSettings(MouseEvent event) {
+        try {
+            SceneManager.switchToScene(event, "driver/driver-settings-view.fxml");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void goToAnalytics(MouseEvent event) {
+        try {
+            SceneManager.switchToScene(event, "driver/driver-stats-view.fxml");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void goToSignOut(MouseEvent event) {
+        try {
+            SceneManager.switchToScene(event, "login-view.fxml");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
 
     @FXML

@@ -35,9 +35,9 @@
                             <image>
                                 <Image url="@../../../../../images/driver.png" />
                             </image>
-                     <cursor>
-                        <Cursor fx:constant="NONE" />
-                     </cursor>
+                            <cursor>
+                                <Cursor fx:constant="NONE" />
+                            </cursor>
                         </ImageView>
                         <Button fx:id="registerDriverButton" layoutX="89.0" layoutY="311.0" mnemonicParsing="false" onAction="#onRegisterDriverButton" text="Register as a driver" />
                     </children>
@@ -53,9 +53,9 @@
                             <image>
                                 <Image url="@../../../../../images/passenger.png" />
                             </image>
-                     <cursor>
-                        <Cursor fx:constant="NONE" />
-                     </cursor>
+                            <cursor>
+                                <Cursor fx:constant="NONE" />
+                            </cursor>
                         </ImageView>
                     </children>
                 </AnchorPane>
