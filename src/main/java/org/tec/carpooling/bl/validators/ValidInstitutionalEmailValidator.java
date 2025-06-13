@@ -2,7 +2,7 @@ package org.tec.carpooling.bl.validators;
 
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
-import org.tec.carpooling.bl.dto.UI_BL.UserRegistrationDTO;
+import org.tec.carpooling.bl.dto.UI_BL.StartUp.UserRegistrationDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.tec.carpooling.bl.services.SimpleDataRetrievalService;
 import org.tec.carpooling.bl.validators.constraints.ValidInstitutionalEmail;

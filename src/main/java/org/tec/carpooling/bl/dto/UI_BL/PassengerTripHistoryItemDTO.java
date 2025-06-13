@@ -1,5 +1,7 @@
 package org.tec.carpooling.bl.dto.UI_BL;
 
+import org.tec.carpooling.bl.dto.UI_BL.driver.DriverSummaryDTO;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 

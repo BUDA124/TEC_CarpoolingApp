@@ -1,10 +1,16 @@
 package org.tec.carpooling.bl.services;
 
+import org.springframework.stereotype.Service;
+import org.tec.carpooling.bl.dto.BL_DA.TripSearchQueryDTO;
+import org.tec.carpooling.bl.dto.BL_DA.TripSearchResultDTO;
 import org.tec.carpooling.bl.dto.UI_BL.*; // Includes PublishTripDTO, TripSearchQueryDTO, TripSearchResultDTO, TripDetailsDTO, PassengerRegistrationDTO
+import org.tec.carpooling.bl.dto.UI_BL.driver.PublishTripDTO;
+import org.tec.carpooling.bl.dto.UI_BL.TripDetailsDTO;
 import org.tec.carpooling.common.exceptions.*;
 
 import java.util.List;
 
+@Service
 public interface TripService {
 
     /**
@@ -17,7 +23,7 @@ public interface TripService {
      * @throws PermissionDeniedException If the user is not a driver or not authorized.
      * @throws OperationFailedException If trip publication fails.
      */
-    TripDetailsDTO publishTrip(PublishTripDTO dto);
+    boolean publishTrip(PublishTripDTO dto);
 
     /**
      * Searches for available trips based on destination, schedule, and passenger's institution.

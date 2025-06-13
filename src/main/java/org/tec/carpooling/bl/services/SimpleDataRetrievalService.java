@@ -11,6 +11,7 @@ public interface SimpleDataRetrievalService {
     List<InstitutionEntity> getAllInstitutions();
     List<CountryEntity> getAllCountries();
     String getPrimaryDomainForInstitution(Long institutionId);
+    List<DistrictEntity> getAllDistrictsInProvince(String province);
 }
 
 

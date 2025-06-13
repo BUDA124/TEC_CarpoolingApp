@@ -1,4 +1,4 @@
-package org.tec.carpooling.bl.dto.UI_BL;
+package org.tec.carpooling.bl.dto.UI_BL.StartUp;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;

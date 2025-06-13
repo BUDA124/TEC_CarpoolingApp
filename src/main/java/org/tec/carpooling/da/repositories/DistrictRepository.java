@@ -14,6 +14,6 @@ import java.util.Optional;
 @Repository
 public interface DistrictRepository extends JpaRepository<DistrictEntity, Long> {
     Optional<DistrictEntity> findByNameAndCanton(String districtCarmenSanJose, CantonEntity sanJoseCanton);
-
+    List<DistrictEntity> findByCanton_Province_Name(String provinceName);
     ArrayList<DistrictEntity> findByCantonIn(List<CantonEntity> allCantons);
 }

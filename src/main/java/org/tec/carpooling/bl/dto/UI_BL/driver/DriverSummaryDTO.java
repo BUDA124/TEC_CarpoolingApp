@@ -1,4 +1,4 @@
-package org.tec.carpooling.bl.dto.UI_BL;
+package org.tec.carpooling.bl.dto.UI_BL.driver;
 
 /**
  * Data Transfer Object for carrying a summary of a driver's information from the BL

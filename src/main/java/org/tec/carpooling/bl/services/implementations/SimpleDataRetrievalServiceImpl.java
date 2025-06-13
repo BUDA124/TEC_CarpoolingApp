@@ -6,6 +6,8 @@ import org.tec.carpooling.bl.services.SimpleDataRetrievalService;
 import org.tec.carpooling.da.entities.*;
 import org.tec.carpooling.da.repositories.*;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,6 +28,12 @@ public class SimpleDataRetrievalServiceImpl implements SimpleDataRetrievalServic
 
     @Autowired
     private CountryRepository countryRepository;
+    @Autowired
+    private DistrictRepository districtRepository;
+    @Autowired
+    private CantonRepository cantonRepository;
+    @Autowired
+    private ProvinceRepository provinceRepository;
 
     @Override
     public List<GenderEntity> getAllGenders() {
@@ -56,7 +64,15 @@ public class SimpleDataRetrievalServiceImpl implements SimpleDataRetrievalServic
     public String getPrimaryDomainForInstitution(Long institutionId) {
         Optional<InstitutionEntity> institutionOptional = institutionRepository.findById(institutionId);
         return institutionOptional
-                .map(InstitutionEntity::getEmailDomain) // If present, applies getEmailDomain, returns Optional<String>
-                .orElse(null); // If Optional<String> is empty (or original was empty), return null
+                .map(InstitutionEntity::getEmailDomain)
+                .orElse(null);
+    }
+
+    public List<DistrictEntity> getAllDistrictsInProvince(String provinceName) {
+        if (provinceRepository.findByName(provinceName).isEmpty()) {
+            return Collections.emptyList();
+        }
+
+        return districtRepository.findByCanton_Province_Name(provinceName);
     }
 }

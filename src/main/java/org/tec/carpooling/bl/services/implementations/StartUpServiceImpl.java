@@ -4,11 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.tec.carpooling.bl.dto.BL_DA.UserInstitutionInfoDTO;
-import org.tec.carpooling.bl.dto.UI_BL.LogInDTO;
-import org.tec.carpooling.bl.dto.UI_BL.UserAcceptTermsDTO;
-import org.tec.carpooling.bl.dto.UI_BL.UserRegistrationDTO;
+import org.tec.carpooling.bl.dto.UI_BL.StartUp.LogInDTO;
+import org.tec.carpooling.bl.dto.UI_BL.StartUp.UserAcceptTermsDTO;
+import org.tec.carpooling.bl.dto.UI_BL.StartUp.UserRegistrationDTO;
 import org.tec.carpooling.bl.mappers.UserRegistrationMapper;
-import org.tec.carpooling.bl.services.UserService;
+import org.tec.carpooling.bl.services.StartUpService;
 import org.tec.carpooling.common.exceptions.AuthenticationException;
 import org.tec.carpooling.common.utils.HashingUtil;
 import org.tec.carpooling.da.entities.*;
@@ -18,7 +18,7 @@ import java.time.LocalDate;
 import java.util.Optional;
 
 @Service
-public class UserServiceImpl implements UserService {
+public class StartUpServiceImpl implements StartUpService {
 
     @Autowired private PersonRepository personRepository;
     @Autowired private PersonalUserRepository personalUserRepository;

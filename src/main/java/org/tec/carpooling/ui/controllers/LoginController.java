@@ -10,8 +10,8 @@ import javafx.scene.text.Text;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Controller;
-import org.tec.carpooling.bl.dto.UI_BL.LogInDTO;
-import org.tec.carpooling.bl.services.UserService;
+import org.tec.carpooling.bl.dto.UI_BL.StartUp.LogInDTO;
+import org.tec.carpooling.bl.services.StartUpService;
 import org.tec.carpooling.common.constants.AppConstants;
 import org.tec.carpooling.common.exceptions.AuthenticationException;
 import org.tec.carpooling.da.repositories.PersonRepository;
@@ -44,7 +44,7 @@ public class LoginController {
     private PersonRepository personRepository;
 
     @Autowired
-    UserService userService;
+    StartUpService startUpService;
 
     private final Validator validator = AppConstants.getValidator();
 
@@ -59,7 +59,7 @@ public class LoginController {
 
         if (violations.isEmpty()) {
             try {
-                if (userService.logInUser(logInDTO)) {
+                if (startUpService.logInUser(logInDTO)) {
                     UserSession.getInstance().setLogInUser(logInDTO.getUsername());
                     SceneManager.switchToScene(event, "pick-role-view.fxml");
                 } else {

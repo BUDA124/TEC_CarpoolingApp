@@ -1,6 +1,6 @@
 package org.tec.carpooling.bl.services;
 
-import org.tec.carpooling.bl.dto.UI_BL.DriverTripHistoryItemDTO;
+import org.tec.carpooling.bl.dto.UI_BL.driver.DriverTripHistoryItemDTO;
 import org.tec.carpooling.bl.dto.UI_BL.PassengerTripHistoryItemDTO;
 import org.tec.carpooling.common.exceptions.NotFoundException;
 

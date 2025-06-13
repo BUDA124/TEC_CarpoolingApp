@@ -13,6 +13,6 @@ import java.util.Optional;
 @Repository
 public interface ProvinceRepository extends JpaRepository<ProvinceEntity, Long> {
     Optional<ProvinceEntity> findByNameAndCountry(String provinceSanJose, CountryEntity costaRica);
-
     ArrayList<ProvinceEntity> findByCountry(CountryEntity costaRica);
+    Optional<ProvinceEntity> findByName(String province);
 }

@@ -1,7 +1,6 @@
-package org.tec.carpooling.bl.dto.UI_BL;
+package org.tec.carpooling.bl.dto.UI_BL.StartUp;
 
 import jakarta.validation.constraints.AssertTrue;
-import jakarta.validation.constraints.NotBlank;
 
 /**
  * Data Transfer Object for conveying a user's acceptance of the terms and conditions

@@ -11,9 +11,9 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.util.StringConverter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.tec.carpooling.bl.dto.UI_BL.UserRegistrationDTO;
+import org.tec.carpooling.bl.dto.UI_BL.StartUp.UserRegistrationDTO;
 import org.tec.carpooling.bl.services.SimpleDataRetrievalService;
-import org.tec.carpooling.bl.services.UserService;
+import org.tec.carpooling.bl.services.StartUpService;
 import org.tec.carpooling.common.constants.AppConstants;
 import org.tec.carpooling.da.entities.CountryEntity;
 import org.tec.carpooling.da.entities.GenderEntity;
@@ -47,11 +47,8 @@ public class RegistrationController {
     @FXML private Text T_LogIn;
     @FXML private Button BTN_enter;
 
-    @Autowired
-    private SimpleDataRetrievalService simpleDataRetrievalService;
-
-    @Autowired
-    UserService userService;
+    @Autowired private SimpleDataRetrievalService simpleDataRetrievalService;
+    @Autowired StartUpService startUpService;
 
     private final Validator validator = AppConstants.getValidator();
 
@@ -228,7 +225,7 @@ public class RegistrationController {
             Set<ConstraintViolation<UserRegistrationDTO>> violations = validator.validate(registrationDTO);
             if (violations.isEmpty()) {
                 try {
-                    if (userService.registerNewUser(registrationDTO)) {
+                    if (startUpService.registerNewUser(registrationDTO)) {
                         SceneManager.switchToScene(event, "pick-role-view.fxml");
                     }
                     else {
@@ -239,7 +236,6 @@ public class RegistrationController {
                     showAlert("Error", Alert.AlertType.ERROR, "Information is not correct.");
                 }
             } else {
-                // Hay violaciones, muestra los mensajes de error
                 String errorMessages = violations.stream()
                         .map(ConstraintViolation::getMessage)
                         .collect(Collectors.joining("\n"));

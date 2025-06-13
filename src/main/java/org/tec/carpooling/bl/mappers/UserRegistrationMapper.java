@@ -2,12 +2,9 @@ package org.tec.carpooling.bl.mappers;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.Named;
 import org.mapstruct.factory.Mappers;
-import org.tec.carpooling.bl.dto.UI_BL.UserRegistrationDTO;
+import org.tec.carpooling.bl.dto.UI_BL.StartUp.UserRegistrationDTO;
 import org.tec.carpooling.da.entities.*; // Assuming GenderEntity is also in this package or imported
-
-import java.time.LocalDate; // Not strictly needed by the mapper if types match
 
 @Mapper(componentModel = "spring")
 public interface UserRegistrationMapper {

@@ -1,16 +1,16 @@
 package org.tec.carpooling.bl.services;
 
-import org.tec.carpooling.bl.dto.UI_BL.LogInDTO;
-import org.tec.carpooling.bl.dto.UI_BL.UserRegistrationDTO;
+import org.tec.carpooling.bl.dto.UI_BL.StartUp.LogInDTO;
+import org.tec.carpooling.bl.dto.UI_BL.StartUp.UserRegistrationDTO;
 import org.tec.carpooling.common.exceptions.AuthenticationException;
 import org.tec.carpooling.common.exceptions.ValidationException;
-import org.tec.carpooling.bl.dto.UI_BL.UserAcceptTermsDTO;
+import org.tec.carpooling.bl.dto.UI_BL.StartUp.UserAcceptTermsDTO;
 import org.tec.carpooling.bl.dto.BL_DA.UserInstitutionInfoDTO; // For internal use, if exposed
 import org.tec.carpooling.common.exceptions.OperationFailedException;
 import org.tec.carpooling.common.exceptions.NotFoundException;
 
 
-public interface UserService {
+public interface StartUpService {
     /**
      * Registers a new user with their full profile data.
      *

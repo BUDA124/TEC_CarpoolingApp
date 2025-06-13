@@ -1,7 +1,5 @@
 package org.tec.carpooling.ui;
 
-import org.tec.carpooling.bl.dto.UI_BL.LogInDTO;
-
 public final class UserSession {
 
     private static UserSession instance;
