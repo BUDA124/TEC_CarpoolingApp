@@ -1,5 +1,6 @@
 package org.tec.carpooling.bl.dto.UI_BL.driver;
 
+import org.tec.carpooling.da.entities.AuditLogEntity;
 import org.tec.carpooling.da.entities.DistrictEntity;
 
 import java.time.LocalTime;
@@ -14,9 +15,10 @@ public class StopDTO {
     private String paymentMethod;
     private DistrictEntity startStop;
     private DistrictEntity endStop;
+    private AuditLogEntity auditLog;
 
     public StopDTO(String address, DistrictEntity district, LocalTime leavesAt,
-                   LocalTime arrivesAt, double cost, String paymentMethod, DistrictEntity startStop, DistrictEntity endStop) {
+                   LocalTime arrivesAt, double cost, String paymentMethod, DistrictEntity startStop, DistrictEntity endStop, AuditLogEntity auditLog) {
         this.address = address;
         this.district = district;
         this.leavesAt = leavesAt;
@@ -25,6 +27,7 @@ public class StopDTO {
         this.paymentMethod = paymentMethod;
         this.startStop = startStop;
         this.endStop = endStop;
+        this.auditLog = auditLog;
     }
 
     public String getAddress() {
@@ -89,6 +92,14 @@ public class StopDTO {
 
     public void setEndStop(DistrictEntity endStop) {
         this.endStop = endStop;
+    }
+
+    public AuditLogEntity getAuditLog() {
+        return auditLog;
+    }
+
+    public void setAuditLog(AuditLogEntity auditLog) {
+        this.auditLog = auditLog;
     }
 
     @Override

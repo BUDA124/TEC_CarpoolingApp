@@ -14,81 +14,88 @@ import org.springframework.stereotype.Controller;
 public class AdminReportsController {
 
     @FXML
-    private Pane historyPane;
-    @FXML
-    private Pane analyticsPane;
-    @FXML
-    private Pane requestsPane;
-    @FXML
-    private Pane viewInstitutionPane;
-
-    @FXML
-    private void onDailyReportText(MouseEvent event) {
-        try {
-            SceneManager.switchToScene(event, "admin-report-view.fxml");
-        } catch (IOException e) {
-            e.printStackTrace();
-
-        }
-    }
-
-    @FXML
-    private void onGeneralQueriesText(MouseEvent event) {
-        try {
-            SceneManager.switchToScene(event, "admin-queries-view.fxml");
-        } catch (IOException e) {
-            e.printStackTrace();
-
-        }
-    }
-
-    @FXML
-    private void onHistoryPane(MouseEvent event) {
-        try {
-            SceneManager.switchToScene(event, "admin-history-view.fxml");
-        } catch (IOException e) {
-            e.printStackTrace();
-
-        }
-    }
-
-    @FXML
-    private void onAnalyticsPane(MouseEvent event) {
-        try {
-            SceneManager.switchToScene(event, "admin-stats-view.fxml");
-        } catch (IOException e) {
-            e.printStackTrace();
-
-        }
-    }
-
-    @FXML
-    private void onRequestPane(MouseEvent event) {
-        try {
-            SceneManager.switchToScene(event, "admin-requests-view.fxml");
-        } catch (IOException e) {
-            e.printStackTrace();
-
-        }
-    }
-
-    @FXML
-    private void onViewInstitutionPane(MouseEvent event) {
-        try {
-            SceneManager.switchToScene(event, "admin-check-inst-view.fxml");
-        } catch (IOException e) {
-            e.printStackTrace();
-
-        }
-    }
-
-
-    @Autowired
-    public AdminReportsController() {}
-
-    @FXML
     public void initialize() {
 
+    }
+
+    @FXML
+    private void goToDailyReport(MouseEvent event) {
+        try {
+            SceneManager.switchToScene(event, "admin/admin-report-view.fxml");
+        } catch (IOException e) {
+            e.printStackTrace();
+            showError("Could not load Daily Report view.");
+        }
+    }
+
+    @FXML
+    private void goToGeneralQueries(MouseEvent event) {
+        try {
+            SceneManager.switchToScene(event, "admin/admin-queries-view.fxml");
+        } catch (IOException e) {
+            e.printStackTrace();
+            showError("Could not load General Queries view.");
+        }
+    }
+
+    @FXML
+    private void goToHistory(MouseEvent event) {
+        try {
+            SceneManager.switchToScene(event, "admin/admin-history-view.fxml");
+        } catch (IOException e) {
+            e.printStackTrace();
+            showError("Could not load History view.");
+        }
+    }
+
+    @FXML
+    private void goToAnalytics(MouseEvent event) {
+        try {
+            SceneManager.switchToScene(event, "admin/admin-stats-view.fxml");
+        } catch (IOException e) {
+            e.printStackTrace();
+            showError("Could not load Analytics view.");
+        }
+    }
+
+    @FXML
+    private void goToRequests(MouseEvent event) {
+        try {
+            SceneManager.switchToScene(event, "admin/admin-requests-view.fxml");
+        } catch (IOException e) {
+            e.printStackTrace();
+            showError("Could not load Requests view.");
+        }
+    }
+
+    @FXML
+    private void goToAddInstitution(MouseEvent event) {
+        try {
+            SceneManager.switchToScene(event, "admin/admin-add-inst-view.fxml");
+        } catch (IOException e) {
+            e.printStackTrace();
+            showError("Could not load Add Institution view.");
+        }
+    }
+
+    @FXML
+    private void goToViewInstitution(MouseEvent event) {
+        try {
+            SceneManager.switchToScene(event, "admin/admin-check-inst-view.fxml");
+        } catch (IOException e) {
+            e.printStackTrace();
+            showError("Could not load View Institution view.");
+        }
+    }
+
+    @FXML
+    private void goToSignOut(MouseEvent event) {
+        try {
+            SceneManager.switchToScene(event, "login-view.fxml");
+        } catch (IOException e) {
+            e.printStackTrace();
+            showError("Could not sign out");
+        }
     }
 
     private void showError(String message) {

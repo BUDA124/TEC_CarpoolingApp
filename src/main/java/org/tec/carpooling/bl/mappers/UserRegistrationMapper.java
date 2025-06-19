@@ -25,26 +25,28 @@ public interface UserRegistrationMapper {
     @Mapping(target = "profilePicture", ignore = true)
     @Mapping(target = "idInstitution", source = "idInstitution")
     @Mapping(target = "idGender", source = "idGender")
-    @Mapping(target = "idAuditLog", ignore = true)
+    @Mapping(target = "idAuditLog", source = "auditLog")
     PersonEntity toPersonEntity(UserRegistrationDTO dto);
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "password", source = "password")
+    @Mapping(target = "username", source = "username")
     @Mapping(target = "registrationDate", ignore = true)
     @Mapping(target = "person", ignore = true)
-    @Mapping(target = "auditLog", ignore = true)
+    @Mapping(target = "userStatus", source = "userStatus")
+    @Mapping(target = "auditLog", source = "auditLog")
     PersonalUserEntity toPersonalUserEntity(UserRegistrationDTO dto);
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "emailAddress", source = "institutionalEmail")
     @Mapping(target = "personalUser", ignore = true)
-    @Mapping(target = "auditLog", ignore = true)
+    @Mapping(target = "auditLog", source = "auditLog")
     InstitutionalEmailEntity toInstitutionalEmailEntity(UserRegistrationDTO dto);
 
     @Mapping(target = "id", ignore = true)
+    @Mapping(target = "isActive", source = "isActive")
     @Mapping(target = "numberOfCredential", source = "credentialNumber")
-    @Mapping(target = "isActive", ignore = true)
     @Mapping(target = "person", ignore = true)
-    @Mapping(target = "auditLog", ignore = true)
+    @Mapping(target = "auditLog", source = "auditLog")
     CredentialEntity toCredentialEntity(UserRegistrationDTO dto);
 }

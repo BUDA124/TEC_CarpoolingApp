@@ -3,6 +3,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
@@ -86,7 +87,7 @@
                   </Text>
                </children>
             </Pane>
-            <Pane fx:id="P_settings1" layoutX="30.0" layoutY="576.0" onMouseClicked="#goToSettings" prefHeight="35.0" prefWidth="220.0" style="-fx-background-color: #1b2b65;">
+            <Pane fx:id="P_settings1" layoutX="30.0" layoutY="576.0" onMouseClicked="#goToSignOut" prefHeight="35.0" prefWidth="220.0" style="-fx-background-color: #1b2b65;">
                <children>
                   <Text fill="WHITE" layoutX="48.0" layoutY="24.0" onMouseClicked="#goToSignOut" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Sign Out" textAlignment="CENTER" wrappingWidth="128.0">
                      <font>
@@ -133,7 +134,7 @@
                   <Font size="13.0" />
                </font>
             </TextField>
-            <TextField fx:id="TF_istitutionalEmail" layoutX="50.0" layoutY="300.0" prefHeight="40.0" prefWidth="608.0" promptText="InstitutionName@example">
+            <TextField fx:id="TF_institutionalEmail" layoutX="50.0" layoutY="300.0" prefHeight="40.0" prefWidth="608.0" promptText="InstitutionName@example">
                <font>
                   <Font size="13.0" />
                </font>
@@ -143,24 +144,14 @@
                   <Font size="18.0" />
                </font>
             </Text>
-            <DatePicker fx:id="DP_birthdate" layoutX="300.0" layoutY="357.0" prefHeight="40.0" prefWidth="280.0" />
+            <DatePicker fx:id="DP_birthdate" layoutX="300.0" layoutY="357.0" prefHeight="40.0" prefWidth="358.0" />
             <ComboBox fx:id="CB_gender" layoutX="50.0" layoutY="357.0" prefHeight="40.0" prefWidth="140.0" promptText="Gender" styleClass="akatab-text" />
             <TextField fx:id="TF_currentPassword" layoutX="50.0" layoutY="410.0" prefHeight="40.0" prefWidth="608.0" promptText="Current Password">
                <font>
                   <Font size="13.0" />
                </font>
             </TextField>
-            <TextField fx:id="TF_confirmNewPassword" layoutX="50.0" layoutY="504.0" prefHeight="40.0" prefWidth="608.0" promptText="Confirm New Password">
-               <font>
-                  <Font size="13.0" />
-               </font>
-            </TextField>
-            <TextField fx:id="TF_newPassword" layoutX="50.0" layoutY="456.0" prefHeight="40.0" prefWidth="608.0" promptText="New Password">
-               <font>
-                  <Font size="13.0" />
-               </font>
-            </TextField>
-            <Button fx:id="BTN_edit" layoutX="294.0" layoutY="575.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="200.0" styleClass="adlam-text" text="Edit">
+            <Button fx:id="BTN_edit" layoutX="294.0" layoutY="575.0" mnemonicParsing="false" onAction="#on_BTN_edit" prefHeight="40.0" prefWidth="200.0" styleClass="adlam-text" text="Edit">
                <font>
                   <Font size="18.0" />
                </font>
@@ -175,6 +166,8 @@
                   <Font size="24.0" />
                </font>
             </Text>
+            <PasswordField fx:id="TF_newPassword" layoutX="50.0" layoutY="457.0" prefHeight="40.0" prefWidth="608.0" promptText="New Password" />
+            <PasswordField fx:id="TF_confirmNewPassword" layoutX="50.0" layoutY="508.0" prefHeight="40.0" prefWidth="608.0" promptText="Confirm New Password" />
          </children>
       </AnchorPane>
    </items>

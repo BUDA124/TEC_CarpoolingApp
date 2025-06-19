@@ -9,8 +9,12 @@ import org.tec.carpooling.bl.dto.UI_BL.driver.PublishTripDTO;
 import org.tec.carpooling.bl.dto.UI_BL.TripDetailsDTO;
 import org.tec.carpooling.bl.dto.UI_BL.driver.StopDTO;
 import org.tec.carpooling.bl.mappers.TripMapper;
+import org.tec.carpooling.bl.services.AuditLogService;
 import org.tec.carpooling.bl.services.TripService;
+import org.tec.carpooling.common.constants.AppConstants;
+import org.tec.carpooling.da.entities.AuditLogEntity;
 import org.tec.carpooling.da.entities.StopEntity;
+import org.tec.carpooling.da.repositories.AuditLogRepository;
 import org.tec.carpooling.da.repositories.StopRepository;
 
 import java.util.ArrayList;
@@ -21,6 +25,7 @@ public class TripServiceImpl implements TripService {
 
     @Autowired private TripMapper tripMapper;
     @Autowired private StopRepository stopRepository;
+    @Autowired private AuditLogService auditLogService;
 
     @Override
     public boolean publishTrip(PublishTripDTO dto) {

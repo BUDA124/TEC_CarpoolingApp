@@ -10,6 +10,7 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
 import jakarta.validation.Validator;
 import jakarta.validation.ValidatorFactory;
+import org.tec.carpooling.ui.SceneManager;
 
 import java.io.IOException;
 import java.net.URL;
@@ -45,6 +46,7 @@ public class CarpoolingApplication extends Application {
 
             FXMLLoader fxmlLoader = new FXMLLoader(fxmlUrl);
             fxmlLoader.setControllerFactory(springContext::getBean);
+            SceneManager.setSpringContext(springContext);
 
             Parent root = fxmlLoader.load();
             Scene scene = new Scene(root);
@@ -81,7 +83,6 @@ public class CarpoolingApplication extends Application {
         super.stop();
     }
 
-    // Aquí NO inicia la aplicación. Iniciar en CarpoolingSpringApp.
     public static void main(String[] args) {
         launch(args);
     }

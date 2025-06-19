@@ -12,16 +12,16 @@ import javafx.scene.text.Text;
 import javafx.util.StringConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.tec.carpooling.bl.dto.UI_BL.StartUp.UserRegistrationDTO;
+import org.tec.carpooling.bl.services.AuditLogService;
 import org.tec.carpooling.bl.services.SimpleDataRetrievalService;
 import org.tec.carpooling.bl.services.StartUpService;
 import org.tec.carpooling.common.constants.AppConstants;
-import org.tec.carpooling.da.entities.CountryEntity;
-import org.tec.carpooling.da.entities.GenderEntity;
-import org.tec.carpooling.da.entities.InstitutionEntity;
-import org.tec.carpooling.da.entities.TypeOfCredentialEntity;
+import org.tec.carpooling.da.entities.*;
+import org.tec.carpooling.da.repositories.UserStatusRepository;
 import org.tec.carpooling.ui.SceneManager;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -40,17 +40,22 @@ public class RegistrationController {
     @FXML private TextField TF_password;
     @FXML private TextField TF_confirmPassword;
     @FXML private TextField TF_institutionalEmail;
+    @FXML private CheckBox CB_termsAndConditions;
     @FXML private ComboBox<GenderEntity> CB_gender;
     @FXML private ComboBox<CountryEntity> CB_country;
     @FXML private ComboBox<TypeOfCredentialEntity> CB_typeId;
     @FXML private ComboBox<InstitutionEntity> CB_institution;
+    @FXML private DatePicker DP_birthdate;
     @FXML private Text T_LogIn;
     @FXML private Button BTN_enter;
 
     @Autowired private SimpleDataRetrievalService simpleDataRetrievalService;
-    @Autowired StartUpService startUpService;
+    @Autowired private StartUpService startUpService;
+    @Autowired private AuditLogService auditLogService;
 
     private final Validator validator = AppConstants.getValidator();
+    @Autowired
+    private UserStatusRepository userStatusRepository;
 
     @FXML
     public void initialize() {
@@ -105,104 +110,109 @@ public class RegistrationController {
                         .orElse(null);
             }
         });
+
+        List<TypeOfCredentialEntity> typesOfCredentialsList = simpleDataRetrievalService.getAllTypeOfCredentials();
+        ObservableList<TypeOfCredentialEntity> observableTypesOfCredentials = FXCollections.observableArrayList(typesOfCredentialsList);
+        CB_typeId.setItems(observableTypesOfCredentials);
+        CB_typeId.setConverter(new StringConverter<TypeOfCredentialEntity>() {
+            @Override
+            public String toString(TypeOfCredentialEntity typeOfCredential) {
+                return typeOfCredential != null ? typeOfCredential.getName() : "";
+            }
+
+            @Override
+            public TypeOfCredentialEntity fromString(String string) {
+                return observableTypesOfCredentials.stream()
+                        .filter(typeOfCredential -> typeOfCredential != null && typeOfCredential.getName().equalsIgnoreCase(string))
+                        .findFirst()
+                        .orElse(null);
+            }
+        });
     }
 
     @FXML
     private void on_BTN_enter(ActionEvent event) {
-        String firstName = TF_firstName.getText();
-        String secondName = TF_secondName.getText();
-        String firstSurname = TF_firstSurname.getText();
-        String secondSurname = TF_secondSurname.getText();
-        String personalEmail = TF_personalEmail.getText();
-        String idNumber = TF_idNumber.getText();
-        Optional<TypeOfCredentialEntity> typeOfCredentialEntityOptional = Optional.ofNullable(CB_typeId.getValue());
-        String username = TF_username.getText();
-        String password = TF_password.getText();
-        String confirmPassword = TF_confirmPassword.getText();
-        String institutionalEmail = TF_institutionalEmail.getText();
+        String firstName = TF_firstName.getText().trim();
+        String secondName = TF_secondName.getText().trim();
+        String firstSurname = TF_firstSurname.getText().trim();
+        String secondSurname = TF_secondSurname.getText().trim();
+        String personalEmail = TF_personalEmail.getText().trim();
+        String idNumber = TF_idNumber.getText().trim();
+        String username = TF_username.getText().trim();
+        String password = TF_password.getText().trim();
+        String confirmPassword = TF_confirmPassword.getText().trim();
+        String institutionalEmail = TF_institutionalEmail.getText().trim();
+        LocalDate birthDate = DP_birthdate.getValue();
 
-        boolean isValid = true;
+        GenderEntity selectedGender = CB_gender.getValue();
+        CountryEntity selectedCountry = CB_country.getValue();
+        InstitutionEntity selectedInstitution = CB_institution.getValue();
+        TypeOfCredentialEntity selectedType = CB_typeId.getValue();
+
+        List<String> errorMessages = new ArrayList<>();
 
         if (firstName.isBlank()) {
-            System.out.println("Error: El primer nombre es obligatorio.");
-            isValid = false;
-        } else {
-            System.out.println("Primer nombre: OK");
+            errorMessages.add("El primer nombre es obligatorio.");
         }
-
-        if (!secondName.isBlank()) {
-            System.out.println("Segundo nombre ingresado: " + secondName);
-        } else {
-            System.out.println("Segundo nombre: (Opcional - vacío)");
-        }
-
         if (firstSurname.isBlank()) {
-            System.out.println("Error: El primer apellido es obligatorio.");
-            isValid = false;
-        } else {
-            System.out.println("Primer apellido: OK");
+            errorMessages.add("El primer apellido es obligatorio.");
         }
-
-        if (!secondSurname.isBlank()) {
-            System.out.println("Segundo apellido ingresado: " + secondSurname);
-        } else {
-            System.out.println("Segundo apellido: (Opcional - vacío)");
-        }
-
         if (personalEmail.isBlank()) {
-            System.out.println("Error: El correo electrónico personal es obligatorio.");
-            isValid = false;
-        } else {
-              System.out.println("Correo personal: OK");
+            errorMessages.add("El correo personal es obligatorio.");
         }
-
         if (idNumber.isBlank()) {
-            System.out.println("Error: El número de identificación es obligatorio.");
-            isValid = false;
-        } else {
-            System.out.println("Número de ID: OK");
+            errorMessages.add("El número de identificación es obligatorio.");
         }
-
-        if (typeOfCredentialEntityOptional.isEmpty()) {
-            System.out.println("Error: Debe seleccionar un tipo de identificación.");
-            isValid = false;
-        } else {
-            System.out.println("Tipo de ID seleccionado: " + typeOfCredentialEntityOptional.get());
-        }
-
         if (username.isBlank()) {
-            System.out.println("Error: El nombre de usuario es obligatorio.");
-            isValid = false;
-        } else {
-            System.out.println("Nombre de usuario: OK");
+            errorMessages.add("El nombre de usuario es obligatorio.");
         }
-
         if (password.isBlank()) {
-            System.out.println("Error: La contraseña es obligatoria.");
-            isValid = false;
-        } else {
-            System.out.println("Contraseña: OK (cumple longitud mínima)");
+            errorMessages.add("La contraseña es obligatoria.");
         }
-
-        if (confirmPassword.isBlank()) {
-            System.out.println("Error: La confirmación de contraseña es obligatoria.");
-            isValid = false;
-        } else {
-            System.out.println("Confirmación de contraseña: OK (coincide)");
+        if (!password.equals(confirmPassword)) {
+            errorMessages.add("Las contraseñas no coinciden.");
         }
-
         if (institutionalEmail.isBlank()) {
-            System.out.println("Error: El correo electrónico institucional es obligatorio.");
-            isValid = false;
-        } else {
-            System.out.println("Correo institucional: OK");
+            errorMessages.add("El correo institucional es obligatorio.");
+        }
+        if (selectedGender == null) {
+            errorMessages.add("Debe seleccionar un género.");
+        }
+        if (selectedCountry == null) {
+            errorMessages.add("Debe seleccionar un país de nacionalidad.");
+        }
+        if (selectedInstitution == null) {
+            errorMessages.add("Debe seleccionar una institución.");
+        }
+        if (selectedType == null) {
+            errorMessages.add("Debe seleccionar un tipo de identificación.");
+        }
+        if (!errorMessages.isEmpty()) {
+            String fullErrorMessage = String.join("\n", errorMessages);
+            showAlert("Campos Inválidos", Alert.AlertType.WARNING, fullErrorMessage);
+            return;
+        }
+        if (birthDate == null) {
+            String fullErrorMessage = String.join("\n", errorMessages);
+            showAlert("Campos Inválidos", Alert.AlertType.WARNING, fullErrorMessage);
+            return;
+        }
+        if (!CB_termsAndConditions.isSelected()) {
+            showAlert("Campos Inválidos", Alert.AlertType.WARNING, "Se deben aceptar los términos y condiciones.");
+            return;
         }
 
-        if (!isValid) {
-            System.out.println("Hay errores en el formulario.");
-        }
 
         try {
+            AuditLogEntity auditLog = auditLogService.createInitialAuditLog(AppConstants.SYSTEM_USER);
+            Optional<UserStatusEntity> optionalUserStatus = userStatusRepository.findByStatus(AppConstants.USER_STATUS_IS_PASSENGER );
+
+
+            if (optionalUserStatus.isEmpty()) {
+                showAlert("Loading Exception", Alert.AlertType.ERROR, "Error loading status");
+            }
+            UserStatusEntity userStatusEntity = optionalUserStatus.get();
+
             UserRegistrationDTO registrationDTO = new UserRegistrationDTO();
             registrationDTO.setFirstName(firstName);
             registrationDTO.setSecondName(secondName);
@@ -212,41 +222,38 @@ public class RegistrationController {
             registrationDTO.setCredentialNumber(idNumber);
             registrationDTO.setUsername(username);
             registrationDTO.setPassword(password);
-
+            registrationDTO.setBirthdate(birthDate);
             registrationDTO.setInstitutionalEmail(institutionalEmail);
-
-            // Set values from ComboBoxes
-            registrationDTO.setIdGender(CB_gender.getValue());
-            registrationDTO.setNationality(CB_country.getValue());
-            registrationDTO.setIdInstitution(CB_institution.getValue());
-            registrationDTO.setIdTypeOfCredential(CB_typeId.getValue());
-
+            registrationDTO.setIdGender(selectedGender);
+            registrationDTO.setNationality(selectedCountry.getName());
+            registrationDTO.setIdInstitution(selectedInstitution);
+            registrationDTO.setIdTypeOfCredential(selectedType);
+            registrationDTO.setAuditLog(auditLog);
+            registrationDTO.setUserStatus(userStatusEntity);
 
             Set<ConstraintViolation<UserRegistrationDTO>> violations = validator.validate(registrationDTO);
             if (violations.isEmpty()) {
-                try {
-                    if (startUpService.registerNewUser(registrationDTO)) {
-                        SceneManager.switchToScene(event, "pick-role-view.fxml");
-                    }
-                    else {
-                        showAlert("Login Failed", Alert.AlertType.ERROR, "Information is not correct."
-                        );
-                    }
-                } catch (Exception e) {
-                    showAlert("Error", Alert.AlertType.ERROR, "Information is not correct.");
+                if (startUpService.registerNewUser(registrationDTO)) {
+                    showAlert("Registro Exitoso", Alert.AlertType.INFORMATION, "Usuario registrado correctamente.");
+                    SceneManager.switchToScene(event, "login-view.fxml");
+                } else {
+                    showAlert("Fallo en el Registro", Alert.AlertType.ERROR, "La información no es correcta o el usuario ya existe.");
                 }
             } else {
-                String errorMessages = violations.stream()
+                String validationErrors = violations.stream()
                         .map(ConstraintViolation::getMessage)
                         .collect(Collectors.joining("\n"));
-                showAlert("Validation Error", Alert.AlertType.ERROR, errorMessages);
+                showAlert("Error de Validación", Alert.AlertType.ERROR, validationErrors);
             }
-            SceneManager.switchToScene(event, "pick-role-view.fxml");
         } catch (IOException e) {
             e.printStackTrace();
-
+            showAlert("Error de Navegación", Alert.AlertType.ERROR, "No se pudo cambiar de pantalla.");
+        } catch (Exception e) {
+            e.printStackTrace();
+            showAlert("Error Inesperado", Alert.AlertType.ERROR, "Ocurrió un error al procesar el registro: " + e.getMessage());
         }
     }
+
     @FXML
     private void On_T_LogIn(MouseEvent event) {
         try {

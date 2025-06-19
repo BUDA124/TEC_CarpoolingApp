@@ -5,7 +5,7 @@ package org.tec.carpooling.bl.dto.UI_BL;
  * full name, pickup point) from the BL to the UI. Used within lists like
  * confirmed passengers on a trip or in trip history.
  */
-public class PassengerInfoDTO { // Used in TripDetailsDTO and History
+public class PassengerInfoDTO {
     private String username;
     private String fullName;
     private String requestedPickupPoint;

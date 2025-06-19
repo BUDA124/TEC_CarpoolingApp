@@ -11,9 +11,9 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<SplitPane dividerPositions="0.25" prefHeight="700.0" prefWidth="1100.0" stylesheets="@../../../../../../css/styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.tec.carpooling.ui.controllers.admin.AdminAddInstAdminController">
+<SplitPane dividerPositions="0.5" prefHeight="700.0" prefWidth="1100.0" stylesheets="@../../../../../../css/styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.tec.carpooling.ui.controllers.admin.AdminAddInstController">
    <items>
-      <AnchorPane disable="true" minHeight="0.0" minWidth="0.0" prefHeight="550.0" prefWidth="134.0" style="-fx-background-color: #081a51;">
+      <AnchorPane  minHeight="0.0" minWidth="0.0" prefHeight="550.0" prefWidth="134.0" style="-fx-background-color: #081a51;">
          <children>
             <Text fill="WHITE" layoutX="86.0" layoutY="67.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="CarPool Hub" wrappingWidth="190.0">
                <font>
@@ -30,36 +30,77 @@
                   <Font size="18.0" />
                </font>
             </Text>
-            <Pane fx:id="institutionsPane" layoutX="26.0" layoutY="156.0" prefHeight="35.0" prefWidth="220.0" style="-fx-background-color: #1b2b65;">
+            <Text fill="#51cbff" layoutX="16.0" layoutY="295.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Workspace">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Text>
+            <Pane layoutX="65.0" layoutY="158.0" onMouseClicked="#goToDailyReport" prefHeight="35.0" prefWidth="220.0" style="-fx-background-color: #1b2b65;">
                <children>
-                  <Text fill="WHITE" layoutX="48.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Institutions" textAlignment="CENTER" wrappingWidth="128.0">
+                  <Text fill="WHITE" layoutX="48.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Daily Report" textAlignment="CENTER" wrappingWidth="128.0">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Text>
                </children>
             </Pane>
-            <Pane fx:id="addInstitutionPane" layoutX="26.0" layoutY="207.0" prefHeight="35.0" prefWidth="220.0" style="-fx-background-color: #1b2b65;">
+            <Pane layoutX="65.0" layoutY="213.0" onMouseClicked="#goToGeneralQueries" prefHeight="35.0" prefWidth="220.0" style="-fx-background-color: #1b2b65;">
                <children>
-                  <Text fill="WHITE" layoutX="42.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Add Institution" textAlignment="CENTER" wrappingWidth="145.0">
+                  <Text fill="WHITE" layoutX="42.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="General queries" textAlignment="CENTER" wrappingWidth="145.0">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Text>
                </children>
             </Pane>
-            <Pane fx:id="administratorPane" layoutX="26.0" layoutY="259.0" prefHeight="35.0" prefWidth="220.0" style="-fx-background-color: #1b2b65;">
+            <Pane layoutX="65.0" layoutY="328.0" onMouseClicked="#goToHistory" prefHeight="35.0" prefWidth="220.0" style="-fx-background-color: #1b2b65;">
                <children>
-                  <Text fill="WHITE" layoutX="48.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Administrators" textAlignment="CENTER" wrappingWidth="128.0">
+                  <Text fill="WHITE" layoutX="48.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="History" textAlignment="CENTER" wrappingWidth="128.0">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Text>
                </children>
             </Pane>
-            <Pane fx:id="addAdministratorPane" layoutX="26.0" layoutY="314.0" prefHeight="35.0" prefWidth="220.0" style="-fx-background-color: #1b2b65;">
+            <Pane layoutX="65.0" layoutY="383.0" onMouseClicked="#goToAnalytics" prefHeight="35.0" prefWidth="220.0" style="-fx-background-color: #1b2b65;">
                <children>
-                  <Text fill="WHITE" layoutX="15.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Add Administrator" textAlignment="CENTER" wrappingWidth="190.0">
+                  <Text fill="WHITE" layoutX="48.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Analytics" textAlignment="CENTER" wrappingWidth="128.0">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+               </children>
+            </Pane>
+            <Pane layoutX="65.0" layoutY="494.0" onMouseClicked="#goToAddInstitution" prefHeight="35.0" prefWidth="220.0" style="-fx-background-color: #1b2b65;">
+               <children>
+                  <Text fill="WHITE" layoutX="46.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Add Institution" textAlignment="CENTER" wrappingWidth="128.0">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+               </children>
+            </Pane>
+            <Pane layoutX="65.0" layoutY="438.0" onMouseClicked="#goToRequests" prefHeight="35.0" prefWidth="220.0" style="-fx-background-color: #1b2b65;">
+               <children>
+                  <Text fill="WHITE" layoutX="48.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Requests" textAlignment="CENTER" wrappingWidth="128.0">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+               </children>
+            </Pane>
+            <Pane layoutX="65.0" layoutY="553.0" onMouseClicked="#goToViewInstitution" prefHeight="35.0" prefWidth="220.0" style="-fx-background-color: #1b2b65;">
+               <children>
+                  <Text fill="WHITE" layoutX="46.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="View Institution" textAlignment="CENTER" wrappingWidth="128.0">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+               </children>
+            </Pane>
+            <Pane layoutX="60.0" layoutY="609.0" onMouseClicked="#goToSignOut" prefHeight="35.0" prefWidth="220.0" style="-fx-background-color: #1b2b65;">
+               <children>
+                  <Text fill="WHITE" layoutX="46.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="akatab-text" text="Sign Out" textAlignment="CENTER" wrappingWidth="128.0">
                      <font>
                         <Font size="18.0" />
                      </font>

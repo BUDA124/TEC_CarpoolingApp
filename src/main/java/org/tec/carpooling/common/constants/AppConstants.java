@@ -27,6 +27,7 @@ public class AppConstants {
     public static final String USER_STATUS_IS_DRIVER = "Driver";
     public static final String USER_STATUS_IS_PASSENGER = "Passenger";
     public static final String USER_STATUS_INACTIVE = "Inactive";
+    public static final String USER_STATUS_IS_ADMIN = "Admin";
 
     // Credential Types
     public static final String CREDENTIAL_TYPE_NATIONAL_ID = "National ID"; // Cédula Nacional

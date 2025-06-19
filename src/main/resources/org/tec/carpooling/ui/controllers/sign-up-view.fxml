@@ -86,7 +86,7 @@
                <font>
                   <Font size="14.0" />
                </font></PasswordField>
-            <CheckBox fx:id="CheckB_termsAndConditions" layoutX="12.0" layoutY="555.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="119.0" styleClass="adlam-text" text="I accept the">
+            <CheckBox fx:id="CB_termsAndConditions" layoutX="12.0" layoutY="555.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="119.0" styleClass="adlam-text" text="I accept the">
                <font>
                   <Font name="SansSerif Regular" size="14.0" />
                </font>
@@ -119,7 +119,7 @@
                <font>
                   <Font size="14.0" />
                </font></TextField>
-            <TextField fx:id="TF_firstSurname" layoutX="410.0" layoutY="174.0" prefHeight="40.0" prefWidth="380.0" promptText="Optional: Second Surname" styleClass="adlam-text">
+            <TextField fx:id="TF_secondSurname" layoutX="410.0" layoutY="174.0" prefHeight="40.0" prefWidth="380.0" promptText="Optional: Second Surname" styleClass="adlam-text">
                <font>
                   <Font size="14.0" />
                </font></TextField>

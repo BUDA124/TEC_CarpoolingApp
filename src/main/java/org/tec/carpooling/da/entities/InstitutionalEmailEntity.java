@@ -20,7 +20,7 @@ public class InstitutionalEmailEntity implements Identifiable<Long> {
     private String emailAddress;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "IDUSER", nullable = false) // References PERSONALUSER(ID)
+    @JoinColumn(name = "IDUSER", nullable = false)
     private PersonalUserEntity personalUser;
 
     @ManyToOne(fetch = FetchType.LAZY)

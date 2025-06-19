@@ -10,12 +10,20 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.tec.carpooling.app.CarpoolingSpringApp;
 
 import java.io.IOException;
 import java.util.Objects;
 
 public class SceneManager {
+
+    // You need to set this context when your application starts
+    private static ConfigurableApplicationContext springContext;
+
+    public static void setSpringContext(ConfigurableApplicationContext context) {
+        SceneManager.springContext = context;
+    }
 
     private static final String FXML_BASE_PATH = "/org/tec/carpooling/ui/controllers/";
     private static final String defaultTitle = "Carpooling App";

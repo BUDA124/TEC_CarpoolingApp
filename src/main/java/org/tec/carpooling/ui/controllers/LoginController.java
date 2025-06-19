@@ -37,14 +37,7 @@ public class LoginController {
     @FXML
     private Text T_signUp;
 
-    @Autowired
-    private PersonalUserRepository personalUserRepository;
-
-    @Autowired
-    private PersonRepository personRepository;
-
-    @Autowired
-    StartUpService startUpService;
+    @Autowired StartUpService startUpService;
 
     private final Validator validator = AppConstants.getValidator();
 
@@ -61,13 +54,18 @@ public class LoginController {
             try {
                 if (startUpService.logInUser(logInDTO)) {
                     UserSession.getInstance().setLogInUser(logInDTO.getUsername());
-                    SceneManager.switchToScene(event, "pick-role-view.fxml");
+                    if (username.equals("MainAdmin")) {
+                        SceneManager.switchToScene(event, "admin/admin-report-view.fxml");
+                    } else {
+                        SceneManager.switchToScene(event, "pick-role-view.fxml");
+                    }
                 } else {
                     showAlert("Login Failed", Alert.AlertType.ERROR, "Invalid username or password.");
                 }
             } catch (AuthenticationException e) {
                 showAlert("Authentication Error", Alert.AlertType.ERROR, e.getMessage());
             } catch (Exception e) {
+                e.printStackTrace();
                 String errorMessage = "An unexpected error occurred while logging in.";
                 showAlert("Login Error", Alert.AlertType.ERROR, errorMessage);
             }

@@ -4,10 +4,7 @@ import jakarta.validation.constraints.*;
 import org.tec.carpooling.bl.validators.constraints.MinimumAge;
 import org.tec.carpooling.bl.validators.constraints.PasswordComplexity;
 import org.tec.carpooling.bl.validators.constraints.ValidInstitutionalEmail;
-import org.tec.carpooling.da.entities.CountryEntity;
-import org.tec.carpooling.da.entities.GenderEntity;
-import org.tec.carpooling.da.entities.InstitutionEntity;
-import org.tec.carpooling.da.entities.TypeOfCredentialEntity;
+import org.tec.carpooling.da.entities.*;
 
 import java.time.LocalDate;
 
@@ -38,17 +35,17 @@ public class UserRegistrationDTO {
 
     @NotBlank(message = "Institutional email is required.")
     @ValidInstitutionalEmail
-    @Size(max = 254, message = "Email must not exceed 254 characters.") // Common max length
+    @Size(max = 254, message = "Email must not exceed 254 characters.")
     private String institutionalEmail;
 
     @NotNull(message = "Birthdate is required.")
     @Past(message = "Birthdate must be in the past.")
-    @MinimumAge(value = 16, message = "User must be at least 16 years old.")
+    @MinimumAge(value = 0, message = "User must be at least 0 years old.")
     private LocalDate birthdate;
 
     @NotBlank(message = "Nationality is required.")
     @Size(max = 50, message = "Nationality must not exceed 50 characters.")
-    private CountryEntity nationality;
+    private String nationality;
 
     @NotBlank(message = "Credential number is required.")
     @Size(min = 3, max = 30, message = "Credential number must be between 6 and 30 characters.")
@@ -64,21 +61,48 @@ public class UserRegistrationDTO {
     private String password;
 
     @NotNull(message = "Institution ID is required.")
-    @Positive(message = "Institution ID must be a positive number.")
     private InstitutionEntity idInstitution;
 
     @NotNull(message = "Gender ID is required.")
-    @Positive(message = "Gender ID must be a positive number.")
     private GenderEntity idGender;
 
     @NotNull(message = "Credential ID is required.")
-    @Positive(message = "Credential ID must be a positive number.")
     private TypeOfCredentialEntity idTypeOfCredential;
+
+    private AuditLogEntity auditLog;
+
+    private UserStatusEntity userStatus;
+
+    private Integer isActive = 1;
 
     public UserRegistrationDTO() {}
 
+    public AuditLogEntity getAuditLog() {
+        return auditLog;
+    }
+
+    public UserStatusEntity getUserStatus() {
+        return userStatus;
+    }
+
+    public void setUserStatus(UserStatusEntity userStatus) {
+        this.userStatus = userStatus;
+    }
+
+    public void setAuditLog(AuditLogEntity auditLog) {
+        this.auditLog = auditLog;
+    }
+
     public @NotBlank(message = "First name is required.") @Size(max = 50, message = "First name must not exceed 50 characters.") String getFirstName() {
         return firstName;
+    }
+
+    public Integer getIsActive() {
+        return isActive;
+    }
+
+    public void setIsActive(Integer isActive) {
+        this.isActive = isActive;
     }
 
     public void setFirstName(@NotBlank(message = "First name is required.") @Size(max = 50, message = "First name must not exceed 50 characters.") String firstName) {
@@ -133,11 +157,11 @@ public class UserRegistrationDTO {
         this.birthdate = birthdate;
     }
 
-    public @NotBlank(message = "Nationality is required.") @Size(max = 50, message = "Nationality must not exceed 50 characters.") CountryEntity getNationality() {
+    public @NotBlank(message = "Nationality is required.") @Size(max = 50, message = "Nationality must not exceed 50 characters.") String getNationality() {
         return nationality;
     }
 
-    public void setNationality(@NotBlank(message = "Nationality is required.") @Size(max = 50, message = "Nationality must not exceed 50 characters.") CountryEntity nationality) {
+    public void setNationality(@NotBlank(message = "Nationality is required.") @Size(max = 50, message = "Nationality must not exceed 50 characters.") String nationality) {
         this.nationality = nationality;
     }
 
@@ -165,27 +189,27 @@ public class UserRegistrationDTO {
         this.password = password;
     }
 
-    public @NotNull(message = "Institution ID is required.") @Positive(message = "Institution ID must be a positive number.") InstitutionEntity getIdInstitution() {
+    public @NotNull(message = "Institution ID is required.") InstitutionEntity getIdInstitution() {
         return idInstitution;
     }
 
-    public void setIdInstitution(@NotNull(message = "Institution ID is required.") @Positive(message = "Institution ID must be a positive number.") InstitutionEntity idInstitution) {
+    public void setIdInstitution(@NotNull(message = "Institution ID is required.") InstitutionEntity idInstitution) {
         this.idInstitution = idInstitution;
     }
 
-    public @NotNull(message = "Gender ID is required.") @Positive(message = "Gender ID must be a positive number.") GenderEntity getIdGender() {
+    public @NotNull(message = "Gender ID is required.") GenderEntity getIdGender() {
         return idGender;
     }
 
-    public void setIdGender(@NotNull(message = "Gender ID is required.") @Positive(message = "Gender ID must be a positive number.") GenderEntity idGender) {
+    public void setIdGender(@NotNull(message = "Gender ID is required.") GenderEntity idGender) {
         this.idGender = idGender;
     }
 
-    public @NotNull(message = "Credential ID is required.") @Positive(message = "Credential ID must be a positive number.") TypeOfCredentialEntity getIdTypeOfCredential() {
+    public @NotNull(message = "Credential ID is required.") TypeOfCredentialEntity getIdTypeOfCredential() {
         return idTypeOfCredential;
     }
 
-    public void setIdTypeOfCredential(@NotNull(message = "Credential ID is required.") @Positive(message = "Credential ID must be a positive number.") TypeOfCredentialEntity idTypeOfCredential) {
+    public void setIdTypeOfCredential(@NotNull(message = "Credential ID is required.") TypeOfCredentialEntity idTypeOfCredential) {
         this.idTypeOfCredential = idTypeOfCredential;
     }
 }

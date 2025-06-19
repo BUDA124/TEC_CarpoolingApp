@@ -16,8 +16,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.tec.carpooling.bl.dto.UI_BL.driver.PublishTripDTO;
 import org.tec.carpooling.bl.dto.UI_BL.driver.StopDTO;
+import org.tec.carpooling.bl.services.AuditLogService;
 import org.tec.carpooling.bl.services.SimpleDataRetrievalService;
 import org.tec.carpooling.bl.services.TripService;
+import org.tec.carpooling.common.constants.AppConstants;
+import org.tec.carpooling.da.entities.AuditLogEntity;
 import org.tec.carpooling.da.entities.DistrictEntity;
 import org.tec.carpooling.ui.SceneManager;
 
@@ -43,6 +46,7 @@ public class DriverRideController {
 
     @Autowired private TripService tripService;
     @Autowired private SimpleDataRetrievalService simpleDataRetrievalService;
+    @Autowired private AuditLogService auditLogService;
 
     private List<DistrictEntity> availableSanJoseDistricts;
 
@@ -83,14 +87,13 @@ public class DriverRideController {
 
         ComboBox<DistrictEntity> locationComboBox = createLocationComboBox();
         VBox leavesAtBox = createTimePicker("Leaves at");
-        VBox arrivesAtBox = createTimePicker("Arrives at");
         VBox costBox = createCostInput();
         VBox paymentBox = createPaymentMethodInput();
         Button removeButton = createRemoveButton(stopRow);
 
         HBox.setMargin(locationComboBox, new Insets(20, 0, 0, 0));
 
-        stopRow.getChildren().addAll(locationComboBox, leavesAtBox, arrivesAtBox, costBox, paymentBox, removeButton);
+        stopRow.getChildren().addAll(locationComboBox, leavesAtBox, costBox, paymentBox, removeButton);
         VB_stopsContainer.getChildren().add(stopRow);
     }
 
@@ -193,6 +196,7 @@ public class DriverRideController {
     }
 
     private StopDTO createStopDTOFromRow(HBox stopRow) {
+        AuditLogEntity auditLog = auditLogService.createInitialAuditLog(AppConstants.SYSTEM_USER);
         DistrictEntity district = ((ComboBox<DistrictEntity>) stopRow.getChildren().get(0)).getValue();
         LocalTime leavesAt = getTimeFromPicker((VBox) stopRow.getChildren().get(1));
         LocalTime arrivesAt = getTimeFromPicker((VBox) stopRow.getChildren().get(2));
@@ -200,7 +204,7 @@ public class DriverRideController {
         String paymentMethod = ((ComboBox<String>) ((VBox) stopRow.getChildren().get(4)).getChildren().get(1)).getValue();
         DistrictEntity startStop = CB_startingLocation.getValue();
         DistrictEntity endStop = CB_endingLocation.getValue();
-        return new StopDTO(district.getName(), district, leavesAt, arrivesAt, cost, paymentMethod, startStop, endStop);
+        return new StopDTO(district.getName(), district, leavesAt, arrivesAt, cost, paymentMethod, startStop, endStop, auditLog);
     }
 
     private void resetRideForm() {

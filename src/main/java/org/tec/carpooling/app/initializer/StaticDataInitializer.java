@@ -64,21 +64,16 @@ public class StaticDataInitializer implements ApplicationRunner {
         log.info("Carga de datos estáticos finalizada.");
     }
 
-    /**
-     * REFACTORED: Uses the efficient batch pattern.
-     */
     private void initializeCountries() {
         log.info("Inicializando Países...");
         List<String> requiredCountries = Arrays.asList(
                 "Afganistán", "Alemania", "Argentina", "Brasil", "Costa Rica", "Rumania", "Samoa"
         );
 
-        // Fetch all existing country names in ONE query.
         Set<String> existingNames = countryRepository.findAll().stream()
                 .map(CountryEntity::getName)
                 .collect(Collectors.toSet());
 
-        // Determine which countries are missing (in-memory operation).
         List<CountryEntity> countriesToSave = requiredCountries.stream()
                 .filter(name -> !existingNames.contains(name)) // Filter out existing ones
                 .map(name -> {
@@ -88,33 +83,23 @@ public class StaticDataInitializer implements ApplicationRunner {
                 })
                 .collect(Collectors.toList());
 
-        // If there's anything to save, proceed.
         if (!countriesToSave.isEmpty()) {
-            // Create the audit log only ONCE for the entire batch.
             AuditLogEntity auditLog = auditService.createInitialAuditLog(AppConstants.SYSTEM_USER);
             countriesToSave.forEach(country -> {
                 country.setAuditLog(auditLog);
                 log.info("País '{}' creado.", country.getName());
             });
 
-            // Save all new countries in ONE batch operation.
             countryRepository.saveAll(countriesToSave);
             log.info("{} países nuevos guardados.", countriesToSave.size());
         }
     }
 
-    /**
-     * HEAVILY REFACTORED: This method now uses batch processing for each level of the hierarchy
-     * (Province, Canton, District) to be extremely efficient and transactionally safe.
-     * It creates only ONE audit log for all location data.
-     */
     private void initializeCostaRicaLocations() {
         log.info("Inicializando Ubicaciones de Costa Rica...");
 
-        // Create ONE shared audit log for the entire operation.
         AuditLogEntity auditLog = auditService.createInitialAuditLog(AppConstants.SYSTEM_USER);
 
-        // Find or create the root entity, "Costa Rica". This single save is acceptable as a prerequisite.
         CountryEntity costaRica = countryRepository.findByName("Costa Rica").orElseGet(() -> {
             CountryEntity country = new CountryEntity();
             country.setName("Costa Rica");
@@ -125,7 +110,6 @@ public class StaticDataInitializer implements ApplicationRunner {
 
         Map<String, Map<String, List<String>>> costaRicaDivisions = getCostaRicaDivisions();
 
-        // --- BATCH PROCESS PROVINCES ---
         log.info("Verificando y creando Provincias...");
         Map<String, ProvinceEntity> provincesByName = provinceRepository.findByCountry(costaRica).stream()
                 .collect(Collectors.toMap(ProvinceEntity::getName, p -> p));
@@ -149,7 +133,6 @@ public class StaticDataInitializer implements ApplicationRunner {
             provincesToSave.forEach(p -> provincesByName.put(p.getName(), p));
         }
 
-        // --- BATCH PROCESS CANTONS ---
         log.info("Verificando y creando Cantones...");
         List<ProvinceEntity> allProvinces = new ArrayList<>(provincesByName.values());
         Map<String, CantonEntity> cantonsByCompositeKey = cantonRepository.findByProvinceIn(allProvinces).stream()
@@ -177,7 +160,6 @@ public class StaticDataInitializer implements ApplicationRunner {
             cantonsToSave.forEach(c -> cantonsByCompositeKey.put(c.getProvince().getName() + ":" + c.getName(), c));
         }
 
-        // --- BATCH PROCESS DISTRICTS ---
         log.info("Verificando y creando Distritos...");
         List<CantonEntity> allCantons = new ArrayList<>(cantonsByCompositeKey.values());
         Map<String, DistrictEntity> districtsByCompositeKey = districtRepository.findByCantonIn(allCantons).stream()
@@ -220,7 +202,7 @@ public class StaticDataInitializer implements ApplicationRunner {
     private void initializeUserStatuses(AuditLogEntity auditLog) {
         initializeCatalogData("Estado de Usuario",
                 Arrays.asList(AppConstants.USER_STATUS_IS_DRIVER, AppConstants.USER_STATUS_IS_PASSENGER,
-                        AppConstants.USER_STATUS_INACTIVE),
+                        AppConstants.USER_STATUS_INACTIVE, AppConstants.USER_STATUS_IS_ADMIN),
                 userStatusRepository,
                 UserStatusEntity::new,
                 auditLog);
@@ -262,10 +244,6 @@ public class StaticDataInitializer implements ApplicationRunner {
                 auditLog);
     }
 
-    /**
-     * REFACTORED: This generic method is now even better. It no longer creates its own
-     * audit log, but accepts one, ensuring its part of a larger unit of work.
-     */
     private <T extends CatalogEntity> void initializeCatalogData(
             String entityName, List<String> requiredItems, JpaRepository<T, ?> repository, Supplier<T> constructor, AuditLogEntity auditLog) { // <-- ADDED a new parameter
 
@@ -293,9 +271,6 @@ public class StaticDataInitializer implements ApplicationRunner {
         }
     }
 
-    /**
-     * REFACTORED: Uses the efficient batch pattern for consistency and robustness.
-     */
     private void initializeParameters() {
         log.info("Inicializando Parámetros del Sistema...");
 
@@ -329,7 +304,6 @@ public class StaticDataInitializer implements ApplicationRunner {
 
     private Map<String, Map<String, List<String>>> getCostaRicaDivisions() {
         Map<String, Map<String, List<String>>> costaRicaDivisions = new LinkedHashMap<>();
-        // ... method content is unchanged ...
         // ------------------------ PROVINCIA SAN JOSÉ ------------------------
         String provinciaSanJoseNombre = "San José";
         Map<String, List<String>> sanJoseCantones = new LinkedHashMap<>();

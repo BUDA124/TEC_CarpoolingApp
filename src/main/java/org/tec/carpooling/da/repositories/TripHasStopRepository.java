@@ -1,6 +1,7 @@
 package org.tec.carpooling.da.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.tec.carpooling.da.entities.StopEntity;
 import org.tec.carpooling.da.entities.TripEntity;
@@ -11,5 +12,6 @@ import java.util.Optional;
 
 @Repository
 public interface TripHasStopRepository extends JpaRepository<TripHasStopEntity, Long> {
-    Optional<TripHasStopEntity> findByTripAndStopAndNumberStop(TripEntity tripEntity, StopEntity mallSanPedro, int numberStop);
+    @Query("SELECT AVG(ths.stopCost) FROM TripHasStopEntity ths WHERE ths.stopCost > 0")
+    Double findAverageFare();
 }

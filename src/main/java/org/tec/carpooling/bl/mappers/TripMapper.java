@@ -16,7 +16,7 @@ public interface TripMapper {
     @Mapping(target = "district", source = "district")
     @Mapping(target = "startTrip", ignore = true)
     @Mapping(target = "endTrip", ignore = true)
-    @Mapping(target = "auditLog", ignore = true)
+    @Mapping(target = "auditLog", source = "auditLog")
     StopEntity toStopEntity(StopDTO dto);
 
 }

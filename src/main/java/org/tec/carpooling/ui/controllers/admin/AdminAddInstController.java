@@ -32,18 +32,6 @@ public class AdminAddInstController {
     private TextField institutionWebsiteURLTextField;
     @FXML
     private Button createInstitutionButton;
-    @FXML
-    private Pane dailyReportText;
-    @FXML
-    private Pane generalQueriesText;
-    @FXML
-    private Pane historyPane;
-    @FXML
-    private Pane analyticsPane;
-    @FXML
-    private Pane requestsPane;
-    @FXML
-    private Pane viewInstitutionPane;
 
     @Autowired
     private SimpleDataRetrievalService simpleDataRetrievalService;
@@ -62,9 +50,6 @@ public class AdminAddInstController {
 
         showError("Institution Added Succesfully ");
     }
-
-
-
 
     @FXML
     public void initialize() {
@@ -163,11 +148,9 @@ public class AdminAddInstController {
             SceneManager.switchToScene(event, "login-view.fxml");
         } catch (IOException e) {
             e.printStackTrace();
+            showError("Could not sign out");
         }
     }
-
-
-
 
     private void showError(String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -176,5 +159,4 @@ public class AdminAddInstController {
         alert.setContentText(message);
         alert.showAndWait();
     }
-
 }

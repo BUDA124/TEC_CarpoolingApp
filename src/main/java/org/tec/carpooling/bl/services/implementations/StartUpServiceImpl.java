@@ -34,6 +34,9 @@ public class StartUpServiceImpl implements StartUpService {
         PersonEntity person = userRegistrationMapper.toPersonEntity(dto);
         person = personRepository.save(person);
 
+        String hashedPassword = HashingUtil.hashPassword(dto.getPassword());
+        dto.setPassword(hashedPassword);
+
         PersonalUserEntity personalUser = userRegistrationMapper.toPersonalUserEntity(dto);
         personalUser.setPerson(person);
         personalUser.setRegistrationDate(LocalDate.now());
@@ -57,7 +60,7 @@ public class StartUpServiceImpl implements StartUpService {
         Optional<PersonalUserEntity> userEntityOptional = personalUserRepository.findByUsername(logInDTO.getUsername());
 
         if (userEntityOptional.isEmpty()) {
-            throw new AuthenticationException("Invalid username or password"); // User not found
+            throw new AuthenticationException("Invalid username or password");
         }
 
         PersonalUserEntity userEntity = userEntityOptional.get();

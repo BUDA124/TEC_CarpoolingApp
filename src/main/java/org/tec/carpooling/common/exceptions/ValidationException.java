@@ -5,14 +5,18 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class ValidationException extends RuntimeException {
-    private final Set<? extends ConstraintViolation<?>> violations;
+    private final Set<String> violations;
 
-    public <T> ValidationException(String message, Set<ConstraintViolation<T>> violations) {
-        super(message + ": " + formatViolations(violations));
+    public ValidationException(Set<String> violations) {
+        // 1. Llama al constructor padre con un mensaje estático y genérico.
+        //    Esta llamada ya no depende de ningún campo de esta clase.
+        super("La entidad contiene errores de validación.");
+
+        // 2. Ahora que el padre ha sido construido, inicializa tus propios campos.
         this.violations = violations;
     }
 
-    public Set<? extends ConstraintViolation<?>> getViolations() {
+    public Set<String> getViolations() {
         return violations;
     }
 

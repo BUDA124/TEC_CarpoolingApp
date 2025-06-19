@@ -1,5 +1,6 @@
 package org.tec.carpooling.bl.services;
 
+import org.springframework.stereotype.Service;
 import org.tec.carpooling.bl.dto.UI_BL.StartUp.LogInDTO;
 import org.tec.carpooling.bl.dto.UI_BL.StartUp.UserRegistrationDTO;
 import org.tec.carpooling.common.exceptions.AuthenticationException;
@@ -9,7 +10,7 @@ import org.tec.carpooling.bl.dto.BL_DA.UserInstitutionInfoDTO; // For internal u
 import org.tec.carpooling.common.exceptions.OperationFailedException;
 import org.tec.carpooling.common.exceptions.NotFoundException;
 
-
+@Service
 public interface StartUpService {
     /**
      * Registers a new user with their full profile data.
